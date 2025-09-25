@@ -1,4 +1,4 @@
-<!-- profile.php -->
+<!-- use include '../php/handlers/profile.php'; ?> to connect php to html-->
 <?php
 // Example PHP data (replace with DB values)
 $user = [

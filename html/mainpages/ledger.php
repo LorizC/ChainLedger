@@ -1,4 +1,4 @@
-<!--use include '../php/handlers/filename.php'; ?> to connect php to html -->
+<!--use include '../php/handlers/ledger.php'; ?> to connect php to html -->
 <?php 
 $ledger = [
   ["user" => "Loriz Carlos", "details" => "Food", "merchant" => "GrabPay", "amount" => "-₱2,255,555.55", "date" => "16-8"],

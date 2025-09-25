@@ -1,4 +1,4 @@
-<!-- use include '../php/handlers/filename.php'; ?> to connect php to html -->
+<!-- use include '../php/handlers/analytics.php'; ?> to connect php to html-->
 <?php
 $analytics = [
   ["title" => "Gcash", "value" => "₱10,200,000.00", "class" => "black", "image" => "../../images/ewallets/gcash.png"],

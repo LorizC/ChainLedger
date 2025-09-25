@@ -1,4 +1,4 @@
-
+<!-- use include '../php/handlers/dashboard.php'; ?> to connect php to html-->
 
 <?php
 // Example PHP variables (replace with DB values later)
