@@ -1,9 +1,9 @@
     <!-- Header -->
     <header>
-      <!-- Burger Icon -->
-      <button id="burger" class="burger-btn">
-        <span class="material-icons-outlined">menu</span>
-      </button>
+  <!-- Burger Icon -->
+  <button id="burger" class="burger-btn">
+    <span id="burgerIcon" class="material-icons-outlined">menu</span>
+  </button>
 
       <!-- Profile Icons -->
       <div class="profile">

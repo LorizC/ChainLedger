@@ -220,3 +220,30 @@ initCardScroll("#category-scroll", "#category-left", "#category-right"); // Cate
 
 
 });
+
+
+// Sidebar toggle
+const burger = document.getElementById("burger");
+const burgerIcon = document.getElementById("burgerIcon");
+const sidebar = document.querySelector(".sidebar");
+const main = document.querySelector(".main");
+const header = document.querySelector("header");
+
+burger.addEventListener("click", () => {
+  sidebar.classList.toggle("hidden");  // hide/show sidebar
+
+  if (sidebar.classList.contains("hidden")) {
+    // Sidebar hidden → expand main + shift header
+    main.style.marginLeft = "0";
+    header.style.left = "0";
+    burgerIcon.textContent = "menu"; // reset icon
+  } else {
+    // Sidebar visible → restore space
+    main.style.marginLeft = "220px"; // same as .sidebar width
+    header.style.left = "220px";
+    burgerIcon.textContent = "close"; // change icon if you want
+  }
+});
+
+
+
