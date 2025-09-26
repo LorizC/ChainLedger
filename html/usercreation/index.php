@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="./dist/assets/fonts/feather.css" />
     <link rel="stylesheet" href="./dist/assets/fonts/fontawesome.css" />
     <link rel="stylesheet" href="./dist/assets/fonts/material.css" />
-    <link rel="stylesheet" href="./dist/assets/css/style.css" id="main-style-link" />
+    <link rel="stylesheet" href="css/style.css" id="main-style-link" />
   </head>
   <body>
     <!-- [ Pre-loader ] start -->
@@ -33,7 +33,7 @@
       <div class="auth-wrapper v1 flex items-center w-full h-full min-h-screen justify-center">
         <form>
           <div class="mt-4 text-center">
-            <button type="button" class="btn btn-primary mx-auto shadow-2xl"><a href="login.php">Dashboard</a></button>
+            <button type="button" class="btn btn-primary mx-auto shadow-2xl"><a href="login.php">Get Started</a></button>
             </div>
         </form>
     </div>
