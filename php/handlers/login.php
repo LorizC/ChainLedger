@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = $result['error'];
             } else {
                 $_SESSION['user'] = $result['user'];
-                header("Location: index_html.php");
+                header("Location: index.php");
                 exit();
             }
         } catch (Exception $e) {

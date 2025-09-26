@@ -26,6 +26,6 @@
     </a>
   </nav>
   <div class="logout">
-    <a href="#"><span class="material-icons-outlined">logout</span></a>
+    <a href="../usercreation/login_html.php"><span class="material-icons-outlined">logout</span></a>
   </div>
 </aside>

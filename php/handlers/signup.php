@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['account_id'] = $result['account_id'];
         $_SESSION['temp_username'] = $result['username'];
 
-        header("Location: set_password_html.php");
+        header("Location: set_password.php");
         exit;
 
     } catch (Exception $e) {

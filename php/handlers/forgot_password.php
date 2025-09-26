@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db/Database.php';
-require_once __DIR__ . '/../repositories/UserRepository.php';
-require_once __DIR__ . '/../services/PasswordService.php';
+require_once __DIR__ . '/../php/db/Database.php';
+require_once __DIR__ . '/../php/repositories/UserRepository.php';
+require_once __DIR__ . '/../php/services/PasswordService.php';
 
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         } else {
             if ($passwordService->resetPassword($userId, $_POST['new_password'])) {
                 unset($_SESSION['reset_user_id']);
-                header("Location: login_html.php");
+                header("Location: login.php");
                 exit;
             } else {
                 $error = "Password reset failed.";

@@ -53,7 +53,7 @@ $userRepo->assignRole($user, $role);
             unset($_SESSION['temp_user_id'], $_SESSION['temp_username'], $_SESSION['account_id']);
 
             // ✅ Redirect to login
-            header("Location: login_html.php");
+            header("Location: login.php");
             exit;
 
         } catch (Exception $e) {

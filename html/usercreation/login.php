@@ -78,7 +78,7 @@
                     </span>
                   </div>
                   <div class="forgot-password">
-                    <a href="forgot_password_html.php">Forgot Password?</a>
+                    <a href="forgot_password.php">Forgot Password?</a>
                   </div>
                 </div>
 
@@ -86,7 +86,7 @@
                   <button type="submit" class="submitForm">Log In</button> 
                   <div class="signup-row">
                     <p class="new-account">Create New Account</p>
-                    <a href="signup_html.php" class="submitForm signup-btn">Sign Up</a>
+                    <a href="signup.php" class="submitForm signup-btn">Sign Up</a>
                   </div>
                 </div>
               </form>
