@@ -15,23 +15,47 @@ body {
 }
 
 /* === Sidebar === */
-/* === Sidebar === */
 .sidebar {
-  width: 70px;
+  width: 220px;
   background: #4B2EFF;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 1rem 0;
+  align-items: flex-start;
+  padding: 1rem;
   gap: 2rem;
-  transition: width 0.3s ease;
+  transition: width 0.3s ease, padding 0.3s ease;
   overflow: hidden;
-
-  /* NEW: make sidebar full height + sticky */
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;       /* always stretch full height */
+  height: 100vh;
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;          /* spacing between logo and text */
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.sidebar .logo-img {
+  width: 40px;        /* adjust logo size */
+  height: auto;
+}
+
+.sidebar .logo .label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;        /* white text for sidebar */
+}
+
+
+/* Hidden sidebar */
+.sidebar.hidden {
+  width: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 .sidebar .logo {
@@ -50,8 +74,8 @@ body {
   color: #fff;
   font-size: 26px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 12px;
   padding: 8px;
   border-left: 4px solid transparent;
   transition: 0.3s;
@@ -63,28 +87,11 @@ body {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 8px 0 0 8px;
 }
-
-/* Expanded sidebar */
-.sidebar.expanded {
-  width: 220px; /* adjust to your liking */
-  align-items: flex-start; /* content aligns left when expanded */
-  padding-left: 1rem;
-}
-
-/* Nav links inside expanded sidebar */
-.sidebar.expanded nav a {
-  justify-content: flex-start;
-  gap: 12px;
-  font-size: 16px;
-}
-
-/* Optional: show labels next to icons only when expanded */
 .sidebar nav a span.label {
-  display: none;
-}
+  display: inline; /* always show labels */
 
-.sidebar.expanded nav a span.label {
-  display: inline;
+  font-weight: 600;
+  color: #fff; 
 }
 
 /* Logout button */
@@ -95,10 +102,10 @@ body {
 
 .logout a {
   color: #fff;
-  font-size: 26px;
+  font-size: 16px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 12px;
   padding: 8px;
   border-left: 4px solid transparent;
   transition: 0.3s;
@@ -110,28 +117,23 @@ body {
   border-radius: 8px 0 0 8px;
 }
 
-/* === Main Layout === */
-.main {
-  flex: 1;
-  padding: 2rem;
-  margin-left: 70px;       /* same as collapsed sidebar width */
-  transition: margin-left 0.3s ease;
-}
-
 /* === Header === */
 header {
   position: fixed;
   top: 0;
-  left: 200px;          /* matches collapsed sidebar width */
+  left: 220px;   /* default aligned with sidebar */
   right: 0;
-  height: 60px;        /* header height */
-  z-index: 200;
+  height: 60px;
   background: #f0f2f5;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 1.5rem;
   border-bottom: 1px solid #ddd;
+  transition: left 0.3s ease;
+}
+header.full {
+  left: 0;
 }
 
 .profile {
@@ -148,12 +150,15 @@ header {
 
 /* === Main Content === */
 .main {
-  margin-left: 200px;   /* align with sidebar */
+  margin-left: 220px;   /* align with sidebar */
   margin-top: 60px;    /* SAME as header height */
   padding: 1rem 2rem;
   flex: 1;
   overflow-y: auto;
   transition: margin-left 0.3s ease;
+}
+.main.full {
+  margin-left: 0; /* full width when sidebar hidden */
 }
 
 
@@ -614,10 +619,7 @@ header .profile span {
     padding: 0;
     overflow: hidden;
   }
-  .sidebar.expanded {
-    width: 200px;
-    padding: 1rem 0;
-  }
+
 
   /* Main content spans full width */
   .main {
@@ -872,4 +874,13 @@ header .profile span {
 
 #merchantSelect option[value="paypal"] {
   color: #003087; /* PayPal Navy */
+}
+
+/* Expand main + header when sidebar is collapsed */
+.main.expanded {
+  margin-left: 0;
+}
+
+header.expanded {
+  left: 0;
 }

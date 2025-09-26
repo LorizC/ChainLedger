@@ -31,17 +31,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // =============================
-  // Sidebar Toggle
-  // =============================
-  const sidebar = document.getElementById("sidebar");
-  const toggleBtn = document.getElementById("sidebarToggle");
-  if (sidebar && toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("collapsed");
-    });
-  }
-
-  // =============================
   // Feather Icons
   // =============================
   if (typeof feather !== "undefined") feather.replace();
@@ -222,28 +211,23 @@ initCardScroll("#category-scroll", "#category-left", "#category-right"); // Cate
 });
 
 
-// Sidebar toggle
-const burger = document.getElementById("burger");
-const burgerIcon = document.getElementById("burgerIcon");
-const sidebar = document.querySelector(".sidebar");
-const main = document.querySelector(".main");
-const header = document.querySelector("header");
+document.addEventListener("DOMContentLoaded", () => {
+  const burgerBtn = document.getElementById("burgerBtn");
+  const sidebar = document.querySelector(".sidebar");
+  const main = document.querySelector(".main");
+  const header = document.querySelector("header");
 
-burger.addEventListener("click", () => {
-  sidebar.classList.toggle("hidden");  // hide/show sidebar
-
-  if (sidebar.classList.contains("hidden")) {
-    // Sidebar hidden → expand main + shift header
-    main.style.marginLeft = "0";
-    header.style.left = "0";
-    burgerIcon.textContent = "menu"; // reset icon
-  } else {
-    // Sidebar visible → restore space
-    main.style.marginLeft = "220px"; // same as .sidebar width
-    header.style.left = "220px";
-    burgerIcon.textContent = "close"; // change icon if you want
+  if (burgerBtn && sidebar && main && header) {
+    burgerBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("hidden");
+      main.classList.toggle("full");
+      header.classList.toggle("full");
+    });
   }
 });
+
+
+
 
 
 
