@@ -1,4 +1,4 @@
-<?php include '../php/handlers/user_data.php'; ?>
+<?php include '../../php/handlers/user_data.php'; ?>
 
 
 <!DOCTYPE html>
