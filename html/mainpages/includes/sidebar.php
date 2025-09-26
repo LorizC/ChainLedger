@@ -1,9 +1,21 @@
-<!-- sidebar.php -->
 <aside class="sidebar">
+  <!-- Logo -->
   <div class="logo">
     <img src="../../images/logos/logo.png" alt="Logo" class="logo-img">
     <span class="label">ChainLedger</span>
   </div>
+
+  <!-- Profile -->
+  <div class="profile">
+    <img src="../../images/avatars/profile.png" alt="User Avatar" class="avatar">
+    <div class="profile-info">
+      <span class="username">Loriz Carlos</span>
+      <span class="fullname">Loriz Carlos</span>
+      <span class="account-id">ID: 12345</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
   <nav>
     <a href="dashboard.php">
       <span class="material-icons-outlined">home</span>
@@ -17,7 +29,7 @@
       <span class="material-icons-outlined">description</span>
       <span class="label">Report</span>
     </a>
-        <a href="analytics.php">
+    <a href="analytics.php">
       <span class="material-icons-outlined">bar_chart</span>
       <span class="label">Analytics</span>
     </a>
@@ -26,6 +38,8 @@
       <span class="label">Profile</span>
     </a>
   </nav>
+
+  <!-- Logout -->
   <div class="logout">
     <a href="../usercreation/login.php">
       <span class="material-icons-outlined">logout</span>
