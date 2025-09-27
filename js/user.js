@@ -217,16 +217,80 @@ document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector(".main");
   const header = document.querySelector("header");
 
-  if (burgerBtn && sidebar && main && header) {
-    burgerBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("hidden");
-      main.classList.toggle("full");
-      header.classList.toggle("full");
-    });
+  burgerBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("hidden");
+    main.classList.toggle("full");
+    header.classList.toggle("full");
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const themeBtn = document.getElementById("themeBtn");
+
+  // Apply saved theme on load
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    themeBtn.textContent = "dark_mode"; // 🌙
   }
+
+  themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    if (document.body.classList.contains("dark-mode")) {
+      themeBtn.textContent = "dark_mode"; // 🌙
+      localStorage.setItem("theme", "dark");
+    } else {
+      themeBtn.textContent = "light_mode"; // ☀️
+      localStorage.setItem("theme", "light");
+    }
+  });
 });
 
 
+// theme.js
+document.addEventListener("DOMContentLoaded", () => {
+  const themeBtn = document.getElementById("themeBtn");
+  const themeToggle = document.getElementById("theme-toggle"); // optional checkbox toggle
+
+  // Apply saved theme on load
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark");
+    if (themeBtn) themeBtn.textContent = "dark_mode"; // 🌙
+    if (themeToggle) themeToggle.checked = true;
+  }
+
+  // Icon button toggle
+  if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+
+      if (document.documentElement.classList.contains("dark")) {
+        themeBtn.textContent = "dark_mode"; // 🌙
+        localStorage.setItem("theme", "dark");
+        if (themeToggle) themeToggle.checked = true;
+      } else {
+        themeBtn.textContent = "light_mode"; // ☀️
+        localStorage.setItem("theme", "light");
+        if (themeToggle) themeToggle.checked = false;
+      }
+    });
+  }
+
+  // Checkbox toggle
+  if (themeToggle) {
+    themeToggle.addEventListener("change", () => {
+      if (themeToggle.checked) {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        if (themeBtn) themeBtn.textContent = "dark_mode";
+      } else {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        if (themeBtn) themeBtn.textContent = "light_mode";
+      }
+    });
+  }
+});
 
 
 

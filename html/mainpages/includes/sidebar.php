@@ -17,6 +17,7 @@
 
   <!-- Nav -->
   <nav>
+    <div class="nav-item">
     <a href="dashboard.php">
       <span class="material-icons-outlined">home</span>
       <span class="label">Dashboard</span>
@@ -37,6 +38,7 @@
       <span class="material-icons-outlined">person</span>
       <span class="label">Profile</span>
     </a>
+    </div>
   </nav>
 
   <!-- Logout -->

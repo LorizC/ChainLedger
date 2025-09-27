@@ -121,16 +121,16 @@ $currentAvatar = $defaultAvatars[0];
       <label class="block text-sm font-medium text-gray-600 mb-2">Choose Avatar</label>
       <div class="grid grid-cols-5 gap-4 mb-6">
         <template x-for="a in [
-          '../../images/avatars/profile1.png',
-          '../../images/avatars/profile2.png',
-          '../../images/avatars/profile3.png',
-          '../../images/avatars/profile4.png',
-          '../../images/avatars/profile5.png',
-          '../../images/avatars/profile6.png'
+          '../../images/avatars/profile1.jpg',
+          '../../images/avatars/profile2.jpg',
+          '../../images/avatars/profile3.jpg',
+          '../../images/avatars/profile4.jpg',
+          '../../images/avatars/profile5.jpg',
+          '../../images/avatars/profile6.jpg'
         ]" :key="a">
           <img :src="a" 
                @click="avatar = a" 
-               class="w-16 h-16 rounded-full cursor-pointer object-cover border hover:ring-4 hover:ring-indigo-500 transition"
+               class="w-16 h-16 rounded-full cursor-pointer object-contain border hover:ring-4 hover:ring-indigo-500 transition"
                :class="{ 'ring-4 ring-indigo-600': avatar === a }">
         </template>
       </div>

@@ -58,24 +58,27 @@ $categories = [
 
 <section class="summary-wrapper">
   <button class="scroll-btn left  bg-gray-200 hover:bg-indigo-600 text-gray-700 hover:text-white 
-         w-10 h-10 flex items-center justify-center rounded-full shadow-md"">&lt;</button>
+         w-10 h-10 flex items-center justify-center rounded-full shadow-md">&lt;</button>
 
-  <div class="summary" id="summary-scroll">
-    <?php foreach ($analytics as $a): ?>
-      <div class="card">
-        <div class="icon-circle <?= strtolower($a["title"]) ?>">
-          <img src="<?= $a["image"] ?>" alt="<?= $a["title"] ?>" class="card-icon">
-        </div>
-        <div class="card-text">
-          <p><?= $a["title"] ?></p>
-          <h2 class="<?= $a["class"] ?>"><?= $a["value"] ?></h2>
-        </div>
+<!-- Summary Cards -->
+<div class="summary" id="summary-scroll">
+  <?php foreach ($analytics as $a): ?>
+    <div class="card">
+      <div class="icon-circle <?= strtolower($a["title"]) ?>">
+        <img src="<?= $a["image"] ?>" alt="<?= $a["title"] ?>" class="card-icon">
       </div>
-    <?php endforeach; ?>
-  </div>
+      <div class="card-text">
+        <!-- 🔹 Light: black / Dark: gray-300 -->
+        <p class="text-black dark:text-[#D1D5DB]"><?= $a["title"] ?></p>
+        <h2 class="<?= $a["class"] ?>"><?= $a["value"] ?></h2>
+      </div>
+    </div>
+  <?php endforeach; ?>
+</div>
+
 
   <button class="scroll-btn right bg-gray-200 hover:bg-indigo-600 text-gray-700 hover:text-white 
-         w-10 h-10 flex items-center justify-center rounded-full shadow-md"">&gt;</button>
+         w-10 h-10 flex items-center justify-center rounded-full shadow-md">&gt;</button>
 </section>
 
 
@@ -156,29 +159,29 @@ $categories = [
 
     <!-- Cards Container -->
 <div id="category-scroll" class="categories">
+  <?php foreach ($categories as $c): ?>
+    <div class="card">
+      <!-- Circle -->
+      <div class="icon-circle
+        <?php if($c['class']=='purple') echo 'bg-purple-100 text-purple-600'; ?>
+        <?php if($c['class']=='red') echo 'bg-red-100 text-red-600'; ?>
+        <?php if($c['class']=='blue') echo 'bg-blue-100 text-blue-600'; ?>
+        <?php if($c['class']=='yellow') echo 'bg-yellow-100 text-yellow-600'; ?>
+        <?php if($c['class']=='green') echo 'bg-green-100 text-green-600'; ?>
+        <?php if($c['class']=='orange') echo 'bg-orange-100 text-orange-600'; ?>">
+        <span class="material-icons-outlined text-2xl"><?= $c["icon"] ?></span>
+      </div>
 
-<?php foreach ($categories as $c): ?>
-  <div class="card">
-    <!-- Circle -->
-    <div class="icon-circle
-      <?php if($c['class']=='purple') echo 'bg-purple-100 text-purple-600'; ?>
-      <?php if($c['class']=='red') echo 'bg-red-100 text-red-600'; ?>
-      <?php if($c['class']=='blue') echo 'bg-blue-100 text-blue-600'; ?>
-      <?php if($c['class']=='yellow') echo 'bg-yellow-100 text-yellow-600'; ?>
-      <?php if($c['class']=='green') echo 'bg-green-100 text-green-600'; ?>
-      <?php if($c['class']=='orange') echo 'bg-orange-100 text-orange-600'; ?>">
-      <span class="material-icons-outlined text-2xl"><?= $c["icon"] ?></span>
+      <!-- Text -->
+      <div>
+        <!-- 🔹 Light: black / Dark: gray-300 -->
+        <p class="text-black dark:text-[#D1D5DB]"><?= $c["title"] ?></p>
+        <h2 class="<?= $c["class"] ?> font-bold text-lg"><?= $c["value"] ?></h2>
+      </div>
     </div>
+  <?php endforeach; ?>
+</div>
 
-    <!-- Text -->
-    <div>
-      <p class="text-gray-500 text-sm"><?= $c["title"] ?></p>
-      <h2 class="<?= $c["class"] ?> font-bold text-lg"><?= $c["value"] ?></h2>
-    </div>
-  </div>
-<?php endforeach; ?>
-
-    </div>
 
     <!-- Right Button -->
     <button id="category-right"

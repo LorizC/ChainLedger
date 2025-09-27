@@ -14,6 +14,18 @@ $transactions = [
   ["name" => "Yan Yin", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
   ["name" => "Tim Mothee", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
   ["name" => "Pat Rick", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],
+  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
+  ["name" => "Bob Sponge", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
+  ["name" => "Jin Jin", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
+  ["name" => "Yan Yin", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
+  ["name" => "Tim Mothee", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
+  ["name" => "Pat Rick", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],
+  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
+  ["name" => "Bob Sponge", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
+  ["name" => "Jin Jin", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
+  ["name" => "Yan Yin", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
+  ["name" => "Tim Mothee", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
+  ["name" => "Pat Rick", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],    
 ];
 
 $breakdown = [
@@ -76,45 +88,45 @@ $breakdown = [
 
     <!-- Total Transactions -->
     <div class="card">
-      <div class="icon-circle bg-blue-100 text-blue-600">
+      <div class="icon-circle bg-blue-100 text-blue-600 ">
         <span class="material-icons-outlined text-2xl">payments</span>
       </div>
       <div>
-        <p class="text-gray-500 text-sm">Total Transactions</p>
-        <h2 class="text-blue-600 font-bold text-lg"><?= $totalTransactions ?></h2>
+        <p class="text-gray-500  dark:text-gray-300 text-sm">Total Transactions</p>
+        <h2 class="text-blue-1000 dark:text-blue-500 font-bold text-lg"><?= $totalTransactions ?></h2>
       </div>
     </div>
 
     <!-- Total Costs -->
     <div class="card">
-      <div class="icon-circle bg-red-100 text-red-600">
+      <div class="icon-circle bg-red-100 text-red-600 ">
         <span class="material-icons-outlined text-2xl">trending_down</span>
       </div>
       <div>
-        <p class="text-gray-500 text-sm">Total Costs</p>
-        <h2 class="text-red-600 font-bold text-lg"><?= $totalCosts ?></h2>
+        <p class="text-gray-500 dark:text-gray-300 text-sm">Total Costs</p>
+        <h2 class="text-red-600 dark:text-red-500 font-bold text-lg"><?= $totalCosts ?></h2>
       </div>
     </div>
 
     <!-- Total Gains -->
     <div class="card">
-      <div class="icon-circle bg-green-100 text-green-600">
+      <div class="icon-circle bg-green-100 text-green-600 ">
         <span class="material-icons-outlined text-2xl">trending_up</span>
       </div>
       <div>
-        <p class="text-gray-500 text-sm">Total Gains</p>
-        <h2 class="text-green-600 font-bold text-lg"><?= $totalGains ?></h2>
+        <p class="text-gray-500 dark:text-gray-300 text-sm">Total Gains</p>
+        <h2 class="text-green-600 dark:text-green-500 font-bold text-lg"><?= $totalGains ?></h2>
       </div>
     </div>
 
     <!-- Total Transactors -->
     <div class="card">
       <div class="icon-circle bg-orange-100 text-orange-600">
-        <span class="material-icons-outlined text-2xl">groups</span>
+        <span class="material-icons-outlined text-2xl ">groups</span>
       </div>
       <div>
-        <p class="text-gray-500 text-sm">Total Transactors</p>
-        <h2 class="text-orange-600 font-bold text-lg"><?= $totalTransactors ?></h2>
+        <p class="text-gray-500 dark:text-gray-300 text-sm">Total Transactors</p>
+        <h2 class="text-orange-600 dark:text-orange-500 font-bold text-lg"><?= $totalTransactors ?></h2>
       </div>
     </div>
 
