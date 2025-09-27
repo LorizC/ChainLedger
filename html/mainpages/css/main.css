@@ -243,6 +243,7 @@ header .profile span {
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 /* === Transaction History === */
@@ -1020,3 +1021,8 @@ body.dark-mode .icon-circle.blue .material-icons-outlined { color: #2563eb !impo
 body.dark-mode .icon-circle.red .material-icons-outlined { color: #dc2626 !important; }    /* red */
 body.dark-mode .icon-circle.green .material-icons-outlined { color: #16a34a !important; }  /* green */
 body.dark-mode .icon-circle.orange .material-icons-outlined { color: #ea580c !important; } /* orange */
+
+
+body.dark-mode .title-block p {
+  color: #ccc;
+}

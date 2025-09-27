@@ -75,7 +75,7 @@ $breakdown = [
     </div>
 
     
-<section class="relative mt-6">
+<section class="relative mt-6 mb-8">
   <!-- Left Button -->
   <button id="total-left"   class="scroll-btn absolute -left-6 top-1/2 -translate-y-1/2 
          bg-gray-200 hover:bg-indigo-600 text-gray-700 hover:text-white 

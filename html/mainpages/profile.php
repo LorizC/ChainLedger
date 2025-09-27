@@ -62,9 +62,9 @@ $currentAvatar = $defaultAvatars[0];
     <?php include './includes/header.php'; ?>
 
     <!-- Title -->
-    <div class="title-block mb-6">
-      <h1 class="text-3xl font-bold">User Profile</h1>
-      <p class="text-gray-600">Welcome to ChainLedger Profile</p>
+    <div class="title-block">
+      <h1>User Profile</h1>
+      <p>Welcome to ChainLedger Profile</p>
     </div>
 
     <div class="grid md:grid-cols-2 gap-6">
