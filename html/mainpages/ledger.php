@@ -186,25 +186,32 @@ $ledger = [
       </th>
               </tr>
             </thead>
-            <tbody>
-              <?php foreach ($ledger as $row): ?>
-              <tr>
-                <td class="user-cell">
-                  <img src="../../images/avatars/profile1.jpg" alt="Profile" class="user-icon">
-                  <?= $row["user"] ?>
-                </td>
-                <td><?= $row["details"] ?></td>
-                <td class="merchant <?= strtolower(str_replace(' ', '', $row['merchant'])) ?>">
-                  <?= $row["merchant"] ?>
-                </td>
-                <td class="amount <?= strpos($row["amount"], '-') !== false ? 'negative' : 'positive' ?>">
-                  <?= $row["amount"] ?>
-                </td>
-                <td><?= $row["date"] ?></td>
-              </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
+<tbody id="ledger-body">
+  <?php foreach ($ledger as $index => $row): ?>
+    <tr class="ledger-row">
+      <td class="user-cell">
+        <img src="../../images/avatars/profile1.jpg" alt="Profile" class="user-icon">
+        <?= $row["user"] ?>
+      </td>
+      <td><?= $row["details"] ?></td>
+      <td class="merchant <?= strtolower(str_replace(' ', '', $row['merchant'])) ?>">
+        <?= $row["merchant"] ?>
+      </td>
+      <td class="amount <?= strpos($row["amount"], '-') !== false ? 'negative' : 'positive' ?>">
+        <?= $row["amount"] ?>
+      </td>
+      <td><?= $row["date"] ?></td>
+    </tr>
+  <?php endforeach; ?>
+</tbody>
+</table>
+
+<!-- Pagination -->
+<div class="flex justify-center items-center gap-4 mt-4">
+  <button id="prev-page" class="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">&lt;</button>
+  <span id="page-info" class="text-gray-700 dark:text-gray-300"></span>
+  <button id="next-page" class="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded disabled:opacity-50">&gt;</button>
+</div>
         </div>
       </div>
     </section>

@@ -35,7 +35,10 @@ $categories = [
 
     <!-- Icons & Charts -->
     <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- in your HTML (order matters!) -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../../js/charts.js"></script>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <!-- Custom Theme Logic -->
     <script src="../../js/user.js"></script>
@@ -89,60 +92,6 @@ $categories = [
     <canvas id="transactionsChart"></canvas>
   </div>
 </section>
-
-<script>
-  const ctx = document.getElementById('transactionsChart').getContext('2d');
-
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-      ],
-      datasets: [
-        {
-          label: 'GCash',
-          data: [80, 120, 40, 130, 60, 40, 70, 60, 90, 60, 80, 100],
-          backgroundColor: '#004ed5'
-        },
-        {
-          label: 'Maya',
-          data: [60, 0, 30, 0, 50, 0, 40, 0, 30, 0, 40, 0],
-          backgroundColor: '#9cffc5'
-        },
-        {
-          label: 'GrabPay',
-          data: [0, 0, 20, 0, 30, 0, 0, 0, 20, 0, 30, 0],
-          backgroundColor: '#02ab4ee9'
-        },
-        {
-          label: 'Paypal',
-          data: [0, 0, 20, 0, 30, 0, 0, 0, 20, 0, 30, 0],
-          backgroundColor: '#013eae'
-        },
-        {
-          label: 'GooglePay',
-          data: [0, 0, 20, 0, 30, 0, 0, 0, 20, 0, 30, 0],
-          backgroundColor: '#fb5305c1'
-        }
-
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top' }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: { display: true, text: 'Transactions' }
-        }
-      }
-    }
-  });
-</script>
 
 <!-- Category Summary Cards -->
 <div class="mt-8">
@@ -199,71 +148,6 @@ $categories = [
   <h3>Monthly Spending Breakdown</h3>
   <canvas id="categoryChart"></canvas>
 </div>
-
-<script>
-  const categoryCtx = document.getElementById('categoryChart').getContext('2d');
-
-  new Chart(categoryCtx, {
-    type: 'bar',
-    data: {
-      labels: [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-      ],
-      datasets: [
-        {
-          label: 'Equipments',
-          data: [500, 700, 650, 600, 750, 720, 800, 850, 900, 870, 950, 1000],
-          backgroundColor: '#FFFF00'
-        },        
-        {
-          label: 'Food',
-          data: [2000, 2500, 3000, 2800, 3100, 2900, 3300, 3500, 4000, 3700, 4200, 4500],
-          backgroundColor: '#712eb9ff'
-        },
-        {
-          label: 'Maintenance',
-          data: [500, 700, 650, 600, 750, 720, 800, 850, 900, 870, 950, 1000],
-          backgroundColor: '#ff9800'
-        },         
-        {
-          label: 'Health',
-          data: [500, 700, 650, 600, 750, 720, 800, 850, 900, 870, 950, 1000],
-          backgroundColor: '#1eff00ff'
-        },        
-        {
-          label: 'Travel',
-          data: [800, 900, 950, 880, 1000, 970, 1050, 1100, 1200, 1150, 1250, 1300],
-          backgroundColor: '#3557c6ff'
-        },       
-        {
-          label: 'Utilities',
-          data: [1500, 1400, 1600, 1550, 1700, 1650, 1800, 1750, 1900, 1850, 2000, 2100],
-          backgroundColor: '#d33d33ff'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top' }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          stacked: true, // 🔹 stack categories vertically
-          title: { display: true, text: 'Amount (₱)' }
-        },
-        x: {
-          stacked: true, // 🔹 stack categories horizontally
-          title: { display: true, text: 'Month' }
-        }
-      }
-    }
-  });
-</script>
-
-
   </main>
 </body>
 </html>

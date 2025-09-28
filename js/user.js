@@ -293,5 +293,51 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+  document.addEventListener("DOMContentLoaded", () => {
+    const rows = document.querySelectorAll(".ledger-row");
+    const prevBtn = document.getElementById("prev-page");
+    const nextBtn = document.getElementById("next-page");
+    const pageInfo = document.getElementById("page-info");
 
+    const rowsPerPage = 9;
+    let currentPage = 1;
+    const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+    function renderPage() {
+      // hide all rows
+      rows.forEach((row, index) => {
+        row.style.display = "none";
+        if (
+          index >= (currentPage - 1) * rowsPerPage &&
+          index < currentPage * rowsPerPage
+        ) {
+          row.style.display = "";
+        }
+      });
+
+      // update page info
+      pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+      // disable buttons when needed
+      prevBtn.disabled = currentPage === 1;
+      nextBtn.disabled = currentPage === totalPages;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      if (currentPage > 1) {
+        currentPage--;
+        renderPage();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentPage < totalPages) {
+        currentPage++;
+        renderPage();
+      }
+    });
+
+    // initial render
+    renderPage();
+  });
 

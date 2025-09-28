@@ -241,9 +241,14 @@ header .profile span {
 /* === Content Grid === */
 .content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 2fr 1fr;  /* history wider, breakdown smaller */
   gap: 2rem;
-  margin-bottom: 2rem;
+  align-items: start; /* ✅ let each section keep its own height */
+}
+
+.pagination a {
+  text-decoration: none;
+  font-weight: 600;
 }
 
 /* === Transaction History === */
@@ -938,17 +943,17 @@ header.expanded {
 .sidebar .profile-info .username {
   font-size: 15px;
   font-weight: 600;
-  color: #fff;
+  color: #e4e4e4;
 }
 
 .sidebar .profile-info .fullname {
   font-size: 13px;
-  color: #ccc;
+  color: #ababab;
 }
 
 .sidebar .profile-info .account-id {
   font-size: 12px;
-  color: #aaa;
+  color: #ffffff;
   font-style: italic;
 }
 
@@ -979,6 +984,7 @@ body.dark-mode header {
 body.dark-mode .sidebar {
   background: #312E81;
 }
+
 body.dark-mode .card {
   background: #1F2937;
   

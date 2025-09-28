@@ -8,24 +8,24 @@ $totalGains = "₱5,122,991,999,669,678,700,000,000,000,000.00";
 $totalTransactors = 5;
 
 $transactions = [
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
-  ["name" => "Bob Sponge", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
-  ["name" => "Jin Jin", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
-  ["name" => "Yan Yin", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
-  ["name" => "Tim Mothee", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
-  ["name" => "Pat Rick", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
-  ["name" => "Bob Sponge", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
-  ["name" => "Jin Jin", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
-  ["name" => "Yan Yin", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
-  ["name" => "Tim Mothee", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
-  ["name" => "Pat Rick", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
-  ["name" => "Bob Sponge", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
-  ["name" => "Jin Jin", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
-  ["name" => "Yan Yin", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
-  ["name" => "Tim Mothee", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
-  ["name" => "Pat Rick", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],    
+  ["name" => "Loriz Neil Carlos", "merchant" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
+  ["name" => "Bob Sponge", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
+  ["name" => "Jin Jin", "merchant" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
+  ["name" => "Yan Yin", "merchant" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
+  ["name" => "Tim Mothee", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
+  ["name" => "Pat Rick", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],
+  ["name" => "Loriz Neil Carlos", "merchant" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
+  ["name" => "Bob Sponge", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
+  ["name" => "Jin Jin", "merchant" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
+  ["name" => "Yan Yin", "merchant" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
+  ["name" => "Tim Mothee", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
+  ["name" => "Pat Rick", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],
+  ["name" => "Loriz Neil Carlos", "merchant" => "GrabPay", "amount" => "₱5,000.00", "date" => "09-11-2025"],
+  ["name" => "Bob Sponge", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
+  ["name" => "Jin Jin", "merchant" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
+  ["name" => "Yan Yin", "merchant" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-1-2025"],
+  ["name" => "Tim Mothee", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-1-2025"],
+  ["name" => "Pat Rick", "merchant" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-1-2025"],    
 ];
 
 $breakdown = [
@@ -34,8 +34,14 @@ $breakdown = [
   ["label" => "Health", "color" => "#1eff00ff", "amount" => "₱120,567.00", "percent" => "20%"],
   ["label" => "Travel", "color" => "#02ab4ee9", "amount" => "₱120,567.00", "percent" => "20%"],
   ["label" => "Maintenance", "color" => "#ff9800", "amount" => "₱120,567.00", "percent" => "20%"],
-  ["label" => "Utilities", "color" => "#fb5305c1", "amount" => "₱120,567.00", "percent" => "20%"],
+  ["label" => "Utilities", "color" => "#fb5305c1", "amount" => "₱120,567.00", "percent" => "20%"],  
 ];
+
+$perPage = 4;
+$totalPages = ceil(count($transactions) / $perPage);
+$currentPage = isset($_GET['page']) ? max(1, min($totalPages, intval($_GET['page']))) : 1;
+$startIndex = ($currentPage - 1) * $perPage;
+$pagedTransactions = array_slice($transactions, $startIndex, $perPage);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -144,25 +150,38 @@ $breakdown = [
     <!-- Content -->
     <section class="content">
       <div class="history">
-        <h3>Transaction History</h3>
-        
-        <table>
-          <tbody>
-            <?php foreach ($transactions as $t): ?>
-              <tr>
-                <td><?= $t["name"] ?></td>
-                <td>
-                  <span class="merchant <?= strtolower($t["method"]) ?>">
-                    <?= $t["method"] ?>
-                  </span>
-                </td>
-                <td><?= $t["amount"] ?></td>
-                <td><?= $t["date"] ?></td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+  <h3>Recent Transactions</h3>
+
+  <!-- Transactions List -->
+  <div class="flex flex-col gap-3">
+    <?php foreach ($pagedTransactions as $t): ?>
+      <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg dark:bg-gray-700">
+        <div>
+          <p class="font-medium"><?= $t["name"] ?></p>
+          <p class="text-sm text-gray-500 dark:text-gray-300"><?= $t["date"] ?> · 
+            <span class="merchant <?= strtolower($t["merchant"]) ?>"><?= $t["merchant"] ?></span>
+          </p>
+        </div>
+        <span class="font-semibold "><?= $t["amount"] ?></span>
       </div>
+    <?php endforeach; ?>
+  </div>
+
+  <!-- Pagination Controls -->
+  <div class="flex justify-center items-center gap-4 mt-6">
+    <?php if ($currentPage > 1): ?>
+      <a href="?page=<?= $currentPage - 1 ?>" 
+         class="px-3 py-1 bg-gray-200 rounded hover:bg-indigo-600 hover:text-white dark:text-black dark:hover:bg-gray-600 dark:hover:text-white">&lt;</a>
+    <?php endif; ?>
+
+    <span class="text-sm">Page <?= $currentPage ?> of <?= $totalPages ?></span>
+
+    <?php if ($currentPage < $totalPages): ?>
+      <a href="?page=<?= $currentPage + 1 ?>" 
+         class="px-3 py-1 bg-gray-200 rounded hover:bg-indigo-600 hover:text-white dark:text-black dark:hover:bg-gray-600 dark:hover:text-white">&gt;</a>
+    <?php endif; ?>
+  </div>
+</div>
 
       <div class="breakdown">
         <h3>Transactions Breakdown</h3>
