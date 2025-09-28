@@ -16,6 +16,11 @@ $transactions = [
   ["name" => "Loriz Neil Carlos", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-01-2025"],
   ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-01-2025"],
   ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-01-2025"],
+  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
+  ["name" => "Loriz Neil Carlos", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
+  ["name" => "Loriz Neil Carlos", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-01-2025"],
+  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-01-2025"],
+  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-01-2025"],  
 ];
 
 // Default avatars (your relative paths)
@@ -67,10 +72,10 @@ $currentAvatar = $defaultAvatars[0];
       <p>Welcome to ChainLedger Profile</p>
     </div>
 
-    <div class="grid md:grid-cols-2 gap-6">
+    <div class="flex flex-col md:flex-row gap-6">
 
       <!-- LEFT: User Info Card -->
-      <div class="bg-white p-6 rounded-xl shadow min-h-[500px]">
+      <div class="bg-white p-6 rounded-xl shadow min-h-[500px] max-h-[500px] w-[600px] dark:bg-gray-800">
         <div class="flex items-center mb-6">
           
 <!-- Profile Section -->
@@ -95,9 +100,9 @@ $currentAvatar = $defaultAvatars[0];
     <!-- Names (stacked) -->
     <div>
       <!-- Editable Username -->
-      <h2 class="text-4xl font-extrabold text-indigo-700" x-text="username"></h2>
+      <h2 class="text-4xl font-extrabold text-indigo-700 dark:text-white" x-text="username"></h2>
       <!-- Fixed Full Name -->
-      <p class="text-xl text-gray-500 mt-1" x-text="fullname"></p>
+      <p class="text-xl text-gray-500 dark:text-gray-300 mt-1" x-text="fullname"></p>
     </div>
   </div>
 
@@ -152,12 +157,12 @@ $currentAvatar = $defaultAvatars[0];
 <!-- Info -->
 <div class="space-y-6 text-2xl mb-8">
   <div class="flex justify-between">
-    <span class="text-gray-500 font-medium">Account ID</span>
-    <span class="font-bold text-gray-800"><?= htmlspecialchars($user["account_id"]) ?></span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Account ID</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["account_id"]) ?></span>
   </div>
   <div class="flex justify-between">
-    <span class="text-gray-500 font-medium">Role</span>
-    <span class="font-bold text-gray-800"><?= htmlspecialchars($user["role"]) ?></span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Role</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["role"]) ?></span>
   </div>
 </div>
 
@@ -165,36 +170,36 @@ $currentAvatar = $defaultAvatars[0];
 
 <div class="space-y-6 text-2xl">
   <div class="flex justify-between">
-    <span class="text-gray-500 font-medium">Birthdate</span>
-    <span class="font-bold text-gray-800"><?= htmlspecialchars($user["birthdate"]) ?></span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Birthdate</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["birthdate"]) ?></span>
   </div>
   <div class="flex justify-between">
-    <span class="text-gray-500 font-medium">Registered</span>
-    <span class="font-bold text-gray-800"><?= htmlspecialchars($user["registered"]) ?></span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Registered</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
   </div>
 </div>
 
       </div>
 
 <!-- RIGHT: Spending + Transactions -->
-<div class="flex flex-col gap-6">
+<div class="flex flex-col gap-6 w-[900px]">
   
   <!-- Spending (smaller card) -->
-  <div class="bg-white p-6 rounded-xl shadow md:col-span-2">
-    <h2 class="text-xl font-semibold text-gray-600">Spending</h2>
-    <p class="text-3xl font-bold text-indigo-700 mt-4"><?= htmlspecialchars($user["spending"]) ?></p>
+  <div class="bg-white p-6 rounded-xl shadow md:col-span-2 dark:bg-gray-800">
+    <h2 class="text-xl font-semibold text-gray-600 dark:text-gray-300">Spending</h2>
+    <p class="text-3xl font-bold text-indigo-700 dark:text-indigo-500 mt-4"><?= htmlspecialchars($user["spending"]) ?></p>
   </div>
 
   <!-- Transactions (takes full remaining space) -->
-  <div class="bg-white p-6 rounded-xl shadow flex-1">
-    <h2 class="text-2xl font-bold text-indigo-700 mb-6">Transactions</h2>
-    <div class="space-y-3 max-h-64 overflow-y-auto pr-2 text-lg">
+  <div class="bg-white p-6 rounded-xl shadow dark:bg-gray-800">
+    <h2 class="text-2xl font-bold text-indigo-700 dark:text-gray-300 mb-6">Transactions</h2>
+    <div class="space-y-3 max-h-96 overflow-y-auto pr-2 text-lg">
       <?php foreach ($transactions as $t): ?>
         <div class="grid grid-cols-4 gap-4 border-b pb-2">
-          <span class="text-gray-700 font-medium"><?= htmlspecialchars($t["name"]) ?></span>
-          <span class="text-gray-500"><?= htmlspecialchars($t["method"]) ?></span>
-          <span class="text-gray-800 font-semibold"><?= htmlspecialchars($t["amount"]) ?></span>
-          <span class="text-gray-500"><?= htmlspecialchars($t["date"]) ?></span>
+          <span class="text-gray-700 font-medium dark:text-gray-300"><?= htmlspecialchars($t["name"]) ?></span>
+          <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["method"]) ?></span>
+          <span class="text-gray-800 font-semibold dark:text-white"><?= htmlspecialchars($t["amount"]) ?></span>
+          <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["date"]) ?></span>
         </div>
       <?php endforeach; ?>
     </div>

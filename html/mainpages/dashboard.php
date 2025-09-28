@@ -145,6 +145,7 @@ $breakdown = [
     <section class="content">
       <div class="history">
         <h3>Transaction History</h3>
+        
         <table>
           <tbody>
             <?php foreach ($transactions as $t): ?>

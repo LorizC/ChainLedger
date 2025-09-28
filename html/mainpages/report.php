@@ -41,7 +41,7 @@
 
 <!-- Content -->
 <section class="px-8">
-  <div class="bg-[#2c2f92] text-white rounded-xl p-10 flex justify-between items-start min-h-[500px]">
+  <div class="bg-[#2c2f92] text-white rounded-xl p-10 flex justify-between items-start min-h-[500px] dark:bg-[#1F2937]">
     
     <!-- Form -->
     <form class="space-y-6 w-2/3">
@@ -99,7 +99,7 @@
            alt="User Profile" 
            class="w-60 h-60 object-contain rounded-full border-4 border-white shadow-lg mt-8">
 
-      <button type="submit" class="bg-blue-100 text-black px-5 py-2.5 rounded-lg hover:bg-blue-200 mt-20 text-base font-medium">
+      <button type="submit" class="bg-blue-100 text-black px-5 py-2.5 rounded-lg hover:bg-blue-200 mt-20 text-base font-medium dark:bg-slate-100">
         Save Transaction
       </button>
     </div>
