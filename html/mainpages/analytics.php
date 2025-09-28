@@ -2,10 +2,10 @@
 <?php
 $analytics = [
   ["title" => "Gcash", "value" => "₱10,200,000.00", "class" => "black", "image" => "../../images/ewallets/gcash.png"],
-  ["title" => "Maya", "value" => "₱8,750,000.00", "class" => "black", "image" => "../../images/ewallets/maya.png"],
-  ["title" => "GrabPay", "value" => "₱1,450,000,000,000.00", "class" => "black", "image" => "../../images/ewallets/grabpay.jpeg"],
-  ["title" => "Paypal", "value" => "₱1,450,000.00", "class" => "black", "image" => "../../images/ewallets/paypal.png"],
   ["title" => "GooglePay", "value" => "₱1,450,000,000,000.00", "class" => "black", "image" => "../../images/ewallets/googlepay.png"],
+  ["title" => "GrabPay", "value" => "₱1,450,000,000,000.00", "class" => "black", "image" => "../../images/ewallets/grabpay.jpeg"],    
+  ["title" => "Maya", "value" => "₱8,750,000.00", "class" => "black", "image" => "../../images/ewallets/maya.png"],
+  ["title" => "Paypal", "value" => "₱1,450,000.00", "class" => "black", "image" => "../../images/ewallets/paypal.png"]
 ];
 $categories = [
   ["title" => "Food", "value" => "₱2,000,000,000,050,000.00", "class" => "green", "icon" => "restaurant"],

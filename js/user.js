@@ -217,10 +217,21 @@ document.addEventListener("DOMContentLoaded", () => {
   const main = document.querySelector(".main");
   const header = document.querySelector("header");
 
+  // Sidebar starts open
+  sidebar.classList.add("show");
+
   burgerBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("hidden");
-    main.classList.toggle("full");
-    header.classList.toggle("full");
+    if (sidebar.classList.contains("show")) {
+      sidebar.classList.remove("show");
+      sidebar.classList.add("hide");
+      main.classList.add("full");
+      header.classList.add("full");
+    } else {
+      sidebar.classList.remove("hide");
+      sidebar.classList.add("show");
+      main.classList.remove("full");
+      header.classList.remove("full");
+    }
   });
 });
 

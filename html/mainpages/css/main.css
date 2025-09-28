@@ -1,4 +1,6 @@
-/* === Global Reset === */
+/*===============*/
+/* === BODY === */
+/*===============*/
 * {
   margin: 0;
   padding: 0;
@@ -9,48 +11,67 @@
 body {
   display: flex;
   height: 100vh;
-  background: #f0f2f5;
+  background: #4B2EFF;
   color: #333;
   transition: all 0.3s ease;
 }
+/* ==========END============ */
 
-/* === Sidebar === */
+/*=================*/
+/* === HEADER === */
+/*================*/
+/* Burger Button */
+.burger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 32px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* centers icon inside button */
+  margin-right: auto;    
+}
+/* ==========END============ */
+
+/*===================*/
+/* ===  SIDEBAR === */
+/*===================*/
 .sidebar {
   width: 220px;
-  background: #4B2EFF;
+  background: #3e27d7;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 1rem;
   gap: 1rem;
-  transition: width 0.3s ease, padding 0.3s ease;
   overflow: hidden;
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
     overflow: hidden;
-      z-index: 1; /* ensure it's behind main */
-
-  /* Smooth transitions */
-  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              padding 0.8s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.6s ease;    
+      z-index: 0; /* ensure it's behind main */
+  /* Slide transition */
+  transition: transform 0.4s ease-in-out; 
 }
 
+/* ===  SIDEBAR LOGO === */
 .sidebar .logo {
   display: flex;
   align-items: center;
   gap: 10px;          /* spacing between logo and text */
   width: 100%;
   padding: 0.5rem 0;
-}
+  color: white;
+  font-size: 28px;
+}  
 
 .sidebar .logo-img {
   width: 40px;        /* adjust logo size */
   height: auto;
 }
-
+/* ===  SIDEBAR LOGO LABEL === */
 .sidebar .logo .label {
   margin-top: 0.5rem;
   font-size: 18px;
@@ -59,32 +80,7 @@ body {
   
 }
 
-.sidebar nav a .label,
-.sidebar .logo .label,
-.sidebar .profile-info {
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-.sidebar.hidden nav a .label,
-.sidebar.hidden .logo .label,
-.sidebar.hidden .profile-info {
-  opacity: 0;
-  transform: translateX(-10px); /* slight slide while fading */
-  pointer-events: none;
-}
-
-/* Hidden sidebar */
-.sidebar.hidden {
-  width: 0;
-  padding: 0;
-  opacity: 0;  /* fades out while collapsing */
-
-}
-
-.sidebar .logo {
-  color: white;
-  font-size: 28px;
-}
-
+/* ===  SIDEBAR NAVIGATION BUTTONS === */
 .sidebar nav {
   display: flex;
   flex-direction: column;
@@ -97,12 +93,14 @@ body {
   font-size: 26px;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.75rem;   /* space between icon + label */
+  margin-bottom: 1.5rem;  /* space between links */
   padding: 8px;
   border-left: 4px solid transparent;
   transition: 0.3s;
 }
 
+/* ===  SIDEBAR LABELS === */
 .sidebar nav a.active,
 .sidebar nav a:hover {
   border-left: 4px solid #00aaff;
@@ -111,14 +109,41 @@ body {
 }
 .sidebar nav a span.label {
   display: inline; /* always show labels */
-
   font-weight: 500;
   color: #fff; 
 }
 
-/* Logout button */
+/* ===  SIDEBAR TRANSITIONS === */
+.sidebar nav a .label,
+.sidebar .logo .label,
+.sidebar .profile-info {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.sidebar.hide .logo,
+.sidebar.hide nav a,
+.sidebar.hide .profile-info {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
+
+/* Open state */
+.sidebar.show {
+  transform: translateX(0);
+}
+
+/* Hidden state, but still in DOM */
+.sidebar.hide {
+  transform: translateX(-220px);
+}
+/* ==========END============ */
+
+
+/*===================*/
+/* ===  LOGOOUT === */
+/*===================*/
 .logout {
-  margin-top: auto; /* forces logout to stick to bottom */
+  margin-top: 3rem; /* forces logout to stick to bottom */
   margin-bottom: 3rem;
 }
 
@@ -131,7 +156,7 @@ body {
   padding: 8px;
   border-left: 4px solid transparent;
   transition: 0.3s;
-  margin-left: 10px; /* indent slightly */
+  margin-left: 25px; /* indent slightly */
 }
 
 .logout a:hover {
@@ -139,8 +164,11 @@ body {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 8px 0 0 8px;
 }
+/* ==========END============ */
 
-/* === Header === */
+/*===================*/
+/* ===  HEADER  === */
+/*===================*/
 header {
   position: fixed;
   top: 0;
@@ -157,39 +185,8 @@ header {
 }
 header.full {
   left: 0;
+
 }
-
-.profile {
-  display: flex;
-  align-items: center;
-}
-
-.profile .material-icons-outlined:first-child {
-  margin-right: 0.5rem; /* pushes light mode to the left */
-  margin-left: 0.0rem; /* optional fine-tune spacing from the edge */
-}
-
-
-
-/* === Main Content === */
-.main {
-  margin-left: 220px;   /* align with sidebar */
-  margin-top: 60px;    /* SAME as header height */
-  padding: 1rem 2rem;
-  flex: 1;
-  overflow-y: auto;
-  transition: margin-left 0.3s ease;
-    /* Add shadow so it appears above the sidebar */
-  background: #f0f2f5;
-  box-shadow: -6px 0 12px rgba(0, 0, 0, 0.25); 
-  position: relative;
-  z-index: 2; /* keep above sidebar */
-}
-.main.full {
-  margin-left: 0; /* full width when sidebar hidden */
-}
-
-
 header h1 {
   font-size: 28px;
   font-weight: 700;
@@ -211,8 +208,57 @@ header .profile span {
   cursor: pointer;
   color: #333;
 }
+.profile {
+  display: flex;
+  align-items: center;
+}
 
-/* === Summary Cards === */
+.profile .material-icons-outlined:first-child {
+  margin-right: 0.5rem; /* pushes light mode to the left */
+  margin-left: 0.0rem; /* optional fine-tune spacing from the edge */
+}
+/* ==========END============ */
+
+/*========================*/
+/* ===  MAIN CONTENT === */
+/*========================*/
+.main {
+  margin-left: 220px;   /* align with sidebar */
+  margin-top: 60px;    /* SAME as header height */
+  padding: 1rem 2rem;
+  flex: 1;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+    /* Add shadow so it appears above the sidebar */
+  background: #f0f2f5;
+  box-shadow: -6px 0 12px rgba(0, 0, 0, 0.25); 
+  position: relative;
+  z-index: 2; /* keep above sidebar */
+}
+.main.full {
+  margin-left: 0; /* full width when sidebar hidden */
+}
+
+/*==============================*/
+/* ===  TITLE PF THE PAGES === */
+/*============================*/
+.title-block {
+  margin: 0 0 2rem 0; /* spacing */
+}
+
+.title-block h1 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.title-block p {
+  font-size: 14px;
+  color: #666;
+}
+
+/*===============================*/
+/* ===  SUMMARY CARDS STYLE === */
+/*=============================*/
 .summary {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -226,7 +272,6 @@ header .profile span {
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
 
 .summary .card h2 {
   font-size: 20px;
@@ -245,12 +290,11 @@ header .profile span {
   gap: 2rem;
   align-items: start; /* ✅ let each section keep its own height */
 }
+/* ==========END============ */
 
-.pagination a {
-  text-decoration: none;
-  font-weight: 600;
-}
-
+/*===========================*/
+/* ===  DASHBOARD === */
+/*===========================*/
 /* === Transaction History === */
 .history {
   background: white;
@@ -272,39 +316,6 @@ header .profile span {
   border-bottom: 1px solid #eee;
   font-size: 14px;
 }
-
-.transactions-chart {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-}
-
-.transactions-chart{
-  grid-column: 1 / -1;   /* stretch across all columns */
-  width: 100%;
-  max-width: none;       /* remove max-width restriction */
-}
-#transactionsChart {
-  width: 100% !important;
-  height: 500px !important;  /* adjust this to make it shorter */
-}
-
-.transactions-chart h3 { margin-bottom: 1rem; }
-
-.transactions-chart table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.transactions-chart td {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
-}
-
-
 /* === Breakdown === */
 .breakdown {
   background: white;
@@ -342,134 +353,49 @@ header .profile span {
   margin-right: 8px;
   display: inline-block;
 }
+/* ==========END============ */
 
-/* === Images === */
-.logo-img {
-  width: 60px;
-  height: auto;
-  display: block;
-}
-
-.profile-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  display: block;
-}
-
-/* === Ledger Table (Wider) === */
-.ledger-table {
+/*===========================*/
+/* ===  ANALYTICS CHART === */
+/*===========================*/
+.transactions-chart{
+  grid-column: 1 / -1;   /* stretch across all columns */
   width: 100%;
-  min-width: 1100px;   /* make the whole table wider */
-  border-collapse: collapse;
-  overflow: hidden;
+  max-width: none;       /* remove max-width restriction */
+}
+.transactions-chart {
+  background: white;
   border-radius: 12px;
-  table-layout: auto;  /* let columns size naturally */
-}
-
-/* Ledger section spans full width of grid */
-.ledger-section {
-  grid-column: 1 / -1;   /* forces it to stretch across the entire row */
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
 }
-
-
-/* Ledger Column Widths */
-.ledger-table th,
-.ledger-table td {
-  padding: 14px;
-  text-align: left;
-  font-size: 14px;
-  white-space: nowrap;
+#transactionsChart {
+  width: 100% !important;
+  height: 500px !important;  /* adjust this to make it shorter */
 }
 
-.ledger-table td:nth-child(1) { min-width: 180px; } /* User */
-.ledger-table td:nth-child(2) { min-width: 150px; } /* Details */
-.ledger-table td:nth-child(3) { min-width: 150px; } /* Merchant */
-.ledger-table td:nth-child(4) { min-width: 160px; text-align: left; } /* Amount */
-.ledger-table td:nth-child(5) { min-width: 120px; text-align: left; } /* Date */
+.transactions-chart h3 { margin-bottom: 1rem; }
 
-/* Wrapper so only this table scrolls on smaller screens */
-.ledger-wrapper {
+.transactions-chart table {
   width: 100%;
-  overflow-x: auto;
+  border-collapse: collapse;
 }
+/*===========================*/
+/* ===  CARDS IN ANALYTICS === */
+/*===========================*/
 
-
-.ledger-table thead {
-  background: #2c2077;
-  color: white;
-}
-
-.ledger-table th,
-.ledger-table td {
-  padding: 14px;
-  text-align: left;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.ledger-table tbody tr:nth-child(even) { background: #ecebff; }
-.ledger-table tbody tr:nth-child(odd)  { background: #d4d2fa; }
-
-/* Ledger Styling */
-.merchant { font-weight: 600; }
-
-.amount.negative { color: red; font-weight: bold; }
-.amount.positive { color: green; font-weight: bold; }
-
-.user-cell {
+/* Cards */
+.summary .card {
+  flex: 0 0 auto;
+  min-width: 180px;
+  max-width: 100%;  /* prevent overflow */
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.user-cell .user-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-/* Merchant-Specific Colors */
-.merchant.grabpay { color: #00b14f; }
-.merchant.gcash   { color: #0072ff; }
-.merchant.maya    { color: #008336; }
-.merchant.paypal  { color: #003599; }
-.merchant.googlepay {
-  background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-weight: 700;
-}
-
-/* Burger Button */
-.burger-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 32px;
-  color: #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;   /* centers icon inside button */
-  margin-right: auto;    
-}
-
-/* Title Block below header */
-.title-block {
-  margin: 0 0 2rem 0; /* spacing */
-}
-
-.title-block h1 {
-  font-size: 32px;
-  font-weight: 700;
-}
-
-.title-block p {
-  font-size: 14px;
-  color: #666;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Wrapper for positioning */
@@ -492,62 +418,6 @@ header .profile span {
   display: none; /* Chrome/Safari */
 }
 
-/* Cards */
-.summary .card {
-  flex: 0 0 auto;
-  min-width: 180px;
-  max-width: 100%;  /* prevent overflow */
-  display: flex;
-  align-items: center;
-  background: white;
-  padding: 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.scroll-btn {
-  display: flex; /* hidden until needed */
-  position: absolute;
-  top:40%;
-  transform: translateY(-50%);
-  background: none;   /* remove background */
-  color: #333;        /* arrow color */
-  border: none;       /* no border */
-  font-size: 28px;    /* bigger arrow */
-  cursor: pointer;
-  z-index: 10;
-  opacity: 0.6;
-  transition: opacity 0.2s, visibility 0.2s;
-  visibility: visible; /* hidden by default */
-}
-
-.scroll-btn:hover {
-  opacity: 1;
-  background: #4B2EFF;   /* purple circle */
-  color: white;          /* arrow turns white */
-  border-radius: 50%;
-}
-
-.scroll-btn.show {
-  visibility: visible; /* show when needed */
-}
-
-.scroll-btn:hover {
-  opacity: 1;
-}
-
-.scroll-btn.left { left: -5px; }   /* tuck closer to cards */
-.scroll-btn.right { right: -5px; }
-
-/* Summary card image */
-.summary .card img.card-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto 0.8rem auto; /* center and add spacing */
-}
-
 /* Summary card layout with image left */
 .summary .card {
   display: flex;
@@ -560,146 +430,9 @@ header .profile span {
   min-width: 220px;
 }
 
-.summary .card img.card-icon {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
 .summary .card .card-text h2 {
   font-size: 18px;
   font-weight: bold;
-}
-
-/* Circle container for image */
-.icon-circle {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  background: #f0f0f0; /* default background */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  overflow: hidden; /* ensures image stays inside circle */
-}
-
-.summary .card .icon-circle img.card-icon {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
-  margin: 0;  /* remove extra margin */
-  display: block;
-}
-
-.icon-circle.gcash { background: #004ed5; }    /* light blue tint */
-.icon-circle.maya { background: #9cffc5; }     /* light green tint */
-.icon-circle.grabpay { background: #02ab4ee9; }  /* light Grab green */
-.icon-circle.paypal { background: #013eae; }   /* light PayPal blue */
-.icon-circle.googlepay { background: #fb5305c1; }/* light yellow tint */
-
-/* ==============================
-   Responsive Layout Adjustments
-============================== */
-
-/* Tablets (<= 1024px) */
-@media (max-width: 1024px) {
-  /* Sidebar */
-  .sidebar {
-    width: 60px;
-  }
-  .sidebar.expanded {
-    width: 180px;
-  }
-
-  /* Main */
-  .main {
-    margin-left: 60px;
-    padding: 1rem;
-  }
-  header {
-    left: 60px;
-    padding: 0 1rem;
-  }
-
-  /* Summary grid → 2 columns */
-  .summary {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Content grid → stack vertically */
-  .content {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Mobile (<= 768px) */
-@media (max-width: 768px) {
-  /* Sidebar collapses by default */
-  .sidebar {
-    position: fixed;
-    width: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-
-
-  /* Main content spans full width */
-  .main {
-    margin-left: 0;
-    padding: 1rem;
-  }
-
-  /* Header spans full width */
-  header {
-    left: 0;
-    padding: 0 1rem;
-  }
-
-  /* Summary cards → horizontal scroll */
-  .summary {
-    display: flex;
-    gap: 1rem;
-    overflow-x: auto;
-    padding: 1rem 0;
-  }
-  .summary .card {
-    min-width: 180px;
-    flex: 0 0 auto;
-  }
-
-  /* Ledger table wrapper scrolls horizontally */
-  .ledger-wrapper {
-    overflow-x: auto;
-  }
-}
-
-/* Small phones (<= 480px) */
-@media (max-width: 480px) {
-  header {
-    height: 50px;
-  }
-  header h1 {
-    font-size: 20px;
-  }
-  header .profile span {
-    font-size: 22px;
-  }
-
-  .summary .card {
-    min-width: 150px;
-    padding: 1rem;
-  }
-  .summary .card .card-text h2 {
-    font-size: 16px;
-  }
-
-  .history,
-  .transactions-chart,
-  .breakdown {
-    padding: 1rem;
-  }
 }
 
 /* === Category Cards Row (No Wrap) === */
@@ -728,7 +461,6 @@ header .profile span {
   align-items: center;
   gap: 1rem;              /* match summary */
 }
-
 
 /* Circle icon same as summary */
 .categories .card .icon-circle {
@@ -782,102 +514,185 @@ header .profile span {
   white-space: nowrap;       /* keep long numbers in one line */
 }
 
-/* ==============================
-   Total Cards (match Summary layout)
-============================== */
-.total-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
+/*==========================*/
+/* ===  SUMAMRY CARD IMAGES === */
+/*==========================*/
+.summary .card img.card-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+  margin: 0 auto 0.8rem auto; /* center and add spacing */
 }
 
-.total {
-  display: flex;
-  gap: 1.5rem;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 1rem 2rem;
-  scrollbar-width: none; /* Firefox */
-}
-.total::-webkit-scrollbar {
-  display: none; /* Chrome/Safari */
-}
-
-.total .card {
-  flex: 0 0 auto;
-  min-width: 220px;
-  background: white;
-  padding: 1rem 1.5rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.total .card .icon-circle {
+/*=========================================*/
+/* ===  SUMAMRY CARD CIRCLES 4 IMAGES === */
+/*=======================================*/
+.icon-circle {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+  background: #f0f0f0; /* default background */
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  overflow: hidden;
+  overflow: hidden; /* ensures image stays inside circle */
 }
 
-.total .card .icon-circle img {
+.summary .card .icon-circle img.card-icon {
   width: 28px;
   height: 28px;
   object-fit: contain;
+  margin: 0;  /* remove extra margin */
   display: block;
-  margin: 0;
 }
 
-.total .card .card-text {
-  display: flex;
-  flex-direction: column;
+.icon-circle.gcash { background: #004ed5; }    /* light blue tint */
+.icon-circle.maya { background: #9cffc5; }     /* light green tint */
+.icon-circle.grabpay { background: #02ab4ee9; }  /* light Grab green */
+.icon-circle.paypal { background: #013eae; }   /* light PayPal blue */
+.icon-circle.googlepay { background: #fb5305c1; }/* light yellow tint */
+
+/*===========================*/
+/* ===  SCROLL ARROWS === */
+/*===========================*/
+.scroll-btn {
+  display: flex; /* hidden until needed */
+  position: absolute;
+  top:40%;
+  transform: translateY(-50%);
+  background: none;   /* remove background */
+  color: #333;        /* arrow color */
+  border: none;       /* no border */
+  font-size: 28px;    /* bigger arrow */
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.6;
+  transition: opacity 0.2s, visibility 0.2s;
+  visibility: visible; /* hidden by default */
 }
 
-.total .card .card-text p {
+.scroll-btn:hover {
+  opacity: 1;
+  background: #4B2EFF;   /* purple circle */
+  color: white;          /* arrow turns white */
+  border-radius: 50%;
+}
+
+.scroll-btn.show {
+  visibility: visible; /* show when needed */
+}
+
+.scroll-btn:hover {
+  opacity: 1;
+}
+
+.scroll-btn.left { left: -5px; }   /* tuck closer to cards */
+.scroll-btn.right { right: -5px; }
+
+/* ==========END============ */
+
+/*==================*/
+/* ===  IMAGES === */
+/*================*/
+.logo-img {
+  width: 60px;
+  height: auto;
+  display: block;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+/* ==========END============ */
+
+/*===========================*/
+/* ===  TRANSACTION LEDGER === */
+/*===========================*/
+/* === Ledger Table   === */
+.ledger-table {
+  width: 100%;
+  min-width: 1100px;   /* make the whole table wider */
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+  table-layout: auto;  /* let columns size naturally */
+}
+
+/* Ledger section spans full width of grid */
+.ledger-section {
+  grid-column: 1 / -1;   /* forces it to stretch across the entire row */
+  width: 100%;
+}
+
+.ledger-table thead {
+  background: #2c2077;
+  color: white;
+}
+
+/* Ledger Column Widths */
+.ledger-table th,
+.ledger-table td {
+  padding: 14px;
+  text-align: left;
   font-size: 14px;
-  color: #777;
-  margin-bottom: 0.3rem;
+  white-space: nowrap;
 }
 
-.total .card .card-text h2 {
-  font-size: 18px;
-  font-weight: bold;
-  word-break: break-word;
-  overflow-wrap: anywhere;
+/* Wrapper so only this table scrolls on smaller screens */
+.ledger-wrapper {
+  width: 100%;
+  overflow-x: auto;
 }
 
-/* Optional: color classes same as summary */
-.total .card h2.blue { color: blue; }
-.total .card h2.red { color: red; }
-.total .card h2.green { color: green; }
-.total .card h2.orange { color: orange; }
+.ledger-table td:nth-child(1) { min-width: 180px; } /* User */
+.ledger-table td:nth-child(2) { min-width: 150px; } /* Details */
+.ledger-table td:nth-child(3) { min-width: 150px; } /* Merchant */
+.ledger-table td:nth-child(4) { min-width: 160px; text-align: left; } /* Amount */
+.ledger-table td:nth-child(5) { min-width: 120px; text-align: left; } /* Date */
 
-/* Responsive adjustments (matches summary) */
-@media (max-width: 768px) {
-  .total {
-    padding: 1rem 0;
-  }
-  .total .card {
-    min-width: 180px;
-  }
+.ledger-table tbody tr:nth-child(even) { background: #ecebff; }
+.ledger-table tbody tr:nth-child(odd)  { background: #d4d2fa; }
+
+/* Ledger Styling */
+.merchant { font-weight: 600; }
+
+.amount.negative { color: red; font-weight: bold; }
+.amount.positive { color: green; font-weight: bold; }
+
+/* user in ledger */
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* user icon in ledger */
+.user-cell .user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-@media (max-width: 480px) {
-  .total .card {
-    min-width: 150px;
-    padding: 1rem;
-  }
-  .total .card .card-text h2 {
-    font-size: 16px;
-  }
+/* Merchant-Specific Colors */
+.merchant.grabpay { color: #00b14f; }
+.merchant.gcash   { color: #0072ff; }
+.merchant.maya    { color: #008336; }
+.merchant.paypal  { color: #003599; }
+.merchant.googlepay {
+  background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
 }
+/* ==========END============ */
+
 
 /* Merchant option colors */
 #merchantSelect option[value="gcash"] {
@@ -948,7 +763,7 @@ header.expanded {
 
 .sidebar .profile-info .fullname {
   font-size: 13px;
-  color: #ababab;
+  color: #d7d7d7;
 }
 
 .sidebar .profile-info .account-id {
@@ -968,8 +783,9 @@ header.expanded {
   transition: all 0.3s ease;
 }
 
-/* Default light mode is already in your CSS */
-/* Add dark-mode overrides */
+/*==========================*/
+/* =====  DARK MODES ===== */
+/*==========================*/
 
 body.dark-mode {
   background: #312E81;
@@ -1021,8 +837,6 @@ body.dark-mode header .profile .material-icons-outlined {
   color: #fff !important;
 }
 
-
-
 body.dark-mode .icon-circle.blue .material-icons-outlined { color: #2563eb !important; }   /* blue */
 body.dark-mode .icon-circle.red .material-icons-outlined { color: #dc2626 !important; }    /* red */
 body.dark-mode .icon-circle.green .material-icons-outlined { color: #16a34a !important; }  /* green */
@@ -1031,4 +845,218 @@ body.dark-mode .icon-circle.orange .material-icons-outlined { color: #ea580c !im
 
 body.dark-mode .title-block p {
   color: #ccc;
+}
+
+
+/* ==============================
+   Responsive Layout Adjustments
+============================== */
+
+/* Tablets (<= 1024px) */
+@media (max-width: 1024px) {
+  /* Sidebar */
+  .sidebar {
+    width: 60px;
+  }
+  .sidebar.expanded {
+    width: 180px;
+  }
+
+  /* Main */
+  .main {
+    margin-left: 60px;
+    padding: 1rem;
+  }
+  header {
+    left: 60px;
+    padding: 0 1rem;
+  }
+
+  /* Summary grid → 2 columns */
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Content grid → stack vertically */
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile (<= 768px) */
+@media (max-width: 768px) {
+  /* Sidebar collapses by default */
+  .sidebar {
+    position: fixed;
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  /* Main content spans full width */
+  .main {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  /* Header spans full width */
+  header {
+    left: 0;
+    padding: 0 1rem;
+  }
+
+  /* Summary cards → horizontal scroll */
+  .summary {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+  }
+  .summary .card {
+    min-width: 180px;
+    flex: 0 0 auto;
+  }
+
+  /* Ledger table wrapper scrolls horizontally */
+  .ledger-wrapper {
+    overflow-x: auto;
+  }
+}
+
+/* Small phones (<= 480px) */
+@media (max-width: 480px) {
+  header {
+    height: 50px;
+  }
+  header h1 {
+    font-size: 20px;
+  }
+  header .profile span {
+    font-size: 22px;
+  }
+
+  .summary .card {
+    min-width: 150px;
+    padding: 1rem;
+  }
+  .summary .card .card-text h2 {
+    font-size: 16px;
+  }
+
+  .history,
+  .transactions-chart,
+  .breakdown {
+    padding: 1rem;
+  }
+}
+
+/* Responsive adjustments (matches summary) */
+@media (max-width: 768px) {
+  .total {
+    padding: 1rem 0;
+  }
+  .total .card {
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .total .card {
+    min-width: 150px;
+    padding: 1rem;
+  }
+  .total .card .card-text h2 {
+    font-size: 16px;
+  }
+}
+/* Extra Responsive Fixes */
+
+/* Tablets (<= 1024px) */
+@media (max-width: 1024px) {
+  /* Sidebar labels hidden */
+  .sidebar nav a span.label,
+  .sidebar .logo .label,
+  .sidebar .profile-info {
+    display: none;
+  }
+  .sidebar {
+    width: 70px;
+    align-items: center;
+  }
+
+  /* Header adjusts */
+  header h1 {
+    font-size: 22px;
+  }
+}
+
+/* Mobile (<= 768px) */
+@media (max-width: 768px) {
+  /* Sidebar toggled via burger button */
+  .sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  .sidebar.show {
+    transform: translateX(0);
+    width: 220px;
+  }
+
+  /* Header spacing */
+  header h1 {
+    font-size: 20px;
+  }
+  header p {
+    font-size: 12px;
+  }
+
+  /* Content grid stacks */
+  .content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* History + Breakdown full width */
+  .history, .breakdown {
+    width: 100%;
+  }
+
+  /* Charts scale down */
+  #transactionsChart {
+    height: 300px !important;
+  }
+}
+
+/* Small Phones (<= 480px) */
+@media (max-width: 480px) {
+  /* Header tighter */
+  header {
+    height: 48px;
+    padding: 0 0.5rem;
+  }
+  header h1 {
+    font-size: 18px;
+  }
+  header .profile span {
+    font-size: 20px;
+  }
+
+  /* Cards smaller */
+  .summary .card,
+  .total .card,
+  .categories .card {
+    min-width: 140px;
+    padding: 0.75rem;
+  }
+  .summary .card .card-text h2,
+  .total .card .card-text h2 {
+    font-size: 14px;
+  }
+
+  /* Ledger table */
+  .ledger-table th, 
+  .ledger-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
 }

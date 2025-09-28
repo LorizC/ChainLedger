@@ -65,127 +65,139 @@ $ledger = [
       <div class="ledger-section">
         <div class="ledger-wrapper">
           <table class="ledger-table">
-            <thead>
-              <tr>
-      <th class="px-4 py-2 text-left">
-        <div class="flex items-center gap-2 relative group">
-          <span>Transaction by</span>
-          <!-- Dropdown Button -->
-          <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
-            <span class="material-icons-outlined text-sm">arrow_drop_down</span>
-          </button>
-
-          <!-- Dropdown Menu -->
-          <div
-            class="absolute top-full mt-1 w-40 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-lg hidden group-hover:block z-10"
-          >
-            <ul class="py-1 text-sm text-black dark:text-gray-200">
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">All</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Loriz Carlos</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Mii Lee</a>
-              </li>
-              <li>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-100 ">Sarah Dicaya</a>
-              </li>
-            </ul>
-          </div>
+<thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
+  <tr>
+    <!-- Transaction by -->
+    <th class="px-4 py-2 text-left">
+      <div class="flex items-center gap-2 relative" x-data="{ open: false }">
+        <span>Transaction by</span>
+        <button 
+          class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700"
+          @click="open = !open"
+        >
+          <span class="material-icons-outlined text-sm">arrow_drop_down</span>
+        </button>
+        <div 
+          x-show="open" 
+          @click.away="open = false"
+          class="absolute top-full mt-1 w-40 bg-white dark:bg-gray-900 border border-gray-200 
+                 dark:border-gray-700 rounded shadow-lg z-10"
+        >
+          <ul class="py-1 text-sm text-black dark:text-gray-200">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">All</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Loriz Carlos</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Mii Lee</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Sarah Dicaya</a></li>
+          </ul>
         </div>
-      </th>
+      </div>
+    </th>
 
-      <!-- Details -->
-      <th class="px-4 py-2 text-left">
-        <div class="flex items-center gap-2 relative group">
-          <span>Details</span>
-          <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
-            <span class="material-icons-outlined text-sm">arrow_drop_down</span>
-          </button>
-
-          <div
-            class="absolute top-full mt-1 w-32 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-lg hidden group-hover:block z-10"
-          >
-            <ul class="py-1 text-sm text-black dark:text-gray-200">
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">All</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Food</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Equipment</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Loan</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Refund</a></li>
-            </ul>
-          </div>
+    <!-- Details -->
+    <th class="px-4 py-2 text-left">
+      <div class="flex items-center gap-2 relative" x-data="{ open: false }">
+        <span>Details</span>
+        <button 
+          class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700" 
+          @click="open = !open"
+        >
+          <span class="material-icons-outlined text-sm">arrow_drop_down</span>
+        </button>
+        <div 
+          x-show="open"
+          @click.away="open = false"
+          class="absolute top-full mt-1 w-32 bg-white dark:bg-gray-900 border 
+                 border-gray-200 dark:border-gray-700 rounded shadow-lg z-10"
+        >
+          <ul class="py-1 text-sm text-black dark:text-gray-200">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">All</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Food</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Equipment</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Loan</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Refund</a></li>
+          </ul>
         </div>
-      </th>
+      </div>
+    </th>
 
-      <!-- Merchant -->
-      <th class="px-4 py-2 text-left">
-        <div class="flex items-center gap-2 relative group">
-          <span>Merchant</span>
-          <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
-            <span class="material-icons-outlined text-sm">arrow_drop_down</span>
-          </button>
-
-          <div
-            class="absolute top-full mt-1 w-36 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-lg hidden group-hover:block z-10"
-          >
-            <ul class="py-1 text-sm text-black dark:text-gray-200">
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">All</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Paypal</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">GCash</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">GrabPay</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Maya</a></li>
-            </ul>
-          </div>
+    <!-- Merchant -->
+    <th class="px-4 py-2 text-left">
+      <div class="flex items-center gap-2 relative" x-data="{ open: false }">
+        <span>Merchant</span>
+        <button 
+          class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700" 
+          @click="open = !open"
+        >
+          <span class="material-icons-outlined text-sm">arrow_drop_down</span>
+        </button>
+        <div 
+          x-show="open"
+          @click.away="open = false"
+          class="absolute top-full mt-1 w-32 bg-white dark:bg-gray-900 border 
+                 border-gray-200 dark:border-gray-700 rounded shadow-lg z-10"
+        >
+          <ul class="py-1 text-sm text-black dark:text-gray-200">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">All</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Gcash</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">GrabPay</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">GooglePay</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Maya</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Paypal</a></li>
+          </ul>
         </div>
-      </th>
+      </div>
+    </th>
 
-            <!-- Amount -->
-      <th class="px-4 py-2 text-left">
-        <div class="flex items-center gap-2 relative group">
-          <span>Amount</span>
-          <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
-            <span class="material-icons-outlined text-sm">arrow_drop_down</span>
-          </button>
-
-          <div
-            class="absolute top-full mt-1 w-36 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-lg hidden group-hover:block z-10"
-          >
-            <ul class="py-1 text-sm text-black dark:text-gray-200"">
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">All</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">1-1k</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">1k-50k</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">50k-100k</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">100k-500k</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">500k-1M</a></li>
-            </ul>
-          </div>
+    <!-- Amount -->
+    <th class="px-4 py-2 text-left">
+      <div class="flex items-center gap-2 relative" x-data="{ open: false }">
+        <span>Amount</span>
+        <button 
+          class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700" 
+          @click="open = !open"
+        >
+          <span class="material-icons-outlined text-sm">arrow_drop_down</span>
+        </button>
+        <div 
+          x-show="open"
+          @click.away="open = false"
+          class="absolute top-full mt-1 w-32 bg-white dark:bg-gray-900 border 
+                 border-gray-200 dark:border-gray-700 rounded shadow-lg z-10"
+        >
+          <ul class="py-1 text-sm text-black dark:text-gray-200">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Highest</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Lowest</a></li>
+          </ul>
         </div>
-      </th>
-      <!-- Date -->
-      <th class="px-4 py-2 text-left">
-        <div class="flex items-center gap-2 relative group">
-          <span>Date</span>
-          <button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700">
-            <span class="material-icons-outlined text-sm">arrow_drop_down</span>
-          </button>
+      </div>
+    </th>
 
-          <div
-            class="absolute top-full mt-1 w-36 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded shadow-lg hidden group-hover:block z-10"
-          >
-            <ul class="py-1 text-sm text-black dark:text-gray-200">
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">All</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Jan-Feb</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Mar-Apr</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">May-Jun</a></li>
-              <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Jul-Aug</a></li>
-            </ul>
-          </div>
+    <!-- Date -->
+    <th class="px-4 py-2 text-left">
+      <div class="flex items-center gap-2 relative" x-data="{ open: false }">
+        <span>Date</span>
+        <button 
+          class="p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-700" 
+          @click="open = !open"
+        >
+          <span class="material-icons-outlined text-sm">arrow_drop_down</span>
+        </button>
+        <div 
+          x-show="open"
+          @click.away="open = false"
+          class="absolute top-full mt-1 w-32 bg-white dark:bg-gray-900 border 
+                 border-gray-200 dark:border-gray-700 rounded shadow-lg z-10"
+        >
+          <ul class="py-1 text-sm text-black dark:text-gray-200">
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Newest</a></li>
+            <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Oldest</a></li>
+          </ul>
         </div>
-      </th>
-              </tr>
-            </thead>
+      </div>
+    </th>
+  </tr>
+</thead>
+
 <tbody id="ledger-body">
   <?php foreach ($ledger as $index => $row): ?>
     <tr class="ledger-row">

@@ -90,10 +90,10 @@ $currentAvatar = $defaultAvatars[0];
   <div class="flex items-center space-x-6">
     <!-- Avatar -->
     <div class="relative inline-block">
-      <img :src="avatar" class="w-28 h-28 rounded-full object-cover border-4 border-indigo-200 shadow" alt="User Avatar">
+      <img :src="avatar" class="w-28 h-28 rounded-full object-cover border-4 border-indigo-200 shadow dark:border-gray-600" alt="User Avatar">
       <button @click="open = true" 
-              class="absolute bottom-1 right-1 bg-white rounded-full p-2 shadow">
-        <span class="material-icons-outlined text-lg text-indigo-600">edit</span>
+              class="absolute bottom-1 right-1 bg-white rounded-full p-2 shadow dark:bg-gray-200">
+        <span class="material-icons-outlined text-lg text-indigo-600 dark:text-black">edit</span>
       </button>
     </div>
 
@@ -108,22 +108,22 @@ $currentAvatar = $defaultAvatars[0];
 
   <!-- Edit Modal -->
   <div x-show="open" x-cloak 
-       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-    <div class="bg-white rounded-xl shadow-lg p-6 w-[28rem]">
-      <h2 class="text-xl font-bold text-gray-700 mb-4">Edit Profile</h2>
+       class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 ">
+    <div class="bg-white rounded-xl shadow-lg p-6 w-[28rem] dark:bg-gray-800">
+      <h2 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-300">Edit Profile</h2>
 
       <!-- Current Avatar -->
       <div class="flex justify-center mb-4">
-        <img :src="avatar" class="w-28 h-28 rounded-full border-4 border-indigo-200 shadow object-cover" alt="Avatar">
+        <img :src="avatar" class="w-28 h-28 rounded-full border-4 border-indigo-200 shadow object-cover dark:border-gray-600" alt="Avatar">
       </div>
 
       <!-- Username Input -->
-      <label class="block text-sm font-medium text-gray-600 mb-1">Username</label>
+      <label class="block text-sm font-medium text-gray-600 mb-1 dark:text-gray-300">Username</label>
       <input type="text" x-model="username" 
              class="w-full border rounded-lg px-3 py-3 mb-4 text-lg text-gray-700 focus:ring-2 focus:ring-indigo-500">
 
       <!-- Avatar Picker -->
-      <label class="block text-sm font-medium text-gray-600 mb-2">Choose Avatar</label>
+      <label class="block text-sm font-medium text-gray-600 mb-2 dark:text-gray-300">Choose Avatar</label>
       <div class="grid grid-cols-5 gap-4 mb-6">
         <template x-for="a in [
           '../../images/avatars/profile1.jpg',
@@ -143,9 +143,9 @@ $currentAvatar = $defaultAvatars[0];
       <!-- Buttons -->
       <div class="flex justify-end space-x-3">
         <button @click="open = false" 
-                class="px-5 py-2 text-base text-gray-600 hover:underline">Cancel</button>
+                class="px-5 py-2 text-base text-gray-600 hover:underline dark:text-gray-300">Cancel</button>
         <button @click="open = false" 
-                class="px-5 py-2 text-base bg-indigo-600 text-white rounded-lg">Save</button>
+                class="px-5 py-2 text-base bg-indigo-600 text-white rounded-lg dark:bg-slate-100 dark:text-gray-800">Save</button>
       </div>
     </div>
   </div>
