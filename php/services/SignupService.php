@@ -23,7 +23,7 @@ class SignupService {
     }
 
     private function generateUsername(string $firstName, string $lastName): string {
-        $baseUsername = $firstName . " " . $lastName;
+        $baseUsername = strtolower(preg_replace('/\s+/', '', $firstName . $lastName));
         $username = $baseUsername;
         $suffix = 1;
         $maxAttempts = 100;
@@ -46,8 +46,9 @@ class SignupService {
         $gender    = $data['gender'] ?? '';
         $securityQ = $data['security_question'] ?? '';
         $securityA = $data['security_answer'] ?? '';
+        $password  = $data['password'] ?? '';
 
-        if ($firstName === '' || $lastName === '' || $birthdate === '' || $gender === '' || $securityQ === '' || $securityA === '') {
+        if ($firstName === '' || $lastName === '' || $birthdate === '' || $gender === '' || $securityQ === '' || $securityA === '' || $password === '') {
             throw new Exception("All required fields must be filled.");
         }
 
@@ -64,6 +65,12 @@ class SignupService {
             $username,
             $accountId
         );
+
+        // Add security credentials
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+        if (!$this->userRepo->addSecurity($accountId, $username, $hashedPassword, $securityQ, $securityA)) {
+            throw new Exception("Failed to add security info for account ID $accountId.");
+        }
 
         return [
             "user_id"    => $userId,

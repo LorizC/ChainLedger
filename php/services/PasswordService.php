@@ -7,13 +7,13 @@ class PasswordService {
     }
 
     /**
-     * Set a password for a user.
+     * Set a password for a user (by account_id).
      * @throws Exception on failure.
      */
-    public function setPassword(int $userId, string $password): bool {
+    public function setPassword(int $accountId, string $password): bool {
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        if (!$this->userRepo->updatePassword($userId, $hashedPassword)) {
-            throw new Exception("Failed to set password for user ID $userId.");
+        if (!$this->userRepo->updatePassword($accountId, $hashedPassword)) {
+            throw new Exception("Failed to set password for account ID $accountId.");
         }
         return true;
     }
@@ -22,10 +22,10 @@ class PasswordService {
      * Change existing password
      * @throws Exception on failure.
      */
-    public function changePassword(int $userId, string $newPassword): bool {
+    public function changePassword(int $accountId, string $newPassword): bool {
         $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-        if (!$this->userRepo->updatePassword($userId, $hashedPassword)) {
-            throw new Exception("Failed to change password for user ID $userId.");
+        if (!$this->userRepo->updatePassword($accountId, $hashedPassword)) {
+            throw new Exception("Failed to change password for account ID $accountId.");
         }
         return true;
     }
@@ -33,7 +33,7 @@ class PasswordService {
     /**
      * Reset password (alias for changePassword)
      */
-    public function resetPassword(int $userId, string $newPassword): bool {
-        return $this->changePassword($userId, $newPassword);
+    public function resetPassword(int $accountId, string $newPassword): bool {
+        return $this->changePassword($accountId, $newPassword);
     }
 }

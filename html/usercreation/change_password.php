@@ -84,7 +84,7 @@ include '../../php/handlers/change_password.php';
       </div>
     </div>
   </div>
-<script src="../js/user.js"></script>
+<script src="../../js/user.js"></script>
 </body>
 </html>
 <?php ob_end_flush(); ?>

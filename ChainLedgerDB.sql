@@ -2,11 +2,18 @@
 -- Create Database
 -- =======================
 SHOW DATABASES;
+
 SHOW TABLES;
+
 CREATE DATABASE ChainledgerDB;
+
 USE ChainledgerDB;
+
 SELECT * FROM users;
 SELECT * FROM security;
+SELECT * FROM company_personnel;
+SELECT * FROM company_owners;
+SELECT * FROM transactions;
 
 -- =======================
 -- Users Table
@@ -17,7 +24,7 @@ CREATE TABLE users (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     birthdate DATE,
-    gender ENUM('Male','Female','Other'),
+    gender ENUM('Male','Female'),
     username VARCHAR(100) UNIQUE NOT NULL
 );
 
@@ -26,13 +33,11 @@ CREATE TABLE users (
 -- =======================
 CREATE TABLE security (
     security_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
     security_question VARCHAR(255) NOT NULL,
     security_answer VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
 );
 
@@ -50,7 +55,7 @@ CREATE TABLE company_personnel (
 -- =======================
 -- Owners Table
 -- =======================
-CREATE TABLE owners (
+CREATE TABLE  company_owners (
     owner_id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
@@ -59,23 +64,18 @@ CREATE TABLE owners (
 );
 
 -- =======================
--- Managers Table
+-- Transaction Table
 -- =======================
-CREATE TABLE managers (
-    manager_id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE transactions (
+    transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
-    company_role ENUM('Manager') DEFAULT 'Manager',
-    FOREIGN KEY (account_id) REFERENCES company_personnel(account_id) ON DELETE CASCADE
-);
-
--- =======================
--- Staffs Table
--- =======================
-CREATE TABLE staffs (
-    staff_id INT AUTO_INCREMENT PRIMARY KEY,
-    account_id INT NOT NULL,
-    username VARCHAR(100) NOT NULL,
-    company_role ENUM('Employee') DEFAULT 'Employee',
-    FOREIGN KEY (account_id) REFERENCES company_personnel(account_id) ON DELETE CASCADE
+    detail ENUM('food', 'equipment', 'travel', 'health', 'maintenance', 'utilities') NOT NULL,
+    merchant ENUM('gcash', 'maya', 'grabpay', 'paypal', 'googlepay') NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    transaction_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    
+    -- Foreign key relationships
+    FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
+    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );

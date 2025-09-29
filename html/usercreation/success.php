@@ -48,6 +48,6 @@
                                 <p class="success-tip">💡 Tip: Make sure to remember your credentials — they won’t be shown again!</p> 
                                </div> 
                             </div> 
-                            <script src="../js/user.js"></script>
+                            <script src="../../js/user.js"></script>
                         </body> 
                         </html>

@@ -6,16 +6,22 @@ class AuthService {
         $this->userRepo = $userRepo;
     }
 
+    /**
+     * Login using account_id + password
+     */
     public function login(string $accountId, string $password): array {
         $user = $this->userRepo->findByAccountId($accountId);
 
-        if (!$user) {
-            return ["error" => "Invalid credentials."]; // avoid leaking info
+        if (!$user || empty($user['password'])) {
+            return ["error" => "Invalid credentials."]; // don’t leak info
         }
 
         if (!password_verify($password, $user['password'])) {
-            return ["error" => "Invalid credentials."]; // same message
+            return ["error" => "Invalid credentials."];
         }
+
+        // ✅ never return password hash in response
+        unset($user['password']);
 
         return ["user" => $user];
     }
