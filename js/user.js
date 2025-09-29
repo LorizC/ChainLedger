@@ -1,9 +1,11 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // =============================
-  // Password Field Toggles
-  // =============================
+// =========================================================================================================================================== //
+// =======================================================PASSWORD FIELD TOGGLES============================================================== //
+// ========================================================================================================================================== //
   document.querySelectorAll(".toggle-password").forEach(toggle => {
+
+    // Single password toggle (eye icon)
     toggle.addEventListener("click", function () {
       const input = document.querySelector(this.dataset.toggle);
       if (!input) return;
@@ -16,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // Toggle both password + confirm password
   const togglePasswordBtn = document.getElementById("togglePassword");
   if (togglePasswordBtn) {
     togglePasswordBtn.addEventListener("click", () => {
@@ -30,34 +33,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // =============================
-  // Feather Icons
-  // =============================
-  if (typeof feather !== "undefined") feather.replace();
-
-  // =============================
-  // Theme Persistence
-  // =============================
-  const themeToggle = document.getElementById("theme-toggle");
-  if (themeToggle) {
-    if (localStorage.getItem("theme") === "dark") {
-      themeToggle.checked = true;
-      document.body.classList.add("dark-mode");
-    }
-    themeToggle.addEventListener("change", () => {
-      if (themeToggle.checked) {
-        localStorage.setItem("theme", "dark");
-        document.body.classList.add("dark-mode");
-      } else {
-        localStorage.setItem("theme", "light");
-        document.body.classList.remove("dark-mode");
-      }
-    });
-  }
-
-  // =============================
-  // Copy Account ID
-  // =============================
+// =========================================================================================================================================== //
+// =============================================================COPY ACCOUNT ID============================================================== //
+// ========================================================================================================================================== //
   window.copyAccountId = function () {
     const accountId = document.getElementById("accountId").textContent;
     navigator.clipboard.writeText(accountId)
@@ -65,31 +43,50 @@ document.addEventListener("DOMContentLoaded", () => {
       .catch(() => alert("❌ Failed to copy. Please try again."));
   };
 
-  // =============================
-  // Chart.js (Balance Chart)
-  // =============================
-  const ctx = document.getElementById("balanceChart");
-  if (ctx) {
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-        datasets: [{
-          label: "Balance",
-          data: [50, 100, 80, 120, 150, 130],
-          borderColor: "#4F46E5",
-          backgroundColor: "rgba(79,70,229,0.2)",
-          fill: true,
-          tension: 0.4
-        }]
-      },
-      options: { responsive: true, plugins: { legend: { display: false } } }
-    });
-  }
 
-  // =============================
-  // Horizontal Scroll Helper (Dynamic)
-  // =============================
+// =========================================================================================================================================== //
+// ==============================================================FEATHER ICONS=============================================================== //
+// ========================================================================================================================================== //
+ document.addEventListener("DOMContentLoaded", () => {
+  if (typeof feather !== "undefined") feather.replace();});
+
+// =========================================================================================================================================== //
+// ===================================================MERCHANT CELECT (COLOR = LOGO)========================================================= //
+// ========================================================================================================================================== //
+const merchantSelect = document.getElementById("merchantSelect");
+const merchantLogo = document.getElementById("merchantLogo");
+
+if (merchantSelect && merchantLogo) {
+  merchantSelect.addEventListener("change", function () {
+    const colors = {
+      gcash: "#0077FF",
+      googlepay: "#EA4335",
+      grabpay: "#01672fff",
+      maya: "#19926eff",
+      paypal: "#003087"
+    };
+
+    const logos = {
+      gcash: "../../images/ewallets/gcash1.jpg",
+      googlepay: "../../images/ewallets/googlepay1.png",
+      grabpay: "../../images/ewallets/grabpay.jpeg",
+      maya: "../../images/ewallets/maya1.png",
+      paypal: "../../images/ewallets/paypal1.jpg"
+    };
+
+    // Change select color
+    this.style.color = colors[this.value] || "black";
+
+    // Swap merchant logo
+    merchantLogo.src = logos[this.value] || "../images/avatars/profile.jpg";
+  });
+}
+
+
+
+// =========================================================================================================================================== //
+// =====================================================HORIZONTAL SCROLL HELPER (DYNAMIC)==================================================== //
+// ========================================================================================================================================== //
   function initCardScroll(containerSelector, leftBtnSelector, rightBtnSelector) {
     const container = document.querySelector(containerSelector);
     const leftBtn = document.querySelector(leftBtnSelector);
@@ -125,51 +122,123 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-// =============================
-// Merchant Select: Color + Logo
-// =============================
-const merchantSelect = document.getElementById("merchantSelect");
-const merchantLogo = document.getElementById("merchantLogo");
+// =========================================================================================================================================== //
+// ================================================THEME PERSISTENCE (Checkbox + Button)===================================================== //
+// ========================================================================================================================================== //
 
-if (merchantSelect && merchantLogo) {
-  merchantSelect.addEventListener("change", function () {
-    const colors = {
-      gcash: "#0077FF",
-      googlepay: "#EA4335",
-      grabpay: "#01672fff",
-      maya: "#19926eff",
-      paypal: "#003087"
-    };
+//Saves the toggled theme in refresh
+//Wag delete other style doesn't change theme
+document.addEventListener("DOMContentLoaded", () => {
+  const themeBtn = document.getElementById("themeBtn");
 
-    const logos = {
-      gcash: "../../images/ewallets/gcash1.jpg",
-      googlepay: "../../images/ewallets/googlepay1.png",
-      grabpay: "../../images/ewallets/grabpay.jpeg",
-      maya: "../../images/ewallets/maya1.png",
-      paypal: "../../images/ewallets/paypal1.jpg"
-    };
-
-    // Change select color
-    this.style.color = colors[this.value] || "black";
-
-    // Swap merchant logo
-    merchantLogo.src = logos[this.value] || "../images/avatars/profile.jpg";
-  });
-}
-
-// Avatar Preview Script
-  function previewAvatar(event) {
-    const reader = new FileReader();
-    reader.onload = function(){
-      document.getElementById('avatar-preview').src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
+  // Apply saved theme on load
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark-mode");
+    themeBtn.textContent = "dark_mode"; // 🌙
   }
 
+  themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
 
-  // =============================
-  // Dashboard Scroll Buttons
-  // =============================
+    if (document.body.classList.contains("dark-mode")) {
+      themeBtn.textContent = "dark_mode"; // 🌙
+      localStorage.setItem("theme", "dark");
+    } else {
+      themeBtn.textContent = "light_mode"; // ☀️
+      localStorage.setItem("theme", "light");
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const themeBtn = document.getElementById("themeBtn");
+  const themeToggle = document.getElementById("theme-toggle"); // optional checkbox toggle
+
+  if (localStorage.getItem("theme") === "dark") {
+    document.documentElement.classList.add("dark");
+    if (themeBtn) themeBtn.textContent = "dark_mode"; // 🌙
+    if (themeToggle) themeToggle.checked = true;
+  }
+  if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+
+      if (document.documentElement.classList.contains("dark")) {
+        themeBtn.textContent = "dark_mode"; // 🌙
+        localStorage.setItem("theme", "dark");
+        if (themeToggle) themeToggle.checked = true;
+      } else {
+        themeBtn.textContent = "light_mode"; // ☀️
+        localStorage.setItem("theme", "light");
+        if (themeToggle) themeToggle.checked = false;
+      }
+    });
+  }
+
+  //Tailwind change themes
+  if (themeToggle) {
+    themeToggle.addEventListener("change", () => {
+      if (themeToggle.checked) {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        if (themeBtn) themeBtn.textContent = "dark_mode";
+      } else {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        if (themeBtn) themeBtn.textContent = "light_mode";
+      }
+    });
+  }
+});
+
+// =========================================================================================================================================== //
+// =============================================================SIDEBAR TOGGLE=============================================================== //
+// ========================================================================================================================================== //
+document.addEventListener("DOMContentLoaded", () => {
+  const burgerBtn = document.getElementById("burgerBtn");
+  const sidebar = document.querySelector(".sidebar");
+  const main = document.querySelector(".main");
+  const header = document.querySelector("header");
+
+  // Sidebar starts open
+  sidebar.classList.add("show");
+
+  burgerBtn.addEventListener("click", () => {
+    if (sidebar.classList.contains("show")) {
+      sidebar.classList.remove("show");
+      sidebar.classList.add("hide");
+      main.classList.add("full");
+      header.classList.add("full");
+    } else {
+      sidebar.classList.remove("hide");
+      sidebar.classList.add("show");
+      main.classList.remove("full");
+      header.classList.remove("full");
+    }
+  });
+});
+
+// =========================================================================================================================================== //
+// =======================================================HEADER USER POPUP TOGGLE============================================================== //
+// ========================================================================================================================================== //
+document.addEventListener("DOMContentLoaded", () => {
+  const userBtn = document.getElementById("userBtn");
+  const userPopup = document.getElementById("userPopup");
+
+  userBtn.addEventListener("click", () => {
+    userPopup.style.display = userPopup.style.display === "block" ? "none" : "block";
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!userPopup.contains(e.target) && !userBtn.contains(e.target)) {
+      userPopup.style.display = "none";
+    }
+  });
+});
+
+// =========================================================================================================================================== //
+// =======================================================DASHBOARD/ANALYTICS SCROLL BUTTONS============================================================== //
+// ========================================================================================================================================== //
   const totalScroll = document.getElementById("total-scroll");
   const leftBtn = document.getElementById("total-left");
   const rightBtn = document.getElementById("total-right");
@@ -199,111 +268,19 @@ if (merchantSelect && merchantLogo) {
     window.addEventListener("resize", toggleButtons);
   }
 
-  // =============================
-  // Initialize Scrollable Sections
-  // =============================
+// =============================
+// Initialize Scrollable Sections
+// =============================
 
 initCardScroll("#total-scroll", "#total-left", "#total-right"); // Dashboard
 initCardScroll("#summary-scroll", ".summary-wrapper .scroll-btn.left", ".summary-wrapper .scroll-btn.right"); // Analytics Summary
 initCardScroll("#category-scroll", "#category-left", "#category-right"); // Categories
 
-
 });
 
-
-document.addEventListener("DOMContentLoaded", () => {
-  const burgerBtn = document.getElementById("burgerBtn");
-  const sidebar = document.querySelector(".sidebar");
-  const main = document.querySelector(".main");
-  const header = document.querySelector("header");
-
-  // Sidebar starts open
-  sidebar.classList.add("show");
-
-  burgerBtn.addEventListener("click", () => {
-    if (sidebar.classList.contains("show")) {
-      sidebar.classList.remove("show");
-      sidebar.classList.add("hide");
-      main.classList.add("full");
-      header.classList.add("full");
-    } else {
-      sidebar.classList.remove("hide");
-      sidebar.classList.add("show");
-      main.classList.remove("full");
-      header.classList.remove("full");
-    }
-  });
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const themeBtn = document.getElementById("themeBtn");
-
-  // Apply saved theme on load
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-mode");
-    themeBtn.textContent = "dark_mode"; // 🌙
-  }
-
-  themeBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-
-    if (document.body.classList.contains("dark-mode")) {
-      themeBtn.textContent = "dark_mode"; // 🌙
-      localStorage.setItem("theme", "dark");
-    } else {
-      themeBtn.textContent = "light_mode"; // ☀️
-      localStorage.setItem("theme", "light");
-    }
-  });
-});
-
-
-// theme.js
-document.addEventListener("DOMContentLoaded", () => {
-  const themeBtn = document.getElementById("themeBtn");
-  const themeToggle = document.getElementById("theme-toggle"); // optional checkbox toggle
-
-  // Apply saved theme on load
-  if (localStorage.getItem("theme") === "dark") {
-    document.documentElement.classList.add("dark");
-    if (themeBtn) themeBtn.textContent = "dark_mode"; // 🌙
-    if (themeToggle) themeToggle.checked = true;
-  }
-
-  // Icon button toggle
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      document.documentElement.classList.toggle("dark");
-
-      if (document.documentElement.classList.contains("dark")) {
-        themeBtn.textContent = "dark_mode"; // 🌙
-        localStorage.setItem("theme", "dark");
-        if (themeToggle) themeToggle.checked = true;
-      } else {
-        themeBtn.textContent = "light_mode"; // ☀️
-        localStorage.setItem("theme", "light");
-        if (themeToggle) themeToggle.checked = false;
-      }
-    });
-  }
-
-  // Checkbox toggle
-  if (themeToggle) {
-    themeToggle.addEventListener("change", () => {
-      if (themeToggle.checked) {
-        document.documentElement.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-        if (themeBtn) themeBtn.textContent = "dark_mode";
-      } else {
-        document.documentElement.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-        if (themeBtn) themeBtn.textContent = "light_mode";
-      }
-    });
-  }
-});
-
-
+// =========================================================================================================================================== //
+// ===========================================================PAGINATION <>================================================================== //
+// ========================================================================================================================================== //
   document.addEventListener("DOMContentLoaded", () => {
     const rows = document.querySelectorAll(".ledger-row");
     const prevBtn = document.getElementById("prev-page");
@@ -352,3 +329,55 @@ document.addEventListener("DOMContentLoaded", () => {
     renderPage();
   });
 
+
+  // // =============================
+  // // Theme Persistence
+  // // =============================
+  // const themeToggle = document.getElementById("theme-toggle");
+  // if (themeToggle) {
+  //   if (localStorage.getItem("theme") === "dark") {
+  //     themeToggle.checked = true;
+  //     document.body.classList.add("dark-mode");
+  //   }
+  //   themeToggle.addEventListener("change", () => {
+  //     if (themeToggle.checked) {
+  //       localStorage.setItem("theme", "dark");
+  //       document.body.classList.add("dark-mode");
+  //     } else {
+  //       localStorage.setItem("theme", "light");
+  //       document.body.classList.remove("dark-mode");
+  //     }
+  //   });
+  // }
+//   // ====================================
+// // AVATAR PREVIEW
+// // ====================================
+//   function previewAvatar(event) {
+//     const reader = new FileReader();
+//     reader.onload = function(){
+//       document.getElementById('avatar-preview').src = reader.result;
+//     };
+//     reader.readAsDataURL(event.target.files[0]);
+//   }
+
+  // // =============================
+  // // Chart.js (Balance Chart)
+  // // =============================
+  // const ctx = document.getElementById("balanceChart");
+  // if (ctx) {
+  //   new Chart(ctx, {
+  //     type: "line",
+  //     data: {
+  //       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  //       datasets: [{
+  //         label: "Balance",
+  //         data: [50, 100, 80, 120, 150, 130],
+  //         borderColor: "#4F46E5",
+  //         backgroundColor: "rgba(79,70,229,0.2)",
+  //         fill: true,
+  //         tension: 0.4
+  //       }]
+  //     },
+  //     options: { responsive: true, plugins: { legend: { display: false } } }
+  //   });
+  // }
