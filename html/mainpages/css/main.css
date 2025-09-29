@@ -1,3 +1,4 @@
+remove the too much space
 /*===============*/
 /* === BODY === */
 /*===============*/
@@ -223,38 +224,44 @@ header .profile span {
 /*===================*/
 .popup {
   position: absolute;
-  top: 60px; /* adjust to header height */
+  top: 55px; /* adjust to header height */
   right: 20px;
-  width: 220px;
+  width: 200px;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   display: none; /* hidden by default */
   padding: 10px;
   font-family: Arial, sans-serif;
+  font-size: 1rem; 
+  transition: background 0.3s, color 0.3s;
+    /* 👇 Force popup above other elements */
+  z-index: 9999;
 }
 
 .popup-header {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
-  margin-bottom: 10px;
+  padding-bottom: 6px;
+  margin-bottom: px;
 }
 
 .popup-header .avatar {
-  width: 40px;
-  height: 40px;
+  width: 32px;              /* smaller avatar */
+  height: 32px;
   border-radius: 50%;
 }
 
+/* Normalize popup menu rows so icon + text align */
 .popup-menu {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* General menu items */
 .popup-menu li {
   display: flex;
   align-items: center;
@@ -262,15 +269,50 @@ header .profile span {
   padding: 8px;
   cursor: pointer;
   color: #333;
+  border-radius: 6px; /* keep rounding for hover */
+  white-space: nowrap;
 }
 
 .popup-menu li:hover {
   background: #f5f5f5;
-  border-radius: 6px;
 }
 
-.popup-menu .logout {
-  color: red;
+/* Special logout */
+.popup-menu .header_logout {
+  color: #ef4444;       /* Tailwind red-500 */
+  font-weight: 600;
+  padding: 6px 8px;     /* smaller spacing */
+}
+
+.popup-menu .header_logout:hover {
+  background: #fee2e2;  /* light red hover */
+  color: #b91c1c;       /* darker red */
+}
+
+
+/*===================*/
+/* === DARK MODE === */
+/*===================*/
+.dark-mode .popup {
+  background: #1e1e1e;
+  color: #f1f1f1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.dark-mode .popup-header {
+  border-bottom: 1px solid #444;
+}
+
+.dark-mode .popup-menu li {
+  color: #ddd;
+}
+
+.dark-mode .popup-menu li:hover {
+  background: #333;
+}
+
+.dark-mode .popup-menu .logout {
+  color: #ff4d4d;
 }
 
 /* ==========END============ */
@@ -299,12 +341,14 @@ header .profile span {
 /* ===  TITLE PF THE PAGES === */
 /*============================*/
 .title-block {
-  margin: 0 0 2rem 0; /* spacing */
+  position: relative;
 }
 
 .title-block h1 {
   font-size: 32px;
   font-weight: 700;
+  position: relative;
+  top: 20px; /* moves text visually down */
 }
 
 .title-block p {
@@ -459,6 +503,7 @@ header .profile span {
   position: relative;
   display: flex;
   align-items: center;
+  margin-top: 24px; /* push tables down */
 }
 
 /* Scrollable row */
@@ -685,6 +730,7 @@ header .profile span {
 .ledger-section {
   grid-column: 1 / -1;   /* forces it to stretch across the entire row */
   width: 100%;
+  margin-top: 40px; /* push tables down */
 }
 
 .ledger-table thead {

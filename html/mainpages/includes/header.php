@@ -19,10 +19,10 @@
     </div>
   </div>
   <ul class="popup-menu">
-    <li><span class="material-icons-outlined">person</span> Profile</li>
-    <li><span class="material-icons-outlined">account_balance_wallet</span> Wallets</li>
-    <li><span class="material-icons-outlined">settings</span> Settings</li>
-    <li class="logout"><span class="material-icons-outlined">logout</span> Logout</li>
+    <li><a href="profile.php"><span class="material-icons-outlined">person</span> Profile</li></a>
+    <li><a href="ledger.php"><span class="material-icons-outlined">account_balance_wallet</span> Transactions</li></a>
+    <li><span class="material-icons-outlined">settings</span></li>
+    <li class="header_logout"><a href="/../usercreation/login.php"><span class="material-icons-outlined">logout</span> Logout</li></a>
   </ul>
 </div>
 </header>

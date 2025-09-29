@@ -76,8 +76,8 @@ $pagedTransactions = array_slice($transactions, $startIndex, $perPage);
 
     <!-- Title & Welcome moved OUTSIDE header -->
     <div class="title-block">
-      <h1>Dashboard</h1>
       <p>Welcome to ChainLedger E-Wallet Transaction Management</p>
+      <h1>Dashboard</h1>
     </div>
 
     

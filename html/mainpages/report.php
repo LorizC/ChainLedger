@@ -34,13 +34,13 @@
 
     <!-- Title & Welcome moved OUTSIDE header -->
     <div class="title-block">
-      <h1>Report Transactions</h1>
       <p>Welcome to ChainLedger Reports</p>
+      <h1>Report Transactions</h1>
     </div>
 
 
 <!-- Content -->
-<section class="px-8">
+<section class="px-8 mt-10">
   <div class="bg-[#2c2f92] text-white rounded-xl p-10 flex justify-between items-start min-h-[500px] dark:bg-[#1F2937]">
     
     <!-- Form -->

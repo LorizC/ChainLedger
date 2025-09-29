@@ -54,8 +54,8 @@ $categories = [
 
     <!-- Title & Welcome moved OUTSIDE header -->
     <div class="title-block">
-      <h1>Analytics</h1>
       <p>Welcome to ChainLedger Analytics</p>
+      <h1>Analytics</h1>
     </div>
 
 

@@ -68,11 +68,11 @@ $currentAvatar = $defaultAvatars[0];
 
     <!-- Title -->
     <div class="title-block">
-      <h1>User Profile</h1>
       <p>Welcome to ChainLedger Profile</p>
+      <h1>User Profile</h1>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-6">
+    <div class="flex flex-col md:flex-row gap-6 mt-10">
 
       <!-- LEFT: User Info Card -->
       <div class="bg-white p-6 rounded-xl shadow min-h-[500px] max-h-[500px] w-[600px] dark:bg-gray-800">

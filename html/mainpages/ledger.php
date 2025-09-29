@@ -57,8 +57,8 @@ $ledger = [
 
     <!-- Title & Welcome -->
     <div class="title-block">
-      <h1>ChainLedger History</h1>
       <p>Welcome to Transaction Ledger</p>
+      <h1>ChainLedger History</h1>
     </div>
 
     <section class="content">
