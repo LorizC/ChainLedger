@@ -14,8 +14,8 @@
   <div class="popup-header">
     <img src="profile.jpg" alt="User Avatar" class="avatar">
     <div>
-      <h4 id="username">Hafsa Humaira</h4>
-      <p id="userEmail">hello@email.com</p>
+      <h4 id="username">Username</h4>
+      <p id="id">123456</p>
     </div>
   </div>
   <ul class="popup-menu">

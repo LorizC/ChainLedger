@@ -1,8 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
-
 // =========================================================================================================================================== //
 // =======================================================PASSWORD FIELD TOGGLES============================================================== //
-// ========================================================================================================================================== //
+// ========================================================================================================================================== //  
   document.querySelectorAll(".toggle-password").forEach(toggle => {
 
     // Single password toggle (eye icon)
@@ -34,8 +33,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 // =========================================================================================================================================== //
-// =============================================================COPY ACCOUNT ID============================================================== //
-// ========================================================================================================================================== //
+// ===========================================================Copy Account ID================================================================= //
+// ========================================================================================================================================== // 
   window.copyAccountId = function () {
     const accountId = document.getElementById("accountId").textContent;
     navigator.clipboard.writeText(accountId)
@@ -45,14 +44,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // =========================================================================================================================================== //
-// ==============================================================FEATHER ICONS=============================================================== //
-// ========================================================================================================================================== //
+// ============================================================ FEATHER ICONS================================================================ //
+// ========================================================================================================================================== // 
  document.addEventListener("DOMContentLoaded", () => {
   if (typeof feather !== "undefined") feather.replace();});
 
 // =========================================================================================================================================== //
-// ===================================================MERCHANT CELECT (COLOR = LOGO)========================================================= //
-// ========================================================================================================================================== //
+// =======================================================MERCHANT SELECT (Color + Logo)============================================================== //
+// ========================================================================================================================================== //   
 const merchantSelect = document.getElementById("merchantSelect");
 const merchantLogo = document.getElementById("merchantLogo");
 
@@ -82,11 +81,9 @@ if (merchantSelect && merchantLogo) {
   });
 }
 
-
-
 // =========================================================================================================================================== //
-// =====================================================HORIZONTAL SCROLL HELPER (DYNAMIC)==================================================== //
-// ========================================================================================================================================== //
+// ===================================================Horizontal Scroll Helper (Dynamic)===================================================== //
+// ========================================================================================================================================== // 
   function initCardScroll(containerSelector, leftBtnSelector, rightBtnSelector) {
     const container = document.querySelector(containerSelector);
     const leftBtn = document.querySelector(leftBtnSelector);
@@ -123,8 +120,51 @@ if (merchantSelect && merchantLogo) {
   }
 
 // =========================================================================================================================================== //
-// ================================================THEME PERSISTENCE (Checkbox + Button)===================================================== //
-// ========================================================================================================================================== //
+// =====================================================DASHBOARD/ANALYTICS SCROLL BUTTONS =================================================== //
+// ========================================================================================================================================== // 
+
+  const totalScroll = document.getElementById("total-scroll");
+  const leftBtn = document.getElementById("total-left");
+  const rightBtn = document.getElementById("total-right");
+
+  if (totalScroll && leftBtn && rightBtn) {
+    const scrollAmount = 250; // adjust based on card width
+
+    leftBtn.addEventListener("click", () => {
+      totalScroll.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    });
+
+    rightBtn.addEventListener("click", () => {
+      totalScroll.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    });
+
+    // Show/hide buttons based on scroll position
+    const toggleButtons = () => {
+      leftBtn.style.visibility = totalScroll.scrollLeft > 0 ? "visible" : "hidden";
+      rightBtn.style.visibility =
+        totalScroll.scrollLeft + totalScroll.clientWidth < totalScroll.scrollWidth
+          ? "visible"
+          : "hidden";
+    };
+
+    toggleButtons(); // Initial check
+    totalScroll.addEventListener("scroll", toggleButtons);
+    window.addEventListener("resize", toggleButtons);
+  }
+
+// =============================
+// Initialize Scrollable Sections
+// =============================
+
+initCardScroll("#total-scroll", "#total-left", "#total-right"); // Dashboard
+initCardScroll("#summary-scroll", ".summary-wrapper .scroll-btn.left", ".summary-wrapper .scroll-btn.right"); // Analytics Summary
+initCardScroll("#category-scroll", "#category-left", "#category-right"); // Categories
+
+});
+
+// =========================================================================================================================================== //
+// ==================================================THEME PERSISTENCE (Checkbox + Button) ================================================== //
+// ========================================================================================================================================== // 
 
 //Saves the toggled theme in refresh
 //Wag delete other style doesn't change theme
@@ -192,8 +232,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =========================================================================================================================================== //
-// =============================================================SIDEBAR TOGGLE=============================================================== //
-// ========================================================================================================================================== //
+// ============================================================SIDEBAR TOGGLE =============================================================== //
+// ========================================================================================================================================== // 
 document.addEventListener("DOMContentLoaded", () => {
   const burgerBtn = document.getElementById("burgerBtn");
   const sidebar = document.querySelector(".sidebar");
@@ -219,8 +259,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =========================================================================================================================================== //
-// =======================================================HEADER USER POPUP TOGGLE============================================================== //
-// ========================================================================================================================================== //
+// ========================================================HEADER USER POPUP TOGGLE=========================================================== //
+// ========================================================================================================================================== // 
 document.addEventListener("DOMContentLoaded", () => {
   const userBtn = document.getElementById("userBtn");
   const userPopup = document.getElementById("userPopup");
@@ -237,50 +277,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // =========================================================================================================================================== //
-// =======================================================DASHBOARD/ANALYTICS SCROLL BUTTONS============================================================== //
-// ========================================================================================================================================== //
-  const totalScroll = document.getElementById("total-scroll");
-  const leftBtn = document.getElementById("total-left");
-  const rightBtn = document.getElementById("total-right");
-
-  if (totalScroll && leftBtn && rightBtn) {
-    const scrollAmount = 250; // adjust based on card width
-
-    leftBtn.addEventListener("click", () => {
-      totalScroll.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-    });
-
-    rightBtn.addEventListener("click", () => {
-      totalScroll.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    });
-
-    // Show/hide buttons based on scroll position
-    const toggleButtons = () => {
-      leftBtn.style.visibility = totalScroll.scrollLeft > 0 ? "visible" : "hidden";
-      rightBtn.style.visibility =
-        totalScroll.scrollLeft + totalScroll.clientWidth < totalScroll.scrollWidth
-          ? "visible"
-          : "hidden";
-    };
-
-    toggleButtons(); // Initial check
-    totalScroll.addEventListener("scroll", toggleButtons);
-    window.addEventListener("resize", toggleButtons);
-  }
-
-// =============================
-// Initialize Scrollable Sections
-// =============================
-
-initCardScroll("#total-scroll", "#total-left", "#total-right"); // Dashboard
-initCardScroll("#summary-scroll", ".summary-wrapper .scroll-btn.left", ".summary-wrapper .scroll-btn.right"); // Analytics Summary
-initCardScroll("#category-scroll", "#category-left", "#category-right"); // Categories
-
-});
-
-// =========================================================================================================================================== //
-// ===========================================================PAGINATION <>================================================================== //
-// ========================================================================================================================================== //
+// ==============================================================PAGINATION <>=============================================================== //
+// ========================================================================================================================================== // 
   document.addEventListener("DOMContentLoaded", () => {
     const rows = document.querySelectorAll(".ledger-row");
     const prevBtn = document.getElementById("prev-page");
@@ -328,6 +326,10 @@ initCardScroll("#category-scroll", "#category-left", "#category-right"); // Cate
     // initial render
     renderPage();
   });
+
+
+
+
 
 
   // // =============================
