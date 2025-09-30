@@ -5,10 +5,13 @@ require_once __DIR__ . '/../db/Database.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../services/AuthService.php';
 require_once __DIR__ . '/../services/SignupService.php';
+require_once __DIR__ . '/../services/SecurityLogService.php';
 
+//Call the services
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
 $authService = new AuthService($userRepo);
+$logService = new SecurityLogService($conn);
 
 $error = "";
 
@@ -23,8 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (isset($result['error'])) {
             $error = $result['error'];
+            // 🚨 Log failed attempt
+            $logService->logEvent(0, (int)$accountId, $accountId, 'FAILED_LOGIN');            
         } else {
             $_SESSION['user'] = $result['user']; // already cleaned (no password)
+            // ✅ Log login
+            $logService->logEvent(
+                $result['user']['user_id'],
+                $result['user']['account_id'],
+                $result['user']['username'],
+                'LOGIN'
+            );            
             header("Location: ../mainpages/dashboard.php");
             exit();
         }

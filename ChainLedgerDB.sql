@@ -87,21 +87,44 @@ CREATE TABLE transactions (
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
-
--- ==========================
--- security_logs tables
--- ==========================  
+DROP TABLE SECURITY_LOGS;
+--Revised
 CREATE TABLE security_logs (
     security_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
-    action ENUM('LOGIN', 'LOGOUT', 'FAILED_LOGIN', 'PASSWORD_CHANGE', 'ACCOUNT_LOCKED') NOT NULL,
+    action ENUM(
+        'LOGIN', 
+        'LOGOUT', 
+        'FAILED_LOGIN', 
+        'PASSWORD_CHANGE', 
+        'ACCOUNT_CREATED',
+        'ACCOUNT_DELETED'
+    ) NOT NULL,
     ip_address VARCHAR(45),
     device_info TEXT,
-    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_agent TEXT,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
-    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
 );
+
+-- -- ==========================
+-- -- security_logs tables
+-- -- ==========================  
+-- CREATE TABLE security_logs (
+--     security_id INT AUTO_INCREMENT PRIMARY KEY,
+--     user_id INT NOT NULL,
+--     account_id INT NOT NULL,
+--     username VARCHAR(100) NOT NULL,
+--     action ENUM('LOGIN', 'LOGOUT', 'FAILED_LOGIN', 'PASSWORD_CHANGE', 'ACCOUNT_LOCKED') NOT NULL,
+--     ip_address VARCHAR(45),
+--     device_info TEXT,
+--     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+--     user_agent TEXT,
+--     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+--     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
+--     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+-- );

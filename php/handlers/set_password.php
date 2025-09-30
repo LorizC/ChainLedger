@@ -5,10 +5,14 @@ require_once __DIR__ . '/../db/Database.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../services/PasswordService.php';
 require_once __DIR__ . '/../services/AuthService.php';
+require_once __DIR__ . '/../services/SecurityLogService.php';
+
+//call
 
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
 $passwordService = new PasswordService($userRepo);
+$logService = new SecurityLogService($conn);
 
 $error = "";
 $username = "";
@@ -38,14 +42,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "Invalid session user.";
     } else {
         try {
-            // ✅ Update password using PasswordService (account_id, not user_id)
+            // Update/Save password using PasswordService (account_id, not user_id)
             $passwordService->setPassword((int)$user['account_id'], $password);
 
-            // ✅ Assign role
+            // Assign role
             $userRepo->assignRole($user, $role);
-
-            // ✅ Clear temp signup session
+            
+            //Log account creation
+            $logService->logEvent(
+              $user['user_id'],
+              $user['account_id'],
+              $user['username'],
+             'ACCOUNT_CREATED'
+              );
+      
+              // Clear temp signup session
             unset($_SESSION['temp_user_id'], $_SESSION['temp_username'], $_SESSION['account_id']);
+
 
             // ✅ Redirect to login
             header("Location: login.php");
