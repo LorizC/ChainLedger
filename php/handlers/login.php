@@ -1,19 +1,14 @@
 <?php
 session_start();
 ob_start();
-
+require_once __DIR__ . '/../db/Database.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../services/AuthService.php';
+require_once __DIR__ . '/../services/SignupService.php';
 
-// ✅ Database connection
-$conn = new mysqli("localhost", "root", "", "ChainledgerDB");
-if ($conn->connect_error) {
-    die("Database connection failed. Please try again later.");
-}
-
-// ✅ Init Repositories & Services
+$conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
-$authService = new AuthService($userRepo);
+$signupService = new SignupService($userRepo);
 
 $error = "";
 
