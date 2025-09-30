@@ -1,17 +1,16 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db/Database.php';
-require_once __DIR__ . '/../repositories/UserRepository.php';
-require_once __DIR__ . '/../services/SecurityLogService.php';
+require_once __DIR__ . '/../../php/db/Database.php';
+require_once __DIR__ . '/../../php/services/SecurityLogService.php';
 
-// ✅ Connect + initialize
+// Initialize DB + logging
 $conn = Database::getConnection();
 $logService = new SecurityLogService($conn);
 
-// ✅ If user exists in session, log logout event
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
 
+    // ✅ Log logout event
     $logService->logEvent(
         $user['user_id'],
         $user['account_id'],
@@ -20,8 +19,11 @@ if (isset($_SESSION['user'])) {
     );
 }
 
-// ✅ Destroy session after logging
+// Destroy session
+$_SESSION = [];
+session_unset();
 session_destroy();
+
+// Redirect to login
 header("Location: login.php");
 exit;
-?>

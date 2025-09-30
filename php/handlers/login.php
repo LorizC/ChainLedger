@@ -29,7 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 🚨 Log failed attempt
             $logService->logEvent(0, (int)$accountId, $accountId, 'FAILED_LOGIN');            
         } else {
-            $_SESSION['user'] = $result['user']; // already cleaned (no password)
+           $_SESSION['user'] = [
+           'user_id'    => $result['user']['user_id'],
+           'account_id' => $result['user']['account_id'],
+           'username'   => $result['user']['username'],
+           'first_name' => $result['user']['first_name'],
+           'last_name'  => $result['user']['last_name']
+            ];
+
             // ✅ Log login
             $logService->logEvent(
                 $result['user']['user_id'],

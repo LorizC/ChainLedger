@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Check if user is logged in
+if (!isset($_SESSION['user'])) {
+    header("Location: ../usercreation/login.php");
+    exit;
+}
+?>
+
 <aside class="sidebar">
   <!-- Logo -->
   <div class="logo">
@@ -9,41 +19,41 @@
   <div class="profile">
     <img src="../../images/avatars/profile.png" alt="User Avatar" class="avatar">
     <div class="profile-info">
-      <span class="username">Loriz Carlos</span>
-      <span class="fullname">Loriz Carlos</span>
-      <span class="account-id">ID: 12345</span>
+      <span class="username"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></span>
+      <span class="fullname"><?php echo htmlspecialchars($_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name']); ?></span>
+      <span class="account-id">Account ID: <?php echo htmlspecialchars($_SESSION['user']['account_id']); ?></span>
     </div>
   </div>
 
   <!-- Nav -->
   <nav>
     <div class="nav-item">
-    <a href="dashboard.php">
-      <span class="material-icons-outlined">home</span>
-      <span class="label">Dashboard</span>
-    </a>
-    <a href="ledger.php">
-      <span class="material-icons-outlined">receipt_long</span>
-      <span class="label">Ledger</span>
-    </a>
-    <a href="report.php">
-      <span class="material-icons-outlined">description</span>
-      <span class="label">Report</span>
-    </a>
-    <a href="analytics.php">
-      <span class="material-icons-outlined">bar_chart</span>
-      <span class="label">Analytics</span>
-    </a>
-    <a href="profile.php">
-      <span class="material-icons-outlined">person</span>
-      <span class="label">Profile</span>
-    </a>
+      <a href="dashboard.php">
+        <span class="material-icons-outlined">home</span>
+        <span class="label">Dashboard</span>
+      </a>
+      <a href="ledger.php">
+        <span class="material-icons-outlined">receipt_long</span>
+        <span class="label">Ledger</span>
+      </a>
+      <a href="report.php">
+        <span class="material-icons-outlined">description</span>
+        <span class="label">Report</span>
+      </a>
+      <a href="analytics.php">
+        <span class="material-icons-outlined">bar_chart</span>
+        <span class="label">Analytics</span>
+      </a>
+      <a href="profile.php">
+        <span class="material-icons-outlined">person</span>
+        <span class="label">Profile</span>
+      </a>
     </div>
   </nav>
 
   <!-- Logout -->
   <div class="logout">
-    <a href="../usercreation/login.php">
+    <a href="../usercreation/logout.php">
       <span class="material-icons-outlined">logout</span>
       <span class="label">Logout</span>
     </a>
