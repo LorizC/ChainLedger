@@ -91,7 +91,7 @@ DROP TABLE SECURITY_LOGS;
 --Revised
 CREATE TABLE security_logs (
     security_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id INT NULL,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
     action ENUM(
@@ -106,8 +106,6 @@ CREATE TABLE security_logs (
     device_info TEXT,
     user_agent TEXT,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
     CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
 );
 
@@ -128,3 +126,8 @@ CREATE TABLE security_logs (
 --     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
 --     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 -- );
+
+ALTER TABLE security_logs DROP FOREIGN KEY fk_user;
+ALTER TABLE security_logs 
+MODIFY user_id INT NULL;
+desc security_logs

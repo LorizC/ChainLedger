@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($result['error'])) {
             $error = $result['error'];
             // 🚨 Log failed attempt
-            $logService->logEvent(0, (int)$accountId, $accountId, 'FAILED_LOGIN');            
+            $logService->logEvent(null, (int)$accountId, $accountId, 'FAILED_LOGIN');            
         } else {
            $_SESSION['user'] = [
            'user_id'    => $result['user']['user_id'],

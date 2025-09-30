@@ -22,7 +22,7 @@
     <li><a href="profile.php"><span class="material-icons-outlined">person</span> Profile</li></a>
     <li><a href="logs.php"><span class="material-icons-outlined">account_balance_wallet</span> Transaction Logs</li></a>
       <li><a href="../usercreation/change_password.php"><span class="material-icons-outlined">lock</span> Change Password</li></a>
-    <li class="header_logout"><a href="../usercreation/login.php"><span class="material-icons-outlined">logout</span> Logout</li></a>
+    <li class="header_logout"><a href="../usercreation/logout.php"><span class="material-icons-outlined">logout</span> Logout</li></a>
   </ul>
 </div>
 </header>
