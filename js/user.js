@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     togglePasswordBtn.addEventListener("click", () => {
       const fields = [
         document.getElementById("password"),
-        document.getElementById("confirm_password")
+        document.getElementById("confirm_password"),    
       ];
       if (!fields[0] || !fields[1]) return;
       const isHidden = fields.every(f => f.type === "password");

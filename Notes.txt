@@ -1,0 +1,7 @@
+Fixing atm
+* create landing page
+* success page after set password / 
+* forgot password
+* change password
+
+Connect database to the mainpages

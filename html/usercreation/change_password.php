@@ -64,8 +64,8 @@ include '../../php/handlers/change_password.php';
             </div>
 
             <div class="inputGroup">
-              <label for="confirmPassword">Confirm Password</label>
-              <input type="password" placeholder="Confirm Password" id="confirmPassword" name="confirm_Password" minlength="8" required />
+              <label for="confirm_password">Confirm Password</label>
+              <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" minlength="8" required />
             </div>
 
             <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">

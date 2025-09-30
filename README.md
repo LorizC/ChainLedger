@@ -1,7 +1,7 @@
 /****************************
 * System: ChainLedger
-* Developers: (Names of developers)
-* Date: (date created)
+* Developers: Carlos, Loriz Neil A., Bautista, Trixie Valerie, Limpahan 
+* Date: September 01, 2025
 * University: Phinma Education - University of Pangasinan
 * School: College of Information Technology Education (CITE)
 * Purpose:
@@ -19,11 +19,3 @@
 NOTE: DO NOT DELETE ANY FOLDERS ON THE PACKAGE THIS WILL DESTROY THE SYSTEM.
 *******************************************************************************
 
-Fixing atm
-* success page after set password / 
-* forgot password
-* change password
-
-* Darkmode in mainpages
-* header toggle
-* sidebar toggle

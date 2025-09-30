@@ -45,7 +45,7 @@
         <div class="form-wrapper">
           <div class="inFormBackground">
 
-            <!-- ✅ Success banner moved inside login box wrapper -->
+            <!-- ✅ Success banner -->
             <?php if (!empty($_SESSION['success_message'])): ?>
               <div class="success-message global-banner">
                 <?= htmlspecialchars($_SESSION['success_message']) ?>

@@ -11,34 +11,35 @@ $passwordService = new PasswordService($userRepo);
 $error = "";
 $success = "";
 
-// Ensure account_id is in session
-if (!isset($_SESSION['user']['account_id'])) {
-    $error = "No account session found. Please login first.";
-} else {
-    $accountId = $_SESSION['user']['account_id'];
-}
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $accountId = trim($_POST['account_id'] ?? '');
+    $question  = trim($_POST['security_question'] ?? '');
+    $answer    = trim($_POST['security_answer'] ?? '');
 
-
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['account_id'])) {
-    $accountId = $_SESSION['account_id'];
-    $newPassword = $_POST['password'] ?? '';
-    $confirm = $_POST['confirmPassword'] ?? '';
-
-    if ($newPassword !== $confirm) {
-        $error = "Passwords do not match.";
-    } elseif (strlen($newPassword) < 8) {
-        $error = "Password must be at least 8 characters.";
+    if (empty($accountId) || empty($question) || empty($answer)) {
+        $error = "All fields are required.";
     } else {
-        try {
-            $passwordService->changePassword($accountId, $newPassword);
-            $success = "Password changed successfully.";
-            // Optionally log the user out or redirect
-            // unset($_SESSION['account_id']);
-            // header("Location: login.php");
-            // exit;
-        } catch (Exception $e) {
-            $error = "Password change failed: " . $e->getMessage();
+        // ✅ Check if account_id exists
+        $stmt = $conn->prepare("SELECT account_id FROM security WHERE account_id = ? LIMIT 1");
+        $stmt->bind_param("i", $accountId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 0) {
+            // No such account_id in security table
+            $error = "Invalid Account ID.";
+        } else {
+            // ✅ Verify security question + answer
+            if ($passwordService->verifySecurityAnswer((int)$accountId, $question, $answer)) {
+                $_SESSION['reset_account_id'] = $accountId;
+                header("Location: change_password.php");
+                exit;
+            } else {
+                $error = "Invalid security question or answer.";
+            }
         }
+
+        $stmt->close();
     }
 }
 ?>
