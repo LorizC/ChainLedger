@@ -22,22 +22,25 @@ class SignupService {
         return $accountId;
     }
 
-    private function generateUsername(string $firstName, string $lastName): string {
-        $baseUsername = strtolower(preg_replace('/\s+/', '', $firstName . $lastName));
-        $username = $baseUsername;
-        $suffix = 1;
-        $maxAttempts = 100;
+private function generateUsername(string $firstName, string $lastName): string {
+    // Use "First Last" format
+    $baseUsername = $firstName . ' ' . $lastName;
+    $username = $baseUsername;
+    $suffix = 1;
+    $maxAttempts = 100;
 
-        while ($this->userRepo->findByUsername($username) !== null) {
-            $username = $baseUsername . $suffix;
-            $suffix++;
-            if ($suffix > $maxAttempts) {
-                throw new Exception("Failed to generate a unique username after $maxAttempts attempts.");
-            }
+    // Ensure uniqueness
+    while ($this->userRepo->findByUsername($username) !== null) {
+        $username = $baseUsername . $suffix;
+        $suffix++;
+        if ($suffix > $maxAttempts) {
+            throw new Exception("Failed to generate a unique username after $maxAttempts attempts.");
         }
-
-        return $username;
     }
+
+    return $username;
+}
+
 
     public function registerUser(array $data): array {
         $firstName = trim($data['first_name'] ?? '');
@@ -46,17 +49,16 @@ class SignupService {
         $gender    = $data['gender'] ?? '';
         $securityQ = $data['security_question'] ?? '';
         $securityA = $data['security_answer'] ?? '';
-        $password  = $data['password'] ?? '';
 
-        if ($firstName === '' || $lastName === '' || $birthdate === '' || $gender === '' || $securityQ === '' || $securityA === '' || $password === '') {
+        if ($firstName === '' || $lastName === '' || $birthdate === '' || $gender === '' || $securityQ === '' || $securityA === '') {
             throw new Exception("All required fields must be filled.");
         }
 
-        // Generate username & account_id
+        // Generate unique username & account_id
         $username  = $this->generateUsername($firstName, $lastName);
         $accountId = $this->generateAccountId();
 
-        // Create user
+        // Create user row
         $userId = $this->userRepo->createUser(
             $firstName,
             $lastName,
@@ -66,9 +68,8 @@ class SignupService {
             $accountId
         );
 
-        // Add security credentials
-        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        if (!$this->userRepo->addSecurity($accountId, $username, $hashedPassword, $securityQ, $securityA)) {
+        // Insert security (leave password NULL for now)
+        if (!$this->userRepo->addSecurity($accountId, $username, null, $securityQ, $securityA)) {
             throw new Exception("Failed to add security info for account ID $accountId.");
         }
 
@@ -79,3 +80,4 @@ class SignupService {
         ];
     }
 }
+

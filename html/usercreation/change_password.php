@@ -60,12 +60,12 @@ include '../../php/handlers/change_password.php';
 
             <div class="inputGroup">
               <label for="password">New Password</label>
-              <input type="password" placeholder="Enter Password" id="password" name="password" minlength="8" required />
+              <input type="password" placeholder="Enter Password" id="password" name="new_password" minlength="8" required />
             </div>
 
             <div class="inputGroup">
               <label for="confirmPassword">Confirm Password</label>
-              <input type="password" placeholder="Confirm Password" id="confirmPassword" name="confirmPassword" minlength="8" required />
+              <input type="password" placeholder="Confirm Password" id="confirmPassword" name="confirm_Password" minlength="8" required />
             </div>
 
             <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">

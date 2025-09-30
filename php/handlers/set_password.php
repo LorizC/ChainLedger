@@ -3,11 +3,12 @@ session_start();
 ob_start();
 require_once __DIR__ . '/../db/Database.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
+require_once __DIR__ . '/../services/PasswordService.php';
 require_once __DIR__ . '/../services/AuthService.php';
 
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
-$signupService = new SignupService($userRepo);
+$passwordService = new PasswordService($userRepo);
 
 $error = "";
 $username = "";
@@ -36,16 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     } elseif (empty($user)) {
         $error = "Invalid session user.";
     } else {
-        // ✅ Hash the password
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
         try {
-// ✅ Update password
-$userRepo->updatePassword($user['user_id'], $hashedPassword);
+            // ✅ Update password using PasswordService (account_id, not user_id)
+            $passwordService->setPassword((int)$user['account_id'], $password);
 
-// ✅ Assign role (cleaner now)
-$userRepo->assignRole($user, $role);
-            // Assign role to relevant tables
+            // ✅ Assign role
+            $userRepo->assignRole($user, $role);
 
             // ✅ Clear temp signup session
             unset($_SESSION['temp_user_id'], $_SESSION['temp_username'], $_SESSION['account_id']);
@@ -59,5 +56,4 @@ $userRepo->assignRole($user, $role);
         }
     }
 }
-
 ?>

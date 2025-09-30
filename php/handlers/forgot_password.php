@@ -9,33 +9,36 @@ $userRepo = new UserRepository($conn);
 $passwordService = new PasswordService($userRepo);
 
 $error = "";
-$step = 1;
+$success = "";
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    if ($step === 1 && isset($_POST['user_id'])) {
-        $_SESSION['reset_user_id'] = (int) $_POST['user_id'];
-        $step = 2;
-    }
-    elseif ($step === 2 && isset($_POST['security_question'], $_POST['security_answer'])) {
-        $userId = $_SESSION['reset_user_id'] ?? 0;
-        if ($passwordService->verifySecurityAnswer($userId, $_POST['security_question'], $_POST['security_answer'])) {
-            $step = 3;
-        } else {
-            $error = "Security answer incorrect.";
-        }
-    }
-    elseif ($step === 3 && isset($_POST['new_password'], $_POST['confirm_password'])) {
-        $userId = $_SESSION['reset_user_id'] ?? 0;
-        if ($_POST['new_password'] !== $_POST['confirm_password']) {
-            $error = "Passwords do not match.";
-        } else {
-            if ($passwordService->resetPassword($userId, $_POST['new_password'])) {
-                unset($_SESSION['reset_user_id']);
-                header("Location: login.php");
-                exit;
-            } else {
-                $error = "Password reset failed.";
-            }
+// Ensure account_id is in session
+if (!isset($_SESSION['user']['account_id'])) {
+    $error = "No account session found. Please login first.";
+} else {
+    $accountId = $_SESSION['user']['account_id'];
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['account_id'])) {
+    $accountId = $_SESSION['account_id'];
+    $newPassword = $_POST['password'] ?? '';
+    $confirm = $_POST['confirmPassword'] ?? '';
+
+    if ($newPassword !== $confirm) {
+        $error = "Passwords do not match.";
+    } elseif (strlen($newPassword) < 8) {
+        $error = "Password must be at least 8 characters.";
+    } else {
+        try {
+            $passwordService->changePassword($accountId, $newPassword);
+            $success = "Password changed successfully.";
+            // Optionally log the user out or redirect
+            // unset($_SESSION['account_id']);
+            // header("Location: login.php");
+            // exit;
+        } catch (Exception $e) {
+            $error = "Password change failed: " . $e->getMessage();
         }
     }
 }
+?>

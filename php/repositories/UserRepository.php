@@ -27,6 +27,15 @@ class UserRepository {
         return $this->conn->insert_id; // ✅ auto-increment user_id
     }
 
+public function findSecurityByAccountId(int $accountId): ?array {
+    $stmt = $this->conn->prepare("SELECT * FROM security WHERE account_id = ? LIMIT 1");
+    $stmt->bind_param("i", $accountId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_assoc() ?: null;
+}
+    
     public function findByAccountId(string $accountId): ?array {
         $stmt = $this->conn->prepare("
             SELECT u.user_id, u.first_name, u.last_name, u.birthdate, u.gender, 
@@ -117,19 +126,21 @@ class UserRepository {
     }
 
     // ✅ Insert into security table without user_id
-    public function addSecurity(int $accountId, string $username, string $hashedPassword, string $securityQ, string $securityA): bool {
-        $stmt = $this->conn->prepare("
-            INSERT INTO security (account_id, username, security_question, security_answer, password)
-            VALUES (?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE 
-                security_question = VALUES(security_question),
-                security_answer = VALUES(security_answer),
-                password = VALUES(password)
-        ");
-        $stmt->bind_param("issss", $accountId, $username, $securityQ, $securityA, $hashedPassword);
+public function addSecurity(int $accountId, string $username, ?string $hashedPassword, string $securityQ, string $securityA): bool {
+    $stmt = $this->conn->prepare("
+        INSERT INTO security (account_id, username, security_question, security_answer, password)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE 
+            security_question = VALUES(security_question),
+            security_answer = VALUES(security_answer),
+            password = COALESCE(VALUES(password), password)
+    ");
+    // Allow NULL password
+    $stmt->bind_param("issss", $accountId, $username, $securityQ, $securityA, $hashedPassword);
 
-        return $stmt->execute();
-    }
+    return $stmt->execute();
+}
+
 
     // ✅ Roles simplified to match schema
     public function assignRole(array $user, string $role): bool {

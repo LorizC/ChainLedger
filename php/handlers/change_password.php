@@ -9,19 +9,21 @@ $userRepo = new UserRepository($conn);
 $passwordService = new PasswordService($userRepo);
 
 $error = "";
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user_id'])) {
-    $userId = $_SESSION['user_id'];
-    $newPassword = $_POST['new_password'];
-    $confirm = $_POST['confirm_password'];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_SESSION['user']['account_id'])) {
+    $accountId = $_SESSION['user']['account_id'];
+    $newPassword = $_POST['new_password'] ?? '';
+    $confirm = $_POST['confirm_password'] ?? '';
 
     if ($newPassword !== $confirm) {
         $error = "Passwords do not match.";
     } else {
-        if ($passwordService->changePassword($userId, $newPassword)) {
-            header("Location: success.php");
+        try {
+            $passwordService->changePassword($accountId, $newPassword);
+            header("Location: /../../html/usercreation/login.php");
             exit;
-        } else {
-            $error = "Password change failed.";
+        } catch (Exception $e) {
+            $error = "Password change failed: " . $e->getMessage();
         }
     }
 }

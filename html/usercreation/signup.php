@@ -79,7 +79,6 @@
                 <option value="" disabled <?= !isset($_POST['gender']) ? 'selected' : '' ?>>Select your gender</option>
                 <option value="Male" <?= (($_POST['gender'] ?? '') === 'Male') ? 'selected' : '' ?>>Male</option>
                 <option value="Female" <?= (($_POST['gender'] ?? '') === 'Female') ? 'selected' : '' ?>>Female</option>
-                <option value="Prefer not to say" <?= (($_POST['gender'] ?? '') === 'Prefer not to say') ? 'selected' : '' ?>>Prefer not to say</option>
               </select>
             </div>
 
