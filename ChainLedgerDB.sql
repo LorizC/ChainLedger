@@ -77,7 +77,9 @@ CREATE TABLE transactions (
     merchant ENUM('gcash', 'maya', 'grabpay', 'paypal', 'googlepay') NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
     transaction_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    
+        currency VARCHAR(10) DEFAULT 'PHP',
+    transaction_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT') NOT NULL,
+    status ENUM('PENDING', 'COMPLETED', 'FAILED', 'CANCELLED') NOT NULL,
     -- Foreign key relationships
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
