@@ -8,7 +8,7 @@ include '../../php/handlers/change_password.php';
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Change Password - ThriftTipid</title>
+  <title>Change Password - ChainLedger</title>
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -28,7 +28,7 @@ include '../../php/handlers/change_password.php';
       <!-- Left side: Welcome message -->
       <div class="left-side">
         <div class="welcome-message">
-          <h1>Welcome to ThriftTipid</h1>
+          <h1>Welcome to ChainLedger</h1>
           <p>A Business E-wallet Transaction Monitoring System</p>
          
           <div class="features-section">
