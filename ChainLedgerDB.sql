@@ -11,9 +11,11 @@ USE ChainledgerDB;
 
 SELECT * FROM users;
 SELECT * FROM security;
+SELECT * FROM security_logs;
 SELECT * FROM company_personnel;
 SELECT * FROM company_owners;
 SELECT * FROM transactions;
+
 
 -- =======================
 -- Users Table
@@ -26,6 +28,7 @@ CREATE TABLE users (
     birthdate DATE,
     gender ENUM('Male','Female'),
     username VARCHAR(100) UNIQUE NOT NULL
+    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 );
 
 -- =======================
@@ -78,4 +81,20 @@ CREATE TABLE transactions (
     -- Foreign key relationships
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
+);
+
+-- ==========================
+-- security_logs tables
+-- ==========================  
+CREATE TABLE security_logs (
+    security_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    account_id INT NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    action ENUM('LOGIN', 'LOGOUT', 'FAILED_LOGIN', 'PASSWORD_CHANGE', 'ACCOUNT_LOCKED') NOT NULL,
+    ip_address VARCHAR(45),
+    device_info TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    user_agent TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
