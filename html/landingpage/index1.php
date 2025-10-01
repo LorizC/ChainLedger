@@ -41,7 +41,7 @@
   </header>
 
   <!-- Hero Section -->
-  <section class="bg-blue-900 text-white py-20 px-6">
+  <section id="1" class="bg-blue-900 text-white py-20 px-6">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
       <div>
         <h1 class="text-4xl font-bold mb-4">Get More Done with whitepace</h1>
@@ -53,7 +53,7 @@
   </section>
 
   <!-- Project Management + Work Together -->
-  <section class="py-20 px-6 bg-white">
+  <section id="2" class="py-20 px-6 bg-white">
     <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
       <!-- Project Management -->
       <div>
@@ -86,7 +86,7 @@
 
 
 
-<section class="bg-white py-20 px-6">
+<section id="3" class="bg-white py-20 px-6">
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
     <img src="https://via.placeholder.com/450x300?text=Customization+Illustration" alt="Customise" class="rounded-lg">
     <div>
@@ -103,7 +103,7 @@
 </section>
 
 <!-- Use as Extension -->
-<section class="bg-blue-900 text-white py-20 px-6">
+<section id="4" class="bg-blue-900 text-white py-20 px-6">
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
     <div>
       <h2 class="text-3xl font-bold mb-4">Use as <span class="text-yellow-400">Extension</span></h2>
