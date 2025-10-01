@@ -276,6 +276,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("settingsToggle");
+    const drawer = document.getElementById("settingsDrawer");
+
+    toggle.addEventListener("click", () => {
+      drawer.classList.toggle("show");
+    });
+  });
+
 // =========================================================================================================================================== //
 // ==============================================================PAGINATION <>=============================================================== //
 // ========================================================================================================================================== // 

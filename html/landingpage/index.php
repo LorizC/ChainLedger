@@ -38,8 +38,8 @@
     </nav>
 
     <div class="space-x-4">
-      <a href="../../html/usercreation/signup.php" class="px-4 py-2 text-sm">Sign Up</a>
-      <a href="../../html/usercreation/login.php" class="px-4 py-2 bg-white text-indigo-900 rounded">Log In</a>
+      <a href="../../html/usercreation/signup.php" class="px-4 py-2 text-sm hover:bg-gray-100 text-white hover:text-black">Sign Up</a>
+      <a href="../../html/usercreation/login.php" class="px-4 py-2 bg-white hover:bg-black text-indigo-900 hover:text-white rounded">Log In</a>
     </div>
   </div>
 </header>
