@@ -258,7 +258,7 @@ header .profile span {
 .popup-header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   border-bottom: 1px solid #eee;
   padding-bottom: 6px;
   margin-bottom: px;
@@ -269,6 +269,22 @@ header .profile span {
   height: 42px;
   border-radius: 50%;
   object-fit: contain;
+}
+
+.popup-header div {
+  display: flex;
+  flex-direction: column; /* stack username above id */
+}
+
+.username {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.id {
+  font-size: 13px;
+  color: #777; /* lighter for distinction */
 }
 
 .popup-header h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1; }
@@ -357,6 +373,12 @@ header .profile span {
   text-decoration: none;
 }
 
+
+
+
+/*===================*/
+/* === DARK MODE === */
+/*===================*/
 /* Dark mode overrides */
 .dark .drawer-item {
   background: #2b2b2b;
@@ -372,10 +394,22 @@ header .profile span {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
 }
 
+/* Dark Mode */
+.dark .username {
+  color: #fff; /* white username */
+}
 
-/*===================*/
-/* === DARK MODE === */
-/*===================*/
+.dark .id {
+  color: #bbb; /* softer gray for ID */
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* circular avatar */
+  object-fit: cover;
+}
+
 .dark-mode .popup {
   background: #1e1e1e;
   color: #f1f1f1;

@@ -12,10 +12,10 @@
 <!-- User Popup -->
 <div id="userPopup" class="popup">
   <div class="popup-header">
-    <img src="profile.jpg" alt="User Avatar" class="avatar">
+    <img src="../../images/avatars/profile.png" alt="User Avatar" class="avatar">
     <div>
-      <h4 id="username">Username</h4>
-      <p id="id">123456</p>
+      <span class="username"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></span>
+      <span class="id"><?php echo htmlspecialchars($_SESSION['user']['account_id']); ?></span>
     </div>
   </div>
 <ul class="popup-menu">

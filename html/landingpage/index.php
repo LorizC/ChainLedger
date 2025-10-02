@@ -24,7 +24,7 @@
 <body class="font-sans text-gray-800">
 
 <!-- Navbar -->
-<header class="fixed top-0 left-0 w-full bg-gradient-to-r from-blue-900 to-indigo-800 text-white shadow-md z-50">
+<header class="fixed top-0 left-0 w-full bg-gradient-to-r from-violet-900 to-indigo-800 text-white shadow-md z-50">
   <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
     <div class="text-lg font-bold">ChainLedger</div>
 
@@ -47,7 +47,7 @@
 
   <!-- Hero Section -->
 <!-- Hero Section -->
-<section id="home" class="bg-gradient-to-r from-blue-900 to-indigo-800 text-center text-white px-6 pt-40 pb-20">
+<section id="home" class="bg-gradient-to-r from-violet-900 to-indigo-800 text-center text-white px-6 pt-40 pb-20">
   <h1 class="text-3xl md:text-5xl font-bold mb-4">ChainLedger</h1>
   <p class="text-lg md:text-xl mb-8">An E-wallet Transaction Monitoring System for Small Businesses.</p>
   
@@ -78,9 +78,9 @@
         <img src="https://dummyimage.com/500x300/eeeeee/000000&text=ARR+Preview" alt="ARR Example" class="rounded-lg shadow">
       </div>
       <div>
-        <h2 class="text-2xl md:text-3xl font-bold mb-4">Duis aute irure dolor in reprehenderit</h2>
-        <p class="text-gray-700 mb-4">Excepteur sint occaecat cupidatat non.</p>
-        <p class="text-gray-700 mb-4">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium.</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Know more about ChainLedger</h2>
+        <p class="text-gray-700 mb-4">E-wallet Transaction Management System.</p>
+        <p class="text-gray-700 mb-4">Description about the system 2-3 sentences.</p>
       </div>
     </div>
   </section>
@@ -89,8 +89,8 @@
   <section id="demo" class="bg-white py-16 px-6">
     <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div>
-        <h2 class="text-2xl md:text-3xl font-bold mb-4">Duis aute irure dolor in reprehenderit</h2>
-        <p class="text-gray-700 mb-4">Duis aute irure dolor in reprehenderit Duis aute irure dolor in reprehenderit.</p>
+        <h2 class="text-2xl md:text-3xl font-bold mb-4">Take a quick look!</h2>
+        <p class="text-gray-700 mb-4">screenshots of the system with carousel transitions+.</p>
         <p class="text-gray-700 mb-4">Duis aute irure dolor in reprehenderit Duis aute irure dolor in reprehenderit Duis aute irure dolor in reprehenderit.</p>
         <a href="#" class="text-teal-500 font-semibold hover:underline">See an example report</a>
       </div>
@@ -101,11 +101,11 @@
   </section>
 
 
-<section id="work" class="bg-blue-900 text-white py-20 px-6">
+<section id="obj" class="bg-gradient-to-r from-violet-900 to-indigo-800 text-white py-20 px-6">
   <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
     <!-- Text Content -->
     <div>
-      <h2 class="text-4xl font-bold mb-6">Duis aute irure dolor in reprehenderit</h2>
+      <h2 class="text-4xl font-bold mb-6">System Objectives</h2>
       <p class="text-gray-200 mb-8">
         Duis aute irure dolor in reprehenderit, Duis aute irure dolor in reprehenderit. Duis aute irure dolor in reprehenderit. 
         Duis aute irure dolor in reprehenderitDuis aute irure dolor in reprehenderit.
@@ -123,69 +123,43 @@
 
 <section id="features" class="bg-white py-40 px-6">
   <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-12 -mt-20 text-brand-navy">Duis aute irure dolor in reprehenderit</h2>
+    <h2 class="text-3xl font-bold mb-12 -mt-20 text-brand-navy">Meet the Developers</h2>
     <div class="grid md:grid-cols-3 gap-12 text-brand-slate">
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">bar_chart</span>
-        <h3 class="font-bold">Duis aute irure dolor in reprehenderit</h3>
-        <p>Duis aute irure dolor in reprehenderit Duis aute irure dolor in reprehenderit.</p>
+        <h3 class="font-bold">Loriz Neil Carlos</h3>
+        <p>Project Manager & Frontend Programmer.</p>
       </div>
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">task_alt</span>
-        <h3 class="font-bold">Duis aute irure dolor in reprehenderit</h3>
-        <p>Duis aute irure dolor in reprehenderit, Duis aute irure dolor in reprehenderit.</p>
+        <h3 class="font-bold">L.E Dela Pena</h3>
+        <p>Systems ANalyst.</p>
       </div>
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">show_chart</span>
-        <h3 class="font-bold">Duis aute irure</h3>
-        <p>Duis aute irure dolor in reprehenderit Duis aute irure dolor in reprehenderit.</p>
+        <h3 class="font-bold">Einjhel Jam Romanillos</h3>
+        <p>Documentation Specialist.</p>
       </div>
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">functions</span>
-        <h3 class="font-bold">Duis aute irure dolor in reprehenderit</h3>
-        <p>Duis aute irure dolor in reprehenderit, Duis aute irure dolor in reprehenderit</p>
+        <h3 class="font-bold">Trixie Valerie Bautista</h3>
+        <p>Database Administrator.</p>
       </div>
-
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">share</span>
-        <h3 class="font-bold">Duis aute irure dolor in</h3>
+        <h3 class="font-bold">Shairyl Limpahan</h3>
         <p>Duis aute irure dolor in reprehenderit.</p>
       </div>
-
-      <div>
-        <span class="material-symbols-outlined text-brand-blue text-4xl mb-4">chat</span>
-        <h3 class="font-bold">Duis aute irure dolor in reprehenderit</h3>
-        <p>Duis aute irure dolor in reprehenderit.</p>
-      </div>
-
-      <div>
-        <span class="material-symbols-outlined text-brand-blue text-4xl mb-4">cloud_sync</span>
-        <h3 class="font-bold">Duis aute irure dolor in reprehenderit</h3>
-        <p>Duis aute irure dolor in reprehenderit.</p>
-      </div>
-
-      <div>
-        <span class="material-symbols-outlined text-brand-blue text-4xl mb-4">notifications_active</span>
-        <h3 class="font-bold">Duis aute irure</h3>
-        <p>Duis aute irure dolor in reprehenderit.</p>
-      </div>
-
-      <div>
-        <span class="material-symbols-outlined text-brand-blue text-4xl mb-4">group</span>
-        <h3 class="font-bold">Duis aute irure dolor in reprehenderit</h3>
-        <p>Duis aute irure dolor in reprehenderit.</p>
-      </div>
-
     </div>
   </div>
 </section>
 
 <!-- Use as Extension -->
-<section id="extension" class="bg-blue-900 text-white py-20 px-6">
+<section id="extension" class="bg-gradient-to-r from-violet-900 to-indigo-800 text-white py-20 px-6">
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
     <div>
       <h2 class="text-3xl font-bold mb-4">sd daws <span class="text-yellow-400">jdfytf</span></h2>
