@@ -51,7 +51,7 @@ $profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
       </a>
     </li>
     <li class="drawer-item">
-      <a href="../usercreation/delete_account.php">
+      <a href="./delete/delete_account.php">
         <span class="material-icons-outlined">delete</span> Delete Account
       </a>
     </li>

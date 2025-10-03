@@ -53,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 // ✅ Verify security question + answer
                 if ($passwordService->verifySecurityAnswer($accountId, $question, $answer)) {
                     $_SESSION['reset_account_id'] = $accountId;
-                    header("Location: edit_confirmation.php");
+                    header("Location: delete_confirmation.php");
                     exit;
                 } else {
                     $error = "Invalid security question or answer.";

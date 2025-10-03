@@ -55,7 +55,7 @@ include 'confirm.php';
           
           <form method="POST" action="">
             <div class="title">
-              <h3 class="login-title">Change Password</h3>
+              <h3 class="login-title">Confirm Password</h3>
             </div>
 
             <div class="inputGroup">
