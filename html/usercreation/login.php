@@ -65,7 +65,7 @@
 
                 <div class="inputGroup">
                   <label for="account-id">Account ID</label>
-                  <input type="text" placeholder="Enter Account ID" id="email" name="account_id" required />
+                  <input type="number" placeholder="Enter Account ID" id="account_id" name="account_id" required />
                 </div>
 
                 <div class="inputGroup">
