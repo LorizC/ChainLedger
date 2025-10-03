@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
             // ✅ Redirect to login
-            header("Location: login.php");
+            header("Location: success.php");
             exit;
 
         } catch (Exception $e) {

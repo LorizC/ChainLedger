@@ -22,29 +22,28 @@ class SignupService {
         return $accountId;
     }
 
-private function generateUsername(string $firstName, string $lastName): string {
-    // Use "First Last" format
-    $baseUsername = $firstName . ' ' . $lastName;
-    $username = $baseUsername;
-    $suffix = 1;
-    $maxAttempts = 100;
+    private function generateUsername(string $firstName, string $lastName): string {
+        // Use "First Last" format
+        $baseUsername = $firstName . ' ' . $lastName;
+        $username = $baseUsername;
+        $suffix = 1;
+        $maxAttempts = 100;
 
-    // Ensure uniqueness
-    while ($this->userRepo->findByUsername($username) !== null) {
-        $username = $baseUsername . $suffix;
-        $suffix++;
-        if ($suffix > $maxAttempts) {
-            throw new Exception("Failed to generate a unique username after $maxAttempts attempts.");
+        // Ensure uniqueness
+        while ($this->userRepo->findByUsername($username) !== null) {
+            $username = $baseUsername . $suffix;
+            $suffix++;
+            if ($suffix > $maxAttempts) {
+                throw new Exception("Failed to generate a unique username after $maxAttempts attempts.");
+            }
         }
+
+        return $username;
     }
-
-    return $username;
-}
-
 
     public function registerUser(array $data): array {
         $firstName = trim($data['first_name'] ?? '');
-        $lastName = trim($data['last_name'] ?? '');
+        $lastName  = trim($data['last_name'] ?? '');
         $birthdate = $data['birthdate'] ?? '';
         $gender    = $data['gender'] ?? '';
         $securityQ = $data['security_question'] ?? '';
@@ -58,14 +57,18 @@ private function generateUsername(string $firstName, string $lastName): string {
         $username  = $this->generateUsername($firstName, $lastName);
         $accountId = $this->generateAccountId();
 
-        // Create user row
+        // Assign a default profile image
+        $defaultProfile = '../../images/avatars/profile.png';
+
+        // Create user row with default profile image
         $userId = $this->userRepo->createUser(
             $firstName,
             $lastName,
             $birthdate,
             $gender,
             $username,
-            $accountId
+            $accountId,
+            $defaultProfile
         );
 
         // Insert security (leave password NULL for now)
@@ -80,4 +83,3 @@ private function generateUsername(string $firstName, string $lastName): string {
         ];
     }
 }
-

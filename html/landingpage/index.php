@@ -123,36 +123,36 @@
 
 <section id="features" class="bg-white py-40 px-6">
   <div class="max-w-6xl mx-auto text-center">
-    <h2 class="text-3xl font-bold mb-12 -mt-20 text-brand-navy">Meet the Developers</h2>
+    <h2 class="text-3xl font-bold mb-12 -mt-20 text-brand-navy">Feautres</h2>
     <div class="grid md:grid-cols-3 gap-12 text-brand-slate">
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">bar_chart</span>
-        <h3 class="font-bold">Loriz Neil Carlos</h3>
-        <p>Project Manager & Frontend Programmer.</p>
+        <h3 class="font-bold">qetruuteeweqw</h3>
+        <p>efergnghmhjmjmjmjmjmjmjmjmjmjmjmjmjmjmjm.</p>
       </div>
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">task_alt</span>
-        <h3 class="font-bold">L.E Dela Pena</h3>
-        <p>Systems ANalyst.</p>
+        <h3 class="font-bold">sqwdwdcdbtynn</h3>
+        <p>ntngbfbebbebebrtbrtrbt.</p>
       </div>
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">show_chart</span>
-        <h3 class="font-bold">Einjhel Jam Romanillos</h3>
-        <p>Documentation Specialist.</p>
+        <h3 class="font-bold">erggbthnyikuyrwefdv</h3>
+        <p>veregryhtyntnrbcvxcwe.</p>
       </div>
 
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">functions</span>
-        <h3 class="font-bold">Trixie Valerie Bautista</h3>
-        <p>Database Administrator.</p>
+        <h3 class="font-bold">fervvfgbgnhmhbfve</h3>
+        <p>y65gtervevvvtv5tv5tv5v5.</p>
       </div>
       <div>
         <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">share</span>
-        <h3 class="font-bold">Shairyl Limpahan</h3>
-        <p>Duis aute irure dolor in reprehenderit.</p>
+        <h3 class="font-bold">swdfvgrbobobbobobbbbo</h3>
+        <p>uhtgwerthuyh5tgtg5tg5ty6h.</p>
       </div>
     </div>
   </div>

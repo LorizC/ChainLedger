@@ -1,11 +1,16 @@
 <?php
 session_start();
 
-// Check if user is logged in
 if (!isset($_SESSION['user'])) {
     header("Location: ../usercreation/login.php");
     exit;
 }
+
+// Include the helper function
+require_once __DIR__ . '/../../../php/handlers/profile_helper.php';
+
+// Get user profile image with fallback
+$profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
 ?>
 
 <aside class="sidebar">
@@ -17,7 +22,7 @@ if (!isset($_SESSION['user'])) {
 
   <!-- Profile -->
   <div class="profile">
-    <img src="../../images/avatars/profile.png" alt="User Avatar" class="avatar">
+        <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="User Avatar"  class="avatar">
     <div class="profile-info">
       <span class="username"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></span>
       <span class="fullname"><?php echo htmlspecialchars($_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name']); ?></span>

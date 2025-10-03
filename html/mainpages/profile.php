@@ -23,7 +23,7 @@ $transactions = [
   ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-01-2025"],  
 ];
 
-// Default avatars (your relative paths)
+// Default avatars (relative paths)
 $defaultAvatars = [
   "../../images/avatars/profile.png",
   "../../images/avatars/profile2.png",
@@ -126,12 +126,12 @@ $currentAvatar = $defaultAvatars[0];
       <label class="block text-sm font-medium text-gray-600 mb-2 dark:text-gray-300">Choose Avatar</label>
       <div class="grid grid-cols-5 gap-4 mb-6">
         <template x-for="a in [
-          '../../images/avatars/profile1.jpg',
-          '../../images/avatars/profile2.jpg',
-          '../../images/avatars/profile3.jpg',
-          '../../images/avatars/profile4.jpg',
-          '../../images/avatars/profile5.jpg',
-          '../../images/avatars/profile6.jpg'
+          '../../images/avatars/male1.jpg',
+          '../../images/avatars/male2.jpg',
+          '../../images/avatars/male3.jpg',
+          '../../images/avatars/female1.jpg',
+          '../../images/avatars/female2.jpg',
+          '../../images/avatars/female3.jpg'
         ]" :key="a">
           <img :src="a" 
                @click="avatar = a" 

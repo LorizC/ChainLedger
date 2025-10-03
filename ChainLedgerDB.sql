@@ -17,6 +17,7 @@ SELECT * FROM company_owners;
 SELECT * FROM transactions;
 
 
+
 -- =======================
 -- Users Table
 -- =======================
@@ -28,6 +29,7 @@ CREATE TABLE users (
     birthdate DATE,
     gender ENUM('Male','Female'),
     username VARCHAR(100) UNIQUE NOT NULL,
+    profile_image VARCHAR(255) DEFAULT NULL;
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

@@ -15,12 +15,16 @@ if ($conn->connect_error) {
 // Fetch security logs with username from users table
 $sql = "
   SELECT sl.security_id, sl.account_id, sl.username, sl.action, sl.ip_address, 
-         sl.device_info, sl.timestamp, sl.user_agent, u.first_name, u.last_name
+         sl.device_info, sl.timestamp, sl.user_agent, u.first_name, u.last_name, u.profile_image
   FROM security_logs sl
   JOIN users u ON sl.user_id = u.user_id
   ORDER BY sl.timestamp DESC
 ";
 $result = $conn->query($sql);
+
+$profileImage = !empty($log['profile_image']) 
+    ? htmlspecialchars($log['profile_image']) 
+    : '../../images/avatars/profile.png'; // fallback
 
 // Put into array
 $logs = [];
@@ -88,8 +92,8 @@ $conn->close();
                   <tr class="border-b dark:border-gray-700">
                     <td class="px-4 py-2">
                       <div class="flex items-center gap-2">
-                        <img src="../../images/avatars/profile1.jpg" class="w-6 h-6 rounded-full" alt="Profile">
-                        <?= htmlspecialchars($log['first_name'] . " " . $log['last_name']) ?>
+<img src="<?= $profileImage ?>" class="w-6 h-6 rounded-full object-cover" alt="Profile">
+<span><?= htmlspecialchars($log['first_name'] . " " . $log['last_name']) ?></span>
                       </div>
                     </td>
                     <td class="px-4 py-2 font-semibold 

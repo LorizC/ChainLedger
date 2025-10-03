@@ -12,19 +12,20 @@ class UserRepository {
         string $birthdate,
         string $gender,
         string $username,
-        int $accountId
+        int $accountId,
+        string $profileImage = '../../images/avatars/profile.png' 
     ): int {
         $stmt = $this->conn->prepare("
-            INSERT INTO users (first_name, last_name, birthdate, gender, username, account_id)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO users (first_name, last_name, birthdate, gender, username, account_id, profile_image)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmt->bind_param("sssssi", $first, $last, $birthdate, $gender, $username, $accountId);
+        $stmt->bind_param("sssssis", $first, $last, $birthdate, $gender, $username, $accountId, $profileImage);
 
         if (!$stmt->execute()) {
             throw new Exception("Failed to create user: " . $stmt->error);
         }
 
-        return $this->conn->insert_id; // ✅ auto-increment user_id
+        return $this->conn->insert_id; // auto-increment user_id
     }
 
 public function findSecurityByAccountId(int $accountId): ?array {
@@ -36,22 +37,22 @@ public function findSecurityByAccountId(int $accountId): ?array {
     return $result->fetch_assoc() ?: null;
 }
     
-    public function findByAccountId(string $accountId): ?array {
-        $stmt = $this->conn->prepare("
-            SELECT u.user_id, u.first_name, u.last_name, u.birthdate, u.gender, 
-                   u.username, u.account_id,
-                   s.password
-            FROM users u
-            LEFT JOIN security s ON u.account_id = s.account_id
-            WHERE u.account_id = ?
-            LIMIT 1
-        ");
-        $stmt->bind_param("s", $accountId);
-        $stmt->execute();
-        $result = $stmt->get_result();
+public function findByAccountId(string $accountId): ?array {
+    $stmt = $this->conn->prepare("
+        SELECT u.user_id, u.first_name, u.last_name, u.birthdate, u.gender, 
+               u.username, u.account_id, u.profile_image,
+               s.password
+        FROM users u
+        LEFT JOIN security s ON u.account_id = s.account_id
+        WHERE u.account_id = ?
+        LIMIT 1
+    ");
+    $stmt->bind_param("i", $accountId);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-        return $result->fetch_assoc() ?: null;
-    }
+    return $result->fetch_assoc() ?: null;
+}
 
     public function findByUsername(string $username): ?array {
         $stmt = $this->conn->prepare("

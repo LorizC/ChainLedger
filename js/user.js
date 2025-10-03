@@ -35,13 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================================================================================== //
 // ===========================================================Copy Account ID================================================================= //
 // ========================================================================================================================================== // 
-  window.copyAccountId = function () {
-    const accountId = document.getElementById("accountId").textContent;
-    navigator.clipboard.writeText(accountId)
-      .then(() => alert("✅ Account ID copied to clipboard!"))
-      .catch(() => alert("❌ Failed to copy. Please try again."));
-  };
-
+    function copyAccountID() {
+      const accountID = document.getElementById('accountID').innerText;
+      navigator.clipboard.writeText(accountID);
+      alert('Account ID copied: ' + accountID);
+    }
 
 // =========================================================================================================================================== //
 // ============================================================ FEATHER ICONS================================================================ //
