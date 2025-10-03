@@ -8,7 +8,7 @@
 
 body {
   font-family: "Poppins", sans-serif; /* set main font for the page */
-  background-image: url('../../../images/logos/img2.jpg'); /* background image */
+  background-image: url('../images/logos/img2.jpg'); /* background image */
   background-size: cover; /* make background cover the entire page */
   background-position: center; /* center the background image */
   background-repeat: no-repeat; /* prevent the background from repeating */

@@ -1,6 +1,6 @@
 <?php 
 ob_start();
-include '../../php/handlers/forgot_password.php'; 
+include 'password.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -9,8 +9,8 @@ include '../../php/handlers/forgot_password.php';
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forgot Password - ChainLedger</title>
-  <link rel="stylesheet" href="../../css/style.css" />
+  <title>Edit Password - ChainLedger</title>
+  <link rel="stylesheet" href="../../../css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
@@ -56,13 +56,21 @@ include '../../php/handlers/forgot_password.php';
           
           <form method="POST" action="">
             <div class="title">
-              <h3 class="login-title">Forgot Password</h3>
+              <h3 class="login-title">Change Password</h3>
             </div>
 
-            <div class="inputGroup">
-              <label for="account_id">Account ID</label>
-              <input type="text" placeholder="Enter Account ID" id="account_id" name="account_id" required />
-            </div>
+<div class="inputGroup">
+  <label for="username">Username</label>
+  <input 
+    type="text" 
+    id="username" 
+    name="username" 
+    value="<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>" 
+    readonly 
+    class="bg-gray-100 cursor-not-allowed"
+  />
+</div>
+
 
             <div class="inputGroup">
               <label for="security-question">Security Question</label>
@@ -83,8 +91,8 @@ include '../../php/handlers/forgot_password.php';
             <div class="button-container">
               <button type="submit" class="submitForm">Next</button>
               <div class="signup-row">
-                <p class="new-account">Remembered?</p>
-                <a href="login.php" class="submitForm signup-btn">Login</a>
+                <p class="new-account">Go back</p>
+                <a href="../dashboard.php" class="submitForm signup-btn">Back</a>
               </div>
             </div>
           </form>
@@ -93,7 +101,7 @@ include '../../php/handlers/forgot_password.php';
     </div>
   </div>
 
-<script src="../../js/user.js"></script>
+<script src="/../../../js/user.js"></script>
 </body>
 </html>
 

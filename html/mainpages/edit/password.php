@@ -1,0 +1,110 @@
+<?php
+session_start();
+require_once __DIR__ . '/../../../php/db/Database.php';
+require_once __DIR__ . '/../../../php/repositories/UserRepository.php';
+require_once __DIR__ . '/../../../php/services/PasswordService.php';
+
+$conn = Database::getConnection();
+$userRepo = new UserRepository($conn);
+$passwordService = new PasswordService($userRepo);
+
+$error = "";
+$success = "";
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $accountId = trim($_POST['account_id'] ?? '');
+    $username  = trim($_POST['username'] ?? '');
+    $question  = trim($_POST['security_question'] ?? '');
+    $answer    = trim($_POST['security_answer'] ?? '');
+
+    if ((empty($accountId) && empty($username)) || empty($question) || empty($answer)) {
+        $error = "Please provide either Account ID or Username and answer the security question.";
+    } else {
+        // ✅ If username is provided, get account_id from it
+        if (!empty($username)) {
+            $stmt = $conn->prepare("SELECT account_id FROM users WHERE username = ? LIMIT 1");
+            $stmt->bind_param("s", $username);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows === 0) {
+                $error = "Invalid Username.";
+                $stmt->close();
+            } else {
+                $row = $result->fetch_assoc();
+                $accountId = (int) $row['account_id'];
+                $stmt->close();
+            }
+        } else {
+            // Convert to int if provided directly
+            $accountId = (int) $accountId;
+        }
+
+        if (empty($error)) {
+            // ✅ Check if security record exists
+            $stmt2 = $conn->prepare("SELECT account_id FROM security WHERE account_id = ? LIMIT 1");
+            $stmt2->bind_param("i", $accountId);
+            $stmt2->execute();
+            $result2 = $stmt2->get_result();
+
+            if ($result2->num_rows === 0) {
+                $error = "No security question found for this user.";
+            } else {
+                // ✅ Verify security question + answer
+                if ($passwordService->verifySecurityAnswer($accountId, $question, $answer)) {
+                    $_SESSION['reset_account_id'] = $accountId;
+                    header("Location: edit_confirmation.php");
+                    exit;
+                } else {
+                    $error = "Invalid security question or answer.";
+                }
+            }
+
+            $stmt2->close();
+        }
+    }
+}
+
+if (!isset($_SESSION['reset_account_id'])) {
+    $error = "No reset session found. Please use Forgot Password again.";
+} else {
+    $accountId = $_SESSION['reset_account_id'];
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $newPassword = $_POST['new_password'] ?? '';
+        $confirm     = $_POST['confirm_password'] ?? '';
+
+        if ($newPassword !== $confirm) {
+            $error = "Passwords do not match.";
+        } elseif (strlen($newPassword) < 8) {
+            $error = "Password must be at least 8 characters.";
+        } else {
+            try {
+                // ✅ Reset password
+                $passwordService->resetPassword((int)$accountId, $newPassword);
+
+                // ✅ Fetch user for logging
+                $user = $userRepo->findByAccountId((int)$accountId);
+
+                if ($user) {
+                    // 🚨 Log password change
+                    $logService->logEvent(
+                        $user['user_id'],
+                        $user['account_id'],
+                        $user['username'],
+                        'PASSWORD_CHANGE'
+                    );
+                }
+
+                // ✅ Cleanup + redirect
+                unset($_SESSION['reset_account_id']); 
+                $_SESSION['success_message'] = "Your password has been reset successfully. Please login with your new password.";
+                header("Location: /../dashboard.php");
+                exit;
+            } catch (Exception $e) {
+                $error = "Password reset failed: " . $e->getMessage();
+            }
+        }
+    }
+}
+?>

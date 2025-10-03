@@ -1,16 +1,15 @@
 <?php 
 ob_start();
-include '../../php/handlers/forgot_password.php'; 
+include 'confirm.php'; 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Change Password - ChainLedger</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Confirm Password - ChainLedger</title>
+  <link rel="stylesheet" href="../../../css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
@@ -43,7 +42,7 @@ include '../../php/handlers/forgot_password.php';
         </div>
       </div>
 
-      <!-- Right side: Forgot Password form -->
+      <!-- Right side: Change Password form -->
       <div class="inFormBackground">
         <div class="inLoginForm">
           <?php if (!empty($success)): ?>
@@ -60,31 +59,24 @@ include '../../php/handlers/forgot_password.php';
             </div>
 
             <div class="inputGroup">
-              <label for="account_id">Account ID</label>
-              <input type="text" placeholder="Enter Account ID" id="account_id" name="account_id" required />
+              <label for="password">New Password</label>
+              <input type="password" placeholder="Enter Password" id="password" name="new_password" minlength="8" required />
             </div>
 
             <div class="inputGroup">
-              <label for="security-question">Security Question</label>
-              <select id="security-question" name="security_question" required>
-              <option value="" disabled selected>Select a question</option>
-                <option value="First Pet">What is the name of your first pet?</option>
-                <option value="Elementary School">What is the name of your elementary school?</option>
-                <option value="Favorite Food">What is your favorite food?</option>
-                <option value="Childhood Nickname">What was your childhood nickname?</option>
-              </select>
+              <label for="confirm_password">Confirm Password</label>
+              <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" minlength="8" required />
             </div>
 
-            <div class="inputGroup">
-              <label for="security-answer">Your Answer</label>
-              <input type="text" placeholder="Enter your answer" id="security-answer" name="security_answer" required />
-            </div>           
+            <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">
+              Show Passwords
+            </p>          
 
             <div class="button-container">
-              <button type="submit" class="submitForm">Next</button>
+              <button type="submit" class="submitForm">Change Password</button>
               <div class="signup-row">
                 <p class="new-account">Go back</p>
-                <a href="../mainpages/dashboard.php" class="submitForm signup-btn">Back</a>
+                <a href="../dashboard.php" class="submitForm signup-btn">Back</a>
               </div>
             </div>
           </form>
@@ -92,9 +84,7 @@ include '../../php/handlers/forgot_password.php';
       </div>
     </div>
   </div>
-
-<script src="../../js/user.js"></script>
+<script src="../../../js/user.js"></script>
 </body>
 </html>
-
 <?php ob_end_flush(); ?>

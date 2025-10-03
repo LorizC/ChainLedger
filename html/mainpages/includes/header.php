@@ -46,8 +46,8 @@ $profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
   </li>
   <ul id="settingsDrawer" class="settings-drawer">
     <li class="drawer-item">
-      <a href="../usercreation/changepassword.php">
-        <span class="material-icons-outlined">lock</span> Change Password
+      <a href="./edit/edit_password.php">
+        <span class="material-icons-outlined">lock</span> Edit Password
       </a>
     </li>
     <li class="drawer-item">
