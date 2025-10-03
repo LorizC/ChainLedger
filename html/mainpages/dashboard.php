@@ -203,6 +203,8 @@ $pagedTransactions = array_slice($transactions, $startIndex, $perPage);
         <?php endforeach; ?>
       </div>
     </section>
+    <?php include './includes/footer.php'; ?>
   </main>
 </body>
+</html>
 

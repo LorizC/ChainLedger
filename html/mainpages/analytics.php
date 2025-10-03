@@ -148,6 +148,7 @@ $categories = [
   <h3>Monthly Spending Breakdown</h3>
   <canvas id="categoryChart"></canvas>
 </div>
+<?php include './includes/footer.php'; ?>
   </main>
 </body>
 </html>

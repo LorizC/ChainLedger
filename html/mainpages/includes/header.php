@@ -1,3 +1,12 @@
+<?php
+
+// Include the helper function
+require_once __DIR__ . '/../../../php/handlers/profile_helper.php';
+
+// Get user profile image with fallback
+$profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
+?>
+
 <header>
   <!-- Burger Icon -->
   <button id="burgerBtn" class="burger-btn">&#9776;</button>
@@ -12,7 +21,7 @@
 <!-- User Popup -->
 <div id="userPopup" class="popup">
   <div class="popup-header">
-    <img src="../../images/avatars/profile.png" alt="User Avatar" class="avatar">
+    <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="User Avatar"  class="avatar">
     <div>
       <span class="username"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></span>
       <span class="id"><?php echo htmlspecialchars($_SESSION['user']['account_id']); ?></span>
@@ -37,7 +46,7 @@
   </li>
   <ul id="settingsDrawer" class="settings-drawer">
     <li class="drawer-item">
-      <a href="../usercreation/change_password.php">
+      <a href="../usercreation/changepassword.php">
         <span class="material-icons-outlined">lock</span> Change Password
       </a>
     </li>

@@ -177,7 +177,7 @@
 
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-400 text-center py-6">
-    <p>&copy; <?php echo date("Y"); ?> ChainLedger. All rights reserved.</p>
+    <p>@ 2025 ChainLedger. All rights reserved.</p>
   </footer>
 
 </body>

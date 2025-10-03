@@ -150,9 +150,7 @@ $currentAvatar = $defaultAvatars[0];
     </div>
   </div>
 </div>
-
-
-        </div>
+</div>
 
 <!-- Info -->
 <div class="space-y-6 text-2xl mb-8">
@@ -178,8 +176,7 @@ $currentAvatar = $defaultAvatars[0];
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
   </div>
 </div>
-
-      </div>
+</div>
 
 <!-- RIGHT: Spending + Transactions -->
 <div class="flex flex-col gap-6 w-[900px]">
@@ -204,11 +201,9 @@ $currentAvatar = $defaultAvatars[0];
       <?php endforeach; ?>
     </div>
   </div>
-
 </div>
-
-
     </div>
+    <?php include './includes/footer.php'; ?>
   </main>
 </body>
 </html>
