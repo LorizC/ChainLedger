@@ -19,7 +19,7 @@ class Database {
                 die(" Database connection failed: " . self::$instance->connect_error);
             }
 
-            // Optional: set charset for better security and encoding support
+            // set charset for better security and encoding support
             self::$instance->set_charset("utf8mb4");
         }
         return self::$instance;

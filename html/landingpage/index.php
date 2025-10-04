@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Whitepace Landing Page</title>
+  <title>ChainLedger Landing Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Google Material Symbols -->
@@ -37,7 +37,7 @@
     <!-- Navbar Links -->
     <nav class="hidden md:flex space-x-6">
       <a href="#home" class="hover:text-gray-300">Home</a>
-      <a href="#about" class="hover:text-gray-300">Abput</a>
+      <a href="#about" class="hover:text-gray-300">About</a>
       <a href="#obj" class="hover:text-gray-300">Objectives</a>
       <a href="#features" class="hover:text-gray-300">Features</a>
       <a href="#purpose" class="hover:text-gray-300">Purpose</a>
@@ -86,8 +86,9 @@
       </div>
       <div>
         <h2 class="text-2xl md:text-3xl font-bold mb-4">Know more about ChainLedger</h2>
-        <p class="text-gray-700 mb-4">E-wallet Transaction Management System.</p>
-        <p class="text-gray-700 mb-4">Description about the system 2-3 sentences.</p>
+        <p class="text-gray-700 mb-4">ChainLedger is an e-wallet transaction monitoring system for small businesses that handles e-wallets or digital wallets.</p>
+        <p class="text-gray-700 mb-4">It allows users to record and categorize income and expenses, generate reports, and view visual summaries.
+           With role-based access, it helps ensure accurate and organized financial management.</p>
       </div>
     </div>
   </section>
@@ -170,8 +171,7 @@
     <div>
       <h2 class="text-4xl font-bold mb-6">System Objectives</h2>
       <p class="text-gray-200 mb-8">
-        Duis aute irure dolor in reprehenderit, Duis aute irure dolor in reprehenderit. Duis aute irure dolor in reprehenderit. 
-        Duis aute irure dolor in reprehenderitDuis aute irure dolor in reprehenderit.
+To provide small businesses an easy-to-use system that records and analyzes transactions, helping them manage finances more efficiently and accurately..
       </p>
       <button class="bg-blue-500 text-white px-6 py-3 rounded-md flex items-center gap-2">
         Try ChainLedger <span class="material-symbols-outlined">arrow_forward</span>
@@ -243,8 +243,7 @@
     <div>
       <h2 class="text-3xl font-bold mb-4">The System's <span class="text-yellow-400">Purpose</span></h2>
       <p class="text-gray-200 mb-8">
-        Duis aute irure dolor in reprehenderit, Duis aute irure dolor in reprehenderit. Duis aute irure dolor in reprehenderit. 
-        Duis aute irure dolor in reprehenderitDuis aute irure dolor in reprehenderit.
+     An E-wallet Transaction Monitoring System designed to help small business owners record, organize, and analyse their digital financial transactions..
       </p>
       <button class="bg-white text-blue-900 px-6 py-3 rounded-md flex items-center gap-2">
         Let’s Go <span class="material-symbols-outlined">arrow_forward</span>

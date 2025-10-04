@@ -1,23 +1,9 @@
 -- =======================
 -- Create Database
 -- =======================
-SHOW DATABASES;
-SHOW TABLES;
-
-Drop table company_personnel;
 CREATE DATABASE ChainledgerDB;
 
 USE ChainledgerDB;
-
-SELECT * FROM users;
-SELECT * FROM security;
-SELECT * FROM security_logs;
-SELECT * FROM company_personnel;
-SELECT * FROM company_owners;
-SELECT * FROM transactions;
-
-
-
 -- =======================
 -- Users Table
 -- =======================
@@ -32,7 +18,6 @@ CREATE TABLE users (
     profile_image VARCHAR(255) DEFAULT NULL;
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
 -- =======================
 -- Security Table
 -- =======================
@@ -46,8 +31,6 @@ CREATE TABLE security (
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
-
-
 -- =======================
 -- Company Personnel Table
 -- =======================
@@ -58,7 +41,6 @@ CREATE TABLE company_personnel (
     company_role ENUM('Business Owner', 'Manager', 'Staff') NOT NULL,
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
 );
-
 -- =======================
 -- Owners Table
 -- =======================
@@ -70,7 +52,6 @@ CREATE TABLE  company_owners (
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
-
 -- =======================
 -- Transaction Table
 -- =======================
@@ -89,8 +70,10 @@ CREATE TABLE transactions (
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
-DROP TABLE SECURITY_LOGS;
---Revised
+
+-- ==========================
+-- Security_logs tables
+-- ========================== 
 CREATE TABLE security_logs (
     security_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NULL,
@@ -110,26 +93,3 @@ CREATE TABLE security_logs (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
 );
-
--- -- ==========================
--- -- security_logs tables
--- -- ==========================  
--- CREATE TABLE security_logs (
---     security_id INT AUTO_INCREMENT PRIMARY KEY,
---     user_id INT NOT NULL,
---     account_id INT NOT NULL,
---     username VARCHAR(100) NOT NULL,
---     action ENUM('LOGIN', 'LOGOUT', 'FAILED_LOGIN', 'PASSWORD_CHANGE', 'ACCOUNT_LOCKED') NOT NULL,
---     ip_address VARCHAR(45),
---     device_info TEXT,
---     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
---     user_agent TEXT,
---     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
---     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
---     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
--- );
-
-ALTER TABLE security_logs DROP FOREIGN KEY fk_user;
-ALTER TABLE security_logs 
-MODIFY user_id INT NULL;
-desc security_logs
