@@ -242,14 +242,15 @@
   <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
     <div>
       <h2 class="text-3xl font-bold mb-4">The System's <span class="text-yellow-400">Purpose</span></h2>
-      <p class="text-gray-200 mb-6">
-       irure dolor in reprehenderit irure dolor in reprehenderitirure dolor in reprehenderitirure dolor in reprehenderit.
+      <p class="text-gray-200 mb-8">
+        Duis aute irure dolor in reprehenderit, Duis aute irure dolor in reprehenderit. Duis aute irure dolor in reprehenderit. 
+        Duis aute irure dolor in reprehenderitDuis aute irure dolor in reprehenderit.
       </p>
       <button class="bg-white text-blue-900 px-6 py-3 rounded-md flex items-center gap-2">
         Let’s Go <span class="material-symbols-outlined">arrow_forward</span>
       </button>
-    </div>
-    <img src="../../images/purpose.webp" alt="Use as Extension" class="rounded-lg">
+    </div class="flex justify-center">
+    <img src="../../images/purpose.webp" alt="Use as Extension" class="rounded-lg w-72 md:w-96">
   </div>
 </section>
 
