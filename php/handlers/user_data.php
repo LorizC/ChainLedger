@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../db/Database.php';
+require_once __DIR__ . '/../db/dbconfig.php';
 
 $db = new Database();
 $conn = $db->getConnection();  // ✅ this ensures $conn exists

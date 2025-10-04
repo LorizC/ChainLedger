@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../../php/db/Database.php';
+require_once __DIR__ . '/../../../php/db/dbconfig.php';
 require_once __DIR__ . '/../../../php/repositories/UserRepository.php';
 require_once __DIR__ . '/../../../php/services/PasswordService.php';
 

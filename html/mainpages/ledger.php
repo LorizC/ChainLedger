@@ -3,7 +3,7 @@
 $ledger = [
   ["user" => "Loriz Carlos", "details" => "Food", "merchant" => "GrabPay", "amount" => "-₱2,255,555.55", "date" => "16-8"],
   ["user" => "Mii Lee", "details" => "Refund", "merchant" => "GCash", "amount" => "-₱900,000.00", "date" => "16-7"],
-  ["user" => "Sarah Dicaya", "details" => "Equipment", "merchant" => "Maya", "amount" => "-₱10,000,000.00", "date" => "16-7"],
+  ["user" => "Sara Pyaya", "details" => "Equipment", "merchant" => "Maya", "amount" => "-₱10,000,000.00", "date" => "16-7"],
   ["user" => "Dave Smith", "details" => "Loan", "merchant" => "Paypal", "amount" => "+₱15,000.00", "date" => "16-6"],
   ["user" => "Jon Weak", "details" => "Loan", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "date" => "16-5"],
   ["user" => "Dave Smith", "details" => "Loan", "merchant" => "Paypal", "amount" => "+₱15,000.00", "date" => "16-6"],
@@ -205,7 +205,7 @@ $ledger = [
   <?php foreach ($ledger as $index => $row): ?>
     <tr class="ledger-row">
       <td class="user-cell">
-        <img src="../../images/avatars/profile1.jpg" alt="Profile" class="user-icon">
+        <img src="../../images/avatars/profile.png"alt="Profile" class="user-icon">
         <?= $row["user"] ?>
       </td>
       <td><?= $row["details"] ?></td>
