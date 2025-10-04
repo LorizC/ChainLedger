@@ -1,6 +1,6 @@
-<?php 
+<?php
 ob_start();
-include 'password.php'; 
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ include 'password.php';
     <div class="background-blur"></div>
 
     <div class="content-wrapper">
-      <!-- Left side: Welcome message -->
+      <!-- Left Side -->
       <div class="left-side">
         <div class="welcome-message">
           <h1>Welcome to ChainLedger</h1>
@@ -43,53 +43,76 @@ include 'password.php';
         </div>
       </div>
 
-      <!-- Right side: Forgot Password form -->
+      <!-- Right Side: Change Password -->
       <div class="inFormBackground">
         <div class="inLoginForm">
-          <?php if (!empty($success)): ?>
-            <p style="color: green; text-align:center;"><?= htmlspecialchars($success) ?></p>
+          
+          <?php if (!empty($_SESSION['flash_success'])): ?>
+            <p style="color: green; text-align:center;">
+              <?= htmlspecialchars($_SESSION['flash_success']); ?>
+            </p>
+            <?php unset($_SESSION['flash_success']); ?>
           <?php endif; ?>
 
-          <?php if (!empty($error)): ?>
-            <p style="color: red; text-align:center;"><?= htmlspecialchars($error) ?></p>
+          <?php if (!empty($_SESSION['flash_error'])): ?>
+            <p style="color: red; text-align:center;">
+              <?= htmlspecialchars($_SESSION['flash_error']); ?>
+            </p>
+            <?php unset($_SESSION['flash_error']); ?>
           <?php endif; ?>
-          
-          <form method="POST" action="">
+
+          <form method="POST" action="password.php">
             <div class="title">
               <h3 class="login-title">Change Password</h3>
             </div>
 
-<div class="inputGroup">
-  <label for="username">Username</label>
-  <input 
-    type="text" 
-    id="username" 
-    name="username" 
-    value="<?php echo htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>" 
-    readonly 
-    class="bg-gray-100 cursor-not-allowed"
-  />
-</div>
-
-
             <div class="inputGroup">
-              <label for="security-question">Security Question</label>
-              <select id="security-question" name="security_question" required>
-              <option value="" disabled selected>Select a question</option>
-                <option value="First Pet">What is the name of your first pet?</option>
-                <option value="Elementary School">What is the name of your elementary school?</option>
-                <option value="Favorite Food">What is your favorite food?</option>
-                <option value="Childhood Nickname">What was your childhood nickname?</option>
-              </select>
+              <label for="username">Username</label>
+              <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                value="<?= htmlspecialchars($_SESSION['user']['username'] ?? ''); ?>" 
+                readonly 
+                class="bg-gray-100 cursor-not-allowed"
+              />
             </div>
 
             <div class="inputGroup">
-              <label for="security-answer">Your Answer</label>
-              <input type="text" placeholder="Enter your answer" id="security-answer" name="security_answer" required />
-            </div>           
+              <label for="current-password">Current Password</label>
+              <input 
+                type="password" 
+                id="current-password" 
+                name="current_password" 
+                placeholder="Enter your current password" 
+                required 
+              />
+            </div>
+
+            <div class="inputGroup">
+              <label for="new-password">New Password</label>
+              <input 
+                type="password" 
+                id="new-password" 
+                name="new_password" 
+                placeholder="Enter your new password" 
+                required 
+              />
+            </div>
+
+            <div class="inputGroup">
+              <label for="confirm-password">Confirm Password</label>
+              <input 
+                type="password" 
+                id="confirm-password" 
+                name="confirm_password" 
+                placeholder="Re-enter your new password" 
+                required 
+              />
+            </div>          
 
             <div class="button-container">
-              <button type="submit" class="submitForm">Next</button>
+              <button type="submit" class="submitForm">Change Password</button>
               <div class="signup-row">
                 <p class="new-account">Go back</p>
                 <a href="../dashboard.php" class="submitForm signup-btn">Back</a>
