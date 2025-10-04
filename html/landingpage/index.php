@@ -97,7 +97,7 @@
     <!-- Text Side -->
     <div>
       <h2 class="text-2xl md:text-3xl font-bold mb-4">Take a quick look!</h2>
-      <p class="text-gray-700 mb-4">Screenshots of the system with smooth carousel transitions.</p>
+      <p class="text-gray-700 mb-4">Screenshots of the system.</p>
       <p class="text-gray-700 mb-4">Easily browse through different sections of ChainLedger to get a feel of the interface.</p>
       <button id="open-fullscreen-gallery" type="button" class="text-teal-500 font-semibold hover:underline">
   See it fullscreen

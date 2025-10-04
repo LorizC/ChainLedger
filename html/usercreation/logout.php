@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../../php/db/Database.php';
+require_once __DIR__ . '/../../php/db/dbconfig.php';
 require_once __DIR__ . '/../../php/services/SecurityLogService.php';
 
 // Initialize DB + logging
@@ -10,7 +10,7 @@ $logService = new SecurityLogService($conn);
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
 
-    // ✅ Log logout event
+    // Log logout event
     $logService->logEvent(
         $user['user_id'],
         $user['account_id'],
