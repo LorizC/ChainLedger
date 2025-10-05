@@ -1,13 +1,14 @@
 <?php
 session_start();
 ob_start();
+
 require_once __DIR__ . '/../db/dbconfig.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../services/AuthService.php';
 require_once __DIR__ . '/../services/SignupService.php';
 require_once __DIR__ . '/../services/SecurityLogService.php';
 
-//Call the services
+// Initialize dependencies
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
 $authService = new AuthService($userRepo);
@@ -27,23 +28,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($result['error'])) {
             $error = $result['error'];
             // 🚨 Log failed attempt
-            $logService->logEvent(null, (int)$accountId, $accountId, 'FAILED_LOGIN');            
+            $logService->logEvent(null, (int)$accountId, $accountId, 'FAILED_LOGIN');
         } else {
-           $_SESSION['user'] = [
-           'user_id'    => $result['user']['user_id'],
-           'account_id' => $result['user']['account_id'],
-           'username'   => $result['user']['username'],
-           'first_name' => $result['user']['first_name'],
-           'last_name'  => $result['user']['last_name']
+            // ✅ Store complete user data in session
+            $_SESSION['user'] = [
+                'user_id'         => $result['user']['user_id'],
+                'account_id'      => $result['user']['account_id'],
+                'username'        => $result['user']['username'],
+                'first_name'      => $result['user']['first_name'],
+                'last_name'       => $result['user']['last_name'],
+                'birthdate'       => $result['user']['birthdate'] ?? null,
+                'date_registered' => $result['user']['date_registered'] ?? null,
+                'company_role'    => $result['user']['company_role'] ?? 'Unassigned',
+                'profile_image'   => $result['user']['profile_image'] ?? 'images/avatars/profile.png'
             ];
 
-            // ✅ Log login
+            // ✅ Log successful login
             $logService->logEvent(
                 $result['user']['user_id'],
                 $result['user']['account_id'],
                 $result['user']['username'],
                 'LOGIN'
-            );            
+            );
+
+            // Redirect to dashboard
             header("Location: ../mainpages/dashboard.php");
             exit();
         }

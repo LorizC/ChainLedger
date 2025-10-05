@@ -10,7 +10,8 @@ class AuthService {
      * Login using account_id + password
      */
     public function login(string $accountId, string $password): array {
-        $user = $this->userRepo->findByAccountId($accountId);
+        // ✅ fetch user with role included
+        $user = $this->userRepo->findWithRoleByAccountId($accountId);
 
         if (!$user || empty($user['password'])) {
             return ["error" => "Invalid credentials."]; // don’t leak info
@@ -20,8 +21,11 @@ class AuthService {
             return ["error" => "Invalid credentials."];
         }
 
-        // ✅ never return password hash in response
+        // ✅ remove sensitive hash
         unset($user['password']);
+
+        // ✅ ensure a fallback role
+        $user['company_role'] = $user['company_role'] ?? 'User';
 
         return ["user" => $user];
     }

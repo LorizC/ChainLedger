@@ -22,7 +22,7 @@ $profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
 
   <!-- Profile -->
   <div class="profile">
-        <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="User Avatar"  class="avatar">
+    <img src="<?php echo htmlspecialchars($profileImage); ?>" alt="User Avatar" class="avatar">
     <div class="profile-info">
       <span class="username"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></span>
       <span class="fullname"><?php echo htmlspecialchars($_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name']); ?></span>
@@ -58,10 +58,11 @@ $profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
 
   <!-- Logout -->
   <div class="logout">
-    <a href="../usercreation/logout.php">
+    <a href="logout.php" id="logoutBtn">
       <span class="material-icons-outlined">logout</span>
       <span class="label">Logout</span>
     </a>
   </div>
 </aside>
 <div class="overlay"></div>
+<script src="../../js/user.js"></script>

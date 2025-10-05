@@ -46,26 +46,24 @@ $profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
   </li>
   <ul id="settingsDrawer" class="settings-drawer">
     <li class="drawer-item">
-      <a href="./edit/edit_password.php">
+      <a href="edit_password.php">
         <span class="material-icons-outlined">lock</span> Edit Password
       </a>
     </li>
     <li class="drawer-item">
-      <a href="./delete/delete_account.php">
+      <a href="delete_account.php">
         <span class="material-icons-outlined">delete</span> Delete Account
       </a>
     </li>
   </ul>
-
-  <li class="header_logout">
-    <a href="../usercreation/logout.php">
-      <span class="material-icons-outlined">logout</span> Logout
-    </a>
-  </li>
-</ul>
+<li class="header_logout">
+  <a href="logout.php" id="logoutBtn">
+    <span class="material-icons-outlined">logout</span> Logout
+  </a>
+</li>
 
 </ul>
-
-
+</ul>
 </div>
+<script src="../../js/user.js"></script>
 </header>

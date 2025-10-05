@@ -67,6 +67,37 @@ public function findByAccountId(string $accountId): ?array {
 
         return $result->fetch_assoc() ?: null;
     }
+public function findWithRoleByAccountId(string $accountId): ?array {
+    $sql = "
+        SELECT 
+            u.user_id,
+            u.account_id,
+            u.username,
+            u.first_name,
+            u.last_name,
+            u.birthdate,
+            u.gender,
+            u.profile_image,
+            u.date_registered,
+            s.password,
+            c.company_role
+        FROM users u
+        LEFT JOIN security s ON u.account_id = s.account_id
+        LEFT JOIN company_personnel c ON u.account_id = c.account_id
+        WHERE u.account_id = ?
+        LIMIT 1
+    ";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bind_param('s', $accountId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    return $result->fetch_assoc() ?: null;
+}
+
+
+
 
     public function accountIdExists(int $accountId): bool {
         $stmt = $this->conn->prepare("

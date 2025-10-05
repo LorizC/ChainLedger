@@ -4,6 +4,10 @@
 CREATE DATABASE ChainledgerDB;
 
 USE ChainledgerDB;
+ SELECT * FROM users;
+
+
+
 -- =======================
 -- Users Table
 -- =======================
