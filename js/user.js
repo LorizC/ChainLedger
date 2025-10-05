@@ -272,6 +272,10 @@ document.addEventListener("DOMContentLoaded", () => {
       userPopup.style.display = "none";
     }
   });
+
+window.addEventListener("scroll", () => {
+  userPopup.classList.remove("show");
+});
 });
 
   document.addEventListener("DOMContentLoaded", () => {

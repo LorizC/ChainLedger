@@ -187,7 +187,7 @@ body {
 /* ===  HEADER/ICONS  === */
 /*===================*/
 header {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 220px;   /* default aligned with sidebar */
   right: 0;
@@ -199,6 +199,7 @@ header {
   padding: 0 1.5rem;
   border-bottom: 1px solid #ddd;
   transition: left 0.3s ease;
+  z-index: 10000;
 }
 header.full {
   left: 0;
@@ -239,7 +240,7 @@ header .profile span {
 /* ===  USER POPUP  === */
 /*===================*/
 .popup {
-  position: absolute;
+  position: fixed;
   top: 55px; /* adjust to header height */
   right: 20px;
   width: 280px;
@@ -253,6 +254,12 @@ header .profile span {
   transition: background 0.3s, color 0.3s;
     /* 👇 Force popup above other elements */
   z-index: 9999;
+}
+
+.popup.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .popup-header {
