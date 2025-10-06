@@ -159,9 +159,9 @@ fullname: '<?= htmlspecialchars($user['name']) ?>' }">
       <?php foreach ($transactions as $t): ?>
         <div class="grid grid-cols-4 gap-4 border-b pb-2">
           <span class="text-gray-700 font-medium dark:text-gray-300"><?= htmlspecialchars($t["name"]) ?></span>
-          <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["method"]) ?></span>
+          <span class="text-gray-500 dark:text-gray-300"><?= (htmlspecialchars($t["merchant"])) ?></span>
           <span class="text-gray-800 font-semibold dark:text-white"><?= htmlspecialchars($t["amount"]) ?></span>
-          <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["date"]) ?></span>
+          <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["transaction_date"]) ?></span>
         </div>
       <?php endforeach; ?>
     </div>

@@ -56,19 +56,19 @@ const merchantLogo = document.getElementById("merchantLogo");
 if (merchantSelect && merchantLogo) {
   merchantSelect.addEventListener("change", function () {
     const colors = {
-      gcash: "#0077FF",
-      googlepay: "#EA4335",
-      grabpay: "#01672fff",
-      maya: "#19926eff",
-      paypal: "#003087"
+      Gcash: "#0077FF",
+      Googlepay: "#EA4335",
+      Grabpay: "#01672fff",
+      Maya: "#19926eff",
+      Paypal: "#003087"
     };
 
     const logos = {
-      gcash: "../../images/ewallets/gcash1.jpg",
-      googlepay: "../../images/ewallets/googlepay1.png",
-      grabpay: "../../images/ewallets/grabpay.jpeg",
-      maya: "../../images/ewallets/maya1.png",
-      paypal: "../../images/ewallets/paypal1.jpg"
+      Gcash: "../../images/ewallets/gcash1.jpg",
+      Googlepay: "../../images/ewallets/googlepay1.png",
+      Grabpay: "../../images/ewallets/grabpay.jpeg",
+      Maya: "../../images/ewallets/maya1.png",
+      Paypal: "../../images/ewallets/paypal1.jpg"
     };
 
     // Change select color

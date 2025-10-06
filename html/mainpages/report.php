@@ -71,11 +71,11 @@
         <label name="merchant" class="block mb-2 text-base">Merchant</label>
         <select id="merchantSelect" class="w-full px-4 py-2.5 rounded text-black text-base">
           <option value="">Select Payment Merchant</option>
-          <option value="gcash">GCash</option>
-          <option value="googlepay">GooglePay</option>
-          <option value="grabpay">GrabPay</option>
-          <option value="maya">Maya</option>
-          <option value="paypal">PayPal</option>
+          <option value="Gcash">GCash</option>
+          <option value="Googlepay">GooglePay</option>
+          <option value="Grabpay">GrabPay</option>
+          <option value="Maya">Maya</option>
+          <option value="Paypal">PayPal</option>
         </select>
       </div>
 
@@ -89,10 +89,21 @@
 
       <div>
         <label name="date" class="block mb-2 text-base">Date</label>
-        <input type="date" class="w-full px-4 py-2.5 rounded text-black text-base" max="<?= date('Y-m-d') ?>">
+        <input type="date" class="w-full px-4 py-2.5 rounded text-black text-base">
       </div>
-    </form>
 
+
+      <div>
+        <label name="status" class="block mb-2 text-base">Status</label>
+        <select id="statusSelect" class="w-full px-4 py-2.5 rounded text-black text-base">
+          <option value="">Select Payment Status</option>
+          <option value="COMPLETED">Complete</option>
+          <option value="PENDING">Pending</option>
+          <option value="FAILED">Failed</option>
+          <option value="CANCELLED">Cancelled</option>
+        </select>
+      </div>    
+    </form>
     <!-- User Icon + Save Button -->
     <div name="merchantLogo" class="flex flex-col justify-start items-center w-1/3 ml-5">
       <img id="merchantLogo" src="../../images/logos/logo.png" 
@@ -107,6 +118,7 @@
   </div>
 </section>
 <?php include './includes/footer.php'; ?>
+<script src="../../js/user.js"></script>
 
   </main>
 </body>

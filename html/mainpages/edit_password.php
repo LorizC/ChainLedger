@@ -1,6 +1,27 @@
 <?php
-?>
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+if (!isset($_SESSION['user'])) {
+    header("Location: ../usercreation/login.php");
+    exit;
+}
+
+require_once __DIR__ . '/../../php/db/dbconfig.php';
+require_once __DIR__ . '/../../php/repositories/UserRepository.php';
+
+$conn = Database::getConnection();
+$userRepo = new UserRepository($conn);
+
+$accountId = (int)$_SESSION['user']['account_id'];
+$userData = $userRepo->findWithRoleByAccountId($accountId);
+
+$user = [
+    'name'  => $userData['first_name'] . ' ' . $userData['last_name'],
+    'role'  => $userData['company_role'] ?? 'Unassigned',
+];
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,11 +69,10 @@
                class="w-28 h-28 rounded-full border-4 border-indigo-200 shadow dark:border-gray-600">
           <div class="ml-6">
             <h2 class="text-3xl font-bold text-indigo-700 dark:text-white">
-              <?= htmlspecialchars($_SESSION['user']['username']); ?>
+              <?= htmlspecialchars($user['name']) ?>
             </h2>
             <p class="text-lg text-gray-500 dark:text-gray-300 mt-1">
-  <?= htmlspecialchars($_SESSION['user']['role'] ?? 'User'); ?>
-</p>
+             <?= htmlspecialchars($user['role']) ?></p>
 
 
             <p class="text-sm text-gray-400 mt-1">Account ID: <?= htmlspecialchars($_SESSION['user']['account_id']); ?></p>
@@ -91,7 +111,7 @@
 
         <form x-data="{showPassword:false,showNew:false,showConfirm:false}"
               method="POST"
-              action="../../php/handlers/change_password.php"
+              action="../../php/handlers/edit_password.php"
               class="space-y-6">
 
           <!-- Current Password -->

@@ -4,9 +4,10 @@
 CREATE DATABASE ChainledgerDB;
 
 USE ChainledgerDB;
- SELECT * FROM users;
+ SELECT * FROM transactions users;
+ desc transactions;
 
-
+ 
 
 -- =======================
 -- Users Table
@@ -63,12 +64,13 @@ CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
-    detail ENUM('food', 'equipment', 'travel', 'health', 'maintenance', 'utilities') NOT NULL,
-    merchant ENUM('gcash', 'maya', 'grabpay', 'paypal', 'googlepay') NOT NULL,
+    detail ENUM('Food', 'Equipment', 'Travel', 'Health', 'Maintenance', 'Utilities') NOT NULL,
+    merchant ENUM('Gcash', 'Maya', 'Grabpay', 'Paypal', 'Googlepay') NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    transaction_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
+    entry_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     currency VARCHAR(10) DEFAULT 'PHP',
-    transaction_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT') NOT NULL,
+    transaction_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT', 'REFUND') NOT NULL,
     status ENUM('PENDING', 'COMPLETED', 'FAILED', 'CANCELLED') NOT NULL,
     -- Foreign key relationships
     FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
