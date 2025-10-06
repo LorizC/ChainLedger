@@ -447,8 +447,9 @@ header .profile span {
 .main {
   margin-left: 220px;   /* align with sidebar */
   margin-top: 60px;    /* SAME as header height */
-  padding: 1rem 2rem;
+  padding: 20px;
   flex: 1;
+  max-height: calc(100vh - 60px); /* full viewport minus header height */
   overflow-y: auto;
   transition: margin-left 0.3s ease;
     /* Add shadow so it appears above the sidebar */

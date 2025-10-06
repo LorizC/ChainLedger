@@ -384,3 +384,24 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+  const modal = document.getElementById('editProfileModal');
+  const cancelEditBtn = document.getElementById('cancelEditBtn');
+  const avatarInputs = document.querySelectorAll('input[name="avatar"]');
+  const avatarPreview = document.getElementById('avatarPreview');
+
+  // Example: Open the modal (attach this to your "Edit Profile" button)
+  function openEditProfile() {
+    modal.classList.remove('hidden');
+  }
+
+  // Close modal
+  cancelEditBtn.addEventListener('click', () => {
+    modal.classList.add('hidden');
+  });
+
+  // Live avatar preview
+  avatarInputs.forEach(input => {
+    input.addEventListener('change', () => {
+      avatarPreview.src = input.value;
+    });
+  });

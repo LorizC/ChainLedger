@@ -1,40 +1,6 @@
-<!-- use include '../php/handlers/profile.php'; ?> to connect php to html-->
-<?php
-// Example PHP data (replace with DB values)
-$user = [
-  "name" => "Loriz Neil Carlos",
-  "account_id" => "123456",
-  "role" => "Business Owner",
-  "birthdate" => "08-16-2006",
-  "registered" => "09-30-2025",
-  "spending" => "₱5,000,000.00"
-];
+<?php include '../../php/handlers/profile.php'; ?>
 
-$transactions = [
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-01-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-01-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-01-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "09-10-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "Maya", "amount" => "₱1,000,000.00", "date" => "08-10-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GooglePay", "amount" => "₱1,000,000.00", "date" => "08-01-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "07-01-2025"],
-  ["name" => "Loriz Neil Carlos", "method" => "GrabPay", "amount" => "₱1,000,000.00", "date" => "06-01-2025"],  
-];
 
-// Default avatars (relative paths)
-$defaultAvatars = [
-  "../../images/avatars/profile.png",
-  "../../images/avatars/profile2.png",
-  "../../images/avatars/profile3.png",
-  "../../images/avatars/profile4.png",
-  "../../images/avatars/profile5.png"
-];
-
-// Current avatar: use first one by default (no randomness)
-$currentAvatar = $defaultAvatars[0];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +28,7 @@ $currentAvatar = $defaultAvatars[0];
   <?php include './includes/sidebar.php'; ?>
 
   <!-- Main -->
-  <main class="main">
+  <main class="main max-h-screen overflow-y-auto">
     <!-- Header -->
     <?php include './includes/header.php'; ?>
 
@@ -80,15 +46,14 @@ $currentAvatar = $defaultAvatars[0];
           
 <!-- Profile Section -->
 <div class="p-6" 
-     x-data="{ 
-       open: false, 
-       avatar: '../../images/avatars/profile.png', 
-       username: 'Loriz Carlos', 
-       fullname: '<?= htmlspecialchars($user["name"]) ?>' 
-     }">
+x-data="{ 
+open: false,
+ avatar: '<?= htmlspecialchars($currentAvatar) ?>',
+ username: '<?= htmlspecialchars($userData['username']) ?>',
+fullname: '<?= htmlspecialchars($user['name']) ?>' }">
 
-  <div class="flex items-center space-x-6">
-    <!-- Avatar -->
+<!-- Avatar -->
+  <div class="flex items-center space-x-6">    
     <div class="relative inline-block">
       <img :src="avatar" class="w-28 h-28 rounded-full object-cover border-4 border-indigo-200 shadow dark:border-gray-600" alt="User Avatar">
       <button @click="open = true" 
@@ -96,9 +61,9 @@ $currentAvatar = $defaultAvatars[0];
         <span class="material-icons-outlined text-lg text-indigo-600 dark:text-black">edit</span>
       </button>
     </div>
-
-    <!-- Names (stacked) -->
     <div>
+    <!-- Names (stacked) -->
+
       <!-- Editable Username -->
       <h2 class="text-4xl font-extrabold text-indigo-700 dark:text-white" x-text="username"></h2>
       <!-- Fixed Full Name -->
