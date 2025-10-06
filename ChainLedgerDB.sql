@@ -4,9 +4,9 @@
 CREATE DATABASE ChainledgerDB;
 
 USE ChainledgerDB;
- SELECT * FROM transactions users;
+ SELECT * FROM security;
  desc transactions;
-
+transactions 
  
 
 -- =======================

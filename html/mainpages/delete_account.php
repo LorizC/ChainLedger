@@ -89,16 +89,17 @@
           </div>
         <?php endif; ?>
 
-        <form x-data="{showPassword:false,showNew:false,showConfirm:false}"
+        <form id="deleteForm"
+        x-data="{showPassword:false,showNew:false,showConfirm:false}"
               method="POST"
-              action="../../php/handlers/change_password.php"
+              action="../../php/handlers/delete_password.php"
               class="space-y-6">
 
           <!-- A ID -->
           <div>
             <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Security Answer</label>
             <div class="relative">
-              <input :type="showNew ? 'text' : 'password'" name="new_password"
+              <input :type="showNew ? 'text' : 'password'" name="security_answer"
                      class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
                      placeholder="Enter your security answer" required>
               <span @click="showNew=!showNew"
@@ -120,7 +121,7 @@
 
           <!-- Confirm Password -->
           <div>
-            <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Confirm New Password</label>
+            <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Confirm Password</label>
             <div class="relative">
               <input :type="showConfirm ? 'text' : 'password'" name="confirm_password"
                      class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
@@ -141,7 +142,26 @@
         </form>
       </div>
     </div>
-
+    <!-- CONFIRMATION MODAL -->
+    <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 w-[350px] text-center">
+        <h3 class="text-xl font-bold text-red-600 mb-4">Confirm Deletion</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-6">
+          Are you sure you want to delete your account? This action cannot be undone.
+        </p>
+        <div class="flex justify-center gap-4">
+          <button type="button"
+                  onclick="document.getElementById('confirmModal').classList.add('hidden')"
+                  class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
+            Cancel
+          </button>
+          <button type="submit" form="deleteForm"
+                  class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
+            Yes, Delete
+          </button>
+        </div>
+      </div>
+    </div>
     <?php include './includes/footer.php'; ?>
   </main>
 </body>
