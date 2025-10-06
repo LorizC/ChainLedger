@@ -25,5 +25,5 @@ session_unset();
 session_destroy();
 
 // Redirect to login
-header("Location: login.php");
+header("Location: ../usercreation/login.php");
 exit;
