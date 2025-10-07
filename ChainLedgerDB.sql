@@ -3,12 +3,9 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 
-USE ChainledgerDB;
- SELECT * FROM security;
- desc transactions;
-transactions 
- 
+Select * from users;
 
+USE ChainledgerDB;
 -- =======================
 -- Users Table
 -- =======================
@@ -99,3 +96,13 @@ CREATE TABLE security_logs (
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
 );
+
+-- ==========================
+-- Archived_Accounts tables
+-- ========================== 
+CREATE TABLE archivedaccounts LIKE transactions;
+
+ALTER TABLE archivedaccounts
+ADD COLUMN old_account_id INT AFTER account_id,
+ADD COLUMN old_username VARCHAR(255) AFTER old_account_id,
+ADD COLUMN archived_at DATETIME DEFAULT CURRENT_TIMESTAMP;

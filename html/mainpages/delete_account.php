@@ -1,4 +1,26 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user'])) {
+    header("Location: ../usercreation/login.php");
+    exit;
+}
+
+require_once __DIR__ . '/../../php/db/dbconfig.php';
+require_once __DIR__ . '/../../php/repositories/UserRepository.php';
+
+$conn = Database::getConnection();
+$userRepo = new UserRepository($conn);
+
+$accountId = (int)$_SESSION['user']['account_id'];
+$userData = $userRepo->findWithRoleByAccountId($accountId);
+
+$user = [
+    'name'  => $userData['first_name'] . ' ' . $userData['last_name'],
+    'role'  => $userData['company_role'] ?? 'Unassigned',
+];
 ?>
 
 
@@ -19,10 +41,13 @@
   <!-- Alpine.js (explicit version) -->
   <script src="https://unpkg.com/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
 
+    <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom Theme Logic -->
+  <script src="../../js/user.js" defer></script>
   <!-- Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <!-- Custom Theme Logic -->
-  <script src="../../js/user.js"></script>
+
 </head>
 <body>
   <!-- Sidebar -->
@@ -51,8 +76,7 @@
               <?= htmlspecialchars($_SESSION['user']['username']); ?>
             </h2>
             <p class="text-lg text-gray-500 dark:text-gray-300 mt-1">
-  <?= htmlspecialchars($_SESSION['user']['role'] ?? 'User'); ?>
-</p>
+            <?= htmlspecialchars($user['role']) ?></p>
 
 
             <p class="text-sm text-gray-400 mt-1">Account ID: <?= htmlspecialchars($_SESSION['user']['account_id']); ?></p>
@@ -92,7 +116,7 @@
         <form id="deleteForm"
         x-data="{showPassword:false,showNew:false,showConfirm:false}"
               method="POST"
-              action="../../php/handlers/delete_password.php"
+              action="../../php/handlers/delete_account.php"
               class="space-y-6">
 
           <!-- A ID -->
@@ -134,35 +158,15 @@
           <!-- Buttons -->
           <div class="flex justify-end gap-3 pt-4">
             <button type="reset" class="px-5 py-2 text-gray-600 hover:underline dark:text-gray-300">Cancel</button>
-            <button type="submit"
-                    class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 dark:bg-slate-100 dark:text-gray-800">
-              Delete Account
-            </button>
+<button id="confirmDeleteBtn" type="button"
+        class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 dark:bg-slate-100 dark:text-gray-800">
+  Delete Account
+</button>
           </div>
         </form>
       </div>
     </div>
-    <!-- CONFIRMATION MODAL -->
-    <div id="confirmModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 w-[350px] text-center">
-        <h3 class="text-xl font-bold text-red-600 mb-4">Confirm Deletion</h3>
-        <p class="text-gray-600 dark:text-gray-300 mb-6">
-          Are you sure you want to delete your account? This action cannot be undone.
-        </p>
-        <div class="flex justify-center gap-4">
-          <button type="button"
-                  onclick="document.getElementById('confirmModal').classList.add('hidden')"
-                  class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600">
-            Cancel
-          </button>
-          <button type="submit" form="deleteForm"
-                  class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">
-            Yes, Delete
-          </button>
-        </div>
-      </div>
-    </div>
-    <?php include './includes/footer.php'; ?>
+     <?php include './includes/footer.php'; ?>
   </main>
 </body>
 </html>

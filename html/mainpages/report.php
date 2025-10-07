@@ -49,8 +49,10 @@
         <label name="details" class="block mb-2 text-base">Details</label>
         <select class="w-full px-4 py-2.5 rounded text-black text-base">
           <option>Select Details</option>
-          <option>Payment</option>
-          <option>Refund</option>
+          <option>Payment</option><!--minus-->
+          <option>Refund</option><!--plus-->
+          <option>Withdrawal</option><!--minus-->
+          <option>Deposit</option><!--plus-->
         </select>
       </div>
 

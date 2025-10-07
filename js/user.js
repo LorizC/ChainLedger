@@ -1,3 +1,5 @@
+console.log("User.js loaded");
+
 document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================================================================================== //
 // =======================================================PASSWORD FIELD TOGGLES============================================================== //
@@ -338,7 +340,7 @@ window.addEventListener("scroll", () => {
   });
 
 // =========================================================================================================================================== //
-// ==============================================================LOGOUT=============================================================== //
+// ==============================================================LOGOUT CONFIRMATION=============================================================== //
 // ========================================================================================================================================== // 
 document.addEventListener("DOMContentLoaded", () => {
   const logoutButtons = document.querySelectorAll('a[href*="logout.php"]');
@@ -384,11 +386,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-  const modal = document.getElementById('editProfileModal');
-  const cancelEditBtn = document.getElementById('cancelEditBtn');
-  const avatarInputs = document.querySelectorAll('input[name="avatar"]');
-  const avatarPreview = document.getElementById('avatarPreview');
+// =========================================================================================================================================== //
+// =============================================================EDIT PROFILE================================================================= //
+// ========================================================================================================================================== // 
+document.addEventListener("DOMContentLoaded", () => {
+const modal = document.getElementById('editProfileModal');
+const cancelEditBtn = document.getElementById('cancelEditBtn');
+const avatarInputs = document.querySelectorAll('input[name="avatar"]');
+const avatarPreview = document.getElementById('avatarPreview');
 
+if (modal && cancelEditBtn) {
   // Example: Open the modal (attach this to your "Edit Profile" button)
   function openEditProfile() {
     modal.classList.remove('hidden');
@@ -402,6 +409,73 @@ document.addEventListener("DOMContentLoaded", () => {
   // Live avatar preview
   avatarInputs.forEach(input => {
     input.addEventListener('change', () => {
-      avatarPreview.src = input.value;
+      if (avatarPreview) avatarPreview.src = input.value;
     });
   });
+}
+
+});
+  // =========================================================================================================================================== //
+// ==========================================================DELETE ACCOUNT CONFIRMATION====================================================== //
+// ========================================================================================================================================== //
+document.addEventListener("DOMContentLoaded", () => {
+  const confirmDeleteBtn = document.getElementById("confirmDeleteBtn");
+  const form = document.getElementById("deleteForm");
+
+  if (!confirmDeleteBtn || !form) return; // safety check
+
+  confirmDeleteBtn.addEventListener("click", () => {
+    const securityAnswer = form.querySelector("input[name='security_answer']").value.trim();
+    const password = form.querySelector("input[name='current_password']").value.trim();
+    const confirmPassword = form.querySelector("input[name='confirm_password']").value.trim();
+
+    // Basic input validation
+    if (!securityAnswer || !password || !confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Missing Fields',
+        text: 'Please fill in all fields before proceeding.',
+        confirmButtonColor: '#3085d6'
+      });
+      return;
+    }
+
+    // Password match validation
+    if (password !== confirmPassword) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Password Mismatch',
+        text: 'Passwords do not match. Please re-enter them correctly.',
+        confirmButtonColor: '#3085d6'
+      });
+      return;
+    }
+
+    // Show confirmation modal
+    Swal.fire({
+      title: 'Are you absolutely sure?',
+      text: "Your account and all associated data will be permanently deleted.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete my account',
+      cancelButtonText: 'Cancel',
+      backdrop: true,
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Deleting...',
+          text: 'Please wait while we remove your account.',
+          icon: 'info',
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          didOpen: () => {
+            form.submit();
+          }
+        });
+      }
+    });
+  });
+});
