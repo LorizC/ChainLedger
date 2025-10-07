@@ -102,7 +102,7 @@ $conn->close();
 
   <!-- Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-  <script src="../../js/user.js"></script>  
+  <script src="../../js/scripts.js"></script>  
 </head>
 <body class="dark:bg-gray-900 dark:text-white">
   <!-- Sidebar -->
@@ -186,7 +186,6 @@ $conn->close();
               <tr>
                 <th class="px-4 py-2 text-left">User</th>
                 <th class="px-4 py-2 text-left">Action</th>
-                <th class="px-4 py-2 text-left">IP Address</th>
                 <th class="px-4 py-2 text-left">Device</th>
                 <th class="px-4 py-2 text-left">User Agent</th>
                 <th class="px-4 py-2 text-left">Timestamp</th>
@@ -211,14 +210,13 @@ $conn->close();
                       <?= $log['action'] === 'FAILED_LOGIN' || $log['action'] === 'ACCOUNT_DELETED' ? 'text-red-500' : 'text-green-500' ?>">
                       <?= htmlspecialchars($log['action']) ?>
                     </td>
-                    <td class="px-4 py-2"><?= htmlspecialchars($log['ip_address']) ?></td>
                     <td class="px-4 py-2"><?= htmlspecialchars($log['device_info']) ?></td>
                     <td class="px-4 py-2 truncate max-w-xs"><?= htmlspecialchars($log['user_agent']) ?></td>
                     <td class="px-4 py-2"><?= htmlspecialchars($log['timestamp']) ?></td>
                   </tr>
                 <?php endforeach; ?>
               <?php else: ?>
-                <tr><td colspan="6" class="px-4 py-2 text-center text-gray-500">No logs found</td></tr>
+                <tr><td colspan="5" class="px-4 py-2 text-center text-gray-500">No logs found</td></tr>
               <?php endif; ?>
             </tbody>
           </table>

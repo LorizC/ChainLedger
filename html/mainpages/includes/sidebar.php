@@ -71,4 +71,4 @@ $profileImage .= '?v=' . time();
   </div>
 </aside>
 <div class="overlay"></div>
-<script src="../../js/user.js"></script>
+<script src="../../js/scripts.js"></script>

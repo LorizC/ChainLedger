@@ -61,7 +61,7 @@ $pagedTransactions = array_slice($transactions, $startIndex, $perPage);
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <!-- Custom Theme Logic -->
-    <script src="../../js/user.js"></script>
+    <script src="../../js/scripts.js"></script>
 </head>
 <body>
   <!-- Sidebar -->

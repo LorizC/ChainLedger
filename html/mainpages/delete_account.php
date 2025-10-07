@@ -44,7 +44,7 @@ $user = [
     <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom Theme Logic -->
-  <script src="../../js/user.js" defer></script>
+  <script src="../../js/scripts.js" defer></script>
   <!-- Icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
 

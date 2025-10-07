@@ -65,5 +65,5 @@ $profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
 </ul>
 </ul>
 </div>
-<script src="../../js/user.js"></script>
+<script src="../../js/scripts.js"></script>
 </header>

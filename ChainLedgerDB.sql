@@ -5,6 +5,7 @@ CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
 
 SELECT * from users
+SELECT *  FROM transactions
 -- =======================
 -- Users Table
 -- =======================
@@ -18,7 +19,8 @@ CREATE TABLE users (
     username VARCHAR(100) UNIQUE NOT NULL,
     profile_image VARCHAR(255) DEFAULT NULL,
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
+)
+
 
 -- =======================
 -- Security Table
@@ -36,7 +38,7 @@ CREATE TABLE security (
     FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-) ENGINE=InnoDB;
+)
 
 -- =======================
 -- Company Personnel Table
@@ -52,7 +54,7 @@ CREATE TABLE company_personnel (
     FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-) ENGINE=InnoDB;
+)
 
 -- =======================
 -- Owners Table
@@ -68,7 +70,7 @@ CREATE TABLE company_owners (
     FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-) ENGINE=InnoDB;
+)
 
 -- =======================
 -- Transaction Table
@@ -77,12 +79,12 @@ CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
-    detail ENUM('Food', 'Equipment', 'Travel', 'Health', 'Maintenance', 'Utilities') NOT NULL,
+    detail ENUM('Food', 'Equipment', 'Transportation', 'Health', 'Maintenance', 'Utilities') NOT NULL,
     merchant ENUM('Gcash', 'Maya', 'Grabpay', 'Paypal', 'Googlepay') NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
+    currency VARCHAR(10) DEFAULT 'PHP',
     transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
     entry_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-    currency VARCHAR(10) DEFAULT 'PHP',
     transaction_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT', 'REFUND') NOT NULL,
     status ENUM('PENDING', 'COMPLETED', 'FAILED', 'CANCELLED') NOT NULL,
     FOREIGN KEY (account_id) REFERENCES users(account_id)
@@ -91,7 +93,7 @@ CREATE TABLE transactions (
     FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-) ENGINE=InnoDB;
+)
 
 -- ==========================
 -- Security_logs Table
@@ -119,7 +121,7 @@ CREATE TABLE security_logs (
     CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-) ENGINE=InnoDB;
+)
 
 -- ==========================
 -- Archived_Accounts Table
