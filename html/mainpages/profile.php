@@ -41,14 +41,14 @@
     <div class="flex flex-col md:flex-row gap-6 mt-10">
 
       <!-- LEFT: User Info Card -->
-      <div class="bg-white p-6 rounded-xl shadow min-h-[500px] max-h-[500px] w-[600px] dark:bg-gray-800">
+      <div class="bg-white p-6 rounded-xl shadow min-h-[500px] max-h-[500px] w-[700px] dark:bg-gray-800">
         <div class="flex items-center mb-6">
           
 <!-- Profile Section -->
 <div class="p-6" 
 x-data="{ 
 open: false,
- avatar: '<?= htmlspecialchars($currentAvatar) ?>',
+ avatar: '<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>',
  username: '<?= htmlspecialchars($userData['username']) ?>',
 fullname: '<?= htmlspecialchars($user['name']) ?>' }">
 
@@ -77,15 +77,20 @@ fullname: '<?= htmlspecialchars($user['name']) ?>' }">
     <div class="bg-white rounded-xl shadow-lg p-6 w-[28rem] dark:bg-gray-800">
       <h2 class="text-xl font-bold text-gray-700 mb-4 dark:text-gray-300">Edit Profile</h2>
 
+          <!-- Form -->
+    <form method="POST" action="../../php/handlers/profile.php">
       <!-- Current Avatar -->
       <div class="flex justify-center mb-4">
         <img :src="avatar" class="w-28 h-28 rounded-full border-4 border-indigo-200 shadow object-cover dark:border-gray-600" alt="Avatar">
       </div>
 
-      <!-- Username Input -->
-      <label class="block text-sm font-medium text-gray-600 mb-1 dark:text-gray-300">Username</label>
-      <input type="text" x-model="username" 
-             class="w-full border rounded-lg px-3 py-3 mb-4 text-lg text-gray-700 focus:ring-2 focus:ring-indigo-500">
+<!-- Username Input -->
+<label class="block text-sm font-medium text-gray-600 mb-1 dark:text-gray-300">Username</label>
+<input 
+  type="text" 
+  name="username" 
+  x-model="username" 
+  class="w-full border rounded-lg px-3 py-3 mb-4 text-lg text-gray-700 focus:ring-2 focus:ring-indigo-500">
 
       <!-- Avatar Picker -->
       <label class="block text-sm font-medium text-gray-600 mb-2 dark:text-gray-300">Choose Avatar</label>
@@ -105,13 +110,18 @@ fullname: '<?= htmlspecialchars($user['name']) ?>' }">
         </template>
       </div>
 
+      <!-- Hidden Avatar Input -->
+      <input type="hidden" name="avatar" :value="avatar">
+      <input type="hidden" name="update_profile" value="1">
+
       <!-- Buttons -->
       <div class="flex justify-end space-x-3">
-        <button @click="open = false" 
+        <button type="button" @click="open = false"
                 class="px-5 py-2 text-base text-gray-600 hover:underline dark:text-gray-300">Cancel</button>
-        <button @click="open = false" 
+        <button type="submit"
                 class="px-5 py-2 text-base bg-indigo-600 text-white rounded-lg dark:bg-slate-100 dark:text-gray-800">Save</button>
       </div>
+    </form>
     </div>
   </div>
 </div>
@@ -152,20 +162,54 @@ fullname: '<?= htmlspecialchars($user['name']) ?>' }">
     <p class="text-3xl font-bold text-indigo-700 dark:text-indigo-500 mt-4"><?= htmlspecialchars($user["spending"]) ?></p>
   </div>
 
-  <!-- Transactions (takes full remaining space) -->
-  <div class="bg-white p-6 rounded-xl shadow dark:bg-gray-800">
-    <h2 class="text-2xl font-bold text-indigo-700 dark:text-gray-300 mb-6">Transactions</h2>
+<!-- Transactions (takes full remaining space) -->
+<div class="bg-white p-6 rounded-xl shadow dark:bg-gray-800">
+  <h2 class="text-2xl font-bold text-indigo-700 dark:text-gray-300 mb-6">Transactions</h2>
+
+  <?php if (empty($transactions)): ?>
+    <!-- Empty State -->
+    <div class="flex flex-col items-center justify-center py-16 text-center text-gray-500 dark:text-gray-400">
+      <span class="material-icons-outlined text-5xl mb-3 text-gray-400 dark:text-gray-500">hourglass_empty</span>
+      <p class="text-xl font-medium">No transactions found</p>
+      <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Your recent activity will appear here.</p>
+    </div>
+  <?php else: ?>
+    <!-- Transaction List -->
     <div class="space-y-3 max-h-96 overflow-y-auto pr-2 text-lg">
       <?php foreach ($transactions as $t): ?>
         <div class="grid grid-cols-4 gap-4 border-b pb-2">
           <span class="text-gray-700 font-medium dark:text-gray-300"><?= htmlspecialchars($t["name"]) ?></span>
-          <span class="text-gray-500 dark:text-gray-300"><?= (htmlspecialchars($t["merchant"])) ?></span>
+          <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["merchant"]) ?></span>
           <span class="text-gray-800 font-semibold dark:text-white"><?= htmlspecialchars($t["amount"]) ?></span>
           <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["transaction_date"]) ?></span>
         </div>
       <?php endforeach; ?>
     </div>
-  </div>
+
+    <!-- Pagination -->
+    <?php if (!empty($totalPages) && $totalPages > 1): ?>
+      <div class="flex justify-center items-center space-x-2 mt-6">
+        <?php if (!empty($page) && $page > 1): ?>
+          <a href="?page=<?= $page - 1 ?>" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200">
+            Previous
+          </a>
+        <?php endif; ?>
+
+        <span class="text-gray-600 dark:text-gray-300 text-sm">Page <?= htmlspecialchars($page ?? 1) ?> of <?= htmlspecialchars($totalPages) ?></span>
+
+        <?php if (!empty($page) && $page < $totalPages): ?>
+          <a href="?page=<?= $page + 1 ?>" class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200">
+            Next
+          </a>
+        <?php endif; ?>
+      </div>
+    <?php endif; ?>
+  <?php endif; ?>
+</div>
+
+
+
+
 </div>
     </div>
     <?php include './includes/footer.php'; ?>

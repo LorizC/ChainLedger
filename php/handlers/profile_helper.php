@@ -6,18 +6,25 @@
  * @return string Final image path to display
  */
 function getProfileImage(?string $profileImage): string {
-    // If image not set, return default immediately
+    $basePath = '../../images/avatars/';
+    $default  = $basePath . 'profile.png';
+
     if (empty($profileImage)) {
-        return '../../images/avatars/profile.png';
+        return $default;
     }
 
-    // Normalize path to check if file exists
-    $profilePath = __DIR__ . '/../../' . ltrim($profileImage, '/');
+    // Remove accidental '../../' or leading slashes
+    $cleanPath = str_replace(['../', './'], '', $profileImage);
+    $fullPath = __DIR__ . '/../../' . $cleanPath;
 
-    // If file does not exist → return default
-    if (!file_exists($profilePath)) {
-        return '../../images/avatars/profile.png';
+    if (!file_exists($fullPath)) {
+        return $default;
     }
 
-    return $profileImage;
+    // ✅ Return a valid relative path from sidebar’s location
+    if (!str_starts_with($cleanPath, 'images/')) {
+        return '../../' . $cleanPath;
+    }
+
+    return '../../' . $cleanPath;
 }

@@ -2,10 +2,9 @@
 -- Create Database
 -- =======================
 CREATE DATABASE ChainledgerDB;
-
-Select * from users;
-
 USE ChainledgerDB;
+
+SELECT * from users
 -- =======================
 -- Users Table
 -- =======================
@@ -19,7 +18,8 @@ CREATE TABLE users (
     username VARCHAR(100) UNIQUE NOT NULL,
     profile_image VARCHAR(255) DEFAULT NULL,
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB;
+
 -- =======================
 -- Security Table
 -- =======================
@@ -30,9 +30,14 @@ CREATE TABLE security (
     security_question VARCHAR(255) NOT NULL,
     security_answer VARCHAR(255) NOT NULL,
     password VARCHAR(255),
-    FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
-    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
-);
+    FOREIGN KEY (account_id) REFERENCES users(account_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 -- =======================
 -- Company Personnel Table
 -- =======================
@@ -41,19 +46,30 @@ CREATE TABLE company_personnel (
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
     company_role ENUM('Business Owner', 'Manager', 'Staff') NOT NULL,
-    FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
-);
+    FOREIGN KEY (account_id) REFERENCES users(account_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 -- =======================
 -- Owners Table
 -- =======================
-CREATE TABLE  company_owners (
+CREATE TABLE company_owners (
     owner_id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
     company_role ENUM('Business Owner') DEFAULT 'Business Owner',
-    FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
-    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
-);
+    FOREIGN KEY (account_id) REFERENCES users(account_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 -- =======================
 -- Transaction Table
 -- =======================
@@ -69,13 +85,16 @@ CREATE TABLE transactions (
     currency VARCHAR(10) DEFAULT 'PHP',
     transaction_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT', 'REFUND') NOT NULL,
     status ENUM('PENDING', 'COMPLETED', 'FAILED', 'CANCELLED') NOT NULL,
-    -- Foreign key relationships
-    FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE,
-    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
-);
+    FOREIGN KEY (account_id) REFERENCES users(account_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
 -- ==========================
--- Security_logs tables
+-- Security_logs Table
 -- ========================== 
 CREATE TABLE security_logs (
     security_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -94,11 +113,16 @@ CREATE TABLE security_logs (
     device_info TEXT,
     user_agent TEXT,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES users(account_id) ON DELETE CASCADE
-);
+    CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES users(account_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
 
 -- ==========================
--- Archived_Accounts tables
+-- Archived_Accounts Table
 -- ========================== 
 CREATE TABLE archivedaccounts LIKE transactions;
 

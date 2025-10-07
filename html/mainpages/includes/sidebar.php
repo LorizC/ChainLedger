@@ -8,11 +8,15 @@ if (!isset($_SESSION['user'])) {
     exit;
 }
 
-// Include the helper function
+// Include helper function
 require_once __DIR__ . '/../../../php/handlers/profile_helper.php';
 
-// Get user profile image with fallback
-$profileImage = getProfileImage($_SESSION['user']['profile_image'] ?? null);
+// ✅ Always get the latest session image, fallback to default
+$rawProfileImage = $_SESSION['user']['profile_image'] ?? null;
+$profileImage = getProfileImage($rawProfileImage);
+
+// ✅ Add cache-busting to ensure image refresh after update
+$profileImage .= '?v=' . time();
 ?>
 
 <aside class="sidebar">
