@@ -76,11 +76,11 @@ body.lock-scroll {
   <!-- Side by Side Images -->
 <div class="mt-12 flex justify-center items-center gap-8">
   <!-- Wider image -->
-  <img src="../../images/demo0.png" alt="Dashboard" 
+  <img src="../../images/index/demo0.png" alt="Dashboard" 
        class="h-[500px] w-[45%] object-contain rounded-lg shadow-lg">
 
   <!-- Taller image -->
-  <img src="../../images/img1.png" alt="Dashboard" 
+  <img src="../../images/index/img1.png" alt="Dashboard" 
        class="h-[480px] w-[45%] object-contain rounded-lg shadow-lg">
 </div>
 </section>
@@ -88,7 +88,7 @@ body.lock-scroll {
   <section id="about" class="bg-white px-6 pt-32 pb-16">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div>
-        <img src="../../images/cl.png" alt="ARR Example" class="rounded-lg shadow">
+        <img src="../../images/index/cl.png" alt="ARR Example" class="rounded-lg shadow">
       </div>
       <div>
         <h2 class="text-2xl md:text-3xl font-bold mb-4">Know more about ChainLedger</h2>
@@ -143,13 +143,13 @@ body.lock-scroll {
     <div class="relative w-full overflow-hidden rounded-lg shadow-lg">
       <!-- Carousel Container -->
 <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
-  <img src="../../images/demo0.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
-  <img src="../../images/demo.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
-  <img src="../../images/demo1.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 2">
-  <img src="../../images/demo2.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 3">
-  <img src="../../images/demo3.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 4">
-  <img src="../../images/demo4.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 5">
-  <img src="../../images/demo5.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 6">
+  <img src="../../images/index/demo0.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
+  <img src="../../images/index/demo.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
+  <img src="../../images/index/demo1.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 2">
+  <img src="../../images/index/demo2.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 3">
+  <img src="../../images/index/demo3.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 4">
+  <img src="../../images/index/demo4.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 5">
+  <img src="../../images/index/demo5.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 6">
 </div>
 
 
@@ -193,7 +193,7 @@ body.lock-scroll {
     </div>
     <!-- Illustration -->
     <div class="flex justify-center">
-      <img src="../../images/img1.webp" alt="ChainLedger" class="w-72 md:w-96">
+      <img src="../../images/index/img1.webp" alt="ChainLedger" class="w-72 md:w-96">
     </div>
   </div>
 </section>
@@ -268,7 +268,7 @@ body.lock-scroll {
 
     <!-- Image -->
     <div class="flex justify-center">
-      <img src="../../images/purpose.webp" alt="System Purpose Illustration" class="w-72 md:w-96 rounded-lg">
+      <img src="../../images/index/purpose.webp" alt="System Purpose Illustration" class="w-72 md:w-96 rounded-lg">
     </div>
   </div>
 </section>
