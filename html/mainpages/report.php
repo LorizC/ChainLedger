@@ -59,10 +59,10 @@
         <label for="details" class="block mb-2 text-base">Details</label>
         <select name="details" id="details" class="w-full px-4 py-2.5 rounded text-black text-base">
           <option value="">Select Details</option>
-          <option value="PAYMENT">Payment</option><!--minus-->
-          <option value="REFUND">Refund</option><!--plus-->
-          <option value="WITHDRAWAL">Withdrawal</option><!--minus-->
-          <option value="DEPOSIT">Deposit</option><!--plus-->
+          <option value="PAYMENT">Payment</option><!--minus/costs-->
+          <option value="REFUND">Refund</option><!--plus/gains-->
+          <option value="WITHDRAWAL">Withdrawal</option><!--minus/costs-->
+          <option value="DEPOSIT">Deposit</option><!--plus/gains-->
         </select>
       </div>
 
@@ -75,7 +75,7 @@
           <option value="Health">Health</option>
           <option value="Maintenance">Maintenance</option>
           <option value="Utilities">Utilities</option>
-          <option value="Travel">Travel</option>
+          <option value="Transportation">Transportation</option>
         </select>
       </div>
 
@@ -103,14 +103,12 @@
       step="0.01" 
       min="0" 
       inputmode="decimal"
-      oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
       class="w-full px-4 py-2.5 rounded-r text-black text-base" 
       required
     >
   </div>
 </div>
 
- 
       <div>
         <label for="date" class="block mb-2 text-base">Date</label>
         <input type="date" name="date" id="date" class="w-full px-4 py-2.5 rounded text-black text-base">
