@@ -13,8 +13,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
+    <!-- Home Button -->
+<a href="../../html/mainpages/home.php" class="home-button" title="Go to Home">
+  <span class="material-icons">home</span>
+</a>  
+    <!-- Theme Button -->
 <input type="checkbox" id="theme-toggle" hidden />
-<div class="page">
+  <div class="page">
     <label for="theme-toggle" class="theme-button">
       <span class="material-icons light-icon">light_mode</span>
       <span class="material-icons dark-icon">dark_mode</span>

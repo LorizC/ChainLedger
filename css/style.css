@@ -55,26 +55,27 @@ body {
 }
 
 .theme-button {
-  position: fixed; /* fixed in viewport */
-  top: 20px; /* distance from top */
-  left: 20px; /* distance from left */
-  width: 48px; /* button width */
-  height: 48px; /* button height */
-  background-color: #2C3E91; /* default circle color (light mode) */
-  border-radius: 50%; /* make it circular */
-  display: flex; /* center icon inside */
-  align-items: center; /* vertical center */
-  justify-content: center; /* horizontal center */
-  cursor: pointer; /* pointer cursor on hover */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* subtle shadow */
-  transition: background-color 0.3s ease; /* smooth transition on hover or dark mode */
+  position: fixed;
+  top: 20px;
+  right: 20px;         /* moved to right side */
+  width: 48px;
+  height: 48px;
+  background-color: #2C3E91;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  z-index: 10;
 }
 
 .theme-button .material-icons {
-  font-size: 24px; /* icon size */
-  color: white; /* icon color */
-  position: absolute; /* allow animation transitions */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* smooth show/hide */
+  font-size: 24px;
+  color: white;
+  position: absolute;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .light-icon {
@@ -87,6 +88,35 @@ body {
   transform: scale(0.5); /* smaller size */
 }
 
+/* ====================================
+   Home Button (Top-Right Corner)
+==================================== */
+.home-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;          /* moved to left side */
+  width: 48px;
+  height: 48px;
+  background-color: #2C3E91;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.home-button .material-icons {
+  font-size: 24px;
+  color: white;
+}
+
+.home-button:hover {
+  background-color: #1e2a63;
+}
 /* ====================================
    Content Wrapper
 ==================================== */
@@ -610,6 +640,14 @@ a {
 
 #theme-toggle:checked ~ .page .signup-row .new-account {
   color: #ffffff; /* white text for sign up row */
+}
+
+#theme-toggle:checked ~ .page .home-button {
+  background-color: #5f5f84;
+}
+
+#theme-toggle:checked ~ .page .home-button:hover {
+  background-color: #444;
 }
 
 #theme-toggle:checked ~ .page .theme-button {
