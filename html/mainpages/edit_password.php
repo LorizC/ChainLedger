@@ -161,6 +161,7 @@ $user = [
         </form>
       </div>
     </div>
+
     <?php include './includes/footer.php'; ?>
   </main>
 </body>

@@ -4,7 +4,7 @@
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
 
-SELECT * from users
+SELECT * from SECURITY_LOGS
 SELECT *  FROM transactions
 -- =======================
 -- Users Table

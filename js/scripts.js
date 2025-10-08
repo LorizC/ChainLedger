@@ -477,3 +477,26 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+
+  // =========================================================================================================================================== //
+// ==========================================================CHANGEPASSWORD SUCCESS====================================================== //
+// ========================================================================================================================================== //
+document.addEventListener('DOMContentLoaded', () => {
+  const successAlert = document.getElementById('success-alert');
+  const closeAlertBtn = document.getElementById('close-alert');
+
+  if (successAlert) {
+    // Auto-hide after 4 seconds
+    setTimeout(() => {
+      successAlert.classList.add('opacity-0');
+      setTimeout(() => successAlert.remove(), 500);
+    }, 4000);
+  }
+
+  if (closeAlertBtn) {
+    closeAlertBtn.addEventListener('click', () => {
+      successAlert.classList.add('opacity-0');
+      setTimeout(() => successAlert.remove(), 500);
+    });
+  }
+});

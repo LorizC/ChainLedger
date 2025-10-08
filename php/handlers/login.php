@@ -25,11 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $result = $authService->login($accountId, $password);
 
-        if (isset($result['error'])) {
-            $error = $result['error'];
-            // 🚨 Log failed attempt
-            $logService->logEvent(null, (int)$accountId, $accountId, 'FAILED_LOGIN');
-        } else {
+    if (isset($result['error'])) {
+    $error = $result['error'];
+        // 🚨 Log failed login using helper method
+        $logService->logFailedLogin($accountId);
+    }
+         else {
             // ✅ Store complete user data in session
             $_SESSION['user'] = [
                 'user_id'         => $result['user']['user_id'],
