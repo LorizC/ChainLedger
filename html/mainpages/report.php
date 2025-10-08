@@ -91,13 +91,25 @@
         </select>
       </div>
       
-            <div>
-              <label for="amount" class="block mb-2 text-base text-white">Amount</label>
-              <div class="flex items-center">
-                <span class="px-4 py-2.5 bg-gray-200 text-black rounded-l text-base">₱</span>
-                <input type="number" name="amount" id="amount" placeholder="0.00" class="w-full px-4 py-2.5 rounded-r text-black text-base" required>
-              </div>
-            </div>
+<div>
+  <label for="amount" class="block mb-2 text-base text-white">Amount</label>
+  <div class="flex items-center">
+    <span class="px-4 py-2.5 bg-gray-200 text-black rounded-l text-base">₱</span>
+    <input 
+      type="number" 
+      name="amount" 
+      id="amount" 
+      placeholder="0.00" 
+      step="0.01" 
+      min="0" 
+      inputmode="decimal"
+      oninput="this.value = this.value.replace(/[^0-9.]/g, '')"
+      class="w-full px-4 py-2.5 rounded-r text-black text-base" 
+      required
+    >
+  </div>
+</div>
+
  
       <div>
         <label for="date" class="block mb-2 text-base">Date</label>

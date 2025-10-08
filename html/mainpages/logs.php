@@ -50,7 +50,7 @@
               >
                 <option value="">All</option>
                 <?php
-                $actions = ['LOGIN','LOGOUT','FAILED_LOGIN','PASSWORD_CHANGE','ACCOUNT_CREATED','ACCOUNT_DELETED'];
+                $actions = ['LOGIN','LOGOUT','PASSWORD_CHANGE','ACCOUNT_CREATED','ACCOUNT_DELETED'];
                 foreach ($actions as $action): ?>
                   <option value="<?= $action ?>" <?= $filterAction === $action ? 'selected' : '' ?>><?= $action ?></option>
                 <?php endforeach; ?>
@@ -81,7 +81,7 @@
             <?php endif; ?>
           </form>
 
-          <!-- ✅ TABLE (Device & User Agent removed) -->
+          <!-- TABLE -->
           <table class="ledger-table w-full border-collapse" id="logsTable">
             <thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
               <tr>
@@ -116,7 +116,7 @@
       </div>
     </td>
     <td class="px-4 py-2 font-semibold 
-      <?= $log['action'] === 'FAILED_LOGIN' || $log['action'] === 'ACCOUNT_DELETED' ? 'text-red-500' : 'text-green-500' ?>">
+      <?= $log['action'] === 'ACCOUNT_DELETED' ? 'text-red-500' : 'text-green-500' ?>">
       <?= htmlspecialchars($log['action']) ?>
     </td>
     <td class="px-4 py-2"><?= htmlspecialchars($log['timestamp']) ?></td>
@@ -129,7 +129,7 @@
             </tbody>
           </table>
 
-          <!-- ✅ PAGINATION -->
+          <!-- PAGINATION -->
           <div class="flex justify-center items-center gap-4 mt-6">
             <?php if ($page > 1): ?>
               <a href="?page=<?= $page - 1 ?>&action=<?= urlencode($filterAction) ?>&user=<?= urlencode($filterUser) ?>" class="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300">&lt; Prev</a>
@@ -151,46 +151,7 @@
         </div>
       </div>
     </section>
-
     <?php include './includes/footer.php'; ?>
   </main>
-
-  <!-- ✅ Sorting Script -->
-  <script>
-    const timestampHeader = document.getElementById('timestampHeader');
-    const table = document.getElementById('logsTable');
-    const sortIcon = document.getElementById('sortIcon');
-    let sortDirection = null; // null, 'asc', or 'desc'
-
-    timestampHeader.addEventListener('click', () => {
-      const tbody = table.querySelector('tbody');
-      const rows = Array.from(tbody.querySelectorAll('tr'));
-
-      const getTimestamp = (row) => {
-        const cell = row.cells[2]; // Timestamp column index after removal
-        return new Date(cell.textContent.trim());
-      };
-
-      if (sortDirection === 'asc') {
-        sortDirection = 'desc';
-        sortIcon.textContent = 'expand_more';
-      } else if (sortDirection === 'desc') {
-        sortDirection = 'asc';
-        sortIcon.textContent = 'expand_less';
-      } else {
-        sortDirection = 'asc';
-        sortIcon.textContent = 'expand_less';
-      }
-
-      rows.sort((a, b) => {
-        const dateA = getTimestamp(a);
-        const dateB = getTimestamp(b);
-        return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
-      });
-
-      tbody.innerHTML = '';
-      rows.forEach(row => tbody.appendChild(row));
-    });
-  </script>
 </body>
 </html>

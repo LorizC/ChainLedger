@@ -500,3 +500,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+  // =========================================================================================================================================== //
+// ==========================================================SORTING SCRIPT====================================================== //
+// ========================================================================================================================================== //
+document.addEventListener('DOMContentLoaded', () => {
+    const timestampHeader = document.getElementById('timestampHeader');
+    const table = document.getElementById('logsTable');
+    const sortIcon = document.getElementById('sortIcon');
+    let sortDirection = null; // null, 'asc', or 'desc'
+
+    timestampHeader.addEventListener('click', () => {
+      const tbody = table.querySelector('tbody');
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+
+      const getTimestamp = (row) => {
+        const cell = row.cells[2]; // Timestamp column index after removal
+        return new Date(cell.textContent.trim());
+      };
+
+      if (sortDirection === 'asc') {
+        sortDirection = 'desc';
+        sortIcon.textContent = 'expand_more';
+      } else if (sortDirection === 'desc') {
+        sortDirection = 'asc';
+        sortIcon.textContent = 'expand_less';
+      } else {
+        sortDirection = 'asc';
+        sortIcon.textContent = 'expand_less';
+      }
+
+      rows.sort((a, b) => {
+        const dateA = getTimestamp(a);
+        const dateB = getTimestamp(b);
+        return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+      });
+
+      tbody.innerHTML = '';
+      rows.forEach(row => tbody.appendChild(row));
+    });
+  });

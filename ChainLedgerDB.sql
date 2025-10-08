@@ -3,9 +3,6 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
-
-SELECT * from SECURITY_LOGS
-SELECT *  FROM transactions
 -- =======================
 -- Users Table
 -- =======================
@@ -20,7 +17,6 @@ CREATE TABLE users (
     profile_image VARCHAR(255) DEFAULT NULL,
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
-
 
 -- =======================
 -- Security Table
@@ -106,7 +102,6 @@ CREATE TABLE security_logs (
     action ENUM(
         'LOGIN', 
         'LOGOUT', 
-        'FAILED_LOGIN', 
         'PASSWORD_CHANGE', 
         'ACCOUNT_CREATED',
         'ACCOUNT_DELETED'

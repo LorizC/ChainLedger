@@ -14,7 +14,7 @@ $filterUser   = $_GET['user'] ?? '';
 $sortOrder    = (isset($_GET['sort']) && in_array($_GET['sort'], ['ASC', 'DESC'])) ? $_GET['sort'] : 'DESC';
 
 // WHERE conditions
-$whereParts = [];
+$whereParts = ["sl.action != 'FAILED_LOGIN'"];
 $params = [];
 $types = '';
 
