@@ -114,7 +114,7 @@ body {
   color: white;
 }
 
-.home-button:hover {
+.home-button:hover, .theme-button:hover {
   background-color: #1e2a63;
 }
 /* ====================================
@@ -642,16 +642,14 @@ a {
   color: #ffffff; /* white text for sign up row */
 }
 
-#theme-toggle:checked ~ .page .home-button {
+#theme-toggle:checked ~ .page .home-button, 
+#theme-toggle:checked ~ .page .theme-button{
   background-color: #5f5f84;
 }
 
-#theme-toggle:checked ~ .page .home-button:hover {
+#theme-toggle:checked ~ .page .home-button:hover,
+#theme-toggle:checked ~ .page .theme-button:hover {
   background-color: #444;
-}
-
-#theme-toggle:checked ~ .page .theme-button {
-  background-color: #5f5f84; /* darker toggle button */
 }
 
 #theme-toggle:checked ~ .page .theme-button .light-icon {

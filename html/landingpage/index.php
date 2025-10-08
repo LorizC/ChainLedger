@@ -8,6 +8,7 @@
 
   <!-- Google Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script src="../../js/index.js"></script>
   <style>
     .material-symbols-outlined {
       font-variation-settings:
@@ -19,11 +20,22 @@
     html{
       scroll-behavior: smooth;
     }
+
+/* Home section always takes full viewport height */
+#home {
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Class to lock scroll on the body */
+body.lock-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
   </style>
 </head>
 <body class="font-sans text-gray-800">
 
-<!-- Navbar -->
 <!-- Navbar -->
 <header class="fixed top-0 left-0 w-full bg-gradient-to-r from-violet-900 to-indigo-800 text-white shadow-md z-50">
   <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
@@ -51,8 +63,6 @@
   </div>
 </header>
 
-
-
   <!-- Hero Section -->
 <section id="home" class="bg-gradient-to-r from-violet-900 to-indigo-800 text-center text-white px-6 pt-40 pb-20">
   <h1 class="text-3xl md:text-5xl font-bold mb-4">ChainLedger</h1>
@@ -73,11 +83,7 @@
   <img src="../../images/img1.png" alt="Dashboard" 
        class="h-[480px] w-[45%] object-contain rounded-lg shadow-lg">
 </div>
-
-
-
 </section>
-
 
   <section id="about" class="bg-white px-6 pt-32 pb-16">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -163,18 +169,26 @@
   </div>
 </section>
 
-
-
+<!-- System Objectives -->
 <section id="obj" class="bg-gradient-to-r from-violet-900 to-indigo-800 text-white py-20 px-6">
   <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
     <!-- Text Content -->
     <div>
       <h2 class="text-4xl font-bold mb-6">System Objectives</h2>
-      <p class="text-gray-200 mb-8">
-To provide small businesses an easy-to-use system that records and analyzes transactions, helping them manage finances more efficiently and accurately..
+      <p class="text-gray-200 mb-6">
+        ChainLedger aims to achieve the following objectives:
       </p>
-      <button class="bg-blue-500 text-white px-6 py-3 rounded-md flex items-center gap-2">
-        Try ChainLedger <span class="material-symbols-outlined">arrow_forward</span>
+      <ul class="text-gray-200 space-y-3 mb-8 list-disc list-inside">
+        <li><strong>Simplify transaction recording</strong> — allow users to easily log income and expenses from various e-wallet platforms.</li>
+        <li><strong>Automate report generation</strong> — provide clear, accurate financial summaries and visual analytics.</li>
+        <li><strong>Ensure data accuracy and security</strong> — protect financial information through role-based access and encrypted storage.</li>
+        <li><strong>Support informed decision-making</strong> — give business owners the insights they need to manage finances efficiently.</li>
+      </ul>
+      <button onclick="window.location.href='../../html/usercreation/login.php'" 
+        class="bg-blue-500 text-white px-6 py-3 rounded-md flex items-center gap-2 
+               transition duration-300 hover:bg-blue-700 hover:scale-105">
+        Try ChainLedger 
+        <span class="material-symbols-outlined">arrow_forward</span>
       </button>
     </div>
     <!-- Illustration -->
@@ -235,134 +249,33 @@ To provide small businesses an easy-to-use system that records and analyzes tran
   </div>
 </section>
 
-
-
 <!-- System's Purpose -->
-<section id="purpose" class="bg-gradient-to-r from-violet-900 to-indigo-800 text-white py-20 px-6">
-  <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+<section id="purpose" class="bg-gradient-to-r from-violet-900 to-indigo-800 text-white py-12 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+    <!-- Text Content -->
     <div>
-      <h2 class="text-3xl font-bold mb-4">The System's <span class="text-yellow-400">Purpose</span></h2>
+      <h2 class="text-4xl font-bold mb-6">The System's <span class="text-yellow-400">Purpose</span></h2>
       <p class="text-gray-200 mb-8">
-     An E-wallet Transaction Monitoring System designed to help small business owners record, organize, and analyse their digital financial transactions..
+        An E-wallet Transaction Monitoring System designed to help small business owners record, organize, and analyse their digital financial transactions.
       </p>
-      <button class="bg-white text-blue-900 px-6 py-3 rounded-md flex items-center gap-2">
-        Let’s Go <span class="material-symbols-outlined">arrow_forward</span>
+      <button onclick="window.location.href='../../html/usercreation/login.php'" 
+        class="bg-white text-blue-900 px-6 py-3 rounded-md flex items-center gap-2 
+               transition duration-300 hover:bg-black hover:text-white hover:scale-105">
+        Let’s Go 
+        <span class="material-symbols-outlined">arrow_forward</span>
       </button>
-    </div class="flex justify-center">
-    <img src="../../images/purpose.webp" alt="Use as Extension" class="rounded-lg w-72 md:w-96">
+    </div>
+
+    <!-- Image -->
+    <div class="flex justify-center">
+      <img src="../../images/purpose.webp" alt="System Purpose Illustration" class="w-72 md:w-96 rounded-lg">
+    </div>
   </div>
 </section>
-
 
   <!-- Footer -->
   <footer class="bg-gray-900 text-gray-400 text-center py-6">
     <p>@ 2025 ChainLedger. All rights reserved.</p>
   </footer>
-
-  <script>
-  const galleryOverlay = document.getElementById('fullscreen-gallery');
-  const galleryImg = document.getElementById('gallery-img');
-  const openGalleryBtn = document.getElementById('open-fullscreen-gallery');
-  const closeGalleryBtn = document.getElementById('close-gallery');
-  const prevGalleryBtn = document.getElementById('prev-gallery');
-  const nextGalleryBtn = document.getElementById('next-gallery');
-
-  const galleryImages = Array.from(document.querySelectorAll('#carousel img'));
-  let galleryIndex = 0;
-
-  function showGalleryImage(index) {
-    galleryImg.src = galleryImages[index].src;
-  }
-
-  openGalleryBtn.addEventListener('click', () => {
-    galleryIndex = 0;
-    showGalleryImage(galleryIndex);
-    galleryOverlay.classList.remove('hidden');
-  });
-
-  closeGalleryBtn.addEventListener('click', () => {
-    galleryOverlay.classList.add('hidden');
-  });
-
-  prevGalleryBtn.addEventListener('click', () => {
-    galleryIndex = (galleryIndex - 1 + galleryImages.length) % galleryImages.length;
-    showGalleryImage(galleryIndex);
-  });
-
-  nextGalleryBtn.addEventListener('click', () => {
-    galleryIndex = (galleryIndex + 1) % galleryImages.length;
-    showGalleryImage(galleryIndex);
-  });
-
-  // Close on ESC key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      galleryOverlay.classList.add('hidden');
-    }
-    if (e.key === 'ArrowLeft') {
-      galleryIndex = (galleryIndex - 1 + galleryImages.length) % galleryImages.length;
-      showGalleryImage(galleryIndex);
-    }
-    if (e.key === 'ArrowRight') {
-      galleryIndex = (galleryIndex + 1) % galleryImages.length;
-      showGalleryImage(galleryIndex);
-    }
-  });
-
-  // Optional: close on background click
-  galleryOverlay.addEventListener('click', (e) => {
-    if (e.target === galleryOverlay) {
-      galleryOverlay.classList.add('hidden');
-    }
-  });
-
-
-  const carousel = document.getElementById('carousel');
-  const slides = carousel.children;
-  const totalSlides = slides.length;
-  const dotsContainer = document.getElementById('carousel-dots');
-  let index = 0;
-  let interval;
-
-  // Create dots
-  for (let i = 0; i < totalSlides; i++) {
-    const dot = document.createElement('button');
-    dot.className = 'w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-500 transition';
-    dot.addEventListener('click', () => moveToSlide(i));
-    dotsContainer.appendChild(dot);
-  }
-
-  const dots = dotsContainer.children;
-  dots[0].classList.add('bg-gray-800');
-
-  function updateDots() {
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].classList.remove('bg-gray-800');
-    }
-    dots[index].classList.add('bg-gray-800');
-  }
-
-  function moveToSlide(i) {
-    index = (i + totalSlides) % totalSlides;
-    carousel.style.transform = `translateX(-${index * 100}%)`;
-    updateDots();
-    restartAutoplay();
-  }
-
-  document.getElementById('prevBtn').addEventListener('click', () => moveToSlide(index - 1));
-  document.getElementById('nextBtn').addEventListener('click', () => moveToSlide(index + 1));
-
-  function autoplay() {
-    interval = setInterval(() => moveToSlide(index + 1), 4000);
-  }
-
-  function restartAutoplay() {
-    clearInterval(interval);
-    autoplay();
-  }
-
-  autoplay();
-</script>
-
 </body>
 </html>

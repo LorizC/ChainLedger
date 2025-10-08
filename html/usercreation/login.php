@@ -13,10 +13,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <!-- Home Button -->
-<a href="../../html/mainpages/home.php" class="home-button" title="Go to Home">
-  <span class="material-icons">home</span>
-</a>  
     <!-- Theme Button -->
 <input type="checkbox" id="theme-toggle" hidden />
   <div class="page">
@@ -44,7 +40,10 @@
           </div>
         </div>
       </div>
-
+    <!-- Home Button -->
+<a href="../../html/landingpage/index.php" class="home-button" title="Go to Home">
+  <span class="material-icons">home</span>
+</a> 
       <!-- Right side: Login form -->
       <div class="right-side">
         <div class="form-wrapper">
