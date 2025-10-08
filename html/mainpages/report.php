@@ -90,40 +90,14 @@
           <option value="Paypal">PayPal</option>
         </select>
       </div>
-
-<div>
-  <label for="amount" class="block mb-2 text-base">Amount</label>
-  <div class="flex items-center relative w-full">
-    <!-- Currency Button -->
-    <button id="currencyBtn" type="button"
-      class="px-4 py-2.5 bg-gray-100 text-black rounded-l-lg text-base font-medium border border-gray-300 hover:bg-gray-200 transition duration-150 ease-in-out focus:outline-none flex items-center gap-1"
-      onclick="toggleCurrencyDropdown()">
-      <span id="currencySymbol">₱</span>
-      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    </button>
-
-    <!-- Dropdown -->
-    <div id="currencyDropdown"
-      class="absolute left-0 top-12 w-44 bg-white text-black rounded-xl shadow-lg border border-gray-200 hidden z-20 overflow-hidden transform transition-all duration-200 ease-out">
-      <ul class="text-base divide-y divide-gray-100">
-        <li><button type="button" class="block px-4 py-2 hover:bg-blue-100 w-full text-left transition" onclick="selectCurrency('₱', 'PHP')">₱ Philippine Peso</button></li>
-        <li><button type="button" class="block px-4 py-2 hover:bg-blue-100 w-full text-left transition" onclick="selectCurrency('$', 'USD')">$ US Dollar</button></li>
-        <li><button type="button" class="block px-4 py-2 hover:bg-blue-100 w-full text-left transition" onclick="selectCurrency('€', 'EUR')">€ Euro</button></li>
-        <li><button type="button" class="block px-4 py-2 hover:bg-blue-100 w-full text-left transition" onclick="selectCurrency('¥', 'JPY')">¥ Japanese Yen</button></li>
-        <li><button type="button" class="block px-4 py-2 hover:bg-blue-100 w-full text-left transition" onclick="selectCurrency('₩', 'KRW')">₩ Korean Won</button></li>
-      </ul>
-    </div>
-
-    <!-- Amount Input -->
-    <input type="number" name="amount" placeholder="0.00"
-      class="w-full px-4 py-2.5 rounded-r-lg text-black focus:outline-none focus:ring-2 focus:ring-blue-300 border border-l-0 border-gray-300 text-base transition duration-150 ease-in-out">
-
-    <!-- Hidden Currency Input (for backend use) -->
-    <input type="hidden" name="currency" id="currencyInput" value="PHP">
-  </div>
-</div>
+      
+            <div>
+              <label for="amount" class="block mb-2 text-base text-white">Amount</label>
+              <div class="flex items-center">
+                <span class="px-4 py-2.5 bg-gray-200 text-black rounded-l text-base">₱</span>
+                <input type="number" name="amount" id="amount" placeholder="0.00" class="w-full px-4 py-2.5 rounded-r text-black text-base" required>
+              </div>
+            </div>
  
       <div>
         <label for="date" class="block mb-2 text-base">Date</label>
@@ -155,27 +129,6 @@
   </div>
 </section>
 <?php include './includes/footer.php'; ?>
-<script>
-  function toggleCurrencyDropdown() {
-    const dropdown = document.getElementById('currencyDropdown');
-    dropdown.classList.toggle('hidden');
-  }
-
-  function selectCurrency(symbol, code) {
-    document.getElementById('currencySymbol').textContent = symbol;
-    document.getElementById('currencyInput').value = code;
-    document.getElementById('currencyDropdown').classList.add('hidden');
-  }
-
-  // Close dropdown when clicking outside
-  document.addEventListener('click', function (e) {
-    const dropdown = document.getElementById('currencyDropdown');
-    const button = document.getElementById('currencyBtn');
-    if (!button.contains(e.target) && !dropdown.contains(e.target)) {
-      dropdown.classList.add('hidden');
-    }
-  });
-</script>
   </main>
 </body>
 </html>

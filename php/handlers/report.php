@@ -37,9 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // ✅ Na-update: Kunin ang status mula sa form (default to 'completed' if empty/not selected)
     $status = !empty($_POST['status']) ? $_POST['status'] : 'completed';
 
-        // ✅ NEW: get selected currency from the hidden input
-    $currency = !empty($_POST['currency']) ? $_POST['currency'] : 'PHP';
-
     // ✅ Kunin mula sa nested session array
     $username = $_SESSION['user']['username'] ?? 'guest';
     $account_id = $_SESSION['user']['account_id'] ?? 0;
@@ -63,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // ------------------------------
     $sql = "INSERT INTO transactions 
                 (account_id, username, detail, merchant, amount, transaction_date, currency, transaction_type, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?, ?, 'PHP', ?, ?)";
 
     $stmt = $conn->prepare($sql);
     if (!$stmt) {
@@ -71,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Bind parameters (status is the last one, already bound correctly)
-    $stmt->bind_param("isssdssss", $account_id, $username, $category, $merchant, $amount, $transaction_date, $currency, $transaction_type, $status);
+    $stmt->bind_param("isssdsss", $account_id, $username, $category, $merchant, $amount, $transaction_date, $transaction_type, $status);
 
     // Execute and check if success
     if ($stmt->execute()) {
