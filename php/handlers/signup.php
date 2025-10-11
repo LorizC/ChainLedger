@@ -13,8 +13,8 @@ $error = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $postData = [
-            'first_name' => trim($_POST['first_name'] ?? ''),
-            'last_name' => trim($_POST['last_name'] ?? ''),
+            'first_name' => ucfirst(trim($_POST['first_name'] ?? '')),
+            'last_name' => ucfirst(trim($_POST['last_name'] ?? '')),
             'birthdate' => trim($_POST['birthdate'] ?? ''),
             'gender' => trim($_POST['gender'] ?? ''),
             'security_question' => trim($_POST['security_question'] ?? ''),
@@ -31,7 +31,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         exit;
 
     } catch (Exception $e) {
-        // Log detailed error for debugging
         error_log("Signup Error: " . $e->getMessage());
         $error = "Signup failed: " . htmlspecialchars($e->getMessage());
     }
