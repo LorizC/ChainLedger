@@ -1,0 +1,736 @@
+/* ====================================
+   Base Reset & Body Styles
+==================================== */
+* {
+  margin: 0; /* remove default margin from all elements */
+  padding: 0; /* remove default padding from all elements */
+}
+
+body {
+  font-family: "Poppins", sans-serif; /* set main font for the page */
+  background-image: url('dist/assets/images/img2.jpg'); /* background image */
+  background-size: cover; /* make background cover the entire page */
+  background-position: center; /* center the background image */
+  background-repeat: no-repeat; /* prevent the background from repeating */
+}
+
+
+
+
+/* ====================================
+   Page Container
+==================================== */
+.page {
+  height: 100vh; /* make page container full viewport height */
+  display: flex; /* use flex layout */
+  align-items: center; /* vertically center content */
+  justify-content: center; /* horizontally center content */
+  color: #333; /* default text color */
+  transition: background-color 0.3s ease, color 0.3s ease; /* smooth transition for dark mode */
+  position: relative; /* allows absolute positioning inside */
+  overflow: hidden; /* hide anything overflowing the container */
+}
+
+/* ====================================
+   Background Blur
+==================================== */
+.background-blur {
+  position: fixed; /* stay in place even when scrolling */
+  top: 0; /* start at top of screen */
+  left: 0; /* start at left of screen */
+  width: 100%; /* full width */
+  height: 100%; /* full height */
+  background-color: rgba(61, 108, 202, 0.2); /* semi-transparent blue overlay */
+  z-index: -1; /* behind other elements */
+  filter: blur(8px); /* apply blur effect */
+  transform: scale(1.05); /* slightly enlarge for better effect */
+  transition: background-color 0.4s ease; /* smooth background color change for dark mode */
+}
+
+/* ====================================
+   Theme Toggle Button
+==================================== */
+#theme-toggle {
+  display: none; /* hide the checkbox input itself */
+}
+
+.theme-button {
+  position: fixed;
+  top: 20px;
+  right: 20px;         /* moved to right side */
+  width: 48px;
+  height: 48px;
+  background-color: #2C3E91;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  z-index: 10;
+}
+
+.theme-button .material-icons {
+  font-size: 24px;
+  color: white;
+  position: absolute;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.light-icon {
+  opacity: 1; /* visible by default */
+  transform: scale(1); /* normal size */
+}
+
+.dark-icon {
+  opacity: 0; /* hidden by default */
+  transform: scale(0.5); /* smaller size */
+}
+
+/* ====================================
+   Home Button (Top-Right Corner)
+==================================== */
+.home-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;          /* moved to left side */
+  width: 48px;
+  height: 48px;
+  background-color: #2C3E91;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.home-button .material-icons {
+  font-size: 24px;
+  color: white;
+}
+
+.home-button:hover, .theme-button:hover {
+  background-color: #1e2a63;
+}
+/* ====================================
+   Content Wrapper
+==================================== */
+.content-wrapper {
+  display: flex; /* flex layout */
+  flex-direction: row; /* horizontal layout */
+  justify-content: space-between; /* space between left/right sides */
+  align-items: center; /* align items to the top */
+  width: 90%; /* container width */
+  max-width: 1000px; /* maximum width */
+  margin: auto; /* center horizontally */
+  gap: 2rem; /* space between items */
+}
+
+/* ====================================
+   Left Side: Welcome Message
+==================================== */
+.left-side {
+  flex: 1; /* take up remaining space */
+  color: #dee4ff; /* text color */
+  padding: 20px; /* inner spacing */
+  margin-top: 0; /* remove any extra top margin */
+}
+
+.welcome-message h1 {
+  font-size: 2rem; /* heading size */
+  margin-bottom: 10px; /* spacing below */
+}
+
+.welcome-message p {
+  font-size: 1rem; /* paragraph size */
+  opacity: 0.9; /* slightly faded */
+}
+
+.features-section {
+  margin-top: 30px; /* spacing above features */
+  text-align: center; /* center heading and list */
+}
+
+.features-section h2 {
+  font-size: 1.5rem; /* subheading size */
+  font-weight: bold; /* bold text */
+  color: #dee4ff; /* dark blue text */
+  margin-bottom: 15px; /* spacing below */
+}
+
+.features-list {
+  display: flex; /* flex layout for list items */
+  justify-content: center; /* center horizontally */
+  gap: 40px; /* spacing between features */
+  list-style: none; /* remove default bullets */
+  padding: 0; /* remove padding */
+}
+
+.features-list li {
+  font-size: 1rem; /* feature text size */
+  font-weight: 600; /* medium bold */
+  color: #ffffff; /* white text */
+}
+
+/* ====================================
+   Right Side: Form Background
+==================================== */
+.inFormBackground {
+  background-color: #ffffff66; /* semi-transparent white */
+  width: 100%; /* full width */
+  max-width: 400px; /* max form width */
+  padding: 40px; /* inner spacing */
+  border-radius: 10px; /* rounded corners */
+  backdrop-filter: blur(5px); /* blur background behind form */
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.2); /* subtle shadow */
+    margin-top: 0;
+  border-radius: 0 0 10px 10px; /* rounded bottom only */
+}
+
+/* ====================================
+   Login Form
+==================================== */
+.inLoginForm form {
+  display: flex; /* flex layout */
+  flex-direction: column; /* stack inputs vertically */
+  gap: 20px; /* space between fields */
+  color: #1e3a8a; /* form text color */
+}
+
+.title {
+  text-align: center; /* center form title */
+  font-size: 24px; /* title size */
+  font-weight: 600; /* semi-bold */
+}
+
+/* ====================================
+   Input Fields
+==================================== */
+.inputGroup label {
+  font-size: 14px; /* label size */
+  font-weight: 500; /* medium */
+  margin-bottom: 5px; /* spacing below label */
+}
+
+.inputGroup input {
+  width: 90%; /* input width */
+  height: 45px; /* input height */
+  padding: 0 10px; /* inner spacing left/right */
+  font-size: 14px; /* text size */
+  border-radius: 5px; /* rounded edges */
+  border: none; /* no border */
+  background-color: rgba(255, 255, 255, 0.9); /* light background */
+  color: #333; /* text color */
+}
+
+::placeholder {
+  color: #666; /* placeholder text color */
+}
+
+.inputGroup select {
+  width: 90%; /* select width */
+  height: 45px; /* select height */
+  padding: 0 10px; /* inner spacing */
+  font-size: 14px; /* text size */
+  border-radius: 5px; /* rounded edges */
+  border: none; /* remove border */
+  background-color: rgba(255, 255, 255, 0.9); /* light background */
+  color: #333; /* text color */
+}
+
+/* ====================================
+   Forgot Password Button
+==================================== */
+.forgot-password {
+  text-align: right; /* align text to right */
+  margin-top: 5px; /* spacing above */
+  padding-right: 25px; /* inner spacing from right */
+}
+
+.forgot-password a {
+  font-size: 13px; /* link text size */
+  color: #2C3E91; /* link color */
+  text-decoration: none; /* remove underline */
+  font-weight: 500; /* medium bold */
+  transition: color 0.3s ease; /* smooth hover effect */
+}
+
+.forgot-password a:hover {
+  color: #1e2a63; /* darker color on hover */
+  text-decoration: underline; /* underline on hover */
+}
+
+/* SUCCESS MESSAGE AFTER FORGOT/CHANGE PASSWORD */
+.success-message {
+  background-color: #d4edda;  /* light green background */
+  color: #155724;             /* dark green text */
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.error-message {
+  background-color: #f8d7da;  /* light red background */
+  color: #721c24;             /* dark red text */
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+/* Copy button for Account ID in Success Page */
+.copy-btn {
+  margin-left: 8px;
+  padding: 3px 8px;
+  font-size: 0.8em;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background: #5d73baac;
+  color: white;
+  transition: background 0.3s ease;
+}
+
+.copy-btn:hover {
+  background: #0056b3;
+}
+
+
+/* Success Banner after sign up and to set password */
+.right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* center both banner and form */
+  justify-content: center; /* vertically center the form */
+  flex: 1; /* take up remaining space */
+}
+
+/* Banner styling */
+.global-banner {
+  width: 100%;
+  max-width: 500px;    /* ✅ same as login form */
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0 auto 15px auto;   /* ✅ center horizontally */
+  box-sizing: border-box;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;   /* same as your login form width */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ====================================
+   Dropdown Select
+==================================== */
+#security-question, #role, #gender {
+  color: #060351; /* text color for selects */
+  background-color: rgba(255, 255, 255, 0.9); /* light background */
+  font-weight: 500; /* medium */
+}
+
+
+/* ====================================
+   Show/Hide Password
+==================================== */
+.toggle-password i {
+  color: #333;  /* dark gray for light background */
+  transition: color 0.3s ease; /* smooth color change */
+}
+
+#togglePassword {
+  text-align: right; /* align to right */
+  margin-top: 5px; /* spacing above */
+  padding-right: 25px;  /* inner spacing */
+  font-size: 13px; /* font size */
+  color: #2C3E91; /* link color */
+  text-decoration: none; /* remove underline */
+  font-weight: 500; /* medium bold */
+  transition: color 0.3s ease; /* smooth hover effect */
+}
+
+#togglePassword:hover {
+  color: #1e2a63; /* darker color on hover */
+  text-decoration: underline; /* add underline */
+}
+
+/* ====================================
+   Buttons
+==================================== */
+.button-container {
+  display: flex; /* flex layout */
+  flex-direction: column; /* stack buttons vertically */
+  align-items: center; /* center buttons horizontally */
+  gap: 15px; /* spacing between buttons */
+  margin-top: 20px; /* spacing above container */
+}
+
+.submitForm {
+  width: 60%; /* button width */
+  padding: 12px 0; /* top/bottom padding */
+  font-size: 16px; /* text size */
+  font-weight: bold; /* bold text */
+  border-radius: 5px; /* rounded corners */
+  cursor: pointer; /* pointer cursor */
+  border: none; /* remove border */
+  background: #2C3E91; /* button background color */
+  color: #fff; /* text color */
+  transition: background 0.3s ease, color 0.3s ease; /* smooth hover */
+}
+
+.submitForm:hover {
+  background: #1e2a63; /* darker background on hover */
+}
+
+.signup-btn {
+  display: inline-flex; /* inline flex layout */
+  align-items: center; /* center items vertically */
+  justify-content: center; /* center items horizontally */
+  text-decoration: none; /* remove underline */
+  width: auto; /* auto width */
+  padding: 10px 20px; /* inner spacing */
+  min-width: 100px; /* minimum width */
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+/* ====================================
+   Sign Up Row
+==================================== */
+.signup-row {
+  display: flex; /* flex layout */
+  align-items: center; /* vertical align center */
+  justify-content: center; /* horizontal align center */
+  gap: 10px; /* spacing between elements */
+  flex-wrap: nowrap; /* prevent wrapping */
+}
+
+.new-account {
+  font-size: 14px; /* text size */
+  font-weight: 600; /* medium bold */
+  margin: 0; /* remove default margin */
+  color: #1e3a8a; /* text color */
+  white-space: nowrap; /* prevent text wrapping */
+}
+
+a {
+  text-decoration: none; /* remove underline for all links */
+}
+
+
+/* ====================================
+   Success Form
+==================================== */
+.success-container {
+  background-color: rgba(255, 255, 255, 0.781); /* light semi-transparent background */
+  max-width: 1400px;   /* wider container (was 1000px) */
+  width: 95%;          /* expand more of the screen */
+  margin: auto;        /* center horizontally */
+  padding: 50px;       /* inner spacing */
+  border-radius: 16px; /* rounded corners */
+  text-align: center;  /* center text */
+}
+
+.success-container h2 {
+  color: #1e3a8a; /* heading color */
+  font-size: 24px; /* heading size */
+  margin-bottom: 20px; /* spacing below */
+}
+
+.back-btn {
+  margin-top: 20px; /* spacing above button */
+  display: inline-block; /* allow width & height */
+  background-color: #2C3E91; /* button background */
+  color: white; /* button text color */
+  padding: 12px 25px; /* inner spacing */
+  border-radius: 8px; /* rounded corners */
+  font-size: 16px; /* text size */
+  font-weight: bold; /* bold text */
+  text-decoration: none; /* remove underline */
+  transition: 0.3s; /* smooth hover effect */
+}
+
+.back-btn:hover {
+  background-color: #1e2a63; /* darker on hover */
+  color: #fff; /* keep text white */
+}
+
+.tip {
+  margin-top: 15px; /* spacing above tip */
+  font-size: 14px; /* tip text size */
+  color: #333; /* tip text color */
+}
+
+/* ====================================
+   Account Details
+==================================== */
+.account-details p {
+  display: flex;
+  align-items: center;
+  gap: 8px;   /* space between items */
+  margin: 8px 0;
+}
+
+.account-details p strong {
+  min-width: 120px; /* keeps labels aligned */
+}
+
+.account-details {
+  display: flex; /* flex layout */
+  justify-content: space-between; /* spread left/right sections */
+  gap: 125px; /* wider space between columns */
+  margin: 30px auto; /* spacing above/below, center horizontally */
+  font-size: 26px; /* text size */
+  line-height: 2; /* spacing between lines */
+  width: 100%; /* full width container */
+}
+
+.details-left, .details-right {
+  flex: 1; /* take equal space */
+}
+
+.details-left p,
+.details-right p {
+  display: grid; /* use grid for label/value layout */
+  grid-template-columns: 220px 1fr; /* fixed label width, flexible value */
+  gap: 50px; /* spacing between label and value */
+  align-items: center; /* vertically center */
+  margin: 8px 0; /* spacing between rows */
+}
+
+.details-left strong,
+.details-right strong {
+  text-align: left; /* align labels to left */
+  white-space: nowrap; /* prevent wrapping */
+  color: #1e3a8a; /* label color */
+}
+
+.details-left span,
+.details-right span {
+  text-align: left; /* align text left */
+  color: red; /* value color */
+  font-weight: 600; /* bold value */
+  word-wrap: break-word; /* allow breaking long words */
+  overflow-wrap: break-word; /* compatibility for older browsers */
+  white-space: normal; /* allow wrapping */
+}
+
+.account-details {
+  overflow-x: auto; /* horizontal scroll if content too wide */
+}
+
+.success-wrapper {
+  display: flex; /* flex layout */
+  flex-direction: column; /* stack vertically */
+  align-items: center; /* center horizontally */
+  justify-content: center; /* center vertically */
+  width: 100%; /* full width */
+  max-width: 1300px; /* maximum width */
+}
+
+.success-title, 
+.success-title2,
+.success-tip {
+  display: block; /* make block elements */
+  text-align: center; /* center text */
+  width: 100%; /* full width */
+}
+
+.success-title{
+  font-size: 28px; /* heading size */
+  font-weight: bold; /* bold text */
+  color: #ffffff; /* white text */
+  margin-bottom: 20px; /* spacing below */
+}
+
+.success-title2 {
+  font-size: 28px; /* heading size */
+  font-weight: bold; /* bold text */
+  color: #1e3a8a; /* blue text */
+  margin-bottom: 20px; /* spacing below */
+}
+
+.success-tip {
+  font-size: 20px; /* tip size */
+  color: #ffffff; /* white text */
+  margin-top: 20px; /* spacing above */
+}
+
+
+.details-right p.account-id-row {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+}
+
+.details-right p.account-id-row strong {
+  min-width: 220px; /* keep label aligned with others */
+}
+/* ====================================
+   Dark Mode (Checkbox Toggle)
+==================================== */
+#theme-toggle:checked ~ .page {
+  color: #e0e0e0; /* general text color for dark mode */
+}
+
+#theme-toggle:checked ~ .page .login-title,
+#theme-toggle:checked ~ .page .signup-title,
+#theme-toggle:checked ~ .page .inputGroup label {
+  color: #e0e0e0; /* labels and titles in dark mode */
+}
+
+#theme-toggle:checked ~ .page .inputGroup input,
+#theme-toggle:checked ~ .page .inputGroup select {
+  background-color: rgba(255, 255, 255, 0.1); /* transparent inputs */
+  color: #e0e0e0; /* light text for inputs */
+}
+
+#theme-toggle:checked ~ .page .inputGroup input::placeholder {
+  color: #bbb; /* lighter placeholder text */
+}
+
+#theme-toggle:checked ~ .page .forgot-password a {
+  color: #e0e0e0; /* dark mode link color */
+}
+
+#theme-toggle:checked ~ .page #security-question option, #theme-toggle:checked ~ .page #role option, #theme-toggle:checked ~ .page #gender option {
+  color: #e0e0e0; /* option text color */
+  background-color: #434343; /* option background dark */
+}
+
+#theme-toggle:checked ~ .page .background-blur {
+  background-color: rgba(0, 0, 0, 0.759); /* dark overlay for blur */
+}
+
+#theme-toggle:checked ~ .page .inFormBackground {
+  background-color: rgba(255, 255, 255, 0.1); /* transparent form */
+  color: #e0e0e0; /* text inside form */
+}
+
+#theme-toggle:checked ~ .page .submitForm {
+  background-color: #fff; /* button background in dark mode */
+  color: #000; /* text black */
+}
+
+#theme-toggle:checked ~ .page .submitForm:hover {
+  background-color: #444; /* darker hover background */
+  color: #fff; /* text white on hover */
+}
+
+#theme-toggle:checked ~ .page .signup-row .new-account {
+  color: #ffffff; /* white text for sign up row */
+}
+
+#theme-toggle:checked ~ .page .home-button, 
+#theme-toggle:checked ~ .page .theme-button{
+  background-color: #5f5f84;
+}
+
+#theme-toggle:checked ~ .page .home-button:hover,
+#theme-toggle:checked ~ .page .theme-button:hover {
+  background-color: #444;
+}
+
+#theme-toggle:checked ~ .page .theme-button .light-icon {
+  opacity: 0; /* hide light icon */
+  transform: scale(0.5); /* shrink icon */
+}
+
+#theme-toggle:checked ~ .page .theme-button .dark-icon {
+  opacity: 1; /* show dark icon */
+  transform: scale(1); /* normal size */
+}
+
+#theme-toggle:checked ~ .page .welcome-message,
+#theme-toggle:checked ~ .page .features-section h2{
+  color: #b7b8ff; /* light blue text */
+}
+
+#theme-toggle:checked ~ .page .features-list li {
+  color: #e0e0e0; /* light text for features */
+}
+
+#theme-toggle:checked ~ .page .toggle-password i {
+  color: #fff;  /* white for dark mode icons */
+}
+
+/* Dark mode override for Show/Hide password text */
+#theme-toggle:checked ~ .page #togglePassword {
+  color: #ffffff !important; /* ensure text is visible */
+}
+
+/* Dark mode for Success Page */
+#theme-toggle:checked ~ .page .success-container {
+  background-color: rgba(0, 0, 0, 0.411); /* dark container */
+  color: #e0e0e0; /* light text */
+  border: 1px solid #555; /* subtle border */
+}
+
+#theme-toggle:checked ~ .page .success-title,
+#theme-toggle:checked ~ .page .success-title2,
+#theme-toggle:checked ~ .page .success-tip {
+  color: #ffffff; /* white text */
+}
+
+#theme-toggle:checked ~ .page .account-details .details-left span,
+#theme-toggle:checked ~ .page .account-details .details-right span {
+  color: #ff7777;  /* softer red for dark mode */
+}
+
+#theme-toggle:checked ~ .page .details-left strong,
+#theme-toggle:checked ~ .page .details-right strong {
+  color: #b7b8ff;  /* lighter label for dark background */
+}
+
+#theme-toggle:checked ~ .page .back-btn {
+  background-color: #fff; /* light button */
+  color: #000; /* dark text */
+}
+
+#theme-toggle:checked ~ .page .back-btn:hover {
+  background-color: #444; /* darker hover */
+  color: #fff; /* white text */
+}
+
+/* ====================================
+   Responsive Design
+==================================== */
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column; /* stack left/right vertically */
+    align-items: center; /* center content */
+    text-align: center; /* center text */
+  }
+  .left-side {
+    margin-bottom: 20px; /* spacing below left side */
+  }
+}
+
+/* Make account details stack on small screens */
+@media (max-width: 768px) {
+  .account-details {
+    flex-direction: column; /* stack vertically */
+    gap: 20px; /* spacing between items */
+  }
+}

@@ -1,0 +1,160 @@
+<?php
+  session_start();
+  if (isset($_POST['submit'])) {
+    // Handle form submission logic here...
+  } else {
+?>
+<!doctype html>
+<html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
+<head>
+  <title>ChainLedger | Transaction Report</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="Transaction Report Page" />
+  <meta name="keywords" content="ChainLedger, Transaction, Report" />
+  <meta name="author" content="Sniper 2025" />
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/fonts/phosphor/duotone/style.css" />
+  <link rel="stylesheet" href="../assets/fonts/tabler-icons.min.css" />
+  <link rel="stylesheet" href="../assets/fonts/feather.css" />
+  <link rel="stylesheet" href="../assets/fonts/fontawesome.css" />
+  <link rel="stylesheet" href="../assets/fonts/material.css" />
+  <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+  <!-- [ Pre-loader ] start -->
+  <div class="loader-bg fixed inset-0 bg-white dark:bg-themedark-cardbg z-[1034]">
+    <div class="loader-track h-[5px] w-full inline-block absolute overflow-hidden top-0">
+      <div class="loader-fill w-[300px] h-[5px] bg-primary-500 absolute top-0 left-0 animate-[hitZak_0.6s_ease-in-out_infinite_alternate]"></div>
+    </div>
+  </div>
+  <!-- [ Pre-loader ] End -->
+
+  <!-- [ Sidebar Menu ] start -->
+  <?php include '../includes/sidebar.php'; ?>
+  <!-- [ Sidebar Menu ] end -->
+
+  <!-- [ Header Topbar ] start -->
+  <?php include '../includes/header.php'; ?>
+  <!-- [ Header Topbar ] end -->
+
+  <!-- [ Main Content ] start -->
+  <div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="page-header-title">
+            <h5 class="mb-0 font-medium">Transaction Report</h5>
+          </div>
+          <ul class="breadcrumb">
+            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item" aria-current="page">Report</li>
+          </ul>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+      <!-- [ Main Content ] start -->
+      <div class="grid grid-cols-12 gap-x-6">
+        <div class="col-span-12">
+          <div class="card">
+            <div class="card-header">
+              <h5>Fill Out Report Details (<span style="color: red; font-weight: bold;">*</span> Required)</h5>
+            </div>
+            <div class="card-body">
+              <form action="/../handlers/report.php" method="POST" class="form-horizontal">
+                <div class="mb-3">
+                  <label for="details" class="form-label">Details<span style="color: red; font-weight: bold;">*</span></label>
+                  <select name="details" id="details" class="form-control">
+                    <option value="">Select Details</option>
+                    <option value="PAYMENT">Payment</option>
+                    <option value="REFUND">Refund</option>
+                    <option value="WITHDRAWAL">Withdrawal</option>
+                    <option value="DEPOSIT">Deposit</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="category" class="form-label">Category<span style="color: red; font-weight: bold;">*</span></label>
+                  <select name="category" id="category" class="form-control">
+                    <option value="" disabled selected>Select Category</option>
+                    <option value="Equipment">Equipment</option>
+                    <option value="Food">Food</option>
+                    <option value="Health">Health</option>
+                    <option value="Maintenance">Maintenance</option>
+                    <option value="Utilities">Utilities</option>
+                    <option value="Transportation">Transportation</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="merchant" class="form-label">Merchant</label>
+                  <select name="merchant" id="merchant" class="form-control">
+                    <option value="">Select Payment Merchant</option>
+                    <option value="Gcash">GCash</option>
+                    <option value="Googlepay">GooglePay</option>
+                    <option value="Grabpay">GrabPay</option>
+                    <option value="Maya">Maya</option>
+                    <option value="Paypal">PayPal</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="amount" class="form-label">Amount<span style="color: red; font-weight: bold;">*</span></label>
+                  <div class="input-group">
+                    <span class="input-group-text">₱</span>
+                    <input type="number" step="0.01" min="0" name="amount" id="amount" placeholder="0.00" class="form-control" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="date" class="form-label">Date<span style="color: red; font-weight: bold;">*</span></label>
+                  <input type="date" name="date" id="date" class="form-control" required>
+                </div>
+
+                <div class="mb-4">
+                  <label for="status" class="form-label">Status</label>
+                  <select name="status" id="status" class="form-control">
+                    <option value="">Select Payment Status</option>
+                    <option value="COMPLETED">Complete</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="FAILED">Failed</option>
+                    <option value="CANCELLED">Cancelled</option>
+                  </select>
+                </div>
+
+                <div class="flex mt-1 justify-between items-center flex-wrap">
+                  <div class="form-check">
+                    <button type="submit" name="submit" class="btn btn-primary mx-auto shadow-2xl">Save Transaction</button>
+                    <button type="reset" class="btn btn-warning mx-auto shadow-2xl">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+
+  <!-- Required Js -->
+  <script src="../assets/js/plugins/simplebar.min.js"></script>
+  <script src="../assets/js/plugins/popper.min.js"></script>
+  <script src="../assets/js/icon/custom-icon.js"></script>
+  <script src="../assets/js/plugins/feather.min.js"></script>
+  <script src="../assets/js/component.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/script.js"></script>
+
+  <?php include '../includes/footer.php'; ?>
+</body>
+</html>
+<?php } ?>
