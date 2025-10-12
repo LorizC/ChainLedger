@@ -146,3 +146,19 @@ ALTER TABLE archivedtransactions
 ADD COLUMN old_account_id INT AFTER account_id,
 ADD COLUMN old_username VARCHAR(255) AFTER old_account_id,
 ADD COLUMN archived_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+
+-- ==========================
+-- Reset Database (For Testing)
+-- ========================== 
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE archivedtransactions;
+TRUNCATE TABLE archivedaccounts;
+TRUNCATE TABLE security_logs;
+TRUNCATE TABLE transactions;
+TRUNCATE TABLE company_owners;
+TRUNCATE TABLE company_personnel;
+TRUNCATE TABLE security;
+TRUNCATE TABLE users;
+
+SET FOREIGN_KEY_CHECKS = 1;

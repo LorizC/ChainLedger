@@ -13,9 +13,7 @@
 1. Real-time transaction monitoring dashboard
 2. Ledger with filtering and sorting
 3. Secure user authentication (Sign Up / Log In)
-4. Interactive demo carousel with fullscreen preview 
-5. Sanitized database connection and queries 
-
+4. Sanitized database connection and queries 
 *-----------------------------*
 * Languages
 *-----------------------------*

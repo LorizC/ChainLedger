@@ -83,7 +83,7 @@
                     <span>Change Password</span>
                   </span>
                 </a>
-                <a href="#" class="dropdown-item dark:hover:bg-gray-800" onclick="alert('About this System...');">
+                <a href="securitylogs.php" class="dropdown-item dark:hover:bg-gray-800">
                   <span><i class="ti ti-report"></i><span> Security Logs</span></span>
                 </a>
                   <!-- Logout -->

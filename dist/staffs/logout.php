@@ -2,8 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once __DIR__ . '/../../php/db/dbconfig.php';
-require_once __DIR__ . '/../../php/services/SecurityLogService.php';
+require_once __DIR__ . '/../database/dbconfig.php';
+require_once __DIR__ . '/services/SecurityLogService.php';
 
 // Initialize DB + logging
 $conn = Database::getConnection();
@@ -27,5 +27,5 @@ session_unset();
 session_destroy();
 
 // Redirect to login
-header("Location: ../usercreation/login.php");
+header("Location: ../../index.php");
 exit;

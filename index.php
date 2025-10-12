@@ -16,8 +16,8 @@ include 'dist/admin/handlers/login.php';
   <style>
     /* ✅ Flash message styling */
     .flash-message {
-      max-width: 400px;
-      margin: 1rem auto;
+      max-width: 100%;
+      margin: 0 0 1rem 0;
       padding: 12px 16px;
       border-radius: 8px;
       font-weight: 500;
@@ -37,6 +37,10 @@ include 'dist/admin/handlers/login.php';
       from { opacity: 0; transform: translateY(-10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    .flash-message {
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
   </style>
 </head>
 <body>
@@ -47,25 +51,10 @@ include 'dist/admin/handlers/login.php';
       <span class="material-icons light-icon">light_mode</span>
       <span class="material-icons dark-icon">dark_mode</span>
     </label>
-      <!-- Flash messages -->
-      <?php if (isset($_SESSION['flash_success'])): ?>
-        <div class="flash-message flash-success">
-          <?= htmlspecialchars($_SESSION['flash_success']); ?>
-        </div>
-        <?php unset($_SESSION['flash_success']); ?>
-      <?php endif; ?>
 
-      <?php if (isset($_SESSION['flash_error'])): ?>
-        <div class="flash-message flash-error">
-          <?= htmlspecialchars($_SESSION['flash_error']); ?>
-        </div>
-        <?php unset($_SESSION['flash_error']); ?>
-      <?php endif; ?>
     <div class="background-blur"></div>
 
     <div class="content-wrapper">
-
-
 
       <!-- Left side -->
       <div class="left-side">
@@ -91,8 +80,24 @@ include 'dist/admin/handlers/login.php';
       <!-- Right side: Login form -->
       <div class="right-side">
         <div class="form-wrapper">
+              <!--  Flash messages moved here -->
+              <?php if (isset($_SESSION['flash_success'])): ?>
+                <div class="flash-message flash-success">
+                  <?= htmlspecialchars($_SESSION['flash_success']); ?>
+                </div>
+                <?php unset($_SESSION['flash_success']); ?>
+              <?php endif; ?>
+
+              <?php if (isset($_SESSION['flash_error'])): ?>
+                <div class="flash-message flash-error">
+                  <?= htmlspecialchars($_SESSION['flash_error']); ?>
+                </div>
+                <?php unset($_SESSION['flash_error']); ?>
+              <?php endif; ?>
+              <!--  End Flash messages -->          
           <div class="inFormBackground">
             <div class="inLoginForm">
+
               <form method="POST" action="">
                 <div class="title">
                   <h3 class="login-title">Login Here</h3>
@@ -136,6 +141,7 @@ include 'dist/admin/handlers/login.php';
 
     </div>
   </div>
+
 <!-- Required Js -->
 <script src="../assets/js/plugins/simplebar.min.js"></script>
 <script src="../assets/js/plugins/popper.min.js"></script>
