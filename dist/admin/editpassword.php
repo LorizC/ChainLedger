@@ -116,7 +116,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
 <form x-data="{showCurrent:false, showNew:false, showConfirm:false, confirmModal:false}"
       x-ref="passwordForm"
       method="POST"
-      action="editpassword.php"
+      action="/ChainLedger-System-/dist/admin/handlers/editpassword.php"
       class="space-y-6">
 
   <!-- Current Password -->

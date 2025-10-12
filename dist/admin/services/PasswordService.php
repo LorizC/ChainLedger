@@ -6,15 +6,16 @@ class PasswordService {
         $this->userRepo = $userRepo;
     }
 
-        public function verifySecurityAnswer(int $accountId, string $question, string $answer): bool {
-        $record = $this->userRepo->findSecurityByAccountId($accountId);
-        if (!$record) return false;
+public function verifySecurityAnswer(int $accountId, string $question, string $answer): bool {
+    $record = $this->userRepo->findSecurityByAccountId($accountId);
+    if (!$record) return false;
 
-        return (
-            strtolower(trim($record['security_question'])) === strtolower(trim($question)) &&
-            strtolower(trim($record['security_answer'])) === strtolower(trim($answer))
-        );
-    }
+    $questionMatches = strtolower(trim($record['security_question'])) === strtolower(trim($question));
+    $answerMatches   = password_verify(trim($answer), $record['security_answer']);
+
+    return $questionMatches && $answerMatches;
+}
+
 
     /**
      * Set a password for a user (by account_id).

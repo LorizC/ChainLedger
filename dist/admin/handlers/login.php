@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             );
 
             // Redirect to dashboard
-            header("Location: /PWA/dist/admin/dashboard.php");
+            header("Location: /ChainLedger-System-/dist/admin/dashboard.php");
             exit();
         }
     }

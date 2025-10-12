@@ -3,14 +3,14 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once __DIR__ . '/../../../database/dbconfig.php';
+require_once __DIR__ . '/../../database/dbconfig.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../services/PasswordService.php';
 require_once __DIR__ . '/../services/SecurityLogService.php';
 
 try {
     // ===============================
-    // 1️⃣ Initialize Classes
+    //  Initialize Classes
     // ===============================
     $conn = Database::getConnection();
     $userRepo = new UserRepository($conn);
@@ -18,12 +18,12 @@ try {
     $logService = new SecurityLogService($conn);
 
     if (!isset($_SESSION['user'])) {
-        header("Location: /../../index.php");
+        header("Location: ../../../index.php");
         exit;
     }
 
     // ===============================
-    // 2️⃣ Securely Get Form Data
+    //  Securely Get Form Data
     // ===============================
     $securityAnswer   = trim($_POST['security_answer'] ?? '');
     $currentPassword  = trim($_POST['current_password'] ?? '');
@@ -31,7 +31,7 @@ try {
 
     if (empty($securityAnswer) || empty($currentPassword) || empty($confirmPassword)) {
         $_SESSION['flash_error'] = "All fields are required.";
-        header('Location: ../../admin/deleteaccount.php');
+        header('Location: ../deleteaccount.php');
         exit;
     }
 
@@ -42,7 +42,7 @@ try {
     }
 
     // ===============================
-    // 3️⃣ Start Transaction
+    //  Start Transaction
     // ===============================
     $conn->begin_transaction();
 
@@ -55,7 +55,7 @@ try {
     }
 
     // ===============================
-    // 4️⃣ Verify Password (via UserRepository)
+    //  Verify Password (via password_verify)
     // ===============================
     if (!password_verify($currentPassword, $userData['password'])) {
         $_SESSION['flash_error'] = "Incorrect password.";
@@ -64,23 +64,24 @@ try {
     }
 
     // ===============================
-    // 5️⃣ Verify Security Answer (via PasswordService)
+    //  Verify Security Answer
     // ===============================
     $securityData = $userRepo->findSecurityByAccountId($accountId);
-    if (!$securityData) {
-        $_SESSION['flash_error'] = "Security information not found.";
-        header('Location: ../deleteaccount.php');
-        exit;
-    }
+$securityData = $userRepo->findSecurityByAccountId($accountId);
+if (!$securityData) {
+    $_SESSION['flash_error'] = "Security information not found.";
+    header('Location: ../deleteaccount.php');
+    exit;
+}
 
-    if (strtolower(trim($securityData['security_answer'])) !== strtolower(trim($securityAnswer))) {
-        $_SESSION['flash_error'] = "Incorrect security answer.";
-        header('Location: ../deleteaccount.php');
-        exit;
-    }
+if (!password_verify($securityAnswer, $securityData['security_answer'])) {
+    $_SESSION['flash_error'] = "Incorrect security answer.";
+    header('Location: ../deleteaccount.php');
+    exit;
+}
 
     // ===============================
-    // 6️⃣ Log Security Event (via SecurityLogService)
+    //  Log Security Event
     // ===============================
     $logService->logEvent(
         $userData['user_id'],
@@ -90,19 +91,57 @@ try {
     );
 
     // ===============================
-    // 7️⃣ Archive Transactions
+    //  Archive User Info → archivedaccounts
     // ===============================
-    $archiveStmt = $conn->prepare("
-        INSERT INTO archivedaccounts 
-        SELECT t.*, NOW() AS archived_at, ? AS old_account_id, ? AS old_username
+    $archiveUser = $conn->prepare("
+        INSERT INTO archivedaccounts (
+            account_id, first_name, last_name, birthdate, gender,
+            username, profile_image, date_registered, archived_at
+        )
+        SELECT account_id, first_name, last_name, birthdate, gender,
+               username, profile_image, date_registered, NOW()
+        FROM users
+        WHERE account_id = ?
+    ");
+    $archiveUser->bind_param('i', $accountId);
+    $archiveUser->execute();
+
+    // ===============================
+    //  Archive Transactions → archivedtransactions
+    // ===============================
+    $archiveTransactions = $conn->prepare("
+        INSERT INTO archivedtransactions (
+            transaction_id, account_id, old_account_id, old_username,
+            username, detail, merchant, amount, currency,
+            transaction_date, entry_date, transaction_type, status, archived_at
+        )
+        SELECT 
+            t.transaction_id,
+            t.account_id,
+            ? AS old_account_id,
+            ? AS old_username,
+            t.username,
+            t.detail,
+            t.merchant,
+            t.amount,
+            t.currency,
+            t.transaction_date,
+            t.entry_date,
+            t.transaction_type,
+            t.status,
+            NOW()
         FROM transactions t
         WHERE t.account_id = ?
     ");
-    $archiveStmt->bind_param('isi', $accountId, $username, $accountId);
-    $archiveStmt->execute();
+    $archiveTransactions->bind_param('isi', $accountId, $username, $accountId);
+    $archiveTransactions->execute();
 
-    // ===============================
-    // 8️⃣ Cascade Delete User Data
+if ($archiveStmt->affected_rows === 0) {
+    error_log("No transactions archived for account ID $accountId");
+}
+
+     // ===============================
+    //  Cascade Delete User Data
     // ===============================
     $tables = [
         'company_personnel',
@@ -122,21 +161,19 @@ try {
     }
 
     // ===============================
-    // 9️⃣ Commit Transaction & Destroy Session
+    //  Commit Transaction & Destroy Session
     // ===============================
-$conn->commit();
+    $conn->commit();
 
-session_unset();
-session_destroy();
+    session_unset();
+    session_destroy();
+    session_start();
 
-// Start fresh session to store flash message
-session_start();
-$_SESSION['flash_success'] = "Your account has been deleted. Transactions moved to archive.";
+    $_SESSION['flash_success'] = "Your account has been deleted. Data moved to archives.";
+    $_SESSION['redirect_after_delete'] = true;
 
-// ✅ Clean redirect (no leading slash)
-$_SESSION['redirect_after_delete'] = true;
-header('Location: ../../../index.php');
-exit;
+    header('Location: ../../../index.php');
+    exit;
 
 } catch (Exception $e) {
     if (isset($conn)) {
@@ -146,5 +183,4 @@ exit;
     $_SESSION['flash_error'] = "Error: " . $e->getMessage();
     header('Location: ../deleteaccount.php');
     exit;
-};
-
+}

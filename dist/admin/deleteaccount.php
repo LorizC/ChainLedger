@@ -68,6 +68,26 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
       </div>
     </div>
 
+<!-- Flash Messages -->
+<?php if (!empty($_SESSION['flash_success'])): ?>
+  <div class="bg-green-100 text-green-800 p-3 rounded mb-4 mx-6">
+    <?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?>
+  </div>
+<?php endif; ?>
+<?php if (isset($_SESSION['redirect_after_delete']) && $_SESSION['redirect_after_delete']): ?>
+<script>
+  setTimeout(function() {
+    window.location.href = '/../../index.php';
+  }, 2000); // 2 seconds delay
+</script>
+<?php unset($_SESSION['redirect_after_delete']); endif; ?>
+
+<?php if (!empty($_SESSION['flash_error'])): ?>
+  <div class="bg-red-100 text-red-800 p-3 rounded mb-4 mx-6">
+    <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
+  </div>
+<?php endif; ?>
+
     <!-- Profile + Password Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 px-6">
 
@@ -104,7 +124,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
 
   <h2 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">Delete Your Account</h2>
 
-  <form id="deleteForm" method="POST" action="../admin/handlers/delete_account.php" class="space-y-6">
+  <form id="deleteForm" method="POST" action="/ChainLedger-System-/dist/admin/handlers/delete_account.php" class="space-y-6">
 
     <!-- Security Answer -->
     <div>
@@ -197,25 +217,36 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
 
 <?php include '../includes/footer.php'; ?>
 
-<!-- Flash Messages -->
-<?php if (!empty($_SESSION['flash_success'])): ?>
-  <div class="bg-green-100 text-green-800 p-3 rounded mb-4 mx-6">
-    <?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?>
-  </div>
-<?php endif; ?>
-<?php if (isset($_SESSION['redirect_after_delete']) && $_SESSION['redirect_after_delete']): ?>
+<!-- Trigger confirmation modal when pressing Enter -->
 <script>
-  setTimeout(function() {
-    window.location.href = '../../html/usercreation/login.php';
-  }, 2000); // 2 seconds delay
-</script>
-<?php unset($_SESSION['redirect_after_delete']); endif; ?>
+  document.addEventListener('DOMContentLoaded', function () {
+    const deleteForm = document.getElementById('deleteForm');
 
-<?php if (!empty($_SESSION['flash_error'])): ?>
-  <div class="bg-red-100 text-red-800 p-3 rounded mb-4 mx-6">
-    <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
-  </div>
-<?php endif; ?>
+    if (deleteForm) {
+      // Prevent default submission on Enter in the form
+      deleteForm.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+
+          // Find the Alpine component and show the modal
+          const alpineRoot = deleteForm.closest('[x-data]');
+          if (alpineRoot && alpineRoot.__x) {
+            alpineRoot.__x.$data.confirmModal = true;
+          }
+        }
+      });
+
+      // Also block any accidental "submit" events that bypass keypress
+      deleteForm.addEventListener('submit', function (e) {
+        const alpineRoot = deleteForm.closest('[x-data]');
+        if (alpineRoot && alpineRoot.__x && alpineRoot.__x.$data.confirmModal === false) {
+          e.preventDefault();
+        }
+      });
+    }
+  });
+</script>
+
 </body>
 </html>
 

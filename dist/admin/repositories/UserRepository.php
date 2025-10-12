@@ -158,18 +158,20 @@ class UserRepository {
         return $result->fetch_assoc() ?: null;
     }
 
-    public function addSecurity(int $accountId, string $username, ?string $hashedPassword, string $securityQ, string $securityA): bool {
-        $stmt = $this->conn->prepare("
-            INSERT INTO security (account_id, username, security_question, security_answer, password)
-            VALUES (?, ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE 
-                security_question = VALUES(security_question),
-                security_answer = VALUES(security_answer),
-                password = COALESCE(VALUES(password), password)
-        ");
-        $stmt->bind_param("issss", $accountId, $username, $securityQ, $securityA, $hashedPassword);
-        return $stmt->execute();
-    }
+public function addSecurity(int $accountId, string $username, ?string $hashedPassword, string $securityQ, string $hashedSecurityA): bool {
+    $stmt = $this->conn->prepare("
+        INSERT INTO security (account_id, username, security_question, security_answer, password)
+        VALUES (?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE 
+            security_question = VALUES(security_question),
+            security_answer = VALUES(security_answer),
+            password = COALESCE(VALUES(password), password)
+    ");
+
+    // Note: $hashedSecurityA is already hashed before calling this method
+    $stmt->bind_param("issss", $accountId, $username, $securityQ, $hashedSecurityA, $hashedPassword);
+    return $stmt->execute();
+}
 
     public function assignRole(array $user, string $role): bool {
         $role = ucwords(strtolower(trim($role)));

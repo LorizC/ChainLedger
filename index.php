@@ -1,4 +1,38 @@
-<?php include 'dist/admin/handlers/login.php'; ?>
+<?php 
+include 'dist/admin/handlers/login.php'; 
+
+if (isset($_SESSION['flash_success'])): ?>
+  <div style="
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 12px 16px;
+    margin: 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+  ">
+    <?= htmlspecialchars($_SESSION['flash_success']); ?>
+  </div>
+<?php
+unset($_SESSION['flash_success']);
+endif;
+
+if (isset($_SESSION['flash_error'])): ?>
+  <div style="
+    background-color: #fee2e2;
+    color: #991b1b;
+    padding: 12px 16px;
+    margin: 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+  ">
+    <?= htmlspecialchars($_SESSION['flash_error']); ?>
+  </div>
+<?php
+unset($_SESSION['flash_error']);
+endif;
+?>?>
 
 <!DOCTYPE html>
 <html lang="en">

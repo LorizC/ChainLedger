@@ -123,9 +123,26 @@ CREATE TABLE security_logs (
 -- ==========================
 -- Archived_Accounts Table
 -- ========================== 
-CREATE TABLE archivedaccounts LIKE transactions;
 
-ALTER TABLE archivedaccounts
+CREATE TABLE archivedaccounts (
+    archived_id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    birthdate DATE,
+    gender ENUM('Male','Female'),
+    username VARCHAR(100) NOT NULL,
+    profile_image VARCHAR(255),
+    date_registered TIMESTAMP,
+    archived_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- ==========================
+-- Archived Transactions Table
+-- ========================== 
+CREATE TABLE archivedtransactions LIKE transactions;
+
+ALTER TABLE archivedtransactions
 ADD COLUMN old_account_id INT AFTER account_id,
 ADD COLUMN old_username VARCHAR(255) AFTER old_account_id,
 ADD COLUMN archived_at DATETIME DEFAULT CURRENT_TIMESTAMP;
