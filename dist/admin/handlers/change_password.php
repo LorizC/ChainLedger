@@ -28,14 +28,14 @@ if (!isset($_SESSION['reset_account_id'])) {
             $error = "Password must be at least 8 characters.";
         } else {
             try {
-                // ✅ Reset password
+                //  Reset password
                 $passwordService->resetPassword((int)$accountId, $newPassword);
 
-                // ✅ Fetch user for logging
+                //  Fetch user for logging
                 $user = $userRepo->findByAccountId((int)$accountId);
 
                 if ($user) {
-                    // 🚨 Log password change
+                    //  Log password change
                     $logService->logEvent(
                         $user['user_id'],
                         $user['account_id'],
@@ -47,7 +47,7 @@ if (!isset($_SESSION['reset_account_id'])) {
                 // ✅ Cleanup + redirect
                 unset($_SESSION['reset_account_id']); 
                 $_SESSION['success_message'] = "Your password has been reset successfully. Please login with your new password.";
-                header("Location: /ChainLedger-System-/dist/index.php");
+                header("Location: /ChainLedger-System-/index.php");
                 exit;
             } catch (Exception $e) {
                 $error = "Password reset failed: " . $e->getMessage();

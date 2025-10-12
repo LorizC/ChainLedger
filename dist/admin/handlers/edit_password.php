@@ -72,6 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['flash_error'] = $e->getMessage();
     }
 
-    header("Location: editpassword.php");
+    header("Location: ../editpassword.php");
     exit;
 }

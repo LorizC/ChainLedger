@@ -1,6 +1,5 @@
 <?php
 session_start();
-include 'handlers/edit_password.php';
 
 require_once __DIR__ . '/../database/dbconfig.php';
 require_once __DIR__ . '/repositories/UserRepository.php';
@@ -116,7 +115,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
 <form x-data="{showCurrent:false, showNew:false, showConfirm:false, confirmModal:false}"
       x-ref="passwordForm"
       method="POST"
-      action="/ChainLedger-System-/dist/admin/handlers/editpassword.php"
+      action="handlers/edit_password.php"
       class="space-y-6">
 
   <!-- Current Password -->

@@ -85,6 +85,14 @@ include('../handlers/change_password.php');
       </div>
     </div>
   </div>
+  <!-- Required Js -->
+<script src="../assets/js/plugins/simplebar.min.js"></script>
+<script src="../assets/js/plugins/popper.min.js"></script>
+<script src="../assets/js/icon/custom-icon.js"></script>
+<script src="../assets/js/plugins/feather.min.js"></script>
+<script src="../assets/js/component.js"></script>
+<script src="../assets/js/theme.js"></script>
+<script src="../assets/js/script.js"></script>
 <script src="../../assets/js/js/scripts.js"></script>
 </body>
 </html>

@@ -84,14 +84,15 @@
                   </span>
                 </a>
                 <a href="#" class="dropdown-item dark:hover:bg-gray-800" onclick="alert('About this System...');">
-                  <span><i class="ti ti-report"></i><span>Security Logs</span></span>
+                  <span><i class="ti ti-report"></i><span> Security Logs</span></span>
                 </a>
+                  <!-- Logout -->
                 <div class="grid my-3">
                   <button class="btn btn-primary flex items-center justify-center dark:bg-indigo-600 dark:text-gray-100">
                     <svg class="pc-icon me-2 w-[22px] h-[22px]">
                       <use xlink:href="#custom-logout-1-outline"></use>
                     </svg>
-                    <a href="./logout.php">Log-Out</a>
+                    <a href="logout.php" id="logoutBtn" class="label">Log-Out</a>
                   </button>
                 </div>
               </div>

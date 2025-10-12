@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $result2 = $stmt2->get_result();
 
             if ($result2->num_rows === 0) {
-                $error = "No security question found for this user.";
+                $error = "No account found for this user.";
             } else {
                 // ✅ Verify security question + answer
                 if ($passwordService->verifySecurityAnswer($accountId, $question, $answer)) {
