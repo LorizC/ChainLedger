@@ -1,7 +1,7 @@
 <?php
 // success.php
 session_start();
-require_once __DIR__ . '/../../database/dbconfig.php';
+require_once __DIR__ . '/../database/dbconfig.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 
 $conn = Database::getConnection();
@@ -12,7 +12,7 @@ $error = "";
 $username = "N/A";
 $accountID = "000000";
 
-// ✅ Use stored session info first
+//  Use stored session info first
 if (isset($_SESSION['success_account_id']) && isset($_SESSION['success_username'])) {
     $username = htmlspecialchars($_SESSION['success_username']);
     $accountID = htmlspecialchars($_SESSION['success_account_id']);

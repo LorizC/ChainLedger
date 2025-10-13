@@ -1,86 +1,20 @@
 <?php
 session_start();
+extract(include __DIR__ . '/handlers/logs.php');
 
-// Get filter values from GET
-$filterAction   = $_GET['action'] ?? '';
-$filterUser     = $_GET['user'] ?? '';
-$filterMerchant = $_GET['merchant'] ?? '';
-$filterStatus   = $_GET['status'] ?? '';
-$sorttimestamp       = $_GET['sort_timestamp'] ?? ''; // 'asc' or 'desc'
-$page           = $_GET['page'] ?? 1;
-
-// Mock user list for filter dropdown
-$userList = new ArrayIterator([
-  ['user_id' => 1, 'full_name' => 'Loriz Carlos'],
-  ['user_id' => 2, 'full_name' => 'Mii Lee'],
-  ['user_id' => 3, 'full_name' => 'Sara Pyaya'],
-  ['user_id' => 4, 'full_name' => 'Dave Smith'],
-  ['user_id' => 5, 'full_name' => 'Jon Weak'],
-  ['user_id' => 6, 'full_name' => 'Sarah Dicaya'],
-]);
-
-// Ledger data
-$ledger = [
-  ["user" => "Sara Pyaya", "action" => "LOGIN", "merchant" => "Maya", "amount" => "-₱10,000,000.00", "timestamp" => "10-07-2025", "status" => "Pending"],  
-  ["user" => "Loriz Carlos", "action" => "ACCOUNT_CREATED", "merchant" => "GrabPay", "amount" => "-₱2,255,555.55", "timestamp" => "10-08-2025", "status" => "Completed"],
-  ["user" => "Jon Weak", "action" => "LOGOUT", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "timestamp" => "10-05-2025", "status" => "Failed"], 
-  ["user" => "Jon Weak", "action" => "ACCOUNT_DELETED", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "timestamp" => "10-05-2025", "status" => "Completed"],
-  ["user" => "Dave Smith", "action" => "PASSWOORD_CHANGE", "merchant" => "Paypal", "amount" => "+₱15,000.00", "timestamp" => "10-06-2025", "status" => "Cancelled"],
-  ["user" => "Sara Pyaya", "action" => "LOGIN", "merchant" => "Maya", "amount" => "-₱10,000,000.00", "timestamp" => "10-07-2025", "status" => "Pending"],  
-  ["user" => "Loriz Carlos", "action" => "ACCOUNT_CREATED", "merchant" => "GrabPay", "amount" => "-₱2,255,555.55", "timestamp" => "10-08-2025", "status" => "Completed"],
-  ["user" => "Jon Weak", "action" => "LOGOUT", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "timestamp" => "10-05-2025", "status" => "Failed"], 
-  ["user" => "Jon Weak", "action" => "ACCOUNT_DELETED", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "timestamp" => "10-05-2025", "status" => "Completed"],
-  ["user" => "Dave Smith", "action" => "PASSWOORD_CHANGE", "merchant" => "Paypal", "amount" => "+₱15,000.00", "timestamp" => "10-06-2025", "status" => "Cancelled"]
-
-];
-
-
-// Extract unique actions (action) and merchants dynamically
-$actions = array_values(array_unique(array_map(fn($row) => $row['action'], $ledger)));
-$merchants = array_values(array_unique(array_map(fn($row) => $row['merchant'], $ledger)));
-
-// Map user IDs to names
-$userNamesById = [
-    1 => 'Loriz Carlos',
-    2 => 'Mii Lee',
-    3 => 'Sara Pyaya',
-    4 => 'Dave Smith',
-    5 => 'Jon Weak',
-    6 => 'Sarah Dicaya',
-];
-
-// FILTER
-$filteredLedger = array_filter($ledger, function($row) use ($filterAction, $filterUser, $filterMerchant, $filterStatus, $userNamesById) {
-    $actionMatch = $filterAction === '' || $row['action'] === $filterAction;
-    $merchantMatch = $filterMerchant === '' || $row['merchant'] === $filterMerchant;
-
-    $userMatch = true;
-    if ($filterUser !== '') {
-        $userMatch = isset($userNamesById[$filterUser]) && $row['user'] === $userNamesById[$filterUser];
-    }
-    $statusMatch = $filterStatus === '' || $row['status'] === $filterStatus;
-
-    return $actionMatch && $merchantMatch && $userMatch && $statusMatch;
-});
-
-// SORT by timestamp if selected
-if ($sorttimestamp === 'asc' || $sorttimestamp === 'desc') {
-    usort($filteredLedger, function($a, $b) use ($sorttimestamp) {
-        $atimestamp = strtotime(str_replace('-', '/', $a['timestamp']));
-        $btimestamp = strtotime(str_replace('-', '/', $b['timestamp']));
-        return $sorttimestamp === 'asc' ? $atimestamp <=> $btimestamp : $btimestamp <=> $atimestamp;
-    });
+// Only business owners or managers
+if ($role !== 'Business Owner' && $role !== 'Manager') {
+    header("Location: /ChainLedger-System-/pages.php");
+    exit;
 }
 
 
-  // PAGINATION SETUP
-$limit = 8; // number of rows per page
-$totalRecords = count($filteredLedger);
-$totalPages = max(1, ceil($totalRecords / $limit));
-$page = max(1, min($page, $totalPages)); // clamp current page
 
-$offset = ($page - 1) * $limit;
-$paginatedLedger = array_slice($filteredLedger, $offset, $limit);
+// Preserve filters for pagination
+$baseQuery = $_GET;
+unset($baseQuery['page']);
+$baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_query($baseQuery);
+
 
 ?>
 
@@ -131,7 +65,7 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
       </div>
     </div>
 
-    <!-- [ Ledger Table Content ] start -->
+    <!-- [ Logs Table Content ] start -->
     <div class="grid grid-cols-12 gap-x-6">
       <div class="col-span-12">
         <div class="card">
@@ -191,8 +125,9 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
              focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
       onchange="this.form.submit()">
       <option value="">Default</option>
-      <option value="desc" <?= $sorttimestamp === 'desc' ? 'selected' : '' ?>>Newest First</option>
-      <option value="asc" <?= $sorttimestamp === 'asc' ? 'selected' : '' ?>>Oldest First</option>
+<option value="desc" <?= $filterSort === 'desc' ? 'selected' : '' ?>>Newest First</option>
+<option value="asc" <?= $filterSort === 'asc' ? 'selected' : '' ?>>Oldest First</option>
+
     </select>
   </div>
 
@@ -202,29 +137,38 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
 </form>
             <!-- FILTER FORM END -->
 
-            <!-- Ledger Table -->
+            <!-- Logs Table -->
             <table class="table table-striped table-bordered w-full">
               <thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
                 <tr>
+                  <th>Account ID</th>
                   <th>User</th>
                   <th>Action</th>
                   <th>Timestamp</th>
                 </tr>
               </thead>
 <tbody>
-  <?php if (empty($paginatedLedger)): ?>
+  <?php if (empty($logs)): ?>
     <tr>
       <td colspan="5" class="text-center py-4 text-gray-500 dark:text-gray-400">
-        No transactions found.
+        No Logs found.
       </td>
     </tr>
   <?php else: ?>
-    <?php foreach ($paginatedLedger as $row): ?>
+    <?php foreach ($logs as $row): ?>
 <tr>
-  <td><?= htmlspecialchars($row["user"]) ?></td>
+        <td class="px-4 py-2 text-sm">
+        <?= htmlspecialchars($row['user_account_id']) ?>
+      </td>
+  <td>
+    <?= htmlspecialchars($row["first_name"] . ' ' . $row["last_name"]) ?>
+    <br>
+    <small class="text-gray-500"><?= htmlspecialchars($row["username"]) ?></small>
+  </td>
   <td><?= htmlspecialchars($row["action"]) ?></td>
   <td><?= htmlspecialchars($row["timestamp"]) ?></td>
 </tr>
+
 
     <?php endforeach; ?>
   <?php endif; ?>
@@ -287,7 +231,7 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
         </div>
       </div>
     </div>
-    <!-- [ Ledger Table Content ] end -->
+    <!-- [ Logs Table Content ] end -->
   </div>
 </div>
 <?php include '../includes/footer.php'; ?>

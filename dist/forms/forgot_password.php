@@ -1,16 +1,16 @@
 <?php 
 ob_start();
-include('../handlers/change_password.php');
-
+include('../handlers/forgot_password.php');
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Change Password - ChainLedger</title>
-  <link rel="stylesheet" href="../../../style.css" />
+  <title>Forgot Password - ChainLedger</title>
+  <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
@@ -43,7 +43,7 @@ include('../handlers/change_password.php');
         </div>
       </div>
 
-      <!-- Right side: Change Password form -->
+      <!-- Right side: Forgot Password form -->
       <div class="inFormBackground">
         <div class="inLoginForm">
           <?php if (!empty($success)): ?>
@@ -56,28 +56,43 @@ include('../handlers/change_password.php');
           
           <form method="POST" action="">
             <div class="title">
-              <h3 class="login-title">Change Password</h3>
+              <h3 class="login-title">Forgot Password</h3>
             </div>
 
             <div class="inputGroup">
-              <label for="password">New Password</label>
-              <input type="password" placeholder="Enter Password" id="password" name="new_password" minlength="8" required />
+                <label for="account_id">Account ID</label>
+  <input type="text" 
+         id="account_id" 
+         name="account_id" 
+         placeholder="Enter 6-digit Account ID" 
+         pattern="\d{6}" 
+         maxlength="6" 
+         required
+         oninput="this.value=this.value.replace(/[^0-9]/g,''); this.setCustomValidity('');"
+         oninvalid="this.setCustomValidity('Please enter exactly 6 digits')" />
+</div>
+
+            <div class="inputGroup">
+              <label for="security-question">Security Question</label>
+              <select id="security-question" name="security_question" required>
+              <option value="" disabled selected>Select a question</option>
+                <option value="First Pet">What is the name of your first pet?</option>
+                <option value="Elementary School">What is the name of your elementary school?</option>
+                <option value="Favorite Food">What is your favorite food?</option>
+                <option value="Childhood Nickname">What was your childhood nickname?</option>
+              </select>
             </div>
 
             <div class="inputGroup">
-              <label for="confirm_password">Confirm Password</label>
-              <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" minlength="8" required />
-            </div>
-
-            <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">
-              Show Passwords
-            </p>          
+              <label for="security-answer">Your Answer</label>
+              <input type="text" placeholder="Enter your answer" id="security-answer" name="security_answer" required />
+            </div>           
 
             <div class="button-container">
-              <button type="submit" class="submitForm">Change Password</button>
+              <button type="submit" class="submitForm">Next</button>
               <div class="signup-row">
-                <p class="new-account">Back to</p>
-                <a href="../../../index.php" class="submitForm signup-btn">Login</a>
+                <p class="new-account">Remembered?</p>
+                <a href="../../index.php" class="submitForm signup-btn">Login</a>
               </div>
             </div>
           </form>
@@ -93,7 +108,8 @@ include('../handlers/change_password.php');
 <script src="../assets/js/component.js"></script>
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/script.js"></script>
-<script src="../../assets/js/js/scripts.js"></script>
+<script src="../assets/js/js/scripts.js"></script>
 </body>
 </html>
+
 <?php ob_end_flush(); ?>

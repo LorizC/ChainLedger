@@ -83,6 +83,7 @@ $page = max(1, min($page, $totalPages)); // clamp current page
 $offset = ($page - 1) * $limit;
 $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
 
+
 ?>
 
 <!doctype html>

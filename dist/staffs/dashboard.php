@@ -1,6 +1,19 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['user'])) {
+    header("Location: /ChainLedger-System-/index.php");
+    exit;
+}
+
+$role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
+
+// Only staffs
+if ($role !== 'staff') {
+    header("Location: /ChainLedger-System-/pages.php");
+    exit;
+}
+
 // Example data (you can replace this with dynamic values later)
 $breakdown = [
   ['label' => 'Food', 'amount' => '$450.20', 'percent' => '30%', 'color' => '#bb71f8ff'],
@@ -50,11 +63,11 @@ if (isset($_POST['submit'])) {
   <!-- [ Pre-loader ] End -->
 
   <!-- [ Sidebar Menu ] start -->
-  <?php include '../includes/sidebar.php'; ?>
+  <?php include '../includes/staffsidebar.php'; ?>
   <!-- [ Sidebar Menu ] end -->
 
   <!-- [ Header Topbar ] start -->
-  <?php include '../includes/header.php'; ?>
+  <?php include '../includes/staffheader.php'; ?>
   <!-- [ Header Topbar ] end -->
 
   <!-- [ Main Content ] start -->
@@ -68,7 +81,7 @@ if (isset($_POST['submit'])) {
             <h5 class="mb-0 font-medium">Dashboard</h5>
           </div>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
             <li class="breadcrumb-item" aria-current="page">Transactions</li>
           </ul>
         </div>

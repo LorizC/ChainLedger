@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Set Password - ChainLedger</title>
-  <link rel="stylesheet" href="../../../style.css" />
+  <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
@@ -87,7 +87,7 @@
                 <button type="submit" class="submitForm">Create Account</button>
                 <div class="signup-row">
                   <p class="new-account">Already have an Account?</p>
-                  <a href="../../../index.php" class="submitForm signup-btn">Log In</a>
+                  <a href="../../index.php" class="submitForm signup-btn">Log In</a>
                 </div>
               </div>
             </form>
@@ -104,6 +104,6 @@
 <script src="../assets/js/component.js"></script>
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/script.js"></script>
-<script src="../../assets/js/js/scripts.js"></script>
+<script src="../assets/js/js/scripts.js"></script>
 </body>
 </html>

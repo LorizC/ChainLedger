@@ -1,5 +1,5 @@
 <?php 
-include 'dist/admin/handlers/login.php'; 
+include 'dist/handlers/login.php'; 
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ include 'dist/admin/handlers/login.php';
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
   <style>
-    /* ✅ Flash message styling */
+    /* Flash message styling */
     .flash-message {
       max-width: 100%;
       margin: 0 0 1rem 0;
@@ -44,6 +44,7 @@ include 'dist/admin/handlers/login.php';
   </style>
 </head>
 <body>
+  
   <!-- Theme Button -->
   <input type="checkbox" id="theme-toggle" hidden />
   <div class="page">
@@ -73,7 +74,7 @@ include 'dist/admin/handlers/login.php';
       </div>
 
       <!-- Home Button -->
-      <a href="dist/admin/landingpage/index.php" class="home-button" title="Go to Home">
+      <a href="dist/landingpage/index.php" class="home-button" title="Go to Home">
         <span class="material-icons">home</span>
       </a> 
 
@@ -121,7 +122,7 @@ include 'dist/admin/handlers/login.php';
                     </span>
                   </div>
                   <div class="forgot-password">
-                    <a href="dist/admin/forms/forgot_password.php">Forgot Password?</a>
+                    <a href="dist/forms/forgot_password.php">Forgot Password?</a>
                   </div>
                 </div>
 
@@ -129,7 +130,7 @@ include 'dist/admin/handlers/login.php';
                   <button type="submit" class="submitForm">Log In</button> 
                   <div class="signup-row">
                     <p class="new-account">Create New Account</p>
-                    <a href="dist/admin/forms/signup.php" class="submitForm signup-btn">Sign Up</a>
+                    <a href="dist/forms/signup.php" class="submitForm signup-btn">Sign Up</a>
                   </div>
                 </div>
 
@@ -143,13 +144,13 @@ include 'dist/admin/handlers/login.php';
   </div>
 
 <!-- Required Js -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/icon/custom-icon.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
+<script src="dist/assets/js/plugins/simplebar.min.js"></script>
+<script src="dist/assets/js/plugins/popper.min.js"></script>
+<script src="dist/assets/js/icon/custom-icon.js"></script>
+<script src="dist/assets/js/plugins/feather.min.js"></script>
+<script src="dist/assets/js/component.js"></script>
+<script src="dist/assets/js/theme.js"></script>
+<script src="dist/assets/js/script.js"></script>
 <script src="dist/assets/js/js/scripts.js"></script>
 </body>
 </html>

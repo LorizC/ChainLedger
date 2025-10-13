@@ -83,6 +83,7 @@ $page = max(1, min($page, $totalPages)); // clamp current page
 $offset = ($page - 1) * $limit;
 $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
 
+
 ?>
 
 <!doctype html>
@@ -114,8 +115,8 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
 </div>
 <!-- [ Pre-loader ] End -->
 
-<?php include '../includes/sidebar.php'; ?>
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/staffsidebar.php'; ?>
+<?php include '../includes/staffheader.php'; ?>
 
 <!-- [ Main Content ] start -->
 <div class="pc-container">
@@ -126,7 +127,7 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
           <h5 class="mb-0 font-medium">Transaction Ledger</h5>
         </div>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Ledger</li>
         </ul>
       </div>

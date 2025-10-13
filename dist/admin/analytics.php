@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if(isset($_POST['submit'])){
 
 } else {
@@ -20,6 +21,7 @@ $categories = [
   ["title" => "Medical", "value" => "₱3,500.00", "color" => "bg-purple-100 text-purple-600", "icon" => "healing"],
   ["title" => "Maintenance", "value" => "₱4,200.00", "color" => "bg-orange-100 text-orange-600", "icon" => "engineering"],
 ];
+
 ?>
 <!doctype html>
 <html lang="en">

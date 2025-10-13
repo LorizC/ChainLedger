@@ -4,9 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/../../database/dbconfig.php';
-require_once __DIR__ . '/../repositories/UserRepository.php';
-require_once __DIR__ . '/../services/PasswordService.php';
-require_once __DIR__ . '/../services/SecurityLogService.php';
+require_once __DIR__ . '/../../repositories/UserRepository.php';
+require_once __DIR__ . '/../../services/PasswordService.php';
+require_once __DIR__ . '/../../services/SecurityLogService.php';
 
 try {
     // ===============================

@@ -1,0 +1,1296 @@
+/*===============*/
+/* === BODY === */
+/*===============*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background: #3e27d7;
+  color: #333;
+  transition: all 0.3s ease;
+}
+/* ==========END============ */
+
+/*=================*/
+/* === HEADER/Burger === */
+/*================*/
+/* Burger Button */
+.burger-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 32px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* centers icon inside button */
+  margin-right: auto;    
+}
+
+
+/* ==========END============ */
+
+/*===================*/
+/* ===  SIDEBAR === */
+/*===================*/
+.sidebar {
+  width: 220px;
+  background: #3e27d7;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
+  gap: 1rem;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+    overflow: hidden;
+      z-index: 0; /* ensure it's behind main */
+  /* Slide transition */
+  transition: transform 0.4s ease-in-out; 
+  transform: translateX(0); /* visible on desktop */
+}
+
+/* ===  SIDEBAR LOGO === */
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;          /* spacing between logo and text */
+  width: 100%;
+  padding: 0.5rem 0;
+  color: white;
+  font-size: 28px;
+}  
+
+.sidebar .logo-img {
+  width: 40px;        /* adjust logo size */
+  height: auto;
+}
+/* ===  SIDEBAR LOGO LABEL === */
+.sidebar .logo .label {
+  margin-top: 0.5rem;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;        /* white text for sidebar */
+  
+}
+
+/* ===  SIDEBAR NAVIGATION BUTTONS === */
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0;
+}
+
+.sidebar nav a {
+  color: #fff;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;   /* space between icon + label */
+  margin-bottom: 1.5rem;  /* space between links */
+  padding: 8px;
+  border-left: 4px solid transparent;
+  transition: 0.3s;
+}
+
+/* ===  SIDEBAR LABELS === */
+.sidebar nav a.active,
+.sidebar nav a:hover {
+  border-left: 4px solid #00aaff;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px 0 0 8px;
+}
+.sidebar nav a span.label {
+  display: inline; /* always show labels */
+  font-weight: 500;
+  color: #fff; 
+}
+
+/* ===  SIDEBAR TRANSITIONS === */
+.sidebar nav a .label,
+.sidebar .logo .label,
+.sidebar .profile-info {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.sidebar.hide .logo,
+.sidebar.hide nav a,
+.sidebar.hide .profile-info {
+  opacity: 0;
+  transform: translateX(-20px);
+  pointer-events: none;
+}
+
+/* Open state */
+.sidebar.show {
+  transform: translateX(0);
+}
+
+/* Hidden state, but still in DOM */
+.sidebar.hide {
+  transform: translateX(-220px);
+}
+
+/* Overlay hidden by default */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999; /* just below sidebar */
+}
+
+/* Show overlay when active */
+.overlay.active {
+  display: block;
+}
+/* ==========END============ */
+
+
+/*===================*/
+/* ===  LOGOOUT === */
+/*===================*/
+.logout {
+  margin-top: 3rem; /* forces logout to stick to bottom */
+  margin-bottom: 3rem;
+}
+
+.logout a {
+  color: #fff;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-left: 4px solid transparent;
+  transition: 0.3s;
+  margin-left: 25px; /* indent slightly */
+}
+
+.logout a:hover {
+  border-left: 4px solid #ff4444;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px 0 0 8px;
+}
+/* ==========END============ */
+
+/*===================*/
+/* ===  HEADER/ICONS  === */
+/*===================*/
+header {
+  position: fixed;
+  top: 0;
+  left: 220px;   /* default aligned with sidebar */
+  right: 0;
+  height: 60px;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid #ddd;
+  transition: left 0.3s ease;
+  z-index: 10000;
+}
+header.full {
+  left: 0;
+
+}
+header h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+header p {
+  font-size: 14px;
+  color: #666;
+}
+
+header .profile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+header .profile span {
+  font-size: 28px;
+  cursor: pointer;
+  color: #333;
+}
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile .material-icons-outlined:first-child {
+  margin-right: 0.5rem; /* pushes light mode to the left */
+  margin-left: 0.0rem; /* optional fine-tune spacing from the edge */
+}
+
+/*===================*/
+/* ===  USER POPUP  === */
+/*===================*/
+.popup {
+  position: fixed;
+  top: 55px; /* adjust to header height */
+  right: 20px;
+  width: 280px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: none; /* hidden by default */
+  padding: 14px 16px;
+  font-family: Arial, sans-serif;
+  font-size: 1.05rem; 
+  transition: background 0.3s, color 0.3s;
+    /* 👇 Force popup above other elements */
+  z-index: 9999;
+}
+
+.popup.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+  margin-bottom: px;
+}
+
+.popup-header .avatar {
+  width: 42px;              /* smaller avatar */
+  height: 42px;
+  border-radius: 50%;
+  object-fit: contain;
+}
+
+.popup-header div {
+  display: flex;
+  flex-direction: column; /* stack username above id */
+}
+
+.username {
+  font-weight: 600;
+  font-size: 16px;
+  color: #333;
+}
+
+.id {
+  font-size: 13px;
+  color: #777; /* lighter for distinction */
+}
+
+.popup-header h4 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1; }
+.popup-header p  { margin: 0; font-size: 13px; color: rgba(255,255,255,0.65); }
+
+/* Normalize popup menu rows so icon + text align */
+.popup-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* General menu items */
+.popup-menu li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  color: inherit;
+  border-radius: 6px; /* keep rounding for hover */
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.popup-menu li span.material-icons-outlined {
+  font-size: 18px;   /* make icons slightly smaller */
+}
+
+.popup-menu li a {
+  flex: 1;           /* text takes the remaining space */
+  text-decoration: none;
+  color: inherit;
+}
+
+.popup-menu li:hover {
+  background: #f5f5f5;
+}
+
+/* Special logout */
+.popup-menu .header_logout {
+  color: #ef4444;       /* Tailwind red-500 */
+  font-weight: 600;
+  padding: 6px 8px;     /* smaller spacing */
+}
+
+.popup-menu .header_logout:hover {
+  background: #fee2e2;  /* light red hover */
+  color: #b91c1c;       /* darker red */
+}
+
+/* === SETTINGS === */
+/* Drawer animation */
+.settings-drawer {
+  margin-left: 25px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding-left: 0;
+}
+
+.settings-drawer.show {
+  max-height: 300px;
+}
+
+/* Drawer items - Light mode */
+.drawer-item {
+  background: #fff;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.drawer-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+.drawer-item a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  text-decoration: none;
+}
+
+
+
+
+/*===================*/
+/* === DARK MODE === */
+/*===================*/
+/* Dark mode overrides */
+.dark .drawer-item {
+  background: #2b2b2b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.dark .drawer-item a {
+  color: #f5f5f5;
+}
+
+.dark .drawer-item:hover {
+  background: #3a3a3a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* Dark Mode */
+.dark .username {
+  color: #fff; /* white username */
+}
+
+.dark .id {
+  color: #bbb; /* softer gray for ID */
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* circular avatar */
+  object-fit: cover;
+}
+
+.dark-mode .popup {
+  background: #1e1e1e;
+  color: #f1f1f1;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+}
+
+.dark-mode .popup-header {
+  border-bottom: 1px solid #444;
+}
+
+.dark-mode .popup-menu li {
+  color: #ddd;
+}
+
+.dark-mode .popup-menu li:hover {
+  background: #333;
+}
+
+.dark-mode .popup-menu .logout {
+  color: #ff4d4d;
+}
+
+/* ==========END============ */
+
+/*========================*/
+/* ===  MAIN CONTENT === */
+/*========================*/
+.main {
+  margin-left: 220px;   /* align with sidebar */
+  margin-top: 60px;    /* SAME as header height */
+  padding: 20px;
+  flex: 1;
+  max-height: calc(100vh - 60px); /* full viewport minus header height */
+  overflow-y: auto;
+  transition: margin-left 0.3s ease;
+    /* Add shadow so it appears above the sidebar */
+  background: #f0f2f5;
+  box-shadow: -6px 0 12px rgba(0, 0, 0, 0.25); 
+  position: relative;
+  z-index: 2; /* keep above sidebar */
+}
+.main.full {
+  margin-left: 0; /* full width when sidebar hidden */
+}
+
+/*==============================*/
+/* ===  TITLE PF THE PAGES === */
+/*============================*/
+.title-block {
+  position: relative;
+}
+
+.title-block h1 {
+  font-size: 32px;
+  font-weight: 700;
+  position: relative;
+  top: 20px; /* moves text visually down */
+}
+
+.title-block p {
+  font-size: 14px;
+  color: #666;
+}
+
+/*===============================*/
+/* ===  SUMMARY CARDS STYLE === */
+/*=============================*/
+.summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary .card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.summary .card h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.summary .card h2.blue { color: blue; }
+.summary .card h2.red { color: red; }
+.summary .card h2.green { color: green; }
+.summary .card h2.orange { color: orange; }
+
+/* === Content Grid === */
+.content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;  /* history wider, breakdown smaller */
+  gap: 2rem;
+  align-items: start; /* ✅ let each section keep its own height */
+}
+/* ==========END============ */
+
+/*===========================*/
+/* ===  DASHBOARD === */
+/*===========================*/
+/* === Transaction History === */
+.history {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.history h3 { margin-bottom: 1rem; }
+
+.history table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+/* === Breakdown === */
+.breakdown {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.breakdown h3 { margin-bottom: 1rem; }
+
+.breakdown .stacked-line {
+  display: flex;
+  width: 100%;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.breakdown .line-segment { height: 100%; }
+
+.breakdown .row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.breakdown .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+}
+/* ==========END============ */
+
+/*===========================*/
+/* ===  ANALYTICS CHART === */
+/*===========================*/
+.transactions-chart{
+  grid-column: 1 / -1;   /* stretch across all columns */
+  width: 100%;
+  max-width: none;       /* remove max-width restriction */
+}
+.transactions-chart {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+#transactionsChart {
+  width: 100% !important;
+  height: 500px !important;  /* adjust this to make it shorter */
+}
+
+.transactions-chart h3 { margin-bottom: 1rem; }
+
+.transactions-chart table {
+  width: 100%;
+  border-collapse: collapse;
+}
+/*===========================*/
+/* ===  CARDS IN ANALYTICS === */
+/*===========================*/
+
+/* Cards */
+.summary .card {
+  flex: 0 0 auto;
+  min-width: 180px;
+  max-width: 100%;  /* prevent overflow */
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Wrapper for positioning */
+.summary-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 24px; /* push tables down */
+}
+
+/* Scrollable row */
+.summary {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 1rem 2rem;
+  scrollbar-width: none; /* Firefox */
+}
+.summary::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+/* Summary card layout with image left */
+.summary .card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 220px;
+}
+
+.summary .card .card-text h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* === Category Cards Row (No Wrap) === */
+.categories {
+  display: flex;
+  gap: 1.5rem;          /* ✅ same gap as summary */
+  overflow-x: auto;
+  padding: 1rem 2rem;   /* ✅ match summary spacing (left + right) */
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.categories::-webkit-scrollbar {
+  display: none;          /* hide scrollbar (Chrome/Safari) */
+}
+
+.categories .card {
+  flex: 0 0 auto;
+  min-width: 220px;       /* match summary */
+  background: white;
+  padding: 1rem 1.5rem;   /* match summary */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: center;
+  gap: 1rem;              /* match summary */
+}
+
+/* Circle icon same as summary */
+.categories .card .icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.categories .card .icon-circle img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+/* Hide scrollbar but keep scroll functionality */
+.categories {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.categories::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
+
+/* Hide scrollbar but keep scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome, Safari, Opera */
+}
+
+/* Let cards expand based on content */
+.summary .card,
+.categories .card {
+  flex: 0 1 auto;          /* allow cards to grow with content */
+  min-width: max-content;  /* cards expand to fit text */
+  max-width: 100%;         /* but not larger than container */
+  padding: 1rem 1.5rem;
+}
+
+/* Make sure the number/text inside wraps instead of overflowing */
+.summary .card .card-text h2,
+.categories .card .card-text h2 {
+  font-size: 18px;
+  font-weight: bold;
+  white-space: nowrap;       /* keep long numbers in one line */
+}
+
+/*==========================*/
+/* ===  SUMAMRY CARD IMAGES === */
+/*==========================*/
+.summary .card img.card-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+  margin: 0 auto 0.8rem auto; /* center and add spacing */
+}
+
+/*=========================================*/
+/* ===  SUMAMRY CARD CIRCLES 4 IMAGES === */
+/*=======================================*/
+.icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f0f0f0; /* default background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden; /* ensures image stays inside circle */
+}
+
+.summary .card .icon-circle img.card-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  margin: 0;  /* remove extra margin */
+  display: block;
+}
+
+.icon-circle.gcash { background: #004ed5; }    /* light blue tint */
+.icon-circle.maya { background: #9cffc5; }     /* light green tint */
+.icon-circle.grabpay { background: #02ab4ee9; }  /* light Grab green */
+.icon-circle.paypal { background: #013eae; }   /* light PayPal blue */
+.icon-circle.googlepay { background: #fb5305c1; }/* light yellow tint */
+
+/*===========================*/
+/* ===  SCROLL ARROWS === */
+/*===========================*/
+.scroll-btn {
+  display: flex; /* hidden until needed */
+  position: absolute;
+  top:40%;
+  transform: translateY(-50%);
+  background: none;   /* remove background */
+  color: #333;        /* arrow color */
+  border: none;       /* no border */
+  font-size: 28px;    /* bigger arrow */
+  cursor: pointer;
+  z-index: 10;
+  opacity: 0.6;
+  transition: opacity 0.2s, visibility 0.2s;
+  visibility: visible; /* hidden by default */
+}
+
+.scroll-btn:hover {
+  opacity: 1;
+  background: #4B2EFF;   /* purple circle */
+  color: white;          /* arrow turns white */
+  border-radius: 50%;
+}
+
+.scroll-btn.show {
+  visibility: visible; /* show when needed */
+}
+
+.scroll-btn:hover {
+  opacity: 1;
+}
+
+.scroll-btn.left { left: -5px; }   /* tuck closer to cards */
+.scroll-btn.right { right: -5px; }
+
+/* ==========END============ */
+
+/*==================*/
+/* ===  IMAGES === */
+/*================*/
+.logo-img {
+  width: 60px;
+  height: auto;
+  display: block;
+}
+
+.profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+/* ==========END============ */
+
+/*===========================*/
+/* ===  TRANSACTION LEDGER === */
+/*===========================*/
+/* === Ledger Table   === */
+.ledger-table {
+  width: 100%;
+  min-width: 1100px;   /* make the whole table wider */
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+  table-layout: auto;  /* let columns size naturally */
+}
+
+/* Ledger section spans full width of grid */
+.ledger-section {
+  grid-column: 1 / -1;   /* forces it to stretch across the entire row */
+  width: 100%;
+  margin-top: 40px; /* push tables down */
+}
+
+.ledger-table thead {
+  background: #2c2077;
+  color: white;
+}
+
+/* Ledger Column Widths */
+.ledger-table th,
+.ledger-table td {
+  padding: 14px;
+  text-align: left;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+/* Wrapper so only this table scrolls on smaller screens */
+.ledger-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.ledger-table td:nth-child(1) { min-width: 180px; } /* User */
+.ledger-table td:nth-child(2) { min-width: 150px; } /* Details */
+.ledger-table td:nth-child(3) { min-width: 150px; } /* Merchant */
+.ledger-table td:nth-child(4) { min-width: 160px; text-align: left; } /* Amount */
+.ledger-table td:nth-child(5) { min-width: 120px; text-align: left; } /* Date */
+
+.ledger-table tbody tr:nth-child(even) { background: #ecebff; }
+.ledger-table tbody tr:nth-child(odd)  { background: #d4d2fa; }
+
+/* Ledger Styling */
+.merchant { font-weight: 600; }
+
+.amount.negative { color: red; font-weight: bold; }
+.amount.positive { color: green; font-weight: bold; }
+
+/* user in ledger */
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+/* user icon in ledger */
+.user-cell .user-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Merchant-Specific Colors */
+.merchant.grabpay { color: #00b14f; }
+.merchant.gcash   { color: #0072ff; }
+.merchant.maya    { color: #008336; }
+.merchant.paypal  { color: #003599; }
+.merchant.googlepay {
+  background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+/* ==========END============ */
+
+
+/* Merchant option colors */
+#merchantSelect option[value="gcash"] {
+  color: #0077FF; /* Blue */
+}
+
+#merchantSelect option[value="googlepay"] {
+  color: #EA4335; /* Google Red */
+}
+
+#merchantSelect option[value="grabpay"] {
+  color: #00B14F; /* Grab Green */
+}
+
+#merchantSelect option[value="maya"] {
+  color: #20C997; /* Maya Teal */
+}
+
+#merchantSelect option[value="paypal"] {
+  color: #003087; /* PayPal Navy */
+}
+
+/* Expand main + header when sidebar is collapsed */
+.main.expanded {
+  margin-left: 0;
+}
+
+header.expanded {
+  left: 0;
+}
+
+
+/* Sidebar profile fully centered */
+.sidebar .profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* center horizontally */
+  justify-content: center; /* center vertically within its space */
+  text-align: center;
+  width: 100%;             /* take full width of sidebar */
+  padding: 1.5rem 0;       /* equal padding left/right */
+  margin: 0 auto;          /* push to center if sidebar uses flex-start */
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.sidebar .profile .avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.sidebar .profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  /* keep text centered */
+  gap: 3px;
+}
+
+.sidebar .profile-info .username {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e4e4e4;
+}
+
+.sidebar .profile-info .fullname {
+  font-size: 13px;
+  color: #d7d7d7;
+}
+
+.sidebar .profile-info .account-id {
+  font-size: 12px;
+  color: #ffffff;
+  font-style: italic;
+}
+
+/* Special hover effect for Report nav only */
+.sidebar nav a[href="report.php"]:hover {
+  border-left: none;              /* remove default left bar */
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50px;            /* full pill/circle shape */
+  padding-left: 12px;             /* keep spacing nice */
+  padding-right: 12px;
+  transform: scale(1.05);         /* subtle grow */
+  transition: all 0.3s ease;
+}
+
+/*==========================*/
+/* =====  DARK MODES ===== */
+/*==========================*/
+
+body.dark-mode {
+  background: #312E81;
+  color: #f0f0f0;
+}
+
+body.dark-mode header {
+  background: #010241;
+  border-bottom: 1px solid #444;
+}
+
+body.dark-mode .sidebar {
+  background: #312E81;
+}
+
+body.dark-mode .card {
+  background: #1F2937;
+  
+}
+
+body.dark-mode .summary .card,
+body.dark-mode .history,
+body.dark-mode .transactions-chart,
+body.dark-mode .breakdown,
+body.dark-mode .ledger-table thead {
+  background: #1F2937; /* keep same light gray */
+  color: #D3D3D3;         /* ensure dark text */
+  border: 1px solid #bbb;
+}
+body.dark-mode .ledger-table tbody tr:nth-child(even) {
+  background: #2a2a2a;
+}
+body.dark-mode .ledger-table tbody tr:nth-child(odd) {
+  background: #242424;
+}
+
+body.dark-mode .main {
+  background: #010241; /* Dark gray for dark mode */
+  box-shadow: -6px 0 12px rgba(0, 0, 0, 0.5);
+}
+/* Sidebar nav + burger button only */
+body.dark-mode .sidebar nav a .material-icons-outlined,
+body.dark-mode .burger-btn {
+  color: #fff !important;
+}
+
+/* Header icons (user + sun) */
+body.dark-mode header .profile .material-icons-outlined {
+  color: #fff !important;
+}
+
+body.dark-mode .icon-circle.blue .material-icons-outlined { color: #2563eb !important; }   /* blue */
+body.dark-mode .icon-circle.red .material-icons-outlined { color: #dc2626 !important; }    /* red */
+body.dark-mode .icon-circle.green .material-icons-outlined { color: #16a34a !important; }  /* green */
+body.dark-mode .icon-circle.orange .material-icons-outlined { color: #ea580c !important; } /* orange */
+
+
+body.dark-mode .title-block p {
+  color: #ccc;
+}
+
+
+/* ==============================
+   Responsive Layout Adjustments
+============================== */
+
+/* Tablets (<= 1024px) */
+@media (max-width: 1024px) {
+  /* Sidebar */
+  .sidebar {
+    width: 60px;
+  }
+  .sidebar.expanded {
+    width: 180px;
+  }
+
+  /* Main */
+  .main {
+    margin-left: 60px;
+    padding: 1rem;
+  }
+  header {
+    left: 60px;
+    padding: 0 1rem;
+  }
+
+  /* Summary grid → 2 columns */
+  .summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Content grid → stack vertically */
+  .content {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Extra Responsive Fixes */
+
+/* Tablets (<= 1024px) */
+@media (max-width: 1024px) {
+  /* Sidebar labels hidden */
+  .sidebar nav a span.label,
+  .sidebar .logo .label,
+  .sidebar .profile-info {
+    display: none;
+  }
+  .sidebar {
+    width: 70px;
+    align-items: center;
+  }
+
+  /* Header adjusts */
+  header h1 {
+    font-size: 22px;
+  }
+}
+
+/* Mobile (<= 768px) */
+@media (max-width: 768px) {
+  .sidebar {
+    max-width: 280px; /* optional limit */
+    z-index: 1000;
+    transform: translateX(100%); /* hide off-screen */
+    z-index: 1000; /* keep above main */
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar.show {
+    transform: translateX(0); /* slide in */
+    
+  }
+
+
+  /* Header adjusts when sidebar overlays */
+  header {
+    left: 0 !important; 
+  }
+
+  .main {
+    margin-left: 0 !important; /* full width */
+  }
+
+
+  /* Header spacing */
+  header h1 {
+    font-size: 20px;
+  }
+  header p {
+    font-size: 12px;
+  }
+
+  /* Content grid stacks */
+  .content {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  /* History + Breakdown full width */
+  .history, .breakdown {
+    width: 100%;
+  }
+
+  /* Charts scale down */
+  #transactionsChart {
+    height: 300px !important;
+  }
+}
+
+/* Mobile (<= 768px) */
+@media (max-width: 768px) {
+
+  /* Main content spans full width */
+  .main {
+    margin-left: 0;
+    padding: 1rem;
+  }
+
+  /* Header spans full width */
+  header {
+    left: 0;
+    padding: 0 1rem;
+  }
+
+  /* Summary cards → horizontal scroll */
+  .summary {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+  }
+  .summary .card {
+    min-width: 180px;
+    flex: 0 0 auto;
+  }
+
+  /* Ledger table wrapper scrolls horizontally */
+  .ledger-wrapper {
+    overflow-x: auto;
+  }
+}
+
+/* Responsive adjustments (matches summary) */
+@media (max-width: 768px) {
+  .total {
+    padding: 1rem 0;
+  }
+  .total .card {
+    min-width: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .total .card {
+    min-width: 150px;
+    padding: 1rem;
+  }
+  .total .card .card-text h2 {
+    font-size: 16px;
+  }
+}
+
+/* Small Phones (<= 480px) */
+@media (max-width: 480px) {
+  /* Header tighter */
+  header {
+    height: 48px;
+    padding: 0 0.5rem;
+  }
+  header h1 {
+    font-size: 18px;
+  }
+  header .profile span {
+    font-size: 20px;
+  }
+
+  /* Cards smaller */
+  .summary .card,
+  .total .card,
+  .categories .card {
+    min-width: 140px;
+    padding: 0.75rem;
+  }
+  .summary .card .card-text h2,
+  .total .card .card-text h2 {
+    font-size: 14px;
+  }
+
+  /* Ledger table */
+  .ledger-table th, 
+  .ledger-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+}
+/* Small phones (<= 480px) */
+@media (max-width: 480px) {
+  header {
+    height: 50px;
+  }
+  header h1 {
+    font-size: 20px;
+  }
+  header .profile span {
+    font-size: 22px;
+  }
+
+  .summary .card {
+    min-width: 150px;
+    padding: 1rem;
+  }
+  .summary .card .card-text h2 {
+    font-size: 16px;
+  }
+
+  .history,
+  .transactions-chart,
+  .breakdown {
+    padding: 1rem;
+  }
+}

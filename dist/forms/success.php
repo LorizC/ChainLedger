@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <title>Account Created - ChainLedger</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
     body {
-      background-image: url('../../assets/images/img2.jpg');
+      background-image: url('../assets/images/img2.jpg');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -80,7 +80,7 @@
     </div>
 
     <button
-      onclick="window.location.href='../../../index.php'"
+      onclick="window.location.href='../../index.php'"
       class="mt-10 bg-blue-800 dark:bg-blue-700 text-white w-full py-4 rounded-lg hover:bg-blue-900 dark:hover:bg-blue-600 transition text-xl font-semibold"
     >
       Back to Login

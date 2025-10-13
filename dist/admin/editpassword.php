@@ -2,8 +2,8 @@
 session_start();
 
 require_once __DIR__ . '/../database/dbconfig.php';
-require_once __DIR__ . '/repositories/UserRepository.php';
-require_once __DIR__ . '/services/PasswordService.php';
+require_once __DIR__ . '/../repositories/UserRepository.php';
+require_once __DIR__ . '/../services/PasswordService.php';
 
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
@@ -17,6 +17,7 @@ $user = [
 ];
 
 $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default.png';
+
 ?>
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">

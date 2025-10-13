@@ -3,6 +3,7 @@
   if (isset($_POST['submit'])) {
     // Handle form submission logic here...
   } else {
+
 ?>
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
@@ -36,11 +37,11 @@
   <!-- [ Pre-loader ] End -->
 
   <!-- [ Sidebar Menu ] start -->
-  <?php include '../includes/sidebar.php'; ?>
+  <?php include '../includes/staffsidebar.php'; ?>
   <!-- [ Sidebar Menu ] end -->
 
   <!-- [ Header Topbar ] start -->
-  <?php include '../includes/header.php'; ?>
+  <?php include '../includes/staffheader.php'; ?>
   <!-- [ Header Topbar ] end -->
 
   <!-- [ Main Content ] start -->
@@ -53,7 +54,7 @@
             <h5 class="mb-0 font-medium">Transaction Report</h5>
           </div>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
             <li class="breadcrumb-item" aria-current="page">Report</li>
           </ul>
         </div>

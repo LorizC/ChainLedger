@@ -20,6 +20,8 @@ $categories = [
   ["title" => "Medical", "value" => "₱3,500.00", "color" => "bg-purple-100 text-purple-600", "icon" => "healing"],
   ["title" => "Maintenance", "value" => "₱4,200.00", "color" => "bg-orange-100 text-orange-600", "icon" => "engineering"],
 ];
+
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -35,7 +37,7 @@ $categories = [
   <link rel="stylesheet" href="../assets/fonts/material.css" />
   <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
   
-  <!-- Tailwind CSS + Alpine.js -->
+  <!-- Tailwind CSS  -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class' }</script>
   <script src="https://unpkg.com/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
@@ -57,8 +59,8 @@ $categories = [
   </div>
 </div>
 
-<?php include '../includes/sidebar.php'; ?>
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/staffsidebar.php'; ?>
+<?php include '../includes/staffheader.php'; ?>
 
 <div class="pc-container">
   <div class="pc-content">
@@ -70,7 +72,7 @@ $categories = [
             <h5 class="mb-0 font-medium">Analytics</h5>
           </div>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
             <li class="breadcrumb-item" aria-current="page">Analytics</li>
           </ul>
         </div>

@@ -2,8 +2,8 @@
 session_start();
 
 require_once __DIR__ . '/../database/dbconfig.php';
-require_once __DIR__ . '/repositories/UserRepository.php';
-require_once __DIR__ . '/services/PasswordService.php';
+require_once __DIR__ . '/../repositories/UserRepository.php';
+require_once __DIR__ . '/../services/PasswordService.php';
 
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
@@ -17,6 +17,7 @@ $user = [
 ];
 
 $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default.png';
+
 ?>
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
@@ -47,9 +48,9 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
 </div>
 
 <!-- Sidebar -->
-<?php include '../includes/sidebar.php'; ?>
+<?php include '../includes/staffsidebar.php'; ?>
 <!-- Header -->
-<?php include '../includes/header.php'; ?>
+<?php include '../includes/staffheader.php'; ?>
 
 <!-- Main Content -->
 <div class="pc-container">
@@ -60,7 +61,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
           <h5 class="mb-0 font-medium">Profile & Security</h5>
         </div>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Profile & Security</li>
         </ul>
       </div>

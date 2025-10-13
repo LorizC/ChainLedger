@@ -4,9 +4,9 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/../../database/dbconfig.php';
-require_once __DIR__ . '/../repositories/UserRepository.php';
-require_once __DIR__ . '/../services/PasswordService.php';
-require_once __DIR__ . '/../services/SecurityLogService.php';
+require_once __DIR__ . '/../../repositories/UserRepository.php';
+require_once __DIR__ . '/../../services/PasswordService.php';
+require_once __DIR__ . '/../../services/SecurityLogService.php';
 
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             throw new Exception("New passwords do not match.");
         }
 
-         if (empty($securityAnswer) || empty($currentPassword) || empty($confirmPassword)) {
+         if (empty($newPassword) || empty($currentPassword) || empty($confirmPassword)) {
             $_SESSION['flash_error'] = "All fields are required.";
             header('Location: ../editpassword.php');
             exit;

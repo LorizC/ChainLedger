@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/../database/dbconfig.php';
-require_once __DIR__ . '/services/SecurityLogService.php';
+require_once __DIR__ . '/../services/SecurityLogService.php';
 
 // Initialize DB + logging
 $conn = Database::getConnection();

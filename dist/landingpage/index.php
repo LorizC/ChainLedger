@@ -8,7 +8,7 @@
 
   <!-- Google Material Symbols -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-  <script src="../../assets/js/js/index.js"></script>
+  <script src="../assets/js/js/index.js"></script>
   <style>
     .material-symbols-outlined {
       font-variation-settings:
@@ -42,7 +42,7 @@ body.lock-scroll {
     
     <!-- Logo + Brand -->
     <div class="flex items-center space-x-3">
-      <img src="../../assets/images/logos/logo.png" alt="ChainLedger Logo" class="h-8 w-8 object-contain">
+      <img src="../assets/images/logos/logo.png" alt="ChainLedger Logo" class="h-8 w-8 object-contain">
       <h1 class="text-xl font-bold tracking-wide">ChainLedger</h1>
     </div>
 
@@ -58,7 +58,7 @@ body.lock-scroll {
     <!-- Buttons -->
     <div class="space-x-4">
       <a href="../forms/signup.php" class="px-4 py-2 text-sm hover:bg-gray-100 text-white hover:text-black rounded">Sign Up</a>
-      <a href="../../../index.php" class="px-4 py-2 bg-white hover:bg-black text-indigo-900 hover:text-white rounded text-sm">Log In</a>
+      <a href="../../index.php" class="px-4 py-2 bg-white hover:bg-black text-indigo-900 hover:text-white rounded text-sm">Log In</a>
     </div>
   </div>
 </header>
@@ -76,11 +76,11 @@ body.lock-scroll {
   <!-- Side by Side Images -->
 <div class="mt-12 flex justify-center items-center gap-8">
   <!-- Wider image -->
-  <img src="../../assets/images/index/demo0.png" alt="Dashboard" 
+  <img src="../assets/images/index/demo0.png" alt="Dashboard" 
        class="h-[500px] w-[45%] object-contain rounded-lg shadow-lg">
 
   <!-- Taller image -->
-  <img src="../../assets/images/index/img1.png" alt="Dashboard" 
+  <img src="../assets/images/index/img1.png" alt="Dashboard" 
        class="h-[480px] w-[45%] object-contain rounded-lg shadow-lg">
 </div>
 </section>
@@ -88,7 +88,7 @@ body.lock-scroll {
   <section id="about" class="bg-white px-6 pt-32 pb-16">
     <div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
       <div>
-        <img src="../../assets/images/index/cl.png" alt="ARR Example" class="rounded-lg shadow">
+        <img src="../assets/images/index/cl.png" alt="ARR Example" class="rounded-lg shadow">
       </div>
       <div>
         <h2 class="text-2xl md:text-3xl font-bold mb-4">Know more about ChainLedger</h2>
@@ -143,13 +143,13 @@ body.lock-scroll {
     <div class="relative w-full overflow-hidden rounded-lg shadow-lg">
       <!-- Carousel Container -->
 <div id="carousel" class="flex transition-transform duration-700 ease-in-out">
-  <img src="../../assets/images/index/demo0.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
-  <img src="../../assets/images/index/demo.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
-  <img src="../../assets/images/index/demo1.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 2">
-  <img src="../../assets/images/index/demo2.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 3">
-  <img src="../../assets/images/index/demo3.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 4">
-  <img src="../../assets/images/index/demo4.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 5">
-  <img src="../../assets/images/index/demo5.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 6">
+  <img src="../assets/images/index/demo0.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
+  <img src="../assets/images/index/demo.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 1">
+  <img src="../assets/images/index/demo1.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 2">
+  <img src="../assets/images/index/demo2.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 3">
+  <img src="../assets/images/index/demo3.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 4">
+  <img src="../assets/images/index/demo4.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 5">
+  <img src="../assets/images/index/demo5.png" class="w-full flex-shrink-0 object-contain h-[300px] fullscreen-trigger" alt="Demo 6">
 </div>
 
 
@@ -184,7 +184,7 @@ body.lock-scroll {
         <li><strong>Ensure data accuracy and security</strong> — protect financial information through role-based access and encrypted storage.</li>
         <li><strong>Support informed decision-making</strong> — give business owners the insights they need to manage finances efficiently.</li>
       </ul>
-      <button onclick="window.location.href='../../../index.php'" 
+      <button onclick="window.location.href='../../index.php'" 
         class="bg-blue-500 text-white px-6 py-3 rounded-md flex items-center gap-2 
                transition duration-300 hover:bg-blue-700 hover:scale-105">
         Try ChainLedger 
@@ -193,7 +193,7 @@ body.lock-scroll {
     </div>
     <!-- Illustration -->
     <div class="flex justify-center">
-      <img src="../../assets/images/index/img1.webp" alt="ChainLedger" class="w-72 md:w-96">
+      <img src="../assets/images/index/img1.webp" alt="ChainLedger" class="w-72 md:w-96">
     </div>
   </div>
 </section>
@@ -258,7 +258,7 @@ body.lock-scroll {
       <p class="text-gray-200 mb-8">
         An E-wallet Transaction Monitoring System designed to help small business owners record, organize, and analyse their digital financial transactions.
       </p>
-      <button onclick="window.location.href='../../../index.php'" 
+      <button onclick="window.location.href='../../index.php'" 
         class="bg-white text-blue-900 px-6 py-3 rounded-md flex items-center gap-2 
                transition duration-300 hover:bg-black hover:text-white hover:scale-105">
         Let’s Go 
@@ -268,7 +268,7 @@ body.lock-scroll {
 
     <!-- Image -->
     <div class="flex justify-center">
-      <img src="../../assets/images/index/purpose.webp" alt="System Purpose Illustration" class="w-72 md:w-96 rounded-lg">
+      <img src="../assets/images/index/purpose.webp" alt="System Purpose Illustration" class="w-72 md:w-96 rounded-lg">
     </div>
   </div>
 </section>

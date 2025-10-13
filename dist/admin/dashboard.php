@@ -1,6 +1,19 @@
 <?php
 session_start();
 
+if (!isset($_SESSION['user'])) {
+    header("Location: /ChainLedger-System-/index.php");
+    exit;
+}
+
+$role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
+
+// Only business owners or managers
+if ($role !== 'business owner' && $role !== 'manager') {
+    header("Location: /ChainLedger-System-/pages.php");
+    exit;
+}
+
 // Example data (you can replace this with dynamic values later)
 $breakdown = [
   ['label' => 'Food', 'amount' => '$450.20', 'percent' => '30%', 'color' => '#bb71f8ff'],

@@ -62,10 +62,10 @@
             <div class="dropdown-header flex items-center justify-between py-4 px-5 bg-primary-500 dark:bg-indigo-700">
               <div class="flex mb-1 items-center">
                 <div class="shrink-0">
-                  <img src="<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>"" alt="user-image" class="w-10 rounded-full" />
+                  <img src="<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>" alt="user-image" class="w-10 rounded-full" />
                 </div>
                 <div class="grow ms-4 text-white">
-                  <h4 class="mb-1 text-white" ><?php echo htmlspecialchars($_SESSION['user']['username']); ?></h4>
+                  <h4 class="mb-1 text-white"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></h4>
                   <span>Account ID: <?php echo htmlspecialchars($_SESSION['user']['account_id']); ?></span>
                 </div>
               </div>
@@ -73,7 +73,7 @@
             <div class="dropdown-body py-4 px-5">
               <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 225px)">
                 <a href="profile.php" class="dropdown-item dark:hover:bg-gray-800">
-                  <span><i class="ti ti-user"></i><span class="ms-2">My Profile</span></span>
+                  <span ><i class="ti ti-user"></i><span class="ms-2">My Profile</span></span>
                 </a>
                 <a href="editpassword.php" class="dropdown-item dark:hover:bg-gray-800">
                   <span>
@@ -83,9 +83,9 @@
                     <span>Change Password</span>
                   </span>
                 </a>
-                <a href="securitylogs.php" class="dropdown-item dark:hover:bg-gray-800">
+                <a href="#" class="dropdown-item dark:hover:bg-gray-800" onclick="return alert('Unauthorized Access\n\nYou are not authorized to access this page.\nPlease contact your system administrator if you believe this is an error.\n\nCopyright © 2025 ChainLedger.\nAll rights reserved.');">
                   <span><i class="ti ti-report"></i><span class="ms-2"> Security Logs</span></span>
-                </a>
+                </a>            
                   <!-- Logout -->
                 <div class="grid my-3">
                   <button class="btn btn-primary flex items-center justify-center dark:bg-indigo-600 dark:text-gray-100">

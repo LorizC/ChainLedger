@@ -10,7 +10,7 @@ include('../handlers/change_password.php');
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Change Password - ChainLedger</title>
-  <link rel="stylesheet" href="../../../style.css" />
+  <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
@@ -77,7 +77,7 @@ include('../handlers/change_password.php');
               <button type="submit" class="submitForm">Change Password</button>
               <div class="signup-row">
                 <p class="new-account">Back to</p>
-                <a href="../../../index.php" class="submitForm signup-btn">Login</a>
+                <a href="../../index.php" class="submitForm signup-btn">Login</a>
               </div>
             </div>
           </form>
@@ -93,7 +93,7 @@ include('../handlers/change_password.php');
 <script src="../assets/js/component.js"></script>
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/script.js"></script>
-<script src="../../assets/js/js/scripts.js"></script>
+<script src="../assets/js/js/scripts.js"></script>
 </body>
 </html>
 <?php ob_end_flush(); ?>

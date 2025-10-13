@@ -4,14 +4,14 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once __DIR__ . '/../../database/dbconfig.php';
-require_once __DIR__ . '/../repositories/UserRepository.php';
+require_once __DIR__ . '/../../repositories/UserRepository.php';
 
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
 
 $accountId = (int)$_SESSION['user']['account_id'];
 
-// ✅ Handle profile update form
+//  Handle profile update form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $newUsername = trim($_POST['username']);
     $newAvatar   = trim($_POST['avatar']);
@@ -28,7 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $_SESSION['user']['profile_image'] = $newAvatar;
 
     // Redirect back to profile page
-    header("Location: profile.php");
+    $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
+    header("Location: profile.php?page=$page");
     exit();
 }
 
