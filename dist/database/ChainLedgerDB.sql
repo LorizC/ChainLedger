@@ -3,7 +3,7 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
-select * from users
+select * from transactions
 -- =======================
 -- Users Table
 -- =======================

@@ -1,9 +1,6 @@
 <?php
 session_start();
 include 'handlers/profile.php';
-if (isset($_POST['submit'])) {
-  // Handle form submission logic here...
-} else {
 
  
 ?>
@@ -206,4 +203,4 @@ if (isset($_POST['submit'])) {
 <script src="../assets/js/script.js"></script>
 </body>
 </html>
-<?php } ?>
+<?php  ?>
