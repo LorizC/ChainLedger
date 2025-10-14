@@ -5,7 +5,7 @@ if (!isset($_SESSION['user'])) {
     header("Location: /ChainLedger-System-/index.php");
     exit;
 }
-
+$user = $_SESSION['user'];
 $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
 // Only staffs

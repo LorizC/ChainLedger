@@ -1,6 +1,32 @@
 <?php
-  session_start();
-  session_destroy()
+session_start();
+
+require_once __DIR__ . '/dist/database/dbconfig.php';
+require_once __DIR__ . '/dist/services/SecurityLogService.php';
+
+// Create DB connection & SecurityLogService
+$conn = Database::getConnection();
+$securityLog = new SecurityLogService($conn);
+
+// If user is logged in, log the LOGOUT event
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+
+    $securityLog->logEvent(
+        (int)($user['user_id'] ?? 0),
+        (int)($user['account_id'] ?? 0),
+        $user['username'] ?? 'Unknown',
+        'LOGOUT'
+    );
+
+    // 🔐 Destroy session
+    session_unset();
+    session_destroy();
+}
+
+// 🚪 Redirect to index page after logout
+header("Location: /ChainLedger-System-/index.php");
+exit;
 ?>
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
@@ -46,6 +72,10 @@
             </div>
             <div class="card-body">
               <img src="./dist/assets/images/pages/404.png" alt="System Not Found" class="w-full h-auto mb-4" />
+                            <div class="flex justify-center">
+              <a href="index.php" class="btn btn-primary px-5 py-2">
+                Go to Home
+              </a>
             </div>
           </div>
         </div>
