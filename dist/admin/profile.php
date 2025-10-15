@@ -1,6 +1,9 @@
 <?php
-session_start();
+
+require_once __DIR__ . '/../services/AuthGuard.php';
 include 'handlers/profile.php';
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Business Owner', 'Manager']);
 
  
 ?>

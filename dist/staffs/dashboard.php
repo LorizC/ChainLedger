@@ -1,18 +1,10 @@
 <?php
-session_start();
+require_once __DIR__ . '/../services/AuthGuard.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: /ChainLedger-System-/index.php");
-    exit;
-}
-$user = $_SESSION['user'];
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Staff']);
+
 $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
-
-// Only staffs
-if ($role !== 'staff') {
-    header("Location: /ChainLedger-System-/pages.php");
-    exit;
-}
 
 // Example data (you can replace this with dynamic values later)
 $breakdown = [
@@ -81,7 +73,7 @@ if (isset($_POST['submit'])) {
             <h5 class="mb-0 font-medium">Dashboard</h5>
           </div>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
             <li class="breadcrumb-item" aria-current="page">Transactions</li>
           </ul>
         </div>

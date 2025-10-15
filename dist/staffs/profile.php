@@ -1,13 +1,12 @@
 <?php
-session_start();
+
+require_once __DIR__ . '/../services/AuthGuard.php';
 include 'handlers/profile.php';
-
-if (isset($_POST['submit'])) {
-  // Handle form submission logic here...
-} else {
-
- 
+// Only allow logged-in users who are Staff
+auth_guard(['Staff']);
 ?>
+ 
+
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
 <head>
@@ -117,6 +116,7 @@ if (isset($_POST['submit'])) {
                 <button type="submit"
                   class="px-5 py-2 text-base bg-indigo-600 text-white rounded-lg dark:bg-slate-100 dark:text-gray-800">Save</button>
               </div>
+              <input type="hidden" name="page" value="<?= $page ?>">
             </form>
           </div>
         </div>
@@ -155,8 +155,8 @@ if (isset($_POST['submit'])) {
             <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Your recent activity will appear here.</p>
           </div>
         <?php else: ?>
-          <div class="space-y-3 max-h-96 overflow-y-auto pr-2 text-lg">
-            <?php foreach ($transactions as $t): ?>
+          <div class="space-y-3 pr-2 text-lg">
+              <?php foreach ($paginatedTransactions as $t): ?>
               <div class="grid grid-cols-4 gap-4 border-b pb-2">
                 <span class="text-gray-700 font-medium dark:text-gray-300"><?= htmlspecialchars($t["name"]) ?></span>
                 <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["merchant"]) ?></span>
@@ -165,6 +165,28 @@ if (isset($_POST['submit'])) {
               </div>
             <?php endforeach; ?>
           </div>
+
+            <?php if ($totalPages > 1): ?>
+    <div class="flex justify-center mt-4 space-x-2">
+      <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1 ?>" 
+           class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-indigo-500 hover:text-white">Prev</a>
+      <?php endif; ?>
+
+      <?php for ($p = 1; $p <= $totalPages; $p++): ?>
+        <a href="?page=<?= $p ?>"
+           class="px-3 py-1 rounded 
+           <?= $p == $page ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-indigo-500 hover:text-white' ?>">
+           <?= $p ?>
+        </a>
+      <?php endfor; ?>
+
+      <?php if ($page < $totalPages): ?>
+        <a href="?page=<?= $page + 1 ?>" 
+           class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-indigo-500 hover:text-white">Next</a>
+      <?php endif; ?>
+    </div>
+  <?php endif; ?>
         <?php endif; ?>
       </div>
 
@@ -184,4 +206,4 @@ if (isset($_POST['submit'])) {
 <script src="../assets/js/script.js"></script>
 </body>
 </html>
-<?php } ?>
+<?php  ?>

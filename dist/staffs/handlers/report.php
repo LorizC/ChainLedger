@@ -1,87 +1,66 @@
 <?php
-// ------------------------------
-// I-enable ang error reporting (para sa debugging)
-// ------------------------------
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-// ------------------------------
-// Simulan ang session (❗MAHALAGA para gumana ang $_SESSION)
-// ------------------------------
-session_start();
-
-// ------------------------------
-// Isama ang database connection file
-// ------------------------------
-// Gumamit tayo ng absolute path para siguradong mahanap kahit saan tawagin
 require_once __DIR__ . '/../../database/dbconfig.php';
+require_once __DIR__ . '/../../repositories/UserRepository.php';
+require_once __DIR__ . '/../../services/SecurityLogService.php';
+require_once __DIR__ . '/../../services/TransactionService.php';
 
-// ------------------------------
-// Kunin ang database connection
-// ------------------------------
 $conn = Database::getConnection();
+$userRepo = new UserRepository($conn);
+$securityLog = new SecurityLogService($conn);
+$transactionService = new TransactionService($conn);
 
-// ------------------------------
-// Suriin kung na-submit ang form
-// ------------------------------
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Kunin lahat ng data galing sa form
-    $details = $_POST['details'];
-    $category = $_POST['category'];
-    $merchant = $_POST['merchant'];
-    $amount = $_POST['amount'];
-    $transaction_date = $_POST['date']; // user input (mm/dd/yyyy format)
-    $transaction_type = $_POST['details']; // depende sa "details" kung PAYMENT, etc.
-    
-    // ✅ Na-update: Kunin ang status mula sa form (default to 'completed' if empty/not selected)
-    $status = !empty($_POST['status']) ? $_POST['status'] : 'completed';
+// Ensure user is logged in
+$current_username = $_SESSION['user']['username'] ?? null;
+if (!$current_username) {
+    $_SESSION['flash_error'] = "You must be logged in to record transactions.";
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
-    // ✅ Kunin mula sa nested session array
-    $username = $_SESSION['user']['username'] ?? 'guest';
-    $account_id = $_SESSION['user']['account_id'] ?? 0;
+// Fetch user record
+$userRecord = $userRepo->findByUsername($current_username);
+if (!$userRecord) {
+    $_SESSION['flash_error'] = "User not found in database.";
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
+}
 
-    // ------------------------------
-    // I-convert ang date format (from mm/dd/yyyy to yyyy-mm-dd hh:mm:ss)
-    // ------------------------------
-    $transaction_date = DateTime::createFromFormat('m/d/Y', $transaction_date);
-    if ($transaction_date) {
-        $transaction_date = $transaction_date->format('Y-m-d H:i:s');
+$account_id = (int)$userRecord['account_id'];
+$user_id = (int)$userRecord['user_id'];
+
+//  ADD TRANSACTION ONLY
+if (isset($_POST['submit_add'])) {
+    $category          = trim($_POST['category'] ?? '');
+    $merchant          = trim($_POST['merchant'] ?? '');
+    $amount            = (float)($_POST['amount'] ?? 0);
+    $transaction_type  = trim($_POST['transaction_type'] ?? '');
+    $status_input      = trim($_POST['status'] ?? '');
+    $date_input        = trim($_POST['date'] ?? '');
+
+    $result = $transactionService->addTransaction(
+        $account_id,
+        $current_username,
+        $category,
+        $merchant,
+        $amount,
+        $transaction_type,
+        $status_input,
+        $date_input
+    );
+
+    if (isset($result['success'])) {
+        $_SESSION['flash_success'] = "Transaction added: ₱" . number_format($amount, 2) . " ($transaction_type - $category)";
+        $securityLog->logEvent($user_id, $account_id, $current_username, "TRANSACTION_ADDED");
     } else {
-        // fallback: kung invalid date, gamitin current date
-        $transaction_date = date('Y-m-d H:i:s');
+        $_SESSION['flash_error'] = $result['error'];
     }
 
-    // ------------------------------
-    // SQL Query - INSERT transaction
-    // Note: 'entry_date' ay may DEFAULT CURRENT_TIMESTAMP sa database
-    // kaya hindi na kailangang isama dito.
-    // Status is already included in the INSERT and will be saved to the database.
-    // ------------------------------
-    $sql = "INSERT INTO transactions 
-                (account_id, username, detail, merchant, amount, transaction_date, currency, transaction_type, status)
-            VALUES (?, ?, ?, ?, ?, ?, 'PHP', ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    if (!$stmt) {
-        die("❌ SQL Prepare Failed: " . $conn->error);
-    }
-
-    // Bind parameters (status is the last one, already bound correctly)
-    $stmt->bind_param("isssdsss", $account_id, $username, $category, $merchant, $amount, $transaction_date, $transaction_type, $status);
-
-    // Execute and check if success
-    if ($stmt->execute()) {
-        // Optional: I-log ang inserted status para sa debugging (tanggalin sa production)
-        error_log("Transaction saved with status: " . $status);
-        
-        header("Location: ../../forms/main/report.php?success=1");
-        exit;
-    } else {
-        echo "❌ Error saving transaction: " . $stmt->error;
-    }
-
-    $stmt->close();
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit();
 }
 
 $conn->close();

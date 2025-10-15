@@ -1,9 +1,10 @@
 <?php
-session_start();
 require_once __DIR__ . '/../database/dbconfig.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../services/PasswordService.php';
-
+require_once __DIR__ . '/../services/AuthGuard.php';
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Staff']);
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
 
@@ -63,7 +64,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
           <h5 class="mb-0 font-medium">Account Deletion</h5>
         </div>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Account Deletion</li>
         </ul>
       </div>

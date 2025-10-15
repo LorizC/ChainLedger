@@ -1,20 +1,19 @@
 <?php
-session_start();
-extract(include __DIR__ . '/handlers/logs.php');
+require_once __DIR__ . '/../services/AuthGuard.php';
+require_once __DIR__ . '/handlers/logs.php';
 
-// Only business owners or managers
-if ($role !== 'Business Owner' && $role !== 'Manager') {
-    header("Location: /ChainLedger-System-/pages.php");
-    exit;
-}
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Business Owner', 'Manager']);
 
-
+// Grab the current user info safely
+$user = $_SESSION['user'];
+$role = $user['company_role'] ?? 'Unassigned';
+$accountId = $user['account_id'] ?? null;
 
 // Preserve filters for pagination
 $baseQuery = $_GET;
 unset($baseQuery['page']);
 $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_query($baseQuery);
-
 
 ?>
 

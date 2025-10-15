@@ -1,5 +1,10 @@
 <?php
-session_start();
+require_once __DIR__ . '/../services/AuthGuard.php';
+
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Staff']);
+
+
 if(isset($_POST['submit'])){
 
 } else {
@@ -21,7 +26,6 @@ $categories = [
   ["title" => "Maintenance", "value" => "₱4,200.00", "color" => "bg-orange-100 text-orange-600", "icon" => "engineering"],
 ];
 
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -37,7 +41,7 @@ $categories = [
   <link rel="stylesheet" href="../assets/fonts/material.css" />
   <link rel="stylesheet" href="../assets/css/style.css" id="main-style-link" />
   
-  <!-- Tailwind CSS  -->
+  <!-- Tailwind CSS + Alpine.js -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class' }</script>
   <script src="https://unpkg.com/alpinejs@3.12.0/dist/cdn.min.js" defer></script>
@@ -72,7 +76,7 @@ $categories = [
             <h5 class="mb-0 font-medium">Analytics</h5>
           </div>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
             <li class="breadcrumb-item" aria-current="page">Analytics</li>
           </ul>
         </div>

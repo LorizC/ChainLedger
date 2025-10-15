@@ -59,7 +59,7 @@
             <i data-feather="user"></i>
           </a>
           <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown p-2 overflow-hidden dark:bg-gray-900 dark:text-gray-100">
-            <div class="dropdown-header flex items-center justify-between py-4 px-5 bg-primary-500 dark:bg-indigo-700">
+            <div class="dropdown-header flex items-center justify-between py-4 px-5 bg-indigo-700">
               <div class="flex mb-1 items-center">
                 <div class="shrink-0">
                   <img src="<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>" alt="user-image" class="w-10 rounded-full" />
@@ -88,7 +88,7 @@
                 </a>            
                   <!-- Logout -->
                 <div class="grid my-3">
-                  <button class="btn btn-primary flex items-center justify-center dark:bg-indigo-600 dark:text-gray-100">
+                  <button class="btn bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600" type="button">
                     <svg class="pc-icon me-2 w-[22px] h-[22px]">
                       <use xlink:href="#custom-logout-1-outline"></use>
                     </svg>

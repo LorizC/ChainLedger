@@ -1,8 +1,8 @@
-<?php require_once __DIR__ . '/../admin/handlers/profile_helper.php'; ?>
+<?php require_once __DIR__ . '/../staffs/handlers/profile_helper.php'; ?>
 
 
 <!-- [ Sidebar Menu ] start -->
-<nav class="pc-sidebar bg-primary-700 text-white min-h-screen w-[var(--tw-sidebar-width,264px)]">
+<nav class="pc-sidebar bg-indigo-800 text-white min-h-screen w-[var(--tw-sidebar-width,264px)]">
   <div class="navbar-wrapper">
     <!-- Logo -->
     <div class="m-header flex items-center py-5 px-6 h-header-height border-b border-gray-700/30">

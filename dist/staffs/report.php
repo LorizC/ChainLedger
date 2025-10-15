@@ -1,10 +1,15 @@
 <?php
-  session_start();
-  if (isset($_POST['submit'])) {
-    // Handle form submission logic here...
-  } else {
+require_once __DIR__ . '/../services/AuthGuard.php';
+include 'handlers/report.php';
 
+// Only allow logged-in users who are Staff
+auth_guard(['Staff']);
+
+// Optional: store the user info in a variable for convenience
+$user = $_SESSION['user'];
+$role = strtolower(trim($user['company_role'] ?? ''));
 ?>
+
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
 <head>
@@ -54,12 +59,24 @@
             <h5 class="mb-0 font-medium">Transaction Report</h5>
           </div>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
             <li class="breadcrumb-item" aria-current="page">Report</li>
           </ul>
         </div>
       </div>
       <!-- [ breadcrumb ] end -->
+
+            <!-- Flash Messages -->
+      <?php if (!empty($_SESSION['flash_success'])): ?>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+          <?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?>
+        </div>
+      <?php endif; ?>
+      <?php if (!empty($_SESSION['flash_error'])): ?>
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
+        </div>
+      <?php endif; ?>
 
       <!-- [ Main Content ] start -->
       <div class="grid grid-cols-12 gap-x-6">
@@ -69,74 +86,92 @@
               <h5>Fill Out Report Details (<span style="color: red; font-weight: bold;">*</span> Required)</h5>
             </div>
             <div class="card-body">
-              <form action="/../handlers/report.php" method="POST" class="form-horizontal">
-                <div class="mb-3">
-                  <label for="details" class="form-label">Details<span style="color: red; font-weight: bold;">*</span></label>
-                  <select name="details" id="details" class="form-control">
-                    <option value="">Select Details</option>
-                    <option value="PAYMENT">Payment</option>
-                    <option value="REFUND">Refund</option>
-                    <option value="WITHDRAWAL">Withdrawal</option>
-                    <option value="DEPOSIT">Deposit</option>
-                  </select>
-                </div>
+<form action="" method="POST" class="form-horizontal">
+  <!-- Transaction Type -->
+  <div class="mb-3">
+    <label for="transaction_type" class="form-label">
+      Transaction Type <span style="color: red; font-weight: bold;">*</span>
+    </label>
+    <select name="transaction_type" id="transaction_type" class="form-control" required>
+      <option value="">Select Transaction Type</option>
+      <option value="PAYMENT">Payment</option>
+      <option value="REFUND">Refund</option>
+      <option value="WITHDRAWAL">Withdrawal</option>
+      <option value="DEPOSIT">Deposit</option>
+      <option value="TRANSFER">Transfer</option>
+    </select>
+  </div>
 
-                <div class="mb-3">
-                  <label for="category" class="form-label">Category<span style="color: red; font-weight: bold;">*</span></label>
-                  <select name="category" id="category" class="form-control">
-                    <option value="" disabled selected>Select Category</option>
-                    <option value="Equipment">Equipment</option>
-                    <option value="Food">Food</option>
-                    <option value="Health">Health</option>
-                    <option value="Maintenance">Maintenance</option>
-                    <option value="Utilities">Utilities</option>
-                    <option value="Transportation">Transportation</option>
-                  </select>
-                </div>
+  <!-- Category (Detail Column) -->
+  <div class="mb-3">
+    <label for="category" class="form-label">
+      Category <span style="color: red; font-weight: bold;">*</span>
+    </label>
+    <select name="category" id="category" class="form-control" required>
+      <option value="" disabled selected>Select Category</option>
+      <option value="Equipment">Equipment</option>
+      <option value="Food">Food</option>
+      <option value="Health">Health</option>
+      <option value="Maintenance">Maintenance</option>
+      <option value="Utilities">Utilities</option>
+      <option value="Transportation">Transportation</option>
+    </select>
+  </div>
 
-                <div class="mb-3">
-                  <label for="merchant" class="form-label">Merchant</label>
-                  <select name="merchant" id="merchant" class="form-control">
-                    <option value="">Select Payment Merchant</option>
-                    <option value="Gcash">GCash</option>
-                    <option value="Googlepay">GooglePay</option>
-                    <option value="Grabpay">GrabPay</option>
-                    <option value="Maya">Maya</option>
-                    <option value="Paypal">PayPal</option>
-                  </select>
-                </div>
+  <!-- Merchant -->
+  <div class="mb-3">
+    <label for="merchant" class="form-label">
+      Merchant <span style="color: red; font-weight: bold;">*</span>
+    </label>
+    <select name="merchant" id="merchant" class="form-control" required>
+      <option value="">Select Payment Merchant</option>
+      <option value="Gcash">GCash</option>
+      <option value="Googlepay">GooglePay</option>
+      <option value="Grabpay">GrabPay</option>
+      <option value="Maya">Maya</option>
+      <option value="Paypal">PayPal</option>
+    </select>
+  </div>
 
-                <div class="mb-3">
-                  <label for="amount" class="form-label">Amount<span style="color: red; font-weight: bold;">*</span></label>
-                  <div class="input-group">
-                    <span class="input-group-text">₱</span>
-                    <input type="number" step="0.01" min="0" name="amount" id="amount" placeholder="0.00" class="form-control" required>
-                  </div>
-                </div>
+  <!-- Amount -->
+  <div class="mb-3">
+    <label for="amount" class="form-label">
+      Amount <span style="color: red; font-weight: bold;">*</span>
+    </label>
+    <div class="input-group">
+      <span class="input-group-text">₱</span>
+      <input type="number" step="0.01" min="0" name="amount" id="amount" placeholder="0.00" class="form-control" required>
+    </div>
+  </div>
 
-                <div class="mb-3">
-                  <label for="date" class="form-label">Date<span style="color: red; font-weight: bold;">*</span></label>
-                  <input type="date" name="date" id="date" class="form-control" required>
-                </div>
+  <!-- Date -->
+  <div class="mb-3">
+    <label for="date" class="form-label">
+      Date <span style="color: red; font-weight: bold;">*</span>
+    </label>
+    <input type="date" name="date" id="date" class="form-control" required>
+  </div>
 
-                <div class="mb-4">
-                  <label for="status" class="form-label">Status</label>
-                  <select name="status" id="status" class="form-control">
-                    <option value="">Select Payment Status</option>
-                    <option value="COMPLETED">Complete</option>
-                    <option value="PENDING">Pending</option>
-                    <option value="FAILED">Failed</option>
-                    <option value="CANCELLED">Cancelled</option>
-                  </select>
-                </div>
+  <!-- Status -->
+  <div class="mb-4">
+    <label for="status" class="form-label">Status</label>
+    <select name="status" id="status" class="form-control" required>
+      <option value="">Select Status</option>
+      <option value="COMPLETED">Completed</option>
+      <option value="PENDING">Pending</option>
+      <option value="FAILED">Failed</option>
+      <option value="CANCELLED">Cancelled</option>
+    </select>
+  </div>
 
-                <div class="flex mt-1 justify-between items-center flex-wrap">
-                  <div class="form-check">
-                    <button type="submit" name="submit" class="btn btn-primary mx-auto shadow-2xl">Save Transaction</button>
-                    <button type="reset" class="btn btn-warning mx-auto shadow-2xl">Cancel</button>
-                  </div>
-                </div>
-              </form>
+  <div class="flex mt-1 justify-between items-center flex-wrap">
+    <div class="form-check">
+      <button type="submit" name="submit_add" class="btn btn-primary mx-auto shadow-2xl">Save Transaction</button>
+      <button type="reset" class="btn btn-warning mx-auto shadow-2xl">Cancel</button>
+    </div>
+  </div>
+</form>
+
             </div>
           </div>
         </div>
@@ -158,4 +193,3 @@
   <?php include '../includes/footer.php'; ?>
 </body>
 </html>
-<?php } ?>

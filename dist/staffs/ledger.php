@@ -1,5 +1,14 @@
 <?php
-session_start();
+require_once __DIR__ . '/../services/AuthGuard.php';
+
+// Only allow logged-in users who are Staff
+auth_guard(['Staff']);
+
+// Optional: store the user info in a variable for convenience
+$user = $_SESSION['user'];
+$role = strtolower(trim($user['company_role'] ?? ''));
+
+
 
 // Get filter values from GET
 $filterAction   = $_GET['action'] ?? '';
@@ -127,7 +136,7 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
           <h5 class="mb-0 font-medium">Transaction Ledger</h5>
         </div>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Ledger</li>
         </ul>
       </div>

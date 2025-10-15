@@ -1,5 +1,9 @@
 <?php
-session_start();
+require_once __DIR__ . '/../services/AuthGuard.php';
+
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Business Owner', 'Manager']);
+
 
 if(isset($_POST['submit'])){
 

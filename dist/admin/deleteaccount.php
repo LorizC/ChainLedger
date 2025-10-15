@@ -1,9 +1,10 @@
 <?php
-session_start();
 require_once __DIR__ . '/../database/dbconfig.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../services/PasswordService.php';
-
+require_once __DIR__ . '/../services/AuthGuard.php';
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Business Owner', 'Manager']);
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
 

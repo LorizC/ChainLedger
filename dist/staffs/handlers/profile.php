@@ -11,7 +11,7 @@ $userRepo = new UserRepository($conn);
 
 $accountId = (int)$_SESSION['user']['account_id'];
 
-// ✅ Handle profile update form
+//  Handle profile update form
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $newUsername = trim($_POST['username']);
     $newAvatar   = trim($_POST['avatar']);
@@ -28,7 +28,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $_SESSION['user']['profile_image'] = $newAvatar;
 
     // Redirect back to profile page
-    header("Location: profile.php");
+    $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
+    header("Location: profile.php?page=$page");
     exit();
 }
 
@@ -43,7 +44,7 @@ $totalSpending = $userRepo->getTotalSpendingByAccountId($accountId);
 // Transactions
 $transactions = [];
 // Pagination setup
-$limit = 9; // Max transactions per page
+$limit = 10; // Max transactions per page
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $offset = ($page - 1) * $limit;
 
@@ -90,4 +91,6 @@ $user = [
 ];
 
 $currentAvatar = $userData['profile_image'] ?: '../../assets/images/user/profile.png';
+$paginatedTransactions = $transactions;
+
 ?>

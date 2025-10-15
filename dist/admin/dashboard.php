@@ -1,10 +1,8 @@
 <?php
-session_start();
+require_once __DIR__ . '/../services/AuthGuard.php';
 
-if (!isset($_SESSION['user'])) {
-    header("Location: /ChainLedger-System-/index.php");
-    exit;
-}
+// Only allow logged-in users who are Business Owner or Manager
+auth_guard(['Business Owner', 'Manager']);
 
 $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
