@@ -1,93 +1,17 @@
 <?php
 require_once __DIR__ . '/../services/AuthGuard.php';
+require_once __DIR__ . '/handlers/ledger.php';
 
 // Only allow logged-in users who are Business Owner or Manager
 auth_guard(['Business Owner', 'Manager']);
 
+$role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
-// Get filter values from GET
-$filterAction   = $_GET['action'] ?? '';
-$filterUser     = $_GET['user'] ?? '';
-$filterMerchant = $_GET['merchant'] ?? '';
-$filterStatus   = $_GET['status'] ?? '';
-$sortDate       = $_GET['sort_date'] ?? ''; // 'asc' or 'desc'
-$page           = $_GET['page'] ?? 1;
-
-// Mock user list for filter dropdown
-$userList = new ArrayIterator([
-  ['user_id' => 1, 'full_name' => 'Loriz Carlos'],
-  ['user_id' => 2, 'full_name' => 'Mii Lee'],
-  ['user_id' => 3, 'full_name' => 'Sara Pyaya'],
-  ['user_id' => 4, 'full_name' => 'Dave Smith'],
-  ['user_id' => 5, 'full_name' => 'Jon Weak'],
-  ['user_id' => 6, 'full_name' => 'Sarah Dicaya'],
-]);
-
-// Ledger data
-$ledger = [
-  ["user" => "Sara Pyaya", "details" => "Equipments", "merchant" => "Maya", "amount" => "-₱10,000,000.00", "date" => "10-07-2025", "status" => "Pending"],  
-  ["user" => "Loriz Carlos", "details" => "Food", "merchant" => "GrabPay", "amount" => "-₱2,255,555.55", "date" => "10-08-2025", "status" => "Completed"],
-  ["user" => "Jon Weak", "details" => "Health", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "date" => "10-05-2025", "status" => "Failed"], 
-  ["user" => "Jon Weak", "details" => "Maintenance", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "date" => "10-05-2025", "status" => "Completed"],
-  ["user" => "Dave Smith", "details" => "Transportation", "merchant" => "Paypal", "amount" => "+₱15,000.00", "date" => "10-06-2025", "status" => "Cancelled"],
-  ["user" => "Mii Lee", "details" => "Utilities", "merchant" => "GCash", "amount" => "-₱900,000.00", "date" => "10-07-2025", "status" => "Completed"],
-  ["user" => "Sara Pyaya", "details" => "Equipments", "merchant" => "Maya", "amount" => "-₱10,000,000.00", "date" => "10-07-2025", "status" => "Pending"],  
-  ["user" => "Loriz Carlos", "details" => "Food", "merchant" => "GrabPay", "amount" => "-₱2,255,555.55", "date" => "10-08-2025", "status" => "Completed"],
-  ["user" => "Jon Weak", "details" => "Health", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "date" => "10-05-2025", "status" => "Failed"], 
-  ["user" => "Jon Weak", "details" => "Maintenance", "merchant" => "Google Pay", "amount" => "+₱10,000.00", "date" => "10-05-2025", "status" => "Completed"],
-  ["user" => "Dave Smith", "details" => "Transportation", "merchant" => "Paypal", "amount" => "+₱15,000.00", "date" => "10-06-2025", "status" => "Cancelled"],
-  ["user" => "Mii Lee", "details" => "Utilities", "merchant" => "GCash", "amount" => "-₱900,000.00", "date" => "10-07-2025", "status" => "Completed"]  
-];
-
-
-// Extract unique actions (details) and merchants dynamically
-$actions = array_values(array_unique(array_map(fn($row) => $row['details'], $ledger)));
-$merchants = array_values(array_unique(array_map(fn($row) => $row['merchant'], $ledger)));
-
-// Map user IDs to names
-$userNamesById = [
-    1 => 'Loriz Carlos',
-    2 => 'Mii Lee',
-    3 => 'Sara Pyaya',
-    4 => 'Dave Smith',
-    5 => 'Jon Weak',
-    6 => 'Sarah Dicaya',
-];
-
-// FILTER
-$filteredLedger = array_filter($ledger, function($row) use ($filterAction, $filterUser, $filterMerchant, $filterStatus, $userNamesById) {
-    $actionMatch = $filterAction === '' || $row['details'] === $filterAction;
-    $merchantMatch = $filterMerchant === '' || $row['merchant'] === $filterMerchant;
-
-    $userMatch = true;
-    if ($filterUser !== '') {
-        $userMatch = isset($userNamesById[$filterUser]) && $row['user'] === $userNamesById[$filterUser];
-    }
-    $statusMatch = $filterStatus === '' || $row['status'] === $filterStatus;
-
-    return $actionMatch && $merchantMatch && $userMatch && $statusMatch;
-});
-
-// SORT by date if selected
-if ($sortDate === 'asc' || $sortDate === 'desc') {
-    usort($filteredLedger, function($a, $b) use ($sortDate) {
-        $aDate = strtotime(str_replace('-', '/', $a['date']));
-        $bDate = strtotime(str_replace('-', '/', $b['date']));
-        return $sortDate === 'asc' ? $aDate <=> $bDate : $bDate <=> $aDate;
-    });
+// Only business owners or managers
+if ($role !== 'business owner' && $role !== 'manager') {
+    header("Location: /ChainLedger-System-/pages.php");
+    exit;
 }
-
-
-  // PAGINATION SETUP
-$limit = 8; // number of rows per page
-$totalRecords = count($filteredLedger);
-$totalPages = max(1, ceil($totalRecords / $limit));
-$page = max(1, min($page, $totalPages)); // clamp current page
-
-$offset = ($page - 1) * $limit;
-$paginatedLedger = array_slice($filteredLedger, $offset, $limit);
-
-
 ?>
 
 <!doctype html>
@@ -162,8 +86,8 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
       onchange="this.form.submit()">
       <option value="">All</option>
       <?php foreach ($userList as $user): ?>
-        <option value="<?= $user['user_id'] ?>" <?= $filterUser == $user['user_id'] ? 'selected' : '' ?>>
-          <?= htmlspecialchars($user['full_name']) ?>
+        <option value="<?= $user['username'] ?>" <?= $filterUser == $user['username'] ? 'selected' : '' ?>>
+          <?= htmlspecialchars($user['username']) ?>
         </option>
       <?php endforeach; ?>
     </select>
@@ -260,26 +184,34 @@ $paginatedLedger = array_slice($filteredLedger, $offset, $limit);
   <?php if (empty($paginatedLedger)): ?>
     <tr>
       <td colspan="5" class="text-center py-4 text-gray-500 dark:text-gray-400">
-        No transactions found.
-      </td>
-    </tr>
-  <?php else: ?>
-    <?php foreach ($paginatedLedger as $row): ?>
-<tr>
-  <td><?= htmlspecialchars($row["user"]) ?></td>
-  <td><?= htmlspecialchars($row["details"]) ?></td>
-  <td><?= htmlspecialchars($row["merchant"]) ?></td>
-  <td class="<?= strpos($row["amount"], '-') !== false ? 'text-red-600' : 'text-green-600' ?>">
-    <?= $row["amount"] ?>
-  </td>
-  <td><?= htmlspecialchars($row["status"]) ?></td>
-  <td><?= htmlspecialchars($row["date"]) ?></td>
-</tr>
+                    </td>
+                  </tr>
+                <?php else: ?>
+                  <?php foreach ($paginatedLedger as $row): ?>
+                  <tr>
+                      <td><?= $row['user'] ?></td>
+                      <td><?= $row['details'] ?></td>
+                      <td><?= $row['merchant'] ?></td>
+                      <td class="<?= strpos($row['amount'], '-') !== false ? 'text-red-600 ' : 'text-green-600 ' ?>">
+                        <?= $row['amount'] ?>  <!-- Formatted amount: e.g., "-₱2,255.55" or "+₱15,000.00" -->
+                      </td>
+                      <td>
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                                     <?= $row['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
+                                        ($row['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                                         ($row['status'] === 'FAILED' ? 'bg-red-100 text-red-800' :
+                                          ($row['status'] === 'CANCELLED' ? 'bg-orange-100 text-red-800' : 'bg-gray-100 text-gray-800'))) ?>">
+                                         
+                          <?= $row['status'] ?>
+                        </span>
+                      </td>
+                      <td><?= $row['date'] ?></td>
+                    </tr>
 
     <?php endforeach; ?>
   <?php endif; ?>
 </tbody>
-            </table>
+</table>
 <!-- Pagination -->
 <?php if ($totalPages > 1): ?>
   <div class="mt-4 flex justify-center space-x-2">

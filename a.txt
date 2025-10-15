@@ -1,0 +1,44 @@
+      <!-- Transactions Breakdown (MATCHES TABLE CARD STYLE) -->
+      <section class="content mt-8">
+        <div class="card table-card">
+          <div class="card-header flex justify-between items-center">
+            <h5>Transactions Breakdown</h5>
+            <a href="#" class="text-primary-500 text-sm flex items-center">
+              <i data-feather="download" class="w-4 h-4 mr-1"></i> Export
+            </a>
+          </div>
+
+          <div class="card-body">
+            <!-- Stacked Colored Line -->
+            <div class="w-full h-4 rounded-full overflow-hidden flex mb-5 bg-gray-200 dark:bg-gray-700">
+              <?php foreach ($breakdown as $b): ?>
+                <div 
+                  class="h-full" 
+                  style="background: <?= $b['color'] ?>; width: <?= $b['percent'] ?>;">
+                </div>
+              <?php endforeach; ?>
+            </div>
+
+            <!-- Breakdown Table Style -->
+            <table class="table table-hover w-full">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Amount</th>
+                  <th>Percent</th>
+                </tr>
+              </thead>
+<tbody>
+<?php foreach ($breakdown as $item): ?>
+  <div class="flex justify-between mb-2">
+    <span><?= $item['label']; ?></span>
+    <span><?= $item['amount']; ?> (<?= $item['percent']; ?>)</span>
+  </div>
+<?php endforeach; ?>
+
+</tbody>
+
+            </table>
+          </div>
+        </div>
+      </section>

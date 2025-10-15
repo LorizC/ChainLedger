@@ -64,7 +64,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
           <h5 class="mb-0 font-medium">Account Deletion</h5>
         </div>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Account Deletion</li>
         </ul>
       </div>
@@ -126,7 +126,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
 
   <h2 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">Delete Your Account</h2>
 
-  <form id="deleteForm" method="POST" action="/ChainLedger-System-/dist/admin/handlers/delete_account.php" class="space-y-6">
+  <form id="deleteForm" method="POST" action="/ChainLedger-System-/dist/staffs/handlers/delete_account.php" class="space-y-6">
 
     <!-- Security Answer -->
     <div>

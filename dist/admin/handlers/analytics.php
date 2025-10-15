@@ -2,13 +2,138 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-
 require_once __DIR__ . '/../../database/dbconfig.php';
-require_once __DIR__ . '/../../repositories/UserRepository.php';
-require_once __DIR__ . '/../../services/PasswordService.php';
+
+if (!isset($_SESSION['user'])) {
+    header("Location: /ChainLedger-System--main/index.php");
+    exit();
+}
 
 $conn = Database::getConnection();
-$userRepo = new UserRepository($conn);
-$passwordService = new PasswordService($userRepo);
 
+// --- MERCHANTS ---
+$merchants = [];
+$sql_merchants = "SELECT merchant, SUM(ABS(amount)) as total_amount, COUNT(*) as count 
+                  FROM transactions 
+                  GROUP BY merchant 
+                  ORDER BY total_amount DESC";
+$result_merchants = $conn->query($sql_merchants);
+if ($result_merchants && $result_merchants->num_rows > 0) {
+    while ($row = $result_merchants->fetch_assoc()) {
+        $merchants[] = [
+            'title' => $row['merchant'] ?? 'Unknown',
+            'value' => '₱' . number_format($row['total_amount'], 2),
+            'image' => getMerchantImage($row['merchant']),
+            'count' => $row['count']
+        ];
+    }
+} else {
+    $merchants[] = [
+        'title' => 'No merchants yet',
+        'value' => '₱0.00',
+        'image' => '../assets/images/ewallets/default.png',
+        'count' => 0
+    ];
+}
+$result_merchants->close();
+
+// --- CATEGORIES ---
+$categories = [];
+$sql_categories = "SELECT detail, SUM(ABS(amount)) as total_amount, COUNT(*) as count 
+                   FROM transactions 
+                   GROUP BY detail 
+                   ORDER BY total_amount DESC";
+$result_categories = $conn->query($sql_categories);
+if ($result_categories && $result_categories->num_rows > 0) {
+    while ($row = $result_categories->fetch_assoc()) {
+        $cat_title = ucfirst(strtolower($row['detail'] ?? 'Unknown'));
+        $categories[] = [
+            'title' => $cat_title,
+            'value' => '₱' . number_format($row['total_amount'], 2),
+            'color' => getCategoryColor($cat_title),
+            'icon' => getCategoryIcon($cat_title),
+            'count' => $row['count'],
+            'numeric_value' => (float)$row['total_amount']
+        ];
+    }
+} else {
+    $categories[] = [
+        'title' => 'No categories yet',
+        'value' => '₱0.00',
+        'color' => 'bg-gray-100 text-gray-600',
+        'icon' => 'category',
+        'count' => 0,
+        'numeric_value' => 0
+    ];
+}
+$result_categories->close();
+
+// --- MONTHLY LINE CHART (LAST 6 MONTHS) ---
+$monthly_labels = [];
+$monthly_values = [];
+$sql_monthly = "SELECT DATE_FORMAT(transaction_date, '%Y-%m') as month, SUM(ABS(amount)) as total 
+                FROM transactions 
+                WHERE transaction_date >= DATE_SUB(CURDATE(), INTERVAL 6 MONTH)
+                GROUP BY month 
+                ORDER BY month ASC";
+$result_monthly = $conn->query($sql_monthly);
+if ($result_monthly && $result_monthly->num_rows > 0) {
+    while ($row = $result_monthly->fetch_assoc()) {
+        $monthly_labels[] = date('M Y', strtotime($row['month'] . '-01'));
+        $monthly_values[] = (float)$row['total'];
+    }
+} else {
+    // Fallback: last 6 months labels with 0 values
+    for ($i=5; $i>=0; $i--) {
+        $month = date('M Y', strtotime("-$i month"));
+        $monthly_labels[] = $month;
+        $monthly_values[] = 0;
+    }
+}
+$result_monthly->close();
+
+// --- PIE CHART ---
+$pie_labels = array_column($categories, 'title');
+$pie_values = array_column($categories, 'numeric_value');
+
+$conn->close();
+
+// --- HELPER FUNCTIONS ---
+function getMerchantImage($merchant) {
+    $images = [
+        'Gcash' => '../assets/images/ewallets/gcash1.jpg',
+        'Googlepay' => '../assets/images/ewallets/googlepay.png',
+        'Grabpay' => '../assets/images/ewallets/grabpay.jpeg',
+        'Maya' => '../assets/images/ewallets/maya.png',
+        'Paypal' => '../assets/images/ewallets/paypal.png'
+    ];
+    $path = $images[$merchant] ?? '../assets/images/ewallets/default.png';
+    return file_exists($path) ? $path : '../assets/images/ewallets/default.png';
+}
+
+function getCategoryColor($category) {
+    $colors = [
+        'Food' => 'bg-purple-100 text-purple-600',
+        'Utilities' => 'bg-red-100 text-red-600',
+        'Transportation' => 'bg-blue-100 text-blue-600',
+        'Equipment' => 'bg-yellow-100 text-yellow-600',
+        'Health' => 'bg-green-100 text-green-600',
+        'Maintenance' => 'bg-orange-100 text-orange-600'
+    ];
+    $category = ucfirst(strtolower($category));
+    return $colors[$category] ?? 'bg-gray-100 text-gray-600';
+}
+
+function getCategoryIcon($category) {
+    $icons = [
+        'Food' => 'restaurant',
+        'Utilities' => 'bolt',
+        'Transportation' => 'flight',
+        'Equipment' => 'build',
+        'Health' => 'healing',
+        'Maintenance' => 'engineering'
+    ];
+    $category = ucfirst(strtolower($category));
+    return $icons[$category] ?? 'category';
+}
 ?>

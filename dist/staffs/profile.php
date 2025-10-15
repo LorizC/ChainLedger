@@ -2,11 +2,11 @@
 
 require_once __DIR__ . '/../services/AuthGuard.php';
 include 'handlers/profile.php';
-// Only allow logged-in users who are Staff
+// Only allow logged-in users who are Business Owner or Manager
 auth_guard(['Staff']);
-?>
- 
 
+ 
+?>
 <!doctype html>
 <html lang="en" data-pc-preset="preset-1" data-pc-sidebar-caption="true" data-pc-direction="ltr" dir="ltr" data-pc-theme="light">
 <head>
@@ -48,7 +48,7 @@ auth_guard(['Staff']);
           <h5 class="mb-0 font-medium">Staff Profile</h5>
         </div>
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+          <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Profile</li>
         </ul>
       </div>

@@ -17,7 +17,7 @@ $logService = new SecurityLogService($conn);
 $error = "";
 $username = "";
 
-// ✅ Use user_id from session instead of old username
+// Use user_id from session instead of old username
 if (isset($_SESSION['temp_user_id'])) {
     $user = $userRepo->findByUserId($_SESSION['temp_user_id']);
     if ($user) {
@@ -60,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             unset($_SESSION['temp_user_id'], $_SESSION['temp_username'], $_SESSION['account_id']);
 
 
-            // ✅ Redirect to login
+            // Redirect to login
             header("Location: success.php");
             exit;
 

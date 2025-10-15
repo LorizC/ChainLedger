@@ -68,17 +68,12 @@ if (isset($_SESSION['user'])) {
             <div class="card-header">
               <h5>Error 404 System Not Found! Please contact the System Developer!</h5>
             </div>
-<div class="card-body flex flex-col items-center justify-center">
-  <img src="./dist/assets/images/pages/404.png" 
-       alt="System Not Found" 
-       class="w-full max-w-sm h-auto mb-4" />
-  <a href="index.php" 
-     class="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg">
-    Go to Index
-  </a>
-</div>
-
-
+            <div class="card-body">
+              <img src="./dist/assets/images/pages/404.png" alt="System Not Found" class="w-full h-auto mb-4" />
+                            <div class="flex justify-center">
+              <a href="index.php" class="btn btn-primary px-5 py-2">
+                Go to Index
+              </a>
             </div>
           </div>
         </div>

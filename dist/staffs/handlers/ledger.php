@@ -1,47 +1,97 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 require_once __DIR__ . '/../../database/dbconfig.php';
-require_once __DIR__ . '/../../repositories/UserRepository.php';
-require_once __DIR__ . '/../../services/PasswordService.php';
+
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+if (!isset($_SESSION['user'])) {
+    header("Location: /ChainLedger-System--main/index.php");
+    exit();
+}
 
 $conn = Database::getConnection();
-$userRepo = new UserRepository($conn);
 
-$sql = "SELECT transaction_id AS id, username AS user, detail AS details, merchant, amount, transaction_date AS date, transaction_type, status, currency FROM transactions ORDER BY transaction_date DESC";
-$result = $conn->query($sql);
+// --- GET FILTERS ---
+$filterAction   = $_GET['action'] ?? '';
+$filterUser     = $_GET['user'] ?? '';
+$filterMerchant = $_GET['merchant'] ?? '';
+$filterStatus   = $_GET['status'] ?? '';
+$sortDate       = $_GET['sort_date'] ?? 'desc';
+$page           = max(1, (int)($_GET['page'] ?? 1));
+$limit          = 8;
 
-$ledger = [];  // Array for the foreach loop in HTML
-if ($result && $result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        // Format date
-        $row['date'] = !empty($row['date']) && strtotime($row['date']) ? date('M j, Y', strtotime($row['date'])) : 'N/A';
-        
-        // Format amount with currency (default PHP/₱) and sign based on type
-        $currency = $row['currency'] ?? 'PHP';
-        $symbol = ($currency === 'PHP') ? '₱' : $currency;
-        $amount_val = floatval($row['amount']);
-        $is_negative = in_array($row['transaction_type'], ['WITHDRAWAL', 'TRANSFER_OUT', 'PAYMENT']);  // Adjust based on your enum
-        $formatted_amount = $symbol . number_format(abs($amount_val), 2);
-        if ($is_negative) {
-            $formatted_amount = '-' . $formatted_amount;  // Add '-' for withdrawals
-        }
-        $row['amount'] = $formatted_amount;
-        
-        // Secure output
-        $row['user'] = htmlspecialchars($row['user'] ?? 'Unknown User');
-        $row['details'] = htmlspecialchars($row['details'] ?? 'N/A');
-        $row['merchant'] = htmlspecialchars($row['merchant'] ?? 'N/A');
-        
-        $ledger[] = $row;
-    }
-} else {
-    // If no data or query error, show empty or error
-    if (!$result) {
-        error_log("Query Error: " . $conn->error);  // Log error without breaking page
-    }
-    $ledger = [];  // Empty array for no rows
+// --- FETCH USER LIST ---
+$userList = [];
+$res_users = $conn->query("SELECT DISTINCT username FROM transactions WHERE username IS NOT NULL AND username != '' ORDER BY username LIMIT 50");
+while($row = $res_users->fetch_assoc()) $userList[] = ['username'=>$row['username']];
+
+// --- FETCH UNIQUE ACTIONS ---
+$actions = [];
+$res_actions = $conn->query("SELECT DISTINCT detail FROM transactions WHERE detail IS NOT NULL AND detail != '' ORDER BY detail LIMIT 50");
+while($row = $res_actions->fetch_assoc()) $actions[] = $row['detail'];
+
+// --- FETCH UNIQUE MERCHANTS ---
+$merchants = [];
+$res_merchants = $conn->query("SELECT DISTINCT merchant FROM transactions WHERE merchant IS NOT NULL AND merchant != '' ORDER BY merchant LIMIT 50");
+while($row = $res_merchants->fetch_assoc()) $merchants[] = $row['merchant'];
+
+// --- BUILD WHERE CLAUSE ---
+$where = "WHERE 1=1";
+$params = [];
+$types = "";
+
+if($filterAction){ $where .= " AND detail = ?"; $params[]=$filterAction; $types.="s"; }
+if($filterUser){ $where .= " AND username = ?"; $params[]=$filterUser; $types.="s"; }
+if($filterMerchant){ $where .= " AND merchant = ?"; $params[]=$filterMerchant; $types.="s"; }
+if($filterStatus){ $where .= " AND status = ?"; $params[]=$filterStatus; $types.="s"; }
+
+// --- PAGINATION: COUNT TOTAL ---
+$stmt_total = $conn->prepare("SELECT COUNT(*) AS total FROM transactions $where");
+if(!empty($params)) $stmt_total->bind_param($types, ...$params);
+$stmt_total->execute();
+$totalRecords = $stmt_total->get_result()->fetch_assoc()['total'] ?? 0;
+$totalPages = max(1, ceil($totalRecords/$limit));
+$page = min($page, $totalPages);
+$offset = ($page-1)*$limit;
+$stmt_total->close();
+
+// --- FETCH PAGINATED LEDGER ---
+$sql = "SELECT username AS user, detail AS details, merchant, amount, transaction_type, status, currency, 
+        DATE_FORMAT(transaction_date,'%m-%d-%Y') AS date
+        FROM transactions $where 
+        ORDER BY transaction_date ".($sortDate==='asc'?'ASC':'DESC')." 
+        LIMIT $limit OFFSET $offset";
+
+$stmt = $conn->prepare($sql);
+
+// Bind filters only (LIMIT & OFFSET directly in query)
+if(!empty($params)){
+    $stmt->bind_param($types, ...$params);
 }
-?>
+
+$stmt->execute();
+$result = $stmt->get_result();
+
+$paginatedLedger = [];
+while($row = $result->fetch_assoc()){
+    $currency = $row['currency'] ?? 'PHP';
+    $symbol = $currency==='PHP'?'₱':$currency;
+    $amount_val = floatval($row['amount']);
+    $isNegative = in_array($row['transaction_type'], ['WITHDRAWAL','TRANSFER_OUT','PAYMENT']);
+    $formattedAmount = $symbol . number_format(abs($amount_val),2);
+    if($isNegative) $formattedAmount = '-'.$formattedAmount;
+
+    $paginatedLedger[] = [
+        'user' => htmlspecialchars($row['user'] ?? 'Unknown'),
+        'details' => htmlspecialchars($row['details'] ?? 'N/A'),
+        'merchant' => htmlspecialchars($row['merchant'] ?? 'N/A'),
+        'amount' => $formattedAmount,
+        'status' => htmlspecialchars($row['status'] ?? 'COMPLETED'),
+        'date' => $row['date']
+    ];
+}
+
+$stmt->close();
+$conn->close();
