@@ -106,7 +106,9 @@ CREATE TABLE security_logs (
         'LOGOUT', 
         'PASSWORD_CHANGE', 
         'ACCOUNT_CREATED',
-        'ACCOUNT_DELETED'
+        'ACCOUNT_DELETED',
+        'TRANSACTION_ADDED',
+        'TRANSACTION_DELETED'
     ) NOT NULL,
     ip_address VARCHAR(45),
     device_info TEXT,
@@ -162,3 +164,14 @@ TRUNCATE TABLE security;
 TRUNCATE TABLE users;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+ALTER TABLE security_logs
+MODIFY action ENUM(
+    'LOGIN',
+    'LOGOUT',
+    'PASSWORD_CHANGE',
+    'ACCOUNT_CREATED',
+    'ACCOUNT_DELETED',
+    'TRANSACTION_ADDED',
+    'TRANSACTION_DELETED'
+) NOT NULL;

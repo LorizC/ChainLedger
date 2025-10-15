@@ -160,7 +160,7 @@
 
   <div class="flex mt-1 justify-between items-center flex-wrap">
     <div class="form-check">
-      <button type="submit" name="submit" class="btn btn-primary mx-auto shadow-2xl">Save Transaction</button>
+      <button type="submit" name="submit_add" class="btn btn-primary mx-auto shadow-2xl">Save Transaction</button>
       <button type="reset" class="btn btn-warning mx-auto shadow-2xl">Cancel</button>
     </div>
   </div>

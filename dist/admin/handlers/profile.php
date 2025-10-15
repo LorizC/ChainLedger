@@ -44,7 +44,7 @@ $totalSpending = $userRepo->getTotalSpendingByAccountId($accountId);
 // Transactions
 $transactions = [];
 // Pagination setup
-$limit = 9; // Max transactions per page
+$limit = 10; // Max transactions per page
 $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
 $offset = ($page - 1) * $limit;
 
@@ -91,4 +91,6 @@ $user = [
 ];
 
 $currentAvatar = $userData['profile_image'] ?: '../../assets/images/user/profile.png';
+$paginatedTransactions = $transactions;
+
 ?>

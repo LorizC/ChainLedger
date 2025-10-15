@@ -152,8 +152,8 @@ include 'handlers/profile.php';
             <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Your recent activity will appear here.</p>
           </div>
         <?php else: ?>
-          <div class="space-y-3 max-h-96 overflow-y-auto pr-2 text-lg">
-            <?php foreach ($transactions as $t): ?>
+          <div class="space-y-3 pr-2 text-lg">
+              <?php foreach ($paginatedTransactions as $t): ?>
               <div class="grid grid-cols-4 gap-4 border-b pb-2">
                 <span class="text-gray-700 font-medium dark:text-gray-300"><?= htmlspecialchars($t["name"]) ?></span>
                 <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["merchant"]) ?></span>
