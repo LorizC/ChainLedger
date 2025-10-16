@@ -58,6 +58,7 @@
               <div class="title">
                 <h3 class="login-title">Set Password</h3>
               </div>
+              
 
               <div class="inputGroup">
                 <label for="role">Select Role:</label>

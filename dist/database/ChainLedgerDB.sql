@@ -3,7 +3,6 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
-select * from security
 
 -- =======================
 -- Users Table
@@ -72,6 +71,17 @@ CREATE TABLE company_owners (
 )
 
 -- =======================
+-- Registered Businesses Table
+-- =======================
+CREATE TABLE registered_businesses (
+    business_id INT PRIMARY KEY,
+    business_name VARCHAR(255) NOT NULL UNIQUE,
+    business_industry VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- =======================
 -- Transaction Table
 -- =======================
 CREATE TABLE transactions (
@@ -92,10 +102,10 @@ CREATE TABLE transactions (
     FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-)
+);
 
 -- ==========================
--- Security_logs Table
+-- Security Logs Table
 -- ========================== 
 CREATE TABLE security_logs (
     security_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -115,20 +125,20 @@ CREATE TABLE security_logs (
     device_info TEXT,
     user_agent TEXT,
     timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_account FOREIGN KEY (account_id) REFERENCES users(account_id)
+    FOREIGN KEY (account_id) REFERENCES users(account_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users(username)
+    FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE
-)
+);
 
 -- ==========================
--- Archived_Accounts Table
+-- Archived Accounts Table
 -- ========================== 
-
 CREATE TABLE archivedaccounts (
     archived_id INT AUTO_INCREMENT PRIMARY KEY,
+    business_id INT NOT NULL,
     account_id INT NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -137,7 +147,10 @@ CREATE TABLE archivedaccounts (
     username VARCHAR(100) NOT NULL,
     profile_image VARCHAR(255),
     date_registered TIMESTAMP,
-    archived_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    archived_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (business_id) REFERENCES registered_businesses(business_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 -- ==========================
@@ -146,21 +159,15 @@ CREATE TABLE archivedaccounts (
 CREATE TABLE archivedtransactions LIKE transactions;
 
 ALTER TABLE archivedtransactions
-ADD COLUMN old_account_id INT AFTER account_id,
-ADD COLUMN old_username VARCHAR(255) AFTER old_account_id,
-ADD COLUMN archived_at DATETIME DEFAULT CURRENT_TIMESTAMP;
+    ADD COLUMN old_account_id INT AFTER account_id,
+    ADD COLUMN old_username VARCHAR(255) AFTER old_account_id,
+    ADD COLUMN archived_at DATETIME DEFAULT CURRENT_TIMESTAMP
 
--- ==========================
--- Registered Businesses Table
--- ==========================
-CREATE TABLE registered_businesses (
-    registered_id INT AUTO_INCREMENT PRIMARY KEY,
-    business_id INT UNIQUE NOT NULL,
-    business_name VARCHAR(255) NOT NULL,
-    business_industry VARCHAR(255) NOT NULL,
-    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    password VARCHAR(255) NOT NULL
-);
+ALTER TABLE archivedtransactions
+    ADD FOREIGN KEY (business_id) REFERENCES registered_businesses(business_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE;
+
 -- ==========================
 -- Reset Database (For Testing)
 -- ========================== 
@@ -176,3 +183,5 @@ TRUNCATE TABLE security;
 TRUNCATE TABLE users;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
