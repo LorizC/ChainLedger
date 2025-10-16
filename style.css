@@ -345,7 +345,7 @@ body {
 /* ====================================
    Dropdown Select
 ==================================== */
-#security-question, #role, #gender {
+#security-question, #role, #gender, #business-industry {
   color: #060351; /* text color for selects */
   background-color: rgba(255, 255, 255, 0.9); /* light background */
   font-weight: 500; /* medium */
@@ -614,7 +614,7 @@ a {
   color: #e0e0e0; /* dark mode link color */
 }
 
-#theme-toggle:checked ~ .page #security-question option, #theme-toggle:checked ~ .page #role option, #theme-toggle:checked ~ .page #gender option {
+#theme-toggle:checked ~ .page #security-question option, #theme-toggle:checked ~ .page #role option, #theme-toggle:checked ~ .page #gender option, #theme-toggle:checked ~ .page #business-industry option {
   color: #e0e0e0; /* option text color */
   background-color: #434343; /* option background dark */
 }

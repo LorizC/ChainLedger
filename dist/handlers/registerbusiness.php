@@ -1,37 +1,85 @@
 <?php
-session_start();
+// ==========================
+// registerbusiness.php
+// ==========================
 require_once __DIR__ . '/../database/dbconfig.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
-require_once __DIR__ . '/../services/SignupService.php';
 
 $conn = Database::getConnection();
-$userRepo = new UserRepository($conn);
-$signupService = new SignupService($userRepo);
+$error = ''; // Default error message holder
 
-$error = "";
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $business_name = trim($_POST['business_name'] ?? '');
+    $business_industry = trim($_POST['business_industry'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    try {
-        $postData = [
-            'first_name' => ucfirst(trim($_POST['first_name'] ?? '')),
-            'last_name' => ucfirst(trim($_POST['last_name'] ?? '')),
-            'birthdate' => trim($_POST['birthdate'] ?? ''),
-            'gender' => trim($_POST['gender'] ?? ''),
-            'security_question' => trim($_POST['security_question'] ?? ''),
-            'security_answer' => trim($_POST['security_answer'] ?? '')
-        ];
+    // ===========================
+    // Validation
+    // ===========================
+    if (empty($business_name) || empty($business_industry) || empty($password) || empty($confirm_password)) {
+        $error = "All fields are required.";
+    } elseif ($password !== $confirm_password) {
+        $error = "Passwords do not match.";
+    } else {
+        // ===========================
+        // Check for duplicate business
+        // ===========================
+        $check_query = "SELECT * FROM registered_businesses WHERE business_name = ?";
+        $stmt = $conn->prepare($check_query);
+        $stmt->bind_param("s", $business_name);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-        $result = $signupService->registerUser($postData);
+        if ($result->num_rows > 0) {
+            $error = "Business name already exists. Please choose another.";
+        } else {
+            // ===========================
+            // Generate Unique Business ID
+            // ===========================
+            $business_id = random_int(100000, 999999);
 
-        $_SESSION['temp_user_id'] = $result['user_id'];
-        $_SESSION['account_id'] = $result['account_id'];
-        $_SESSION['temp_username'] = $result['username'];
+            // Make sure ID is unique
+            $check_id_query = "SELECT business_id FROM registered_businesses WHERE business_id = ?";
+            $check_stmt = $conn->prepare($check_id_query);
+            $check_stmt->bind_param("i", $business_id);
+            $check_stmt->execute();
+            $check_result = $check_stmt->get_result();
 
-        header("Location: set_password.php");
-        exit;
+            while ($check_result->num_rows > 0) {
+                $business_id = random_int(100000, 999999);
+                $check_stmt->bind_param("i", $business_id);
+                $check_stmt->execute();
+                $check_result = $check_stmt->get_result();
+            }
 
-    } catch (Exception $e) {
-        error_log("Signup Error: " . $e->getMessage());
-        $error = "Signup failed: " . htmlspecialchars($e->getMessage());
+            $check_stmt->close();
+
+            // ===========================
+            // Hash Password
+            // ===========================
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // ===========================
+            // Insert Business Record
+            // ===========================
+            $insert_query = "
+                INSERT INTO registered_businesses (business_id, business_name, business_industry, password)
+                VALUES (?, ?, ?, ?)
+            ";
+            $stmt = $conn->prepare($insert_query);
+            $stmt->bind_param("isss", $business_id, $business_name, $business_industry, $hashed_password);
+
+            if ($stmt->execute()) {
+                    header("Location: registration_success.php?business_id=" . urlencode($business_id));
+                exit();
+            } else {
+                $error = "Database error: Could not register business.";
+            }
+
+            $stmt->close();
+        }
     }
 }
+?>

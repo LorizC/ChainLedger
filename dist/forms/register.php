@@ -6,7 +6,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Create Account - ChainLedger</title>
+  <title>ChainLedger | Register Business Account </title>
   <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -51,7 +51,7 @@
   <p style="color:red; text-align:center; margin-bottom:0px;"><?= htmlspecialchars($error) ?></p>
 <?php endif; ?>
 
-          <form method="POST" action="signup.php">
+          <form method="POST" action="register.php">
             <div class="title">
               <h3 class="signup-title">Business Registration</h3>
             </div>
@@ -59,14 +59,13 @@
             <div class="inputGroup">
               <label for="businessName">Business Name</label>
               <input type="text" placeholder="Enter Business Name" id="businessName" name="business_name" required
-                     pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed"
                      value="<?= htmlspecialchars($_POST['business_name'] ?? '') ?>" />
             </div>
 
             <div class="inputGroup">
               <label for="businessIndustry">Business Industry</label>
               <select id="business-industry" name="business_industry" required>
-                <option value="" disabled <?= !isset($_POST['business_industry']) ? 'selected' : '' ?>>Select a question</option>
+                <option value="" disabled <?= !isset($_POST['business_industry']) ? 'selected' : '' ?>>Select Industry</option>
                 <option value="Convenience Store" <?= (($_POST['business_industry'] ?? '') === 'Convenience Store') ? 'selected' : '' ?>>Convenience Store</option>
                 <option value="Food Store" <?= (($_POST['business_industry'] ?? '') === 'Food Store') ? 'selected' : '' ?>>Food Store</option>
                 <option value="Clothing Store" <?= (($_POST['business_industry'] ?? '') === 'Clothing Store') ? 'selected' : '' ?>>Clothing Store</option>
@@ -74,16 +73,22 @@
                 <option value="Equipment Store" <?= (($_POST['business_industry'] ?? '') === 'Equipment Store') ? 'selected' : '' ?>>Equipment Store</option>
               </select>
             </div>
+                <div class="inputGroup">
+                <label for="password">Password</label>
+                <input type="password" placeholder="Enter Password" id="password" name="password" required />
+              </div>
 
-            <div class="inputGroup">
-              <label for="date_registered">Date Registered</label>
-              <input type="date" id="date_registered" name="date_registered" required
-                     max="<?= date('Y-m-d') ?>"
-                     value="<?= htmlspecialchars($_POST['date_registered'] ?? '') ?>" />
-            </div>
+              <div class="inputGroup">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" required />
+              </div>
+
+              <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">
+                Show Passwords
+              </p>
 
             <div class="button-container">
-              <button type="submit" class="submitForm">Next</button>
+              <button type="submit" class="submitForm">Register</button>
               <div class="signup-row">
                 <p class="new-account">Already Registered?</p>
                 <a href="../../index.php" class="submitForm signup-btn">Log In</a>

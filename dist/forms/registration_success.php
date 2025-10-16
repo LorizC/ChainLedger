@@ -50,34 +50,44 @@
     </div>
 
     <h1 class="text-green-700 dark:text-green-400 text-4xl font-semibold mb-4">
-      Account Created Successfully!
+      Business Registered Successfully!
     </h1>
     <h2 class="text-gray-700 dark:text-gray-300 text-2xl font-medium mb-10">
-      Account Details
+      Business Details
     </h2>
 
-    <div class="text-left space-y-6 text-xl">
-      <p class="text-gray-800 dark:text-gray-200 font-semibold flex justify-between">
-        <span>Username:</span>
-        <span class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $username; ?></span>
-      </p>
+<div class="text-left space-y-6 text-xl">
+  <p class="text-gray-800 dark:text-gray-200 font-semibold flex justify-between">
+    <span>Business Name:</span>
+    <span class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $business_name; ?></span>
+  </p>
 
-      <div class="flex items-center justify-between">
-        <p class="text-gray-800 dark:text-gray-200 font-semibold flex-1">
-          Account ID:
-          <span id="accountID" class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $accountID; ?></span>
-        </p>
-        <button
-          onclick="copyAccountID()"
-          class="ml-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-lg flex items-center gap-2 text-base font-semibold transition"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M8 16h8a2 2 0 002-2v-2M8 16v2a2 2 0 002 2h2m4-4v2a2 2 0 01-2 2h-2" />
-          </svg>
-          Copy
-        </button>
-      </div>
-    </div>
+  <p class="text-gray-800 dark:text-gray-200 font-semibold flex justify-between">
+    <span>Industry:</span>
+    <span class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $business_industry; ?></span>
+  </p>
+  <p class="text-gray-800 dark:text-gray-200 font-semibold flex justify-between">
+    <span>Date Registered:</span>
+    <span class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $date_registered; ?></span>
+  </p>
+  <div class="flex items-center justify-between">
+    <p class="text-gray-800 dark:text-gray-200 font-semibold flex-1">
+      Business ID:
+      <span id="businessID" class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $business_id; ?></span>
+    </p>
+    <button
+      onclick="copyBusinessID()"
+      class="ml-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-lg flex items-center gap-2 text-base font-semibold transition"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2M8 16h8a2 2 0 002-2v-2M8 16v2a2 2 0 002 2h2m4-4v2a2 2 0 01-2 2h-2" />
+      </svg>
+      Copy
+    </button>
+  </div>
+
+
+</div>
 
     <button
       onclick="window.location.href='../../index.php'"
@@ -99,31 +109,20 @@
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/script.js"></script>
   <script>
-    function copyAccountID() {
-      const accountIDElement = document.getElementById('accountID');
-      if (!accountIDElement) return;
-      const accountID = accountIDElement.textContent.trim();
+    // Copy Business ID to Clipboard
+function copyBusinessID() {
+  const idElement = document.getElementById('businessID');
+  const idValue = idElement.textContent.trim();
+  navigator.clipboard.writeText(idValue)
+    .then(() => showToast('✅ Business ID copied!'))
+    .catch(() => showToast('❌ Copy failed.'));
+}
 
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(accountID)
-          .then(() => showToast('✅ Account ID copied!'))
-          .catch(err => console.error('Clipboard error:', err));
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = accountID;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        showToast('✅ Account ID copied!');
-      }
-    }
-
-    // ✅ Toast now shows at the TOP center
+    //
     function showToast(message) {
       const toast = document.createElement('div');
       toast.textContent = message;
-      toast.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-fadeInDown text-lg font-semibold';
+      toast.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-fadeInDown text-lg font-semibold z-50';
       document.body.appendChild(toast);
 
       setTimeout(() => {

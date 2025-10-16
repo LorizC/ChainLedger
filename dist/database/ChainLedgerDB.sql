@@ -3,7 +3,8 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
-select * from transactions
+select * from security
+
 -- =======================
 -- Users Table
 -- =======================
@@ -150,11 +151,16 @@ ADD COLUMN old_username VARCHAR(255) AFTER old_account_id,
 ADD COLUMN archived_at DATETIME DEFAULT CURRENT_TIMESTAMP;
 
 -- ==========================
--- Create Business Table
--- ========================== 
-
-
-
+-- Registered Businesses Table
+-- ==========================
+CREATE TABLE registered_businesses (
+    registered_id INT AUTO_INCREMENT PRIMARY KEY,
+    business_id INT UNIQUE NOT NULL,
+    business_name VARCHAR(255) NOT NULL,
+    business_industry VARCHAR(255) NOT NULL,
+    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    password VARCHAR(255) NOT NULL
+);
 -- ==========================
 -- Reset Database (For Testing)
 -- ========================== 
@@ -170,4 +176,3 @@ TRUNCATE TABLE security;
 TRUNCATE TABLE users;
 
 SET FOREIGN_KEY_CHECKS = 1;
-
