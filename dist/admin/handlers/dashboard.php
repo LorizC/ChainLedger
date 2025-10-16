@@ -35,21 +35,36 @@ if ($resCost && $row = $resCost->fetch_assoc()) {
 $netBalance = $totalGains - $totalCosts;
 
 // --- Transactors ---
-$transactors = [];//add company_role from company_personel
-$sqlTransactors = "SELECT user_id, CONCAT(first_name, ' ', last_name) AS full_name, username, date_registered 
-                   FROM users 
-                   ORDER BY date_registered DESC 
-                   LIMIT 10";
+$transactors = [];
+
+$sqlTransactors = "
+    SELECT 
+        u.user_id,
+        CONCAT(u.first_name, ' ', u.last_name) AS full_name,
+        u.username,
+        u.date_registered,
+        cp.company_role
+    FROM users u
+    LEFT JOIN company_personnel cp ON u.account_id = cp.account_id
+    ORDER BY u.date_registered DESC
+    LIMIT 10
+";
+
 $resultTransactors = $conn->query($sqlTransactors);
+
 if ($resultTransactors) {
     while ($row = $resultTransactors->fetch_assoc()) {
-        $row['formatted_date'] = !empty($row['date_registered']) ? date('m-d-Y', strtotime($row['date_registered'])) : 'N/A';
+        $row['formatted_date'] = !empty($row['date_registered'])
+            ? date('m-d-Y', strtotime($row['date_registered']))
+            : 'N/A';
         $row['full_name'] = htmlspecialchars($row['full_name'] ?? 'Unknown');
         $row['username'] = htmlspecialchars($row['username'] ?? 'N/A');
-        $row['role'] = 'user';//company_role???
+        $row['role'] = htmlspecialchars($row['company_role'] ?? 'N/A');
         $transactors[] = $row;
     }
 }
+
+
 
 // --- Recent Transactions ---
 $recentTransactions = [];

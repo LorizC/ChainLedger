@@ -116,43 +116,53 @@ if (!empty($_SESSION['flash_success'])): ?>
         </div>
       </section>
 
-<!-- Users Table --> 
- <section class="content mt-8"> 
+<!-- My Transactions Table --> 
+<section class="content mt-8"> 
   <div class="card table-card"> 
-  <div class="card-header flex justify-between items-center"> 
-  <h5>Transactors</h5> <a href="#" class="text-primary-500 text-sm flex items-center"> 
- <a href="#" onclick="exportTableToText('transactorsTable', 'transactors.txt')" 
-   class="text-primary-500 text-sm flex items-center">
-  <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
-</a>
-
-</div> 
-<div class="card-body overflow-x-auto"> 
-  <table id="transactorsTable" class="table table-hover w-full">
-    <thead>
-     <tr>
-     <th>User ID</th> 
-     <th>Full Name</th> 
-     <th>Username</th> 
-     <th>Role</th> 
-     <th>Date Registered</th> 
-    </tr> 
-    </thead> 
-    <tbody> 
-                                <?php foreach($transactors as $user): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($user['user_id']) ?></td>
-                                        <td><?= $user['full_name'] ?></td>
-                                        <td><?= $user['username'] ?></td>
-                                        <td><span class="px-2 py-1 rounded text-xs bg-green-100 text-green-800"><?= ucfirst($user['role']) ?></span></td>
-                                        <td><?= $user['formatted_date'] ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-</tbody> 
-</table> 
-</div> 
-</div> 
-</section> 
+    <div class="card-header flex justify-between items-center"> 
+      <h5>My Transactions</h5> 
+      <a href="#" onclick="exportTableToText('myTransactionsTable', 'my_transactions.txt')" 
+         class="text-primary-500 text-sm flex items-center">
+        <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
+      </a>
+    </div> 
+    <div class="card-body overflow-x-auto"> 
+      <table id="myTransactionsTable" class="table table-hover w-full">
+        <thead>
+          <tr> 
+            <th>Category</th> 
+            <th>Details</th>
+            <th>Type</th>              
+            <th>Amount</th> 
+            <th>Status</th> 
+            <th>Date</th> 
+          </tr> 
+        </thead> 
+        <tbody> 
+          <?php foreach($transactors as $tx): ?>
+            <tr>
+              <td><?= htmlspecialchars($tx['detail']) ?></td>
+              <td><?= htmlspecialchars($tx['merchant']) ?></td>
+              <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= htmlspecialchars($tx['transaction_type']) ?></span></td>
+              <td class="<?= $tx['amount'] < 0 ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">
+                  <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
+              </td>
+              <td>
+                <span class="px-2 py-1 rounded text-xs 
+                  <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
+                     ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                     ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
+                  <?= ucfirst(strtolower($tx['status'])) ?>
+                </span>
+              </td>
+              <td><?= $tx['formatted_date'] ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody> 
+      </table> 
+    </div> 
+  </div> 
+</section>
 <!-- Transactions Table --> 
  <section class="content mt-8"> 
   <div class="card table-card"> 
@@ -170,7 +180,7 @@ if (!empty($_SESSION['flash_success'])): ?>
             <thead> <tr> <th>Transaction By</th> 
             <!-- New Column --> 
              <th>Category</th> 
-             <th>Details</th> 
+             <th>Type</th>              
              <th>Amount</th> 
              <th>Status</th> 
              <th>Date</th> 
@@ -180,11 +190,13 @@ if (!empty($_SESSION['flash_success'])): ?>
                                 <?php foreach($recentTransactions as $tx): ?>
                                     <tr>
                                         <td><?= $tx['fullname'] ?></td>
+                                        <td><?= $tx['detail'] ?></td>                                        
                                         <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= $tx['category'] ?></span></td>
-                                        <td><?= $tx['detail'] ?></td>
                                         <td class="<?= $tx['is_negative'] ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">  <!-- Red if cost, no minus -->
                                             <?= $tx['formatted_amount'] ?>  <!-- Positive always -->
                                         </td>
+
+
                                         <td>
                                             <span class="px-2 py-1 rounded text-xs 
                                                 <?= $tx['status'] === 'Completed' ? 'bg-green-100 text-green-800' : 
