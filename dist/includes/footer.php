@@ -3,7 +3,7 @@
         <div class="grid grid-cols-12 gap-1.5">
           <div class="col-span-12 sm:col-span-6 my-1">
             <p class="m-0"></p>
-              Software Solutions ©2025 | All Rights Reserved.
+              ChainLedger ©2025 | All Rights Reserved.
             </p>
           </div>
           <div class="col-span-12 sm:col-span-6 my-1 justify-self-end">

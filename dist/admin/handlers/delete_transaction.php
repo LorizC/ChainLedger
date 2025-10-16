@@ -12,11 +12,13 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $stmt = $conn->prepare("DELETE FROM transactions WHERE transaction_id = ?");
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {
+        $_SESSION['flash_success'] = " Transaction deleted successfully!";
         $stmt->close();
         $conn->close();
         header("Location: dashboard.php?deleted=transaction");
         exit();
     } else {
+        $_SESSION['flash_error'] = " Failed to delete transaction. Please try again.";
         $stmt->close();
         $conn->close();
         header("Location: dashboard.php?error=delete_failed");

@@ -14,11 +14,13 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
     $stmt = $conn->prepare("DELETE FROM users WHERE user_id = ?");
     $stmt->bind_param("i", $id);
     if ($stmt->execute()) {
+        $_SESSION['flash_success'] = " User deleted successfully!";
         $stmt->close();
         $conn->close();
         header("Location: dashboard.php?deleted=user");
         exit();
     } else {
+        $_SESSION['flash_error'] = " User deleted successfully!";
         $stmt->close();
         $conn->close();
         header("Location: dashboard.php?error=delete_failed");

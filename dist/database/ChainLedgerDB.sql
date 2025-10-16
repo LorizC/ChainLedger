@@ -150,6 +150,12 @@ ADD COLUMN old_username VARCHAR(255) AFTER old_account_id,
 ADD COLUMN archived_at DATETIME DEFAULT CURRENT_TIMESTAMP;
 
 -- ==========================
+-- Create Business Table
+-- ========================== 
+
+
+
+-- ==========================
 -- Reset Database (For Testing)
 -- ========================== 
 SET FOREIGN_KEY_CHECKS = 0;

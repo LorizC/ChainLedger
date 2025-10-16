@@ -147,7 +147,8 @@ auth_guard(['Business Owner', 'Manager']);
     <label for="date" class="form-label">
       Date <span style="color: red; font-weight: bold;">*</span>
     </label>
-    <input type="date" name="date" id="date" class="form-control" required>
+    <input type="date" name="date" id="date" class="form-control"min="<?= date('1900-m-d') ?>" max="<?= date('Y-m-d') ?>" required>
+    
   </div>
 
   <!-- Status -->
@@ -164,8 +165,9 @@ auth_guard(['Business Owner', 'Manager']);
 
   <div class="flex mt-1 justify-between items-center flex-wrap">
     <div class="form-check">
-      <button type="submit" name="submit_add" class="btn btn-primary mx-auto shadow-2xl">Save Transaction</button>
-      <button type="reset" class="btn btn-warning mx-auto shadow-2xl">Cancel</button>
+      <button type="reset" class="btn btn-danger mx-auto shadow-2xl">Cancel</button>
+      <button type="submit" name="submit_add" class="btn btn-success mx-auto shadow-2xl">Save Transaction</button>
+
     </div>
   </div>
 </form>

@@ -144,8 +144,10 @@ if (isset($_SESSION['user'])) {
                 <div class="button-container">
                   <button type="submit" class="submitForm">Log In</button> 
                   <div class="signup-row">
-                    <p class="new-account">Create New Account</p>
-                    <a href="dist/forms/signup.php" class="submitForm signup-btn">Sign Up</a>
+
+                    <a href="dist/forms/signup.php" class="submitForm signup-btn">Create Account</a>
+
+                    <a href="dist/forms/register.php" class="submitForm signup-btn">Register Business</a>                    
                   </div>
                 </div>
 

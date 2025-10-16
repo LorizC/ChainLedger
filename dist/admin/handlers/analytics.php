@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once __DIR__ . '/../../database/dbconfig.php';
 
 if (!isset($_SESSION['user'])) {
-    header("Location: /ChainLedger-System--main/index.php");
+    header("Location: /ChainLedger-System-/index.php");
     exit();
 }
 

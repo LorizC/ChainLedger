@@ -121,8 +121,14 @@ if (!empty($_SESSION['flash_success'])): ?>
   <div class="card table-card"> 
   <div class="card-header flex justify-between items-center"> 
   <h5>Transactors</h5> <a href="#" class="text-primary-500 text-sm flex items-center"> 
-  <i data-feather="download" class="w-4 h-4 mr-1"></i> Export </a> </div> <div class="card-body overflow-x-auto"> 
-  <table class="table table-hover w-full"> 
+ <a href="#" onclick="exportTableToText('transactorsTable', 'transactors.txt')" 
+   class="text-primary-500 text-sm flex items-center">
+  <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
+</a>
+
+</div> 
+<div class="card-body overflow-x-auto"> 
+  <table id="transactorsTable" class="table table-hover w-full">
     <thead>
      <tr>
      <th>User ID</th> 
@@ -153,10 +159,14 @@ if (!empty($_SESSION['flash_success'])): ?>
     <div class="card-header flex justify-between items-center">
        <h5>Recent Transactions</h5>
         <a href="#" class="text-primary-500 text-sm flex items-center"> 
-          <i data-feather="download" class="w-4 h-4 mr-1"></i> Export </a> 
+<a href="#" onclick="exportTableToText('transactionsTable', 'transactions.txt')" 
+   class="text-primary-500 text-sm flex items-center">
+  <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
+</a>
+
         </div> 
         <div class="card-body overflow-x-auto"> 
-          <table class="table table-hover w-full"> 
+          <table id="transactionsTable" class="table table-hover w-full">
             <thead> <tr> <th>Transaction By</th> 
             <!-- New Column --> 
              <th>Category</th> 
@@ -195,7 +205,28 @@ if (!empty($_SESSION['flash_success'])): ?>
   </main>
 
   <?php include '../includes/footer.php'; ?>
+  <script>
+function exportTableToText(tableId, filename) {
+  const table = document.getElementById(tableId);
+  if (!table) return alert("Table not found!");
 
+  let text = "";
+  const rows = table.querySelectorAll("tr");
+  rows.forEach((row) => {
+    const cols = row.querySelectorAll("th, td");
+    const rowText = Array.from(cols)
+      .map(col => col.innerText.trim())
+      .join(" | ");
+    text += rowText + "\n";
+  });
+
+  const blob = new Blob([text], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+}
+</script>
   <!-- Required JS -->
   <script src="../assets/js/plugins/simplebar.min.js"></script>
   <script src="../assets/js/plugins/popper.min.js"></script>

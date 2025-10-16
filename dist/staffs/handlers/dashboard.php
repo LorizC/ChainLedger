@@ -15,14 +15,19 @@ if ($resTotal && $row = $resTotal->fetch_assoc()) {
     $totalTransactions = $row['count'] ?? 0;
 }
 
-$totalGains = 0;
-$resGain = $conn->query("SELECT SUM(amount) as total_gain FROM transactions WHERE amount > 0 OR transaction_type IN ('DEPOSIT', 'TRANSFER_IN')");
+$resGain = $conn->query("
+    SELECT SUM(amount) as total_gain 
+    FROM transactions 
+    WHERE (amount > 0 AND transaction_type NOT IN ('WITHDRAWAL', 'TRANSFER', 'PAYMENT')) 
+          OR transaction_type IN ('DEPOSIT', 'REFUND')
+");
+
 if ($resGain && $row = $resGain->fetch_assoc()) {
     $totalGains = $row['total_gain'] ?? 0;
 }
 
 $totalCosts = 0;
-$resCost = $conn->query("SELECT SUM(amount) as total_cost FROM transactions WHERE amount < 0 OR transaction_type IN ('WITHDRAWAL', 'TRANSFER_OUT', 'PAYMENT')");
+$resCost = $conn->query("SELECT SUM(amount) as total_cost FROM transactions WHERE amount < 0 OR transaction_type IN ('WITHDRAWAL', 'TRANSFER', 'PAYMENT')");
 if ($resCost && $row = $resCost->fetch_assoc()) {
     $totalCosts = abs($row['total_cost'] ?? 0);
 }

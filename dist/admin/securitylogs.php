@@ -3,7 +3,7 @@ require_once __DIR__ . '/../services/AuthGuard.php';
 require_once __DIR__ . '/handlers/logs.php';
 
 // Only allow logged-in users who are Business Owner or Manager
-auth_guard(['Business Owner', 'Manager']);
+auth_guard(['Business Owner']);
 
 // Grab the current user info safely
 $user = $_SESSION['user'];

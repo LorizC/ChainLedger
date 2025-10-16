@@ -8,7 +8,7 @@ $conn = $db->getConnection();  // ✅ this ensures $conn exists
 
 // Ensure user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: html/usercreation/login.php");
+    header("Location: /ChainLedger-System-/index.php");
     exit;
 }
 

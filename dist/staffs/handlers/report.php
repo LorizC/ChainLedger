@@ -53,7 +53,7 @@ if (isset($_POST['submit_add'])) {
     );
 
     if (isset($result['success'])) {
-        $_SESSION['flash_success'] = "Transaction added: ₱" . number_format($amount, 2) . " ($transaction_type - $category)";
+        $_SESSION['flash_success'] = "Transaction Added Successfully";
         $securityLog->logEvent($user_id, $account_id, $current_username, "TRANSACTION_ADDED");
     } else {
         $_SESSION['flash_error'] = $result['error'];
