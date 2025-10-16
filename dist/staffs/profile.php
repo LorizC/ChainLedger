@@ -36,8 +36,8 @@ auth_guard(['Staff']);
 </div>
 
 <!-- Sidebar & Header -->
-<?php include '../includes/staffsidebar.php'; ?>
-<?php include '../includes/staffheader.php'; ?>
+<?php include '../includes/sidebar.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <!-- Main Content -->
 <div class="pc-container">

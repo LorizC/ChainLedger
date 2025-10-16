@@ -51,9 +51,9 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
 </div>
 
 <!-- Sidebar -->
-<?php include '../includes/staffsidebar.php'; ?>
+<?php include '../includes/sidebar.php'; ?>
 <!-- Header -->
-<?php include '../includes/staffheader.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <!-- Main Content -->
 <div class="pc-container">

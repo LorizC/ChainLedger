@@ -43,8 +43,8 @@ if ($role !== 'staff') {
 </div>
 <!-- [ Pre-loader ] End -->
 
-<?php include '../includes/staffsidebar.php'; ?>
-<?php include '../includes/staffheader.php'; ?>
+<?php include '../includes/sidebar.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <!-- [ Main Content ] start -->
 <div class="pc-container">

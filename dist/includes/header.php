@@ -83,9 +83,14 @@
                     <span>Change Password</span>
                   </span>
                 </a>
-                <a href="securitylogs.php" class="dropdown-item dark:hover:bg-gray-800">
-                  <span><i class="ti ti-report"></i><span class="ms-2"> Security Logs</span></span>
-                </a>
+<a 
+  href="#" 
+  class="dropdown-item dark:hover:bg-gray-800"
+  onclick="return validateAccess('<?php echo strtolower($_SESSION['user']['company_role'] ?? ''); ?>')"
+>
+  <span><i class="ti ti-report"></i><span class="ms-2"> Security Logs</span></span>
+</a>
+
                   <!-- Logout -->
                 <div class="grid my-3">
                   <button class="btn bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600" type="button">
@@ -106,3 +111,29 @@
   </div>
 </header>
 <!-- [ Header ] end -->
+<script>
+function validateAccess(role) {
+  if (role === 'business owner') {
+    // Allow access to Security Logs
+    window.location.href = 'securitylogs.php';
+    return true;
+  } 
+  else if (role === 'manager' || role === 'staff') {
+    // Deny access for managers and staff
+    alert(
+      "Unauthorized Access\n\n" +
+      "You are not authorized to access this page.\n" +
+      "Please contact your system administrator if you believe this is an error.\n\n" +
+      "Copyright © 2025 ChainLedger.\nAll rights reserved."
+    );
+    return false;
+  } 
+  else {
+    // Catch any other unexpected roles
+    alert("Access Denied.\n\nYour role does not have permission to view this page.");
+    return false;
+  }
+}
+</script>
+
+

@@ -40,11 +40,11 @@ auth_guard(['Staff']);
   <!-- [ Pre-loader ] End -->
 
   <!-- [ Sidebar Menu ] start -->
-  <?php include '../includes/staffsidebar.php'; ?>
+  <?php include '../includes/sidebar.php'; ?>
   <!-- [ Sidebar Menu ] end -->
 
   <!-- [ Header Topbar ] start -->
-  <?php include '../includes/staffheader.php'; ?>
+  <?php include '../includes/header.php'; ?>
   <!-- [ Header Topbar ] end -->
 
   <!-- [ Main Content ] start -->

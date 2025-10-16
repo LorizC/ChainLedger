@@ -1,4 +1,4 @@
-<?php include('../handlers/success.php'); ?>
+<?php include('../handlers/registersuccess.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,7 +97,8 @@
     </button>
 
     <p class="text-gray-500 dark:text-gray-400 text-base mt-6 italic">
-      Tip: Make sure to remember your credentials — they won’t be shown again!
+      Tip: Make sure to remember your credentials — they won’t be shown again!</br>
+      📋 Click the copy button to copy your Business ID to clipboard.
     </p>
   </div>
 <!-- Required Js -->

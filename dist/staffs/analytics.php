@@ -46,8 +46,8 @@ if(isset($_POST['submit'])){
   </div>
 </div>
 
-<?php include '../includes/staffsidebar.php'; ?>
-<?php include '../includes/staffheader.php'; ?>
+<?php include '../includes/sidebar.php'; ?>
+<?php include '../includes/header.php'; ?>
 
 <div class="pc-container">
   <div class="pc-content">

@@ -87,7 +87,8 @@
     </button>
 
     <p class="text-gray-500 dark:text-gray-400 text-base mt-6 italic">
-      Tip: Make sure to remember your credentials — they won’t be shown again!
+      Tip: Make sure to remember your credentials — they won’t be shown again!</br>
+      📋 Click the copy button to copy your Account ID to clipboard.
     </p>
   </div>
 <!-- Required Js -->
