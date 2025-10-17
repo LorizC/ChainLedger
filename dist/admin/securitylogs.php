@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../services/AuthGuard.php';
 require_once __DIR__ . '/handlers/logs.php';
 
+
+
 // Only allow logged-in users who are Business Owner or Manager
 auth_guard(['Business Owner']);
 
@@ -9,6 +11,7 @@ auth_guard(['Business Owner']);
 $user = $_SESSION['user'];
 $role = $user['company_role'] ?? 'Unassigned';
 $accountId = $user['account_id'] ?? null;
+
 
 // Preserve filters for pagination
 $baseQuery = $_GET;
@@ -60,6 +63,7 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
         <ul class="breadcrumb">
           <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Logs</li>
+          <li class="breadcrumb-item"><a href="../admin/archives.php">Archives</a></li>
         </ul>
       </div>
     </div>

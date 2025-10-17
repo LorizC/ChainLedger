@@ -119,8 +119,10 @@ CREATE TABLE security_logs (
         'ACCOUNT_CREATED',
         'ACCOUNT_DELETED',
         'TRANSACTION_ADDED',
-        'TRANSACTION_DELETED'
+        'TRANSACTION_DELETED',
+        'TRANSACTION_EDITED'
     ) NOT NULL,
+    action_details TEXT NULL AFTER action
     ip_address VARCHAR(45),
     device_info TEXT,
     user_agent TEXT,
@@ -132,13 +134,11 @@ CREATE TABLE security_logs (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
 -- ==========================
 -- Archived Accounts Table
 -- ========================== 
 CREATE TABLE archivedaccounts (
     archived_id INT AUTO_INCREMENT PRIMARY KEY,
-    business_id INT NOT NULL,
     account_id INT NOT NULL,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -169,6 +169,34 @@ ALTER TABLE archivedtransactions
         ON UPDATE CASCADE;
 
 -- ==========================
+-- Archived Logs Table
+-- ========================== 
+CREATE TABLE archivedlogs (
+    archived_log_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NULL,
+    account_id INT NULL,
+    username VARCHAR(100) NOT NULL,
+    action ENUM(
+        'LOGIN', 
+        'LOGOUT', 
+        'PASSWORD_CHANGE', 
+        'ACCOUNT_CREATED',
+        'ACCOUNT_DELETED',
+        'TRANSACTION_ADDED',
+        'TRANSACTION_DELETED',
+        'TRANSACTION_EDITED',
+        'FAILED_LOGIN'
+    ) NOT NULL,
+    action_details TEXT NULL,
+    ip_address VARCHAR(45),
+    device_info TEXT,
+    user_agent TEXT,
+    timestamp DATETIME NULL,
+    archived_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+-- ==========================
 -- Reset Database (For Testing)
 -- ========================== 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -183,5 +211,3 @@ TRUNCATE TABLE security;
 TRUNCATE TABLE users;
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-

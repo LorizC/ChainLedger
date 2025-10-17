@@ -67,18 +67,17 @@ try {
     //  Verify Security Answer
     // ===============================
     $securityData = $userRepo->findSecurityByAccountId($accountId);
-$securityData = $userRepo->findSecurityByAccountId($accountId);
-if (!$securityData) {
-    $_SESSION['flash_error'] = "Security information not found.";
-    header('Location: ../deleteaccount.php');
-    exit;
-}
+    if (!$securityData) {
+        $_SESSION['flash_error'] = "Security information not found.";
+        header('Location: ../deleteaccount.php');
+        exit;
+    }
 
-if (!password_verify($securityAnswer, $securityData['security_answer'])) {
-    $_SESSION['flash_error'] = "Incorrect security answer.";
-    header('Location: ../deleteaccount.php');
-    exit;
-}
+    if (!password_verify($securityAnswer, $securityData['security_answer'])) {
+        $_SESSION['flash_error'] = "Incorrect security answer.";
+        header('Location: ../deleteaccount.php');
+        exit;
+    }
 
     // ===============================
     //  Log Security Event
@@ -106,41 +105,32 @@ if (!password_verify($securityAnswer, $securityData['security_answer'])) {
     $archiveUser->bind_param('i', $accountId);
     $archiveUser->execute();
 
-    // ===============================
-    //  Archive Transactions → archivedtransactions
-    // ===============================
-    $archiveTransactions = $conn->prepare("
-        INSERT INTO archivedtransactions (
-            transaction_id, account_id, old_account_id, old_username,
-            username, detail, merchant, amount, currency,
-            transaction_date, entry_date, transaction_type, status, archived_at
-        )
-        SELECT 
-            t.transaction_id,
-            t.account_id,
-            ? AS old_account_id,
-            ? AS old_username,
-            t.username,
-            t.detail,
-            t.merchant,
-            t.amount,
-            t.currency,
-            t.transaction_date,
-            t.entry_date,
-            t.transaction_type,
-            t.status,
-            NOW()
-        FROM transactions t
-        WHERE t.account_id = ?
-    ");
-    $archiveTransactions->bind_param('isi', $accountId, $username, $accountId);
-    $archiveTransactions->execute();
+    if ($archiveUser->affected_rows === 0) {
+        throw new Exception("Failed to archive user information.");
+    }
 
-if ($archiveStmt->affected_rows === 0) {
-    error_log("No transactions archived for account ID $accountId");
+// ===============================
+//  Archive Security Logs → archivedlogs
+// ===============================
+$archiveLogs = $conn->prepare("
+    INSERT INTO archivedlogs (
+        user_id, account_id, username, action, action_details,
+        ip_address, device_info, user_agent, timestamp, archived_at
+    )
+    SELECT 
+        user_id, account_id, username, action, action_details,
+        ip_address, device_info, user_agent, timestamp, NOW()
+    FROM security_logs
+    WHERE account_id = ?
+");
+$archiveLogs->bind_param('i', $accountId);
+$archiveLogs->execute();
+
+if ($archiveLogs->affected_rows === 0) {
+    error_log("No security logs archived for account ID $accountId");
 }
 
-     // ===============================
+    // ===============================
     //  Cascade Delete User Data
     // ===============================
     $tables = [
