@@ -184,6 +184,9 @@ if (isset($_GET['error'])): ?>
 </div> 
 </div> 
 </section> 
+
+
+
 <!-- Transactions Table --> 
  <section class="content mt-8"> 
   <div class="card table-card"> 

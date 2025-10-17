@@ -75,12 +75,12 @@
                 <a href="profile.php" class="dropdown-item dark:hover:bg-gray-800">
                   <span><i class="ti ti-user"></i><span class="ms-2">My Profile</span></span>
                 </a>
-                <a href="editpassword.php" class="dropdown-item dark:hover:bg-gray-800">
+                <a href="enter_business.php" class="dropdown-item dark:hover:bg-gray-800">
                   <span>
                     <svg class="pc-icon text-muted me-2 inline-block">
                       <use xlink:href="#custom-lock-outline"></use>
                     </svg>
-                    <span>Change Password</span>
+                    <span>Enter a Business / ChangeP</span>
                   </span>
                 </a>
 <a 

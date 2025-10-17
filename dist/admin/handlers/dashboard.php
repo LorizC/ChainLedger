@@ -34,6 +34,20 @@ if ($resCost && $row = $resCost->fetch_assoc()) {
 
 $netBalance = $totalGains - $totalCosts;
 
+// --- My Transactions ---
+$transactors = [];
+$sql = "SELECT * FROM transactions WHERE account_id = ? ORDER BY transaction_date DESC LIMIT 10";
+if ($stmt = $conn->prepare($sql)) {
+    $stmt->bind_param('i', $accountID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    while ($row = $result->fetch_assoc()) {
+        $row['formatted_date'] = date('m-d-Y', strtotime($row['transaction_date']));
+        $transactors[] = $row;
+    }
+    $stmt->close();
+}
+
 // --- Transactors ---
 $transactors = [];
 
