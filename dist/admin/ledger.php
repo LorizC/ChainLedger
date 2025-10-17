@@ -118,7 +118,7 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
   <!-- Merchant Filter -->
   <div class="flex items-center gap-1">
     <span class="material-icons-outlined text-gray-500 dark:text-gray-300">store</span>
-    <label for="merchant" class="text-gray-700 dark:text-gray-300 font-medium">Merchant:</label>
+    <label for="merchant" class="text-gray-700 dark:text-gray-300 font-medium">Method:</label>
     <select 
       name="merchant" id="merchant"
       class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
@@ -178,8 +178,8 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
               <thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
                 <tr>
                   <th>User</th>
-                  <th>Details</th>
-                  <th>Merchant</th>
+                  <th>Category</th>
+                  <th>Payment Method</th>
                   <th>Amount</th>
                   <th>Status</th>
                   <th>Date</th>

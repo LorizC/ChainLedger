@@ -1,26 +1,14 @@
 <?php
 require_once __DIR__ . '/../services/AuthGuard.php';
-require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/handlers/dashboard.php';
 
 // Only allow logged-in users who are Business Owner or Manager
-auth_guard(['Business Owner', 'Manager']);
-
-// Initialize UserRepository
-$userRepo = new UserRepository($conn);
-
-// FETCH USER INFO
-$accountId = $_SESSION['user']['account_id'] ?? null;
-$userData = $userRepo->findWithRoleByAccountId($accountId);
-if (!$userData) {
-    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
-    exit();
-}
+auth_guard(['Staff']);
 
 $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
-// Only business owners or managers
-if ($role !== 'business owner' && $role !== 'manager') {
+// Only staff
+if ($role !== 'staff') {
     header("Location: /ChainLedger-System-/pages.php");
     exit;
 }
@@ -79,7 +67,7 @@ if ($role !== 'business owner' && $role !== 'manager') {
             <h5 class="mb-0 font-medium">Dashboard</h5>
           </div>
           <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
+            <li class="breadcrumb-item"><a href="../staffs/dashboard.php">Home</a></li>
             <li class="breadcrumb-item" aria-current="page">Transactions</li>
           </ul>
         </div>
@@ -92,30 +80,6 @@ if (!empty($_SESSION['flash_success'])): ?>
     <?= $_SESSION['flash_success']; ?>
   </div>
   <?php unset($_SESSION['flash_success']); ?>
-<?php endif; ?>
-
-<?php
-// Success messages (from URL parameters)
-if (isset($_GET['deleted'])): ?>
-  <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-    <?php if ($_GET['deleted'] === 'user'): ?>
-      User deleted successfully!
-    <?php elseif ($_GET['deleted'] === 'transaction'): ?>
-      Transaction deleted successfully!
-    <?php endif; ?>
-  </div>
-<?php endif; ?>
-
-<?php
-// Error messages (from URL parameters)
-if (isset($_GET['error'])): ?>
-  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-    <?php if ($_GET['error'] === 'delete_failed'): ?>
-      Delete failed. Try again.
-    <?php elseif ($_GET['error'] === 'invalid_id'): ?>
-      Invalid ID. No action taken.
-    <?php endif; ?>
-  </div>
 <?php endif; ?>
 
       <!-- Summary Cards -->
@@ -152,87 +116,53 @@ if (isset($_GET['error'])): ?>
         </div>
       </section>
 
-<!-- Users Table --> 
- <section class="content mt-8"> 
+<!-- My Transactions Table --> 
+<section class="content mt-8"> 
   <div class="card table-card"> 
-  <div class="card-header flex justify-between items-center"> 
-  <h5>Transactors</h5> <a href="#" class="text-primary-500 text-sm flex items-center"> 
- <a href="#" onclick="exportTableToText('transactorsTable', 'transactors.txt')" 
-   class="text-primary-500 text-sm flex items-center">
-  <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
-</a>
-
-</div> 
-<div class="card-body overflow-x-auto"> 
-  <table id="transactorsTable" class="table table-hover w-full">
-
-    <thead>
-     <tr>
-     <th>User ID</th> 
-     <th>Full Name</th> 
-     <th>Username</th> 
-     <th>Role</th> 
-     <th>Date Registered</th> 
-     <th>Action</th> 
-    </tr> 
-    </thead> 
-    <tbody> 
-                                <?php foreach($transactors as $user): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($user['user_id']) ?></td>
-                                        <td><?= $user['full_name'] ?></td>
-                                        <td><?= $user['username'] ?></td>
-                                        <td><span class="px-2 py-1 rounded text-xs bg-green-100 text-green-800"><?= ucfirst($user['role']) ?></span></td>
-                                        <td><?= $user['formatted_date'] ?></td>
-                                        <td>
-                                            <a href="handlers/delete_user.php?id=<?= $user['user_id'] ?>" onclick="return confirm('Are you sure you want to delete this user?')" class="text-red-600 hover:text-red-800">
-                                                <span class="material-icons-outlined text-base align-middle">delete</span> Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-</tbody> 
-</table> 
-</div> 
-</div> 
-</section> 
-      <!-- My Transactions -->
-      <section class="content mt-8">
-        <div class="card table-card">
-          <div class="card-header flex justify-between items-center">
-            <h5>My Transactions</h5>
-          </div>
-          <div class="card-body overflow-x-auto">
-            <table id="myTransactionsTable" class="table table-hover w-full">
-              <thead>
-                <tr>
-                  <th>Category</th>
-                  <th>Details</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach($transactions as $tx): ?>
-                <tr>
-                  <td><?= htmlspecialchars($tx['detail'] ?? 'N/A') ?></td>
-                  <td><?= htmlspecialchars($tx['merchant'] ?? 'N/A') ?></td>
-                  <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= htmlspecialchars($tx['transaction_type'] ?? 'Unknown') ?></span></td>
-                  <td class="<?= $tx['amount'] < 0 ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">
-                    <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
-                  </td>
-                  <td><?= ucfirst(strtolower($tx['status'] ?? 'N/A')) ?></td>
-                  <td><?= $tx['formatted_date'] ?></td>
-                </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
+    <div class="card-header flex justify-between items-center"> 
+      <h5>My Transactions</h5> 
+      <a href="#" onclick="exportTableToText('myTransactionsTable', 'my_transactions.txt')" 
+         class="text-primary-500 text-sm flex items-center">
+        <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
+      </a>
+    </div> 
+    <div class="card-body overflow-x-auto"> 
+      <table id="myTransactionsTable" class="table table-hover w-full">
+        <thead>
+          <tr> 
+            <th>Category</th> 
+            <th>Details</th>
+            <th>Type</th>              
+            <th>Amount</th> 
+            <th>Status</th> 
+            <th>Date</th> 
+          </tr> 
+        </thead> 
+        <tbody> 
+          <?php foreach($transactors as $tx): ?>
+            <tr>
+              <td><?= htmlspecialchars($tx['detail']) ?></td>
+              <td><?= htmlspecialchars($tx['merchant']) ?></td>
+              <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= htmlspecialchars($tx['transaction_type']) ?></span></td>
+              <td class="<?= $tx['amount'] < 0 ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">
+                  <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
+              </td>
+              <td>
+                <span class="px-2 py-1 rounded text-xs 
+                  <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
+                     ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                     ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
+                  <?= ucfirst(strtolower($tx['status'])) ?>
+                </span>
+              </td>
+              <td><?= $tx['formatted_date'] ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody> 
+      </table> 
+    </div> 
+  </div> 
+</section>
 
 <!-- Transactions Table --> 
  <section class="content mt-8"> 
@@ -248,15 +178,13 @@ if (isset($_GET['error'])): ?>
         </div> 
         <div class="card-body overflow-x-auto"> 
           <table id="transactionsTable" class="table table-hover w-full">
-
             <thead> <tr> <th>Transaction By</th> 
             <!-- New Column --> 
              <th>Category</th> 
-             <th>Type</th> 
+             <th>Type</th>              
              <th>Amount</th> 
-              <th>Status</th>
+             <th>Status</th> 
              <th>Date</th> 
-             <th>Action</th> 
             </tr> 
           </thead> 
           <tbody> 
@@ -279,17 +207,7 @@ if (isset($_GET['error'])): ?>
                                             </span>
                                         </td>
                                         <td><?= $tx['formatted_date'] ?></td>
-<td class="flex items-center space-x-3">
-  <a href="edit_transaction.php?id=<?= $tx['transaction_id'] ?>" 
-     class="flex items-center text-blue-600 hover:text-blue-800">
-    <span class="material-icons-outlined text-base mr-1">edit</span> Edit
-  </a>
-  <a href="handlers/delete_transaction.php?id=<?= $tx['transaction_id'] ?>" 
-     onclick="return confirm('Are you sure you want to delete this transaction?')" 
-     class="flex items-center text-red-600 hover:text-red-800">
-    <span class="material-icons-outlined text-base mr-1">delete</span> Delete
-  </a>
-</td>
+
                                     </tr>
                                 <?php endforeach; ?>      
     </tbody> 
@@ -298,24 +216,20 @@ if (isset($_GET['error'])): ?>
 </section>
     </div>
   </main>
+
   <?php include '../includes/footer.php'; ?>
- 
- <script>
+  <script>
 function exportTableToText(tableId, filename) {
   const table = document.getElementById(tableId);
   if (!table) return alert("Table not found!");
 
   let text = "";
   const rows = table.querySelectorAll("tr");
-
-  rows.forEach((row, rowIndex) => {
-    // Get all columns
+  rows.forEach((row) => {
     const cols = row.querySelectorAll("th, td");
-
-    // Filter out the last column (Action)
-    const colsToExport = Array.from(cols).slice(0, -1);
-
-    const rowText = colsToExport.map(col => col.innerText.trim()).join(" | ");
+    const rowText = Array.from(cols)
+      .map(col => col.innerText.trim())
+      .join(" | ");
     text += rowText + "\n";
   });
 
@@ -326,8 +240,6 @@ function exportTableToText(tableId, filename) {
   link.click();
 }
 </script>
-
-
   <!-- Required JS -->
   <script src="../assets/js/plugins/simplebar.min.js"></script>
   <script src="../assets/js/plugins/popper.min.js"></script>
@@ -347,7 +259,8 @@ function exportTableToText(tableId, filename) {
     main_layout_change('vertical');
     feather.replace();
   </script>
-<script>
+
+  <script>
 // =======================================
 // Tailwind Pagination for Dashboard Tables
 // =======================================
@@ -421,5 +334,6 @@ document.addEventListener("DOMContentLoaded", () => {
   paginateTable("myTransactionsTable", 5);   // My Transactions
 });
 </script>
+
 </body>
 </html>

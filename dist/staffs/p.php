@@ -145,40 +145,21 @@ auth_guard(['Staff']);
       </div>
 
 
-  <!-- LEFT: Fixed Size Profile Card with Edit Modal -->
-<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow 
-            w-full md:w-[500px] flex-shrink-0"
-           x-data="{
-              open:false,
-              avatar:'<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>',
-              username:'<?= htmlspecialchars($userData['username']) ?>',
-              fullname:'<?= htmlspecialchars($user['name']) ?>'
-           }">
 
-<!-- Avatar + Name -->
-<div class="flex items-center space-x-6">
-  <div class="relative inline-block">
-  </div>
-  <div>
-    <h2 class="text-4xl font-extrabold text-indigo-700 dark:text-white" x-text="username"></h2>
-    <p class="text-xl text-gray-500 dark:text-gray-300 mt-1" x-text="fullname"></p>
-  </div>
-</div>
-
-
-<!-- Profile Info -->
+      <!-- RIGHT: Transactions Table -->
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 min-h-[650px]">
 <div class="space-y-6 text-lg mt-8">
   <div class="flex justify-between">
-    <span class="text-gray-500 dark:text-gray-300 font-medium">Account ID</span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">First Name</span>
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["account_id"]) ?></span>
   </div>
   <div class="flex justify-between">
-    <span class="text-gray-500 dark:text-gray-300 font-medium">Role</span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Last Name</span>
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["role"]) ?></span>
   </div>
   <hr class="my-6 border-gray-300">
   <div class="flex justify-between">
-    <span class="text-gray-500 dark:text-gray-300 font-medium">Birthdate</span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Gender</span>
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["birthdate"]) ?></span>
   </div>
   <div class="flex justify-between">
@@ -187,6 +168,7 @@ auth_guard(['Staff']);
   </div>
 </div>
 
+              </div>
       </div>
 
     </div>
@@ -205,4 +187,3 @@ auth_guard(['Staff']);
 <script src="../assets/js/script.js"></script>
 </body>
 </html>
-<?php  ?>

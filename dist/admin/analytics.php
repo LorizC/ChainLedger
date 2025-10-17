@@ -122,8 +122,8 @@ if(isset($_POST['submit'])){
 </section>
 
     <!-- Pie Chart -->
-    <div class="transactions-chart mt-8 w-full md:w-3/4 lg:w-2/3 xl:w-1/2 mx-auto">
-      <h3 class="text-xl font-bold mb-4 text-center">Monthly Spending Breakdown</h3>
+    <div class="transactions-chart mt-8 w-full md:w-2/3 lg:w-1/2 xl:w-2/5 mx-auto">
+      <h3 class="text-xl font-bold mb-4 text-center">Transactions Category Breakdown</h3>
       <canvas id="categoryChart" class="h-72"></canvas>
     </div>
 
