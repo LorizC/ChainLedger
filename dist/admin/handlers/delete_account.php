@@ -129,7 +129,39 @@ $archiveLogs->execute();
 if ($archiveLogs->affected_rows === 0) {
     error_log("No security logs archived for account ID $accountId");
 }
+    // ===============================
+    //  Archive Transactions → archivedtransactions
+    // ===============================
+    $archiveTransactions = $conn->prepare("
+        INSERT INTO archivedtransactions (
+            transaction_id, account_id, old_account_id, old_username,
+            username, detail, merchant, amount, currency,
+            transaction_date, entry_date, transaction_type, status, archived_at
+        )
+        SELECT 
+            t.transaction_id,
+            t.account_id,
+            ? AS old_account_id,
+            ? AS old_username,
+            t.username,
+            t.detail,
+            t.merchant,
+            t.amount,
+            t.currency,
+            t.transaction_date,
+            t.entry_date,
+            t.transaction_type,
+            t.status,
+            NOW()
+        FROM transactions t
+        WHERE t.account_id = ?
+    ");
+    $archiveTransactions->bind_param('isi', $accountId, $username, $accountId);
+    $archiveTransactions->execute();
 
+if ($archiveTransactions->affected_rows === 0) {
+    error_log("No transactions archived for account ID $accountId");
+}
     // ===============================
     //  Cascade Delete User Data
     // ===============================

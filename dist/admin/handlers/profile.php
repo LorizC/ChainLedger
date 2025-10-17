@@ -29,14 +29,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 
     // Redirect back to profile page
     $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
-    header("Location: profile.php?page=$page");
+    header("Location: index.php?page=$page");
     exit();
 }
 
 // FETCH USER INFO
 $userData = $userRepo->findWithRoleByAccountId($accountId);
 if (!$userData) {
-    die("User not found.");
+    header("Location: ../../pages.php?error=user_not_found");
+    exit();
 }
 
 $totalSpending = $userRepo->getTotalSpendingByAccountId($accountId);
