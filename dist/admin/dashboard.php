@@ -205,9 +205,8 @@ if (isset($_GET['error'])): ?>
             <thead> <tr> <th>Transaction By</th> 
             <!-- New Column --> 
              <th>Category</th> 
-             <th>Details</th> 
+             <th>Type</th> 
              <th>Amount</th> 
-             <th>Status</th> 
              <th>Date</th> 
              <th>Action</th> 
             </tr> 
@@ -216,11 +215,13 @@ if (isset($_GET['error'])): ?>
                                 <?php foreach($recentTransactions as $tx): ?>
                                     <tr>
                                         <td><?= $tx['fullname'] ?></td>
+                                        <td><?= $tx['detail'] ?></td>                                        
                                         <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= $tx['category'] ?></span></td>
-                                        <td><?= $tx['detail'] ?></td>
                                         <td class="<?= $tx['is_negative'] ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">  <!-- Red if cost, no minus -->
                                             <?= $tx['formatted_amount'] ?>  <!-- Positive always -->
                                         </td>
+
+
                                         <td>
                                             <span class="px-2 py-1 rounded text-xs 
                                                 <?= $tx['status'] === 'Completed' ? 'bg-green-100 text-green-800' : 

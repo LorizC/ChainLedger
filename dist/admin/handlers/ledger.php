@@ -59,9 +59,9 @@ $stmt_total->close();
 
 // --- FETCH PAGINATED LEDGER ---
 $sql = "SELECT username AS user, detail AS details, merchant, amount, transaction_type, status, currency, 
-        DATE_FORMAT(transaction_date,'%m-%d-%Y') AS date
+        DATE_FORMAT(entry_date,'%m-%d-%Y') AS date
         FROM transactions $where 
-        ORDER BY transaction_date ".($sortDate==='asc'?'ASC':'DESC')." 
+        ORDER BY entry_date ".($sortDate==='asc'?'ASC':'DESC')." 
         LIMIT $limit OFFSET $offset";
 
 $stmt = $conn->prepare($sql);

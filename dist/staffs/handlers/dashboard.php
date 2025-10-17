@@ -14,19 +14,19 @@ if ($resTotal && $row = $resTotal->fetch_assoc()) {
 $resGain = $conn->query("
     SELECT SUM(amount) as total_gain 
     FROM transactions 
-    WHERE account_id = $accountID
-          AND ((amount > 0 AND transaction_type NOT IN ('WITHDRAWAL', 'TRANSFER', 'PAYMENT')) 
-          OR transaction_type IN ('DEPOSIT', 'REFUND'))
+    WHERE (amount > 0 AND transaction_type NOT IN ('WITHDRAWAL', 'TRANSFER', 'PAYMENT')) 
+          OR transaction_type IN ('DEPOSIT', 'REFUND')
 ");
-$totalGains = ($resGain && $row = $resGain->fetch_assoc()) ? ($row['total_gain'] ?? 0) : 0;
 
-$resCost = $conn->query("
-    SELECT SUM(amount) as total_cost 
-    FROM transactions 
-    WHERE account_id = $accountID 
-          AND (amount < 0 OR transaction_type IN ('WITHDRAWAL', 'TRANSFER', 'PAYMENT'))
-");
-$totalCosts = ($resCost && $row = $resCost->fetch_assoc()) ? abs($row['total_cost'] ?? 0) : 0;
+if ($resGain && $row = $resGain->fetch_assoc()) {
+    $totalGains = $row['total_gain'] ?? 0;
+}
+
+$totalCosts = 0;
+$resCost = $conn->query("SELECT SUM(amount) as total_cost FROM transactions WHERE amount < 0 OR transaction_type IN ('WITHDRAWAL', 'TRANSFER', 'PAYMENT')");
+if ($resCost && $row = $resCost->fetch_assoc()) {
+    $totalCosts = abs($row['total_cost'] ?? 0);
+}
 
 $netBalance = $totalGains - $totalCosts;
 

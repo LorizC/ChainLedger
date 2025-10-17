@@ -8,15 +8,32 @@ if (!isset($_SESSION['user'])) {
     header("Location: /ChainLedger-System-/index.php");
     exit();
 }
+$account_id = $_SESSION['user']['account_id'] ?? null;
+$role = $_SESSION['user']['role'] ?? null;
+
 
 $conn = Database::getConnection();
 
 // --- MERCHANTS ---
 $merchants = [];
-$sql_merchants = "SELECT merchant, SUM(ABS(amount)) as total_amount, COUNT(*) as count 
-                  FROM transactions 
-                  GROUP BY merchant 
-                  ORDER BY total_amount DESC";
+$sql_merchants = "
+    SELECT 
+        m.merchant,
+        COALESCE(SUM(ABS(t.amount)), 0) AS total_amount,
+        COUNT(t.transaction_id) AS count
+    FROM (
+        SELECT 'Gcash' AS merchant
+        UNION SELECT 'Maya'
+        UNION SELECT 'Grabpay'
+        UNION SELECT 'Paypal'
+        UNION SELECT 'Googlepay'
+    ) AS m
+    LEFT JOIN transactions t 
+        ON t.merchant = m.merchant
+    GROUP BY m.merchant
+    ORDER BY total_amount DESC
+";
+
 $result_merchants = $conn->query($sql_merchants);
 if ($result_merchants && $result_merchants->num_rows > 0) {
     while ($row = $result_merchants->fetch_assoc()) {
@@ -38,21 +55,38 @@ if ($result_merchants && $result_merchants->num_rows > 0) {
 $result_merchants->close();
 
 // --- CATEGORIES ---
+// --- CATEGORIES ---
 $categories = [];
-$sql_categories = "SELECT detail, SUM(ABS(amount)) as total_amount, COUNT(*) as count 
-                   FROM transactions 
-                   GROUP BY detail 
-                   ORDER BY total_amount DESC";
+$sql_categories = "
+    SELECT 
+        d.detail AS detail,
+        COALESCE(SUM(ABS(t.amount)), 0) AS total_amount,
+        COUNT(t.transaction_id) AS count
+    FROM (
+        SELECT 'Food' AS detail
+        UNION ALL SELECT 'Equipment'
+        UNION ALL SELECT 'Transportation'
+        UNION ALL SELECT 'Health'
+        UNION ALL SELECT 'Maintenance'
+        UNION ALL SELECT 'Utilities'
+    ) AS d
+    LEFT JOIN transactions t 
+        ON LOWER(t.detail) = LOWER(d.detail)
+    GROUP BY d.detail
+    ORDER BY total_amount DESC
+";
+
 $result_categories = $conn->query($sql_categories);
 if ($result_categories && $result_categories->num_rows > 0) {
     while ($row = $result_categories->fetch_assoc()) {
         $cat_title = ucfirst(strtolower($row['detail'] ?? 'Unknown'));
+
         $categories[] = [
             'title' => $cat_title,
-            'value' => '₱' . number_format($row['total_amount'], 2),
+            'value' => '₱' . number_format((float)$row['total_amount'], 2),
             'color' => getCategoryColor($cat_title),
             'icon' => getCategoryIcon($cat_title),
-            'count' => $row['count'],
+            'count' => (int)$row['count'],
             'numeric_value' => (float)$row['total_amount']
         ];
     }
@@ -67,6 +101,7 @@ if ($result_categories && $result_categories->num_rows > 0) {
     ];
 }
 $result_categories->close();
+
 
 // --- MONTHLY LINE CHART (LAST 6 MONTHS) ---
 $monthly_labels = [];

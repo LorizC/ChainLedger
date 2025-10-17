@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../services/AuthGuard.php';
 require_once __DIR__ . '/handlers/analytics.php';
-// Only allow logged-in users who are staff
+// Only allow logged-in users who are Business Owner or Manager
 auth_guard(['Staff']);
 
 
@@ -228,3 +228,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </body>
 </html>
 <?php } ?>
+

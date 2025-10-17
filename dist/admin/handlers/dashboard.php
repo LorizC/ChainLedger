@@ -105,7 +105,6 @@ if ($resultRecent) {
         $row['detail'] = htmlspecialchars($row['detail'] ?? $row['merchant'] ?? 'N/A');
         $row['merchant'] = htmlspecialchars($row['merchant'] ?? 'N/A');
         $row['category'] = htmlspecialchars($row['transaction_type'] ?? 'N/A');
-        $row['status'] = htmlspecialchars($row['status'] ?? 'N/A');
 
         $recentTransactions[] = $row;
     }
