@@ -1,11 +1,18 @@
 <?php
 
   require_once __DIR__ . '/../services/AuthGuard.php';
+  require_once __DIR__ . '/..repositories/UserRepository.php';
   include 'handlers/report.php';
 
 // Only allow logged-in users who are Business Owner or Manager
 auth_guard(['Business Owner', 'Manager']);
-  
+
+// FETCH USER INFO
+$userData = $userRepo->findWithRoleByAccountId($accountId);
+if (!$userData) {
+    header("Location: ../../pages.php?error=user_not_found");
+    exit();
+}
 
 ?>
 <!doctype html>

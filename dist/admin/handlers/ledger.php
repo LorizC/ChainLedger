@@ -92,6 +92,3 @@ while($row = $result->fetch_assoc()){
         'date' => $row['date']
     ];
 }
-
-$stmt->close();
-$conn->close();

@@ -1,11 +1,21 @@
 <?php
 require_once __DIR__ . '/../services/AuthGuard.php';
+require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/handlers/logs.php';
-
-
 
 // Only allow logged-in users who are Business Owner or Manager
 auth_guard(['Business Owner']);
+
+// Initialize UserRepository
+$userRepo = new UserRepository($conn);
+
+// FETCH USER INFO
+$accountId = $_SESSION['user']['account_id'] ?? null;
+$userData = $userRepo->findWithRoleByAccountId($accountId);
+if (!$userData) {
+    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
+    exit();
+}
 
 // Grab the current user info safely
 $user = $_SESSION['user'];

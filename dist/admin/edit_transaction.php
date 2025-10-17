@@ -1,11 +1,21 @@
 <?php
 require_once __DIR__ . '/../services/AuthGuard.php';
+require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/../database/dbconfig.php';
 
 // Restrict access
 auth_guard(['Business Owner', 'Manager']);
-
 $conn = Database::getConnection();
+// Initialize UserRepository
+$userRepo = new UserRepository($conn);
+
+// FETCH USER INFO
+$accountId = $_SESSION['user']['account_id'] ?? null;
+$userData = $userRepo->findWithRoleByAccountId($accountId);
+if (!$userData) {
+    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
+    exit();
+}
 
 // Fetch transaction by ID
 if (isset($_GET['id']) && !empty($_GET['id'])) {

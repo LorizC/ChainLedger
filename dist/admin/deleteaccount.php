@@ -8,8 +8,13 @@ auth_guard(['Business Owner', 'Manager']);
 $conn = Database::getConnection();
 $userRepo = new UserRepository($conn);
 
-$accountId = (int)$_SESSION['user']['account_id'];
+// FETCH USER INFO
+$accountId = $_SESSION['user']['account_id'] ?? null;
 $userData = $userRepo->findWithRoleByAccountId($accountId);
+if (!$userData) {
+    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
+    exit();
+}
 
 $user = [
     'name'  => $userData['first_name'] . ' ' . $userData['last_name'],

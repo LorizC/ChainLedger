@@ -63,5 +63,5 @@ if (isset($_POST['submit_add'])) {
     exit();
 }
 
-$conn->close();
+
 ?>
