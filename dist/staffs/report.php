@@ -92,11 +92,11 @@ auth_guard(['Staff']);
     </label>
     <select name="transaction_type" id="transaction_type" class="form-control" required>
       <option value="">Select Transaction Type</option>
-      <option value="PAYMENT">Payment</option>
-      <option value="REFUND">Refund</option>
-      <option value="WITHDRAWAL">Withdrawal</option>
-      <option value="DEPOSIT">Deposit</option>
-      <option value="TRANSFER">Transfer</option>
+      <option value="PAYMENT">Payment (Cash out)</option>
+      <option value="REFUND">Refund (Cash In)</option>
+      <option value="WITHDRAWAL">Withdrawal (Cash out)</option>
+      <option value="DEPOSIT">Deposit (Cash In)</option>
+      <option value="TRANSFER">Transfer (Cash out)</option>
     </select>
   </div>
 
@@ -148,18 +148,6 @@ auth_guard(['Staff']);
       Date <span style="color: red; font-weight: bold;">*</span>
     </label>
     <input type="date" name="date" id="date" class="form-control"min="<?= date('1900-m-d') ?>" max="<?= date('Y-m-d') ?>" required>
-  </div>
-
-  <!-- Status -->
-  <div class="mb-4">
-    <label for="status" class="form-label">Status</label>
-    <select name="status" id="status" class="form-control" required>
-      <option value="">Select Status</option>
-      <option value="COMPLETED">Completed</option>
-      <option value="PENDING">Pending</option>
-      <option value="FAILED">Failed</option>
-      <option value="CANCELLED">Cancelled</option>
-    </select>
   </div>
 
   <div class="flex mt-1 justify-between items-center flex-wrap">

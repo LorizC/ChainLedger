@@ -13,17 +13,6 @@
             <i data-feather="menu"></i>
           </a>
         </li>
-        <li class="dropdown pc-h-item">
-          <a class="pc-head-link dropdown-toggle me-0" data-pc-toggle="dropdown" href="#" role="button"
-            aria-haspopup="false" aria-expanded="false">
-            <i data-feather="search"></i>
-          </a>
-          <div class="dropdown-menu pc-h-dropdown drp-search dark:bg-gray-900 dark:text-gray-100">
-            <form class="px-2 py-1">
-              <input type="search" class="form-control !border-0 !shadow-none dark:bg-gray-800 dark:text-gray-100" placeholder="Search here..."/>
-            </form>
-          </div>
-        </li>
       </ul>
     </div>
 

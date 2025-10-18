@@ -72,12 +72,12 @@
 
               <div class="inputGroup">
                 <label for="password">Password</label>
-                <input type="password" placeholder="Enter Password" id="password" name="password" required />
+                <input type="password" placeholder="Enter Password" id="password" name="password" minlength="8" required />
               </div>
 
               <div class="inputGroup">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" required />
+                <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" minlength="8" required />
               </div>
 
               <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">
@@ -106,5 +106,48 @@
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/script.js"></script>
 <script src="../assets/js/js/scripts.js"></script>
+
+<script>
+  const password = document.getElementById('password');
+  const confirmPassword = document.getElementById('confirm_password');
+  const submitButton = document.querySelector('.submitForm');
+  const toggle = document.getElementById('togglePassword');
+
+  // Find the title container
+  const titleDiv = document.querySelector('.title');
+
+  // Create message element and place it below the title
+  const message = document.createElement('p');
+  message.style.fontSize = '0.9em';
+  message.style.marginTop = '5px';
+  message.style.textAlign = 'center';
+  titleDiv.insertAdjacentElement('afterend', message);
+
+  // Function to check password match
+  function checkPasswords() {
+    if (password.value && confirmPassword.value) {
+      if (password.value !== confirmPassword.value) {
+        message.textContent = '⚠ Passwords do not match!';
+        message.style.color = 'red';
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.6';
+      } else {
+        message.textContent = '✓ Passwords match';
+        message.style.color = 'green';
+        submitButton.disabled = false;
+        submitButton.style.opacity = '1';
+      }
+    } else {
+      message.textContent = '';
+      submitButton.disabled = false;
+      submitButton.style.opacity = '1';
+    }
+  }
+
+  // Listen for typing events
+  password.addEventListener('input', checkPasswords);
+  confirmPassword.addEventListener('input', checkPasswords);
+</script>
+
 </body>
 </html>

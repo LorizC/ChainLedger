@@ -147,7 +147,7 @@ auth_guard(['Staff']);
 
 
       <!-- RIGHT: Transactions Table -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 min-h-[650px]">
+      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 min-h-[500px]">
 <div class="space-y-6 text-lg mt-8">
   <div class="flex justify-between">
     <span class="text-gray-500 dark:text-gray-300 font-medium">First Name</span>
@@ -157,7 +157,6 @@ auth_guard(['Staff']);
     <span class="text-gray-500 dark:text-gray-300 font-medium">Last Name</span>
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["role"]) ?></span>
   </div>
-  <hr class="my-6 border-gray-300">
   <div class="flex justify-between">
     <span class="text-gray-500 dark:text-gray-300 font-medium">Gender</span>
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["birthdate"]) ?></span>
@@ -166,7 +165,20 @@ auth_guard(['Staff']);
     <span class="text-gray-500 dark:text-gray-300 font-medium">Registered</span>
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
   </div>
-</div>
+
+  <hr class="my-6 border-gray-300">
+    <div class="flex justify-between">
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Business ID</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["account_id"]) ?></span>
+  </div>
+      <div class="flex justify-between">
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Business Name</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["account_id"]) ?></span>
+    </div> 
+     <div class="flex justify-between">
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Business Registered</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
+  </div>
 
               </div>
       </div>

@@ -62,6 +62,7 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
         <ul class="breadcrumb">
           <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Ledger</li>
+          <li class="breadcrumb-item"><a href="../staffs/archvdtransactions.php">Archives</a></li>
         </ul>
       </div>
     </div>
@@ -132,24 +133,22 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
     </select>
   </div>
 
-<!-- Status Filter -->
+<!-- Transaction Type Filter -->
 <div class="flex items-center gap-1">
-  <span class="material-icons-outlined text-gray-500 dark:text-gray-300">flag</span>
-  <label for="status" class="text-gray-700 dark:text-gray-300 font-medium">Status:</label>
+  <span class="material-icons-outlined text-gray-500 dark:text-gray-300">swap_horiz</span>
+  <label for="transaction_type" class="text-gray-700 dark:text-gray-300 font-medium">Type:</label>
   <select 
-    name="status" id="status"
+    name="transaction_type" id="transaction_type"
     class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
            bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-100 
            focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
     onchange="this.form.submit()">
     <option value="">All</option>
-    <option value="Pending" <?= $filterStatus === 'Pending' ? 'selected' : '' ?>>Pending</option>
-    <option value="Completed" <?= $filterStatus === 'Completed' ? 'selected' : '' ?>>Completed</option>
-    <option value="Failed" <?= $filterStatus === 'Failed' ? 'selected' : '' ?>>Failed</option>
-    <option value="Cancelled" <?= $filterStatus === 'Cancelled' ? 'selected' : '' ?>>Cancelled</option>
+    <?php foreach ($transactionTypes as $type): ?>
+      <option value="<?= $type ?>" <?= $filterType === $type ? 'selected' : '' ?>><?= htmlspecialchars($type) ?></option>
+    <?php endforeach; ?>
   </select>
 </div>
-
 
   <!-- Date Sort -->
   <div class="flex items-center gap-1">
@@ -162,8 +161,8 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
              focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
       onchange="this.form.submit()">
       <option value="">Default</option>
-      <option value="desc" <?= $sortDate === 'desc' ? 'selected' : '' ?>>Newest First</option>
-      <option value="asc" <?= $sortDate === 'asc' ? 'selected' : '' ?>>Oldest First</option>
+      <option value="desc" <?= $sortDate === 'desc' ? 'selected' : '' ?>>DESC</option>
+      <option value="asc" <?= $sortDate === 'asc' ? 'selected' : '' ?>>ASC</option>
     </select>
   </div>
 
@@ -175,47 +174,48 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
             <!-- Ledger Table -->
             <table class="table table-striped table-bordered w-full">
-              <thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
-                <tr>
-                  <th>User</th>
-                  <th>Category</th>
-                  <th>Payment Method</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
+<thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
+  <tr>
+    <th>User</th>
+    <th>Category</th>
+    <th>Payment Method</th>
+    <th>Amount</th>
+    <th>Type</th> <!-- changed -->
+    <th>Date</th>
+  </tr>
+</thead>
 <tbody>
   <?php if (empty($paginatedLedger)): ?>
     <tr>
-      <td colspan="5" class="text-center py-4 text-gray-500 dark:text-gray-400">
-                    </td>
-                  </tr>
-                <?php else: ?>
-                  <?php foreach ($paginatedLedger as $row): ?>
-                  <tr>
-                      <td><?= $row['user'] ?></td>
-                      <td><?= $row['details'] ?></td>
-                      <td><?= $row['merchant'] ?></td>
-                      <td class="<?= strpos($row['amount'], '-') !== false ? 'text-red-600 ' : 'text-green-600 ' ?>">
-                        <?= $row['amount'] ?>  <!-- Formatted amount: e.g., "-₱2,255.55" or "+₱15,000.00" -->
-                      </td>
-                      <td>
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                     <?= $row['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
-                                        ($row['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
-                                         ($row['status'] === 'FAILED' ? 'bg-red-100 text-red-800' :
-                                          ($row['status'] === 'CANCELLED' ? 'bg-orange-100 text-red-800' : 'bg-gray-100 text-gray-800'))) ?>">
-                                         
-                          <?= $row['status'] ?>
-                        </span>
-                      </td>
-                      <td><?= $row['date'] ?></td>
-                    </tr>
+      <td colspan="6" class="text-center py-4 text-gray-500 dark:text-gray-400">No transactions found.</td>
+    </tr>
+  <?php else: ?>
+    <?php foreach ($paginatedLedger as $row): ?>
+    <tr>
+      <td><?= $row['user'] ?></td>
+      <td><?= $row['details'] ?></td>
+      <td><?= $row['merchant'] ?></td>
+      <td class="<?= strpos($row['amount'], '-') !== false ? 'text-red-600' : 'text-green-600' ?>">
+        <?= $row['amount'] ?>
+      </td>
+      <td>
+        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                     <?= $row['transaction_type'] === 'DEPOSIT' ? 'bg-green-100 text-green-800' : 
+                        ($row['transaction_type'] === 'WITHDRAWAL' ? 'bg-red-100 text-red-800' : 
+                         ($row['transaction_type'] === 'TRANSFER' ? 'bg-yellow-100 text-yellow-800' : 
+                          ($row['transaction_type'] === 'PAYMENT' ? 'bg-orange-100 text-orange-800' :
+                          ($row['transaction_type'] === 'REFUND' ? 'bg-blue-100 text-blue-800' :
 
+                          'bg-gray-100 text-gray-800')))) ?>">
+          <?= strtoupper($row['transaction_type']) ?>
+        </span>
+      </td>
+      <td><?= $row['date'] ?></td>
+    </tr>
     <?php endforeach; ?>
   <?php endif; ?>
 </tbody>
+
 </table>
 <!-- Pagination -->
 <?php if ($totalPages > 1): ?>

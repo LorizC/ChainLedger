@@ -95,7 +95,7 @@ CREATE TABLE transactions (
     transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
     entry_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     transaction_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT', 'REFUND') NOT NULL,
-    status ENUM('PENDING', 'COMPLETED', 'FAILED', 'CANCELLED') NOT NULL,
+    status ENUM('COMPLETED') NOT NULL DEFAULT 'COMPLETED';
     FOREIGN KEY (account_id) REFERENCES users(account_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
@@ -103,7 +103,6 @@ CREATE TABLE transactions (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-
 -- ==========================
 -- Security Logs Table
 -- ========================== 

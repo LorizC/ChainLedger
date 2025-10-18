@@ -17,7 +17,7 @@ $conn = Database::getConnection();
 $filterAction   = $_GET['action'] ?? '';
 $filterUser     = $_GET['user'] ?? '';
 $filterMerchant = $_GET['merchant'] ?? '';
-$filterStatus   = $_GET['status'] ?? '';
+$filterType     = $_GET['transaction_type'] ?? ''; // renamed from status
 $sortDate       = $_GET['sort_date'] ?? 'desc';
 $page           = max(1, (int)($_GET['page'] ?? 1));
 $limit          = 8;
@@ -37,6 +37,11 @@ $merchants = [];
 $res_merchants = $conn->query("SELECT DISTINCT merchant FROM transactions WHERE merchant IS NOT NULL AND merchant != '' ORDER BY merchant LIMIT 50");
 while($row = $res_merchants->fetch_assoc()) $merchants[] = $row['merchant'];
 
+// --- FETCH UNIQUE TRANSACTION TYPES ---
+$transactionTypes = [];
+$res_types = $conn->query("SELECT DISTINCT transaction_type FROM transactions WHERE transaction_type IS NOT NULL AND transaction_type != '' ORDER BY transaction_type LIMIT 50");
+while($row = $res_types->fetch_assoc()) $transactionTypes[] = $row['transaction_type'];
+
 // --- BUILD WHERE CLAUSE ---
 $where = "WHERE 1=1";
 $params = [];
@@ -45,7 +50,7 @@ $types = "";
 if($filterAction){ $where .= " AND detail = ?"; $params[]=$filterAction; $types.="s"; }
 if($filterUser){ $where .= " AND username = ?"; $params[]=$filterUser; $types.="s"; }
 if($filterMerchant){ $where .= " AND merchant = ?"; $params[]=$filterMerchant; $types.="s"; }
-if($filterStatus){ $where .= " AND status = ?"; $params[]=$filterStatus; $types.="s"; }
+if($filterType){ $where .= " AND transaction_type = ?"; $params[]=$filterType; $types.="s"; } // replaced status filter
 
 // --- PAGINATION: COUNT TOTAL ---
 $stmt_total = $conn->prepare("SELECT COUNT(*) AS total FROM transactions $where");
@@ -58,7 +63,7 @@ $offset = ($page-1)*$limit;
 $stmt_total->close();
 
 // --- FETCH PAGINATED LEDGER ---
-$sql = "SELECT username AS user, detail AS details, merchant, amount, transaction_type, status, currency, 
+$sql = "SELECT username AS user, detail AS details, merchant, amount, transaction_type, currency, 
         DATE_FORMAT(entry_date,'%m-%d-%Y') AS date
         FROM transactions $where 
         ORDER BY entry_date ".($sortDate==='asc'?'ASC':'DESC')." 
@@ -88,10 +93,8 @@ while($row = $result->fetch_assoc()){
         'details' => htmlspecialchars($row['details'] ?? 'N/A'),
         'merchant' => htmlspecialchars($row['merchant'] ?? 'N/A'),
         'amount' => $formattedAmount,
-        'status' => htmlspecialchars($row['status'] ?? 'COMPLETED'),
+        'transaction_type' => htmlspecialchars($row['transaction_type'] ?? 'N/A'),
         'date' => $row['date']
     ];
 }
-
-$stmt->close();
-$conn->close();
+?>

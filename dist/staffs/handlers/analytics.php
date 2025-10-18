@@ -102,6 +102,59 @@ if ($result_categories && $result_categories->num_rows > 0) {
 }
 $result_categories->close();
 
+// --- TRANSACTION TYPES ---
+$transaction_types = [];
+$sql_transaction_types = "
+    SELECT 
+        t.transaction_type AS type,
+        COALESCE(SUM(ABS(t.amount)), 0) AS total_amount,
+        COUNT(t.transaction_id) AS count
+    FROM transactions t
+    GROUP BY t.transaction_type
+    ORDER BY total_amount DESC
+";
+
+$result_transaction_types = $conn->query($sql_transaction_types);
+if ($result_transaction_types && $result_transaction_types->num_rows > 0) {
+    while ($row = $result_transaction_types->fetch_assoc()) {
+        $transaction_types[] = [
+            'type' => ucfirst($row['type'] ?? 'Unknown'),
+            'value' => '₱' . number_format((float)$row['total_amount'], 2),
+            'count' => (int)$row['count'],
+            'numeric_value' => (float)$row['total_amount']
+        ];
+    }
+} else {
+    $transaction_types[] = [
+        'type' => 'No transactions yet',
+        'value' => '₱0.00',
+        'count' => 0,
+        'numeric_value' => 0
+    ];
+}
+$result_transaction_types->close();
+// --- MONTHLY SUMMARY DESCRIPTION ---
+$latest_month_label = isset($monthly_labels) && is_array($monthly_labels) && !empty($monthly_labels)
+    ? end($monthly_labels)
+    : date('M Y');
+
+$highest_merchant = $merchants[0]['title'] ?? 'N/A';
+$highest_category = $categories[0]['title'] ?? 'N/A';
+$highest_type = $transaction_types[0]['type'] ?? 'N/A';
+
+$top_merchant_value = $merchants[0]['value'] ?? '₱0.00';
+$top_category_value = $categories[0]['value'] ?? '₱0.00';
+$top_type_value = $transaction_types[0]['value'] ?? '₱0.00';
+
+$monthly_summary = "
+  In {$latest_month_label}, the highest recorded transaction merchant was 
+  <strong>{$highest_merchant}</strong> with a total of <strong>{$top_merchant_value}</strong>. 
+  The leading category was <strong>{$highest_category}</strong> totaling <strong>{$top_category_value}</strong>, 
+  while the most common transaction type was <strong>{$highest_type}</strong> with <strong>{$top_type_value}</strong> in value.<br> 
+  Overall, ChainLedger recorded steady financial activity across all categories, merchants, and transaction types.
+";
+
+
 
 // --- MONTHLY LINE CHART (LAST 6 MONTHS) ---
 $monthly_labels = [];

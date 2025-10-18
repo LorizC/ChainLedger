@@ -116,12 +116,35 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
       <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
         <h2 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">Update Password</h2>
 
-<form x-data="{showCurrent:false, showNew:false, showConfirm:false, confirmModal:false}"
-      x-ref="passwordForm"
-      method="POST"
-      action="handlers/edit_password.php"
-      class="space-y-6">
-
+<form 
+  x-data="{
+      showCurrent:false, 
+      showNew:false, 
+      showConfirm:false, 
+      confirmModal:false,
+      newPassword: '',
+      confirmPassword: '',
+      passwordError: '',
+      validatePasswords() {
+        if (this.newPassword !== this.confirmPassword) {
+          this.passwordError = 'Passwords do not match.';
+          return false;
+        } else {
+          this.passwordError = 'Password match.';
+          return true;
+        }
+      },
+      submitForm() {
+        if (this.validatePasswords()) {
+          this.confirmModal = true;
+        }
+      }
+  }"
+  x-ref="passwordForm"
+  method="POST"
+  action="handlers/edit_password.php"
+  class="space-y-6"
+>
   <!-- Current Password -->
   <div>
     <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Current Password</label>
@@ -139,6 +162,8 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
     <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">New Password</label>
     <div class="relative">
       <input :type="showNew ? 'text' : 'password'" name="new_password" required
+             x-model="newPassword"
+             @input="validatePasswords"
              class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
              placeholder="New password">
       <span @click="showNew=!showNew"
@@ -151,17 +176,28 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
     <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Confirm New Password</label>
     <div class="relative">
       <input :type="showConfirm ? 'text' : 'password'" name="confirm_password" required
+             x-model="confirmPassword"
+             @input="validatePasswords"
              class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
              placeholder="Confirm new password">
       <span @click="showConfirm=!showConfirm"
             class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
     </div>
-  </div>
+
+    <!-- Real-time Error Message -->
+<p 
+  x-show="passwordError" 
+  x-text="passwordError"
+  :class="passwordError === 'Password match.' 
+    ? 'text-green-600 text-sm mt-2 font-medium' 
+    : 'text-red-600 text-sm mt-2 font-medium'">
+</p>
 
   <!-- Buttons -->
   <div class="flex justify-end gap-3 pt-4">
-    <button type="reset" class="px-5 py-2 text-gray-600 hover:underline dark:text-gray-300">Cancel</button>
-    <button type="button" @click="confirmModal=true"
+    <button type="reset" class="px-5 py-2 text-gray-600 hover:underline dark:text-gray-300"
+            @click="passwordError=''">Cancel</button>
+    <button type="button" @click="submitForm()"
             class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 dark:bg-slate-100 dark:text-gray-800">
       Save Changes
     </button>
@@ -185,9 +221,9 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
       </div>
     </div>
   </div>
-
 </form>
 
+      </div>
       </div>
     </div>
   </div>

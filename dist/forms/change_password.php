@@ -94,6 +94,51 @@ include('../handlers/change_password.php');
 <script src="../assets/js/theme.js"></script>
 <script src="../assets/js/script.js"></script>
 <script src="../assets/js/js/scripts.js"></script>
+
+<script>
+  const password = document.getElementById('password');
+  const confirmPassword = document.getElementById('confirm_password');
+  const submitButton = document.querySelector('.submitForm');
+  const toggle = document.getElementById('togglePassword');
+  const titleDiv = document.querySelector('.title');
+
+  // Create message element below the title
+  const message = document.createElement('p');
+  message.style.fontSize = '0.9em';
+  message.style.marginTop = '5px';
+  message.style.textAlign = 'center';
+  message.style.transition = 'opacity 0.3s ease'; // smooth fade
+  message.style.opacity = '0';
+  titleDiv.insertAdjacentElement('afterend', message);
+
+  // Function to check password match
+  function checkPasswords() {
+    if (password.value && confirmPassword.value) {
+      if (password.value !== confirmPassword.value) {
+        message.textContent = '⚠ Passwords do not match!';
+        message.style.color = 'red';
+        message.style.opacity = '1';
+        submitButton.disabled = true;
+        submitButton.style.opacity = '0.6';
+      } else {
+        message.textContent = '✓ Passwords match';
+        message.style.color = 'green';
+        message.style.opacity = '1';
+        submitButton.disabled = false;
+        submitButton.style.opacity = '1';
+      }
+    } else {
+      message.textContent = '';
+      message.style.opacity = '0';
+      submitButton.disabled = false;
+      submitButton.style.opacity = '1';
+    }
+  }
+
+  // Real-time validation
+  password.addEventListener('input', checkPasswords);
+  confirmPassword.addEventListener('input', checkPasswords);
+</script>
 </body>
 </html>
 <?php ob_end_flush(); ?>

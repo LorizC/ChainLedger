@@ -38,7 +38,7 @@ if (isset($_POST['submit_add'])) {
     $merchant          = trim($_POST['merchant'] ?? '');
     $amount            = (float)($_POST['amount'] ?? 0);
     $transaction_type  = trim($_POST['transaction_type'] ?? '');
-    $status_input      = trim($_POST['status'] ?? '');
+    $status_input      = 'COMPLETED'; // Always set to COMPLETE
     $date_input        = trim($_POST['date'] ?? '');
 
     $result = $transactionService->addTransaction(

@@ -122,7 +122,15 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
 
 <!-- Delete Account Form (Right Column) -->
 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1"
-     x-data="{ confirmModal:false, showPassword:false, showConfirm:false, showSecurity:false }">
+     x-data="{
+       confirmModal:false,
+       showPassword:false,
+       showConfirm:false,
+       showSecurity:false,
+       password:'',
+       confirm:'',
+       get passwordsMatch() { return this.password && this.confirm && this.password === this.confirm; }
+     }">
 
   <h2 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">Delete Your Account</h2>
 
@@ -144,7 +152,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
     <div>
       <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Password</label>
       <div class="relative">
-        <input :type="showPassword ? 'text' : 'password'" name="current_password"
+        <input :type="showPassword ? 'text' : 'password'" x-model="password" name="current_password"
                class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
                placeholder="Enter current password" required>
         <span @click="showPassword=!showPassword"
@@ -156,47 +164,54 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
     <div>
       <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Confirm Password</label>
       <div class="relative">
-        <input :type="showConfirm ? 'text' : 'password'" name="confirm_password"
+        <input :type="showConfirm ? 'text' : 'password'" x-model="confirm" name="confirm_password"
                class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
                placeholder="Re-enter password" required>
         <span @click="showConfirm=!showConfirm"
               class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
       </div>
+
+      <!-- Password Match Error -->
+      <p x-show="confirm && !passwordsMatch" class="text-red-500 text-sm mt-1">
+        Passwords do not match.
+      </p>
+      <p x-show="confirm && passwordsMatch" class="text-green-500 text-sm mt-1">
+        Passwords match.
+      </p>
     </div>
 
     <!-- Buttons -->
     <div class="flex justify-end gap-3 pt-4">
       <button type="reset" class="px-5 py-2 text-gray-600 hover:underline dark:text-gray-300">Cancel</button>
-      <button type="button" @click="confirmModal=true"
+      <button type="button" 
+              @click="passwordsMatch ? confirmModal=true : alert('Passwords do not match!')"
               class="px-6 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 dark:bg-red-500 dark:text-gray-900">
         Delete Account
       </button>
     </div>
 
-<!-- Confirmation Modal -->
-<div x-show="confirmModal" x-cloak
-     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-sm w-full p-6 flex flex-col items-center text-center">
-    <!-- Warning Icon -->
-    <span class="material-icons-outlined text-red-600 text-6xl mb-4">warning</span>
-
-    <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Confirm Account Deletion</h2>
-    <p class="text-gray-700 dark:text-gray-300 mb-6">
-      Are you sure you want to delete your account? 
-      <span class="font-semibold text-red-500">This action cannot be undone!</span>
-    </p>
-    <div class="flex justify-center gap-3">
-      <button @click="confirmModal=false"
-              class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">
-        Cancel
-      </button>
-      <button @click="$el.closest('form').submit()"
-              class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600">
-        Yes, Delete
-      </button>
+    <!-- Confirmation Modal -->
+    <div x-show="confirmModal" x-cloak
+         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-sm w-full p-6 flex flex-col items-center text-center">
+        <span class="material-icons-outlined text-red-600 text-6xl mb-4">warning</span>
+        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">Confirm Account Deletion</h2>
+        <p class="text-gray-700 dark:text-gray-300 mb-6">
+          Are you sure you want to delete your account?
+          <span class="font-semibold text-red-500">This action cannot be undone!</span>
+        </p>
+        <div class="flex justify-center gap-3">
+          <button @click="confirmModal=false"
+                  class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+            Cancel
+          </button>
+          <button @click="$el.closest('form').submit()"
+                  class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600">
+            Yes, Delete
+          </button>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
   </form>
 </div>

@@ -152,7 +152,7 @@ if (!empty($_SESSION['flash_success'])): ?>
                   <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
                      ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
                      ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
-                  <?= ucfirst(strtolower($tx['status'])) ?>
+                  <?= ($tx['status']) ?>
                 </span>
               </td>
               <td><?= $tx['formatted_date'] ?></td>
@@ -198,14 +198,14 @@ if (!empty($_SESSION['flash_success'])): ?>
                                         </td>
 
 
-                                        <td>
-                                            <span class="px-2 py-1 rounded text-xs 
-                                                <?= $tx['status'] === 'Completed' ? 'bg-green-100 text-green-800' : 
-                                                   ($tx['status'] === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
-                                                   ($tx['status'] === 'Failed' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
-                                                <?= ucfirst($tx['status']) ?>
-                                            </span>
-                                        </td>
+              <td>
+                <span class="px-2 py-1 rounded text-xs 
+                  <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
+                     ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                     ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
+                  <?= ($tx['status']) ?>
+                </span>
+              </td>
                                         <td><?= $tx['formatted_date'] ?></td>
 
                                     </tr>

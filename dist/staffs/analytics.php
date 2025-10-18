@@ -64,6 +64,17 @@ if(isset($_POST['submit'])){
           </ul>
         </div>
       </div>
+<!-- Monthly Summary Description -->
+<section class="mt-8 px-4 md:px-8 lg:px-12">
+  <div class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm p-8 max-w-5xl mx-auto">
+    <h3 class="text-2xl font-semibold mb-4 text-center text-gray-900 dark:text-gray-100">
+      Monthly Summary
+    </h3>
+    <p class="text-gray-700 dark:text-gray-300 text-lg leading-relaxed text-center">
+      <?= $monthly_summary ?>
+    </p>
+  </div>
+</section>  
 
 <!-- E-Wallet Summary -->
 <section class="relative px-2 py-6">

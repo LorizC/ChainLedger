@@ -223,7 +223,14 @@ if (isset($_GET['error'])): ?>
                   <td class="<?= $tx['amount'] < 0 ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">
                     <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
                   </td>
-                  <td><?= ucfirst(strtolower($tx['status'] ?? 'N/A')) ?></td>
+                                <td>
+                <span class="px-2 py-1 rounded text-xs 
+                  <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
+                     ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+                     ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
+                  <?= ($tx['status']) ?>
+                </span>
+              </td>
                   <td><?= $tx['formatted_date'] ?></td>
                 </tr>
                 <?php endforeach; ?>
@@ -270,14 +277,13 @@ if (isset($_GET['error'])): ?>
                                         </td>
 
 
-                                        <td>
-                                            <span class="px-2 py-1 rounded text-xs 
-                                                <?= $tx['status'] === 'Completed' ? 'bg-green-100 text-green-800' : 
-                                                   ($tx['status'] === 'Pending' ? 'bg-yellow-100 text-yellow-800' : 
-                                                   ($tx['status'] === 'Failed' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
-                                                <?= ucfirst($tx['status']) ?>
-                                            </span>
-                                        </td>
+              <td>
+                <span class="px-2 py-1 rounded text-xs 
+                  <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' :  
+                     ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800') ?>">
+                  <?= ($tx['status']) ?>
+                </span>
+              </td>
                                         <td><?= $tx['formatted_date'] ?></td>
 <td class="flex items-center space-x-3">
   <a href="edit_transaction.php?id=<?= $tx['transaction_id'] ?>" 
