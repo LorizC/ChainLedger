@@ -76,7 +76,7 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
         <ul class="breadcrumb">
           <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Logs</li>
-          <li class="breadcrumb-item"><a href="../admin/archives.php">Archives</a></li>
+          <li class="breadcrumb-item"><a href="../admin/archives.php" class="hover:text-blue-800 transition">Archives</a></li>
         </ul>
       </div>
     </div>
@@ -150,6 +150,8 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
   <?php if ($page > 1): ?>
     <input type="hidden" name="page" value="<?= $page ?>">
   <?php endif; ?>
+  <input type="hidden" name="type" value="<?= basename($_SERVER['PHP_SELF'], '.php') ?>">
+
 </form>
             <!-- FILTER FORM END -->
 

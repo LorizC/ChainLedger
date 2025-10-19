@@ -72,14 +72,9 @@
                     <span>Enter a Business / ChangeP</span>
                   </span>
                 </a>
-<a 
-  href="#" 
-  class="dropdown-item dark:hover:bg-gray-800"
-  onclick="return validateAccess('<?php echo strtolower($_SESSION['user']['company_role'] ?? ''); ?>')"
->
-  <span><i class="ti ti-report"></i><span class="ms-2"> Security Logs</span></span>
-</a>
-
+               <a href="#" class="dropdown-item dark:hover:bg-gray-800" onclick="return validateAccess('<?php echo strtolower($_SESSION['user']['company_role'] ?? ''); ?>')"><span><i class="ti ti-report"></i><span class="ms-2"> Security Logs</span>
+              </span>
+            </a>
                   <!-- Logout -->
                 <div class="grid my-3">
                   <button class="btn bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600" type="button">

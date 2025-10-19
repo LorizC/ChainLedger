@@ -3,7 +3,7 @@ require_once __DIR__ . '/../services/AuthGuard.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
 require_once __DIR__ . '/handlers/logs.php';
 
-// Only allow logged-in users who are Business Owner or Manager
+// Only allow logged-in users who are Business Owner
 auth_guard(['Business Owner']);
 
 // Initialize UserRepository
@@ -17,16 +17,102 @@ if (!$userData) {
     exit();
 }
 
-// Grab the current user info safely
 $user = $_SESSION['user'];
 $role = $user['company_role'] ?? 'Unassigned';
 $accountId = $user['account_id'] ?? null;
 
+// Initialize filters
+$filterUser = $_GET['user'] ?? '';
+$filterAction = $_GET['action'] ?? '';
+$filterSort = $_GET['sort_timestamp'] ?? 'desc';
+$archivedPage = max(1, intval($_GET['archivedpage'] ?? 1));
+$recordsPerPage = 10;
+$offset = ($archivedPage - 1) * $recordsPerPage;
 
-// Preserve filters for pagination
-$baseQuery = $_GET;
-unset($baseQuery['page']);
-$baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_query($baseQuery);
+// ===============================
+// Build SQL filter query (NO is_archived)
+// ===============================
+$whereClauses = [];
+$params = [];
+
+if (!empty($filterUser)) {
+    $whereClauses[] = "al.account_id = ?";
+    $params[] = $filterUser;
+}
+if (!empty($filterAction)) {
+    $whereClauses[] = "al.action = ?";
+    $params[] = $filterAction;
+}
+
+$whereSQL = count($whereClauses) ? ('WHERE ' . implode(' AND ', $whereClauses)) : '';
+$orderBy = "ORDER BY al.archived_at " . ($filterSort === 'asc' ? 'ASC' : 'DESC');
+
+// ===============================
+// Fetch Archived Logs (from archivedlogs + archivedaccounts)
+// ===============================
+$sql = "
+    SELECT 
+        al.account_id AS user_account_id,
+        ac.username,
+        CONCAT(ac.first_name, ' ', ac.last_name) AS full_name,
+        al.action,
+        al.archived_at
+    FROM archivedlogs al
+    LEFT JOIN archivedaccounts ac ON al.account_id = ac.account_id
+    $whereSQL
+    $orderBy
+    LIMIT $recordsPerPage OFFSET $offset
+";
+
+$stmt = $conn->prepare($sql);
+
+// Bind parameters dynamically if any
+if (!empty($params)) {
+    $types = str_repeat('s', count($params)); // all strings (adjust if needed)
+    $stmt->bind_param($types, ...$params);
+}
+
+$stmt->execute();
+$result = $stmt->get_result();
+$archivedLogs = $result->fetch_all(MYSQLI_ASSOC);
+
+
+// ===============================
+// Pagination count
+// ===============================
+$countSql = "
+    SELECT COUNT(*) 
+    FROM archivedlogs al
+    LEFT JOIN archivedaccounts ac ON al.account_id = ac.account_id
+    $whereSQL
+";
+$countStmt = $conn->prepare($countSql);
+if (!empty($params)) {
+    $types = str_repeat('s', count($params));
+    $countStmt->bind_param($types, ...$params);
+}
+$countStmt->execute();
+$countResult = $countStmt->get_result();
+$totalArchivedRecords = $countResult->fetch_row()[0] ?? 0;
+
+$totalArchivedPages = ceil($totalArchivedRecords / $recordsPerPage);
+
+// ===============================
+// Fetch dropdown data
+// ===============================
+$userListResult = $conn->query("
+    SELECT account_id AS user_id, CONCAT(first_name, ' ', last_name) AS full_name
+    FROM archivedaccounts
+    ORDER BY full_name ASC
+");
+$userList = $userListResult->fetch_all(MYSQLI_ASSOC);
+
+
+$actionsResult = $conn->query("SELECT DISTINCT action FROM archivedlogs ORDER BY action ASC");
+$actions = [];
+while ($row = $actionsResult->fetch_assoc()) {
+    $actions[] = $row['action'];
+}
 
 ?>
 
@@ -68,7 +154,7 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
     <div class="page-header">
       <div class="page-block">
         <div class="page-header-title">
-          <h5 class="mb-0 font-medium">Security Logs</h5>
+          <h5 class="mb-0 font-medium">Archived Logs</h5>
         </div>
         <ul class="breadcrumb">
           <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
@@ -146,8 +232,8 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
             </select>
           </div>
 
-          <?php if ($page > 1): ?>
-            <input type="hidden" name="page" value="<?= $page ?>">
+          <?php if ($archivedPage > 1): ?>
+            <input type="hidden" name="archived_page" value="<?= $archivedPage ?>">
           <?php endif; ?>
         </form>
 
@@ -185,49 +271,52 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
           </tbody>
         </table>
 
-        <!-- Pagination -->
-        <?php if ($totalArchivedPages > 1): ?>
-          <div class="mt-4 flex justify-center space-x-2">
-            <?php if ($page > 1): ?>
-              <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>"
-                 class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">
-                ‹ Prev
-              </a>
-            <?php endif; ?>
+<!-- Pagination -->
+<?php if ($totalArchivedPages > 1): ?>
+  <div class="mt-4 flex justify-center space-x-2">
+    <?php if ($archivedPage > 1): ?>
+      <a href="?<?= http_build_query(array_merge($_GET, ['archivedpage' => $archivedPage - 1])) ?>"
+         class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">
+        ‹ Prev
+      </a>
+    <?php endif; ?>
 
-            <?php
-              $range = 1;
-              $start = max(1, $page - $range);
-              $end = min($totalArchivedPages, $page + $range);
+    <?php
+      $range = 1;
+      $start = max(1, $archivedPage - $range);
+      $end = min($totalArchivedPages, $archivedPage + $range);
 
-              if ($start > 1) {
-                echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => 1])) . '" 
-                        class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">1</a>';
-                if ($start > 2) echo '<span class="px-2 text-gray-500 dark:text-gray-400">…</span>';
-              }
+      if ($start > 1) {
+        echo '<a href="?' . http_build_query(array_merge($_GET, ['archivedpage' => 1])) . '" 
+                class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">1</a>';
+        if ($start > 2) echo '<span class="px-2 text-gray-500 dark:text-gray-400">…</span>';
+      }
 
-              for ($i = $start; $i <= $end; $i++) {
-                $active = $i == $page ? 'bg-blue-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100';
-                echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $i])) . '" 
-                        class="px-3 py-1 rounded border ' . $active . '">' . $i . '</a>';
-              }
+      for ($i = $start; $i <= $end; $i++) {
+        $active = $i == $archivedPage
+          ? 'bg-blue-600 text-white'
+          : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100';
+        echo '<a href="?' . http_build_query(array_merge($_GET, ['archivedpage' => $i])) . '" 
+                class="px-3 py-1 rounded border ' . $active . '">' . $i . '</a>';
+      }
 
-              if ($end < $totalArchivedPages) {
-                if ($end < $totalArchivedPages - 1)
-                  echo '<span class="px-2 text-gray-500 dark:text-gray-400">…</span>';
-                echo '<a href="?' . http_build_query(array_merge($_GET, ['page' => $totalArchivedPages])) . '" 
-                        class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">' . $totalArchivedPages . '</a>';
-              }
-            ?>
+      if ($end < $totalArchivedPages) {
+        if ($end < $totalArchivedPages - 1)
+          echo '<span class="px-2 text-gray-500 dark:text-gray-400">…</span>';
+        echo '<a href="?' . http_build_query(array_merge($_GET, ['archivedpage' => $totalArchivedPages])) . '" 
+                class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">' . $totalArchivedPages . '</a>';
+      }
+    ?>
 
-            <?php if ($page < $totalArchivedPages): ?>
-              <a href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>"
-                 class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">
-                Next ›
-              </a>
-            <?php endif; ?>
-          </div>
-        <?php endif; ?>
+    <?php if ($archivedPage < $totalArchivedPages): ?>
+      <a href="?<?= http_build_query(array_merge($_GET, ['archivedpage' => $archivedPage + 1])) ?>"
+         class="px-3 py-1 rounded border bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100">
+        Next ›
+      </a>
+    <?php endif; ?>
+  </div>
+<?php endif; ?>
+
 
       </div>
     </div>

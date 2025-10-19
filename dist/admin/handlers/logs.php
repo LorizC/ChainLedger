@@ -24,8 +24,14 @@ if ($accountId) {
 // PAGINATION & FILTERS (for logs)
 // ===============================
 $logsPerPage = 8;
+// Active logs pagination
 $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] : 1;
 $offset = ($page - 1) * $logsPerPage;
+
+// Archived logs pagination
+$archivedPage = isset($_GET['archived_page']) && is_numeric($_GET['archived_page']) ? (int)$_GET['archived_page'] : 1;
+$archivedOffset = ($archivedPage - 1) * $logsPerPage;
+
 
 $filterAction = $_GET['action'] ?? '';
 $filterUser   = $_GET['user'] ?? '';
@@ -66,7 +72,7 @@ function bind_params_dynamic(mysqli_stmt $stmt, string $types, array &$params) {
 
 //
 // ====================================================
-// 1️⃣ ACTIVE LOGS (security_logs)
+//  ACTIVE LOGS (security_logs)
 // ====================================================
 //
 $countSQL = "
@@ -117,7 +123,7 @@ $stmt->close();
 
 //
 // ====================================================
-// 2️⃣ ARCHIVED LOGS (archivedlogs)
+//  ARCHIVED LOGS (archivedlogs)
 // ====================================================
 $archivedWhereParts = [];
 $archivedParams = [];
@@ -132,7 +138,7 @@ if ($filterAction !== '') {
 
 // Filter by user
 if ($filterUser !== '') {
-    $archivedWhereParts[] = "al.account_id = (SELECT account_id FROM users WHERE user_id = ?)";
+    $archivedWhereParts[] = "al.account_id = ?";
     $archivedParams[] = $filterUser;
     $archivedTypes .= 'i';
 }
@@ -162,7 +168,7 @@ $archivedSQL = "
     FROM archivedlogs al
     LEFT JOIN archivedaccounts ac ON al.account_id = ac.account_id
     $archivedWhereSQL
-    ORDER BY al.timestamp $sortOrder
+    ORDER BY al.archived_at $sortOrder
     LIMIT ? OFFSET ?
 ";
 $stmt = $conn->prepare($archivedSQL);
@@ -170,11 +176,12 @@ $stmt = $conn->prepare($archivedSQL);
 if (!empty($archivedParams)) {
     $archivedParamsData = $archivedParams;
     $archivedParamsData[] = $logsPerPage;
-    $archivedParamsData[] = $offset;
+    $archivedParamsData[] = $archivedOffset;
+
     $archivedTypesData = $archivedTypes . 'ii';
     bind_params_dynamic($stmt, $archivedTypesData, $archivedParamsData);
 } else {
-    $stmt->bind_param('ii', $logsPerPage, $offset);
+    $stmt->bind_param('ii', $logsPerPage, $archivedOffset);
 }
 
 $stmt->execute();
@@ -187,7 +194,7 @@ $stmt->close();
 
 //
 // ====================================================
-// 3️⃣ FILTER OPTIONS
+//  FILTER OPTIONS
 // ====================================================
 //
 $actions = [];
@@ -211,9 +218,11 @@ return [
     'totalPages'        => $totalPages,
     'totalArchivedPages'=> $totalArchivedPages,
     'page'              => $page,
+    'archivedPage'      => $archivedPage,
     'filterAction'      => $filterAction,
     'filterUser'        => $filterUser,
     'filterSort'        => $filterSort,
     'role'              => $role,
 ];
+
 ?>
