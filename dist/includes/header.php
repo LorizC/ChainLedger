@@ -53,10 +53,12 @@
                 <div class="shrink-0">
                   <img src="<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>" alt="user-image" class="w-10 rounded-full" />
                 </div>
-                <div class="grow ms-4 text-white">
-                  <h4 class="mb-1 text-white" ><?php echo htmlspecialchars($_SESSION['user']['username']); ?></h4>
-                  <span>Account ID: <?php echo htmlspecialchars($_SESSION['user']['account_id']); ?></span>
-                </div>
+               <div class="grow ms-4 text-white">
+               <h4 class="mb-1 text-white max-w-[150px] truncate" title="<?php echo htmlspecialchars($_SESSION['user']['username']); ?>"
+               >
+               <?php echo htmlspecialchars($_SESSION['user']['username']); ?></h4>
+               <span class="block text-sm text-gray-300">Account ID: <?php echo htmlspecialchars($_SESSION['user']['account_id']); ?></span>
+               </div>
               </div>
             </div>
             <div class="dropdown-body py-4 px-5">

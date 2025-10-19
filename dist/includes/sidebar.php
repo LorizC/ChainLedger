@@ -29,7 +29,7 @@ $basePath = ($role === 'staff') ? '../staffs/' : '../admin/';
           <h5 class="font-semibold text-lg text-white">
             <?= htmlspecialchars($_SESSION['user']['company_role'] ?? '') ?>
           </h5>
-          <p class="text-sm text-gray-300 leading-tight mt-1">
+          <p class="text-sm text-gray-300 leading-tight mt-1 max-w-[150px] truncate">
             <?= htmlspecialchars($_SESSION['user']['username']) ?>
           </p>
           <p class="text-[12px] text-gray-400 mt-1">

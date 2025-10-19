@@ -40,12 +40,18 @@
 
       <!-- Right side -->
       <div class="form-section">
-        <?php if (!empty($username)): ?>
-          <div class="success-message global-banner">
-            Welcome, <?= htmlspecialchars($username) ?>! <br>
-            Please fill the form to complete your registration.
-          </div>
-        <?php endif; ?>      
+<?php if (!empty($username)): ?>
+  <div class="success-message global-banner">
+    <span 
+      class="username-ellipsis" 
+      title="<?= htmlspecialchars($username) ?>">
+      Welcome!
+    </span>
+    <br>
+    Please fill the form to complete your registration.
+  </div>
+<?php endif; ?>
+
 
         <div class="inFormBackground">
           <div class="inLoginForm">

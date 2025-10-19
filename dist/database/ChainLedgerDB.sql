@@ -3,7 +3,6 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
-
 -- =======================
 -- Users Table
 -- =======================

@@ -39,7 +39,7 @@
 
   <div class="overlay"></div>
 
-  <!-- 📌 Bigger Card -->
+  <!-- Card -->
   <div class="bg-white dark:bg-gray-800 bg-opacity-95 backdrop-blur-md rounded-3xl shadow-2xl w-full max-w-2xl p-14 text-center relative z-10 transition">
     <div class="flex justify-center mb-8">
       <div class="bg-green-100 dark:bg-green-800 rounded-full p-6">
@@ -59,7 +59,9 @@
     <div class="text-left space-y-6 text-xl">
       <p class="text-gray-800 dark:text-gray-200 font-semibold flex justify-between">
         <span>Username:</span>
-        <span class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $username; ?></span>
+        <span class="text-red-600 dark:text-red-400 font-bold ml-2 truncate block max-w-[250px]" title="<?php echo $username; ?>"> <?php echo $username; ?>
+</span>
+
       </p>
 
       <div class="flex items-center justify-between">
