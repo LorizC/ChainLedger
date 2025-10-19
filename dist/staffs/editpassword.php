@@ -116,82 +116,105 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
       <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
         <h2 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">Update Password</h2>
 
-<form 
-  x-data="{
-      showCurrent:false, 
-      showNew:false, 
-      showConfirm:false, 
+  <form 
+    x-data="{
+      showCurrent:false,
+      showNew:false,
+      showConfirm:false,
       confirmModal:false,
+      currentPassword: '',
       newPassword: '',
       confirmPassword: '',
       passwordError: '',
+      isValid: false,
       validatePasswords() {
+        // minimum length
+        if (this.newPassword.length < 8) {
+          this.passwordError = 'Password must be at least 8 characters.';
+          this.isValid = false;
+          return false;
+        }
+        // match check
         if (this.newPassword !== this.confirmPassword) {
           this.passwordError = 'Passwords do not match.';
+          this.isValid = false;
           return false;
-        } else {
-          this.passwordError = 'Password match.';
-          return true;
         }
+        this.passwordError = 'Passwords match.';
+        this.isValid = true;
+        return true;
       },
       submitForm() {
         if (this.validatePasswords()) {
           this.confirmModal = true;
         }
+      },
+      clearState() {
+        this.currentPassword = '';
+        this.newPassword = '';
+        this.confirmPassword = '';
+        this.passwordError = '';
+        this.isValid = false;
       }
-  }"
-  x-ref="passwordForm"
-  method="POST"
-  action="handlers/edit_password.php"
-  class="space-y-6"
->
-  <!-- Current Password -->
-  <div>
-    <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Current Password</label>
-    <div class="relative">
-      <input :type="showCurrent ? 'text' : 'password'" name="current_password" required
-             class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
-             placeholder="Current password">
-      <span @click="showCurrent=!showCurrent"
-            class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
-    </div>
-  </div>
+    }"
+    x-ref="passwordForm"
+    method="POST"
+    action="handlers/edit_password.php"
+    class="space-y-6"
+  >
 
-  <!-- New Password -->
-  <div>
-    <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">New Password</label>
-    <div class="relative">
-      <input :type="showNew ? 'text' : 'password'" name="new_password" required
-             x-model="newPassword"
-             @input="validatePasswords"
-             class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
-             placeholder="New password">
-      <span @click="showNew=!showNew"
-            class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
-    </div>
-  </div>
-
-  <!-- Confirm New Password -->
-  <div>
-    <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Confirm New Password</label>
-    <div class="relative">
-      <input :type="showConfirm ? 'text' : 'password'" name="confirm_password" required
-             x-model="confirmPassword"
-             @input="validatePasswords"
-             class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
-             placeholder="Confirm new password">
-      <span @click="showConfirm=!showConfirm"
-            class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
+    <!-- Current Password -->
+    <div>
+      <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Current Password</label>
+      <div class="relative">
+        <input :type="showCurrent ? 'text' : 'password'"
+               name="current_password"
+               x-model="currentPassword"
+               required
+               class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+               placeholder="Current password">
+        <span @click="showCurrent = !showCurrent"
+              class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
+      </div>
     </div>
 
-    <!-- Real-time Error Message -->
-<p 
-  x-show="passwordError" 
-  x-text="passwordError"
-  :class="passwordError === 'Password match.' 
-    ? 'text-green-600 text-sm mt-2 font-medium' 
-    : 'text-red-600 text-sm mt-2 font-medium'">
-</p>
+    <!-- New Password -->
+    <div>
+      <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">New Password</label>
+      <div class="relative">
+        <input :type="showNew ? 'text' : 'password'"
+               name="new_password"
+               x-model="newPassword"
+               @input="validatePasswords()"
+               required
+               class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+               placeholder="New password">
+        <span @click="showNew = !showNew"
+              class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
+      </div>
+    </div>
+
+    <!-- Confirm New Password -->
+    <div>
+      <label class="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">Confirm New Password</label>
+      <div class="relative">
+        <input :type="showConfirm ? 'text' : 'password'"
+               name="confirm_password"
+               x-model="confirmPassword"
+               @input="validatePasswords()"
+               required
+               class="w-full border rounded-lg px-3 py-3 text-gray-700 focus:ring-2 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white"
+               placeholder="Confirm new password">
+        <span @click="showConfirm = !showConfirm"
+              class="material-icons-outlined absolute right-3 top-3.5 cursor-pointer text-gray-500">visibility</span>
+      </div>
+
+      <!-- Real-time Error / Success Message -->
+      <p x-show="passwordError"
+         x-text="passwordError"
+         :class="isValid ? 'text-green-600 dark:text-green-400 mt-2 text-sm font-medium' : 'text-red-600 dark:text-red-400 mt-2 text-sm font-medium'">
+      </p>
+    </div>
 
   <!-- Buttons -->
   <div class="flex justify-end gap-3 pt-4">
