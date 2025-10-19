@@ -94,24 +94,34 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
   class="mb-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg shadow 
          flex flex-wrap items-center gap-4">
 
-  <!-- User Filter -->
-  <div class="flex items-center gap-2">
-    <span class="material-icons-outlined text-gray-500 dark:text-gray-300">person</span>
-    <label for="user" class="text-gray-700 dark:text-gray-300 font-medium">User:</label>
-    <select 
-      name="user" id="user"
-      class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
-             bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-100 
-             focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-      onchange="this.form.submit()">
-      <option value="">All</option>
-      <?php foreach ($userList as $user): ?>
-        <option value="<?= $user['user_id'] ?>" <?= $filterUser == $user['user_id'] ? 'selected' : '' ?>>
-          <?= htmlspecialchars($user['full_name']) ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-  </div>
+<!-- User Filter -->
+<div class="flex items-center gap-2">
+  <span class="material-icons-outlined text-gray-500 dark:text-gray-300">person</span>
+  <label for="user" class="text-gray-700 dark:text-gray-300 font-medium">User:</label>
+  <select 
+    name="user" id="user"
+    class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
+           bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-100 
+           focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition
+           max-w-[220px]"
+    onchange="this.form.submit()">
+    <option value="">All</option>
+    <?php foreach ($userList as $user): 
+      $fullName = htmlspecialchars($user['full_name']);
+      $shortName = mb_strlen($fullName) > 20 
+        ? mb_substr($fullName, 0, 20) . '…' 
+        : $fullName;
+    ?>
+      <option 
+        value="<?= $user['user_id'] ?>" 
+        <?= $filterUser == $user['user_id'] ? 'selected' : '' ?>
+        title="<?= $fullName ?>">
+        <?= $shortName ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</div>
+
 
   <!-- Action Filter -->
   <div class="flex items-center gap-1">
@@ -178,10 +188,17 @@ $baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_que
         <td class="px-4 py-2 text-sm">
         <?= htmlspecialchars($row['user_account_id']) ?>
       </td>
-  <td>
-    <?= htmlspecialchars($row["first_name"] . ' ' . $row["last_name"]) ?>
+  <!-- Name + Username -->
+  <td class="px-4 py-2 text-sm">
+    <span class="block max-w-[180px] truncate" 
+          title="<?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?>">
+      <?= htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) ?>
+    </span>
     <br>
-    <small class="text-gray-500"><?= htmlspecialchars($row["username"]) ?></small>
+    <small class="block text-gray-500 max-w-[180px] truncate" 
+           title="<?= htmlspecialchars($row['username']) ?>">
+      <?= htmlspecialchars($row['username']) ?>
+    </small>
   </td>
   <td><?= htmlspecialchars($row["action"]) ?></td>
   <td><?= htmlspecialchars($row["timestamp"]) ?></td>

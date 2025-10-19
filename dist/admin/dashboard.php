@@ -84,15 +84,18 @@ if ($role !== 'business owner' && $role !== 'manager') {
           </ul>
         </div>
       </div>
-<!-- Flash & Status Messages -->
 <?php
 // Flash success message (session)
 if (!empty($_SESSION['flash_success'])): ?>
-  <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-    <?= $_SESSION['flash_success']; ?>
+  <div 
+    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 truncate" 
+    title="<?= htmlspecialchars($_SESSION['flash_success']); ?>"
+  >
+    <?= htmlspecialchars($_SESSION['flash_success']); ?>
   </div>
   <?php unset($_SESSION['flash_success']); ?>
 <?php endif; ?>
+
 
 <?php
 // Success messages (from URL parameters)
@@ -177,20 +180,24 @@ if (isset($_GET['error'])): ?>
     </tr> 
     </thead> 
     <tbody> 
-                                <?php foreach($transactors as $user): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($user['account_id']) ?></td>
-                                        <td><?= $user['full_name'] ?></td>
-                                        <td><?= $user['username'] ?></td>
-                                        <td><span class="px-2 py-1 rounded text-xs bg-green-100 text-green-800"><?= ucfirst($user['role']) ?></span></td>
-                                        <td><?= $user['formatted_date'] ?></td>
-                                        <td>
-                                            <a href="handlers/delete_user.php?id=<?= $user['account_id'] ?>" onclick="return confirm('Are you sure you want to delete this user?')" class="text-red-600 hover:text-red-800">
-                                                <span class="material-icons-outlined text-base align-middle">delete</span> Delete
-                                            </a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
+<?php foreach($transactors as $user): ?>
+ <tr>
+  <td><?= htmlspecialchars($user['account_id']) ?></td>
+<td class="max-w-[180px] truncate" title="<?= htmlspecialchars($user['full_name']) ?>">
+  <?= htmlspecialchars($user['full_name']) ?>
+</td>
+<td class="max-w-[180px] truncate" title="<?= htmlspecialchars($user['username']) ?>">
+  <?= htmlspecialchars($user['username']) ?>
+</td>
+ <td><span class="px-2 py-1 rounded text-xs bg-green-100 text-green-800"><?= ucfirst($user['role']) ?></span></td>
+  <td><?= $user['formatted_date'] ?></td>
+ <td>
+ <a href="handlers/delete_user.php?id=<?= $user['account_id'] ?>" onclick="return confirm('Are you sure you want to delete this user?')" class="text-red-600 hover:text-red-800">
+ <span class="material-icons-outlined text-base align-middle">delete</span> Delete
+ </a>
+</td>
+</tr>
+<?php endforeach; ?>
 </tbody> 
 </table> 
 </div> 
@@ -269,7 +276,7 @@ if (isset($_GET['error'])): ?>
           <tbody> 
            <?php foreach($recentTransactions as $tx): ?>
             <tr>
-              <td><?= $tx['fullname'] ?></td>
+              <td class="max-w-[180px] truncate" title="<?= htmlspecialchars($tx['fullname']) ?>"><?= htmlspecialchars($tx['fullname']) ?></td>
               <td><?= $tx['detail'] ?></td>                                        
               <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= $tx['category'] ?></span></td>
               <td class="<?= $tx['is_negative'] ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">  <!-- Red if cost, no minus -->

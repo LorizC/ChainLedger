@@ -87,14 +87,34 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
 
       <!-- LEFT: Profile Card -->
       <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow">
-        <div class="flex items-center mb-6">
-          <img src="<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>" alt="User Avatar" class="w-28 h-28 rounded-full border-4 border-indigo-200 shadow dark:border-gray-600">
-          <div class="ml-6">
-            <h2 class="text-3xl font-bold text-indigo-700 dark:text-white"><?php echo htmlspecialchars($_SESSION['user']['username']); ?></h2>
-            <p class="text-lg text-gray-500 dark:text-gray-300 mt-1"><?= htmlspecialchars($user['role']) ?></p>
-            <p class="text-sm text-gray-400 mt-1">Account ID: <?= htmlspecialchars($_SESSION['user']['account_id']) ?></p>
-          </div>
-        </div>
+<div class="flex items-center mb-6">
+  <img 
+    src="<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>" 
+    alt="User Avatar" 
+    class="w-28 h-28 rounded-full border-4 border-indigo-200 shadow dark:border-gray-600"
+  >
+  
+  <div class="ml-6 max-w-[220px]">
+    <h2 
+      class="text-3xl font-bold text-indigo-700 dark:text-white truncate" 
+      title="<?php echo htmlspecialchars($_SESSION['user']['username']); ?>"
+    >
+      <?php echo htmlspecialchars($_SESSION['user']['username']); ?>
+    </h2>
+
+    <p 
+      class="text-lg text-gray-500 dark:text-gray-300 mt-1 truncate" 
+      title="<?= htmlspecialchars($user['role']) ?>"
+    >
+      <?= htmlspecialchars($user['role']) ?>
+    </p>
+
+    <p class="text-sm text-gray-400 mt-1">
+      Account ID: <?= htmlspecialchars($_SESSION['user']['account_id']) ?>
+    </p>
+  </div>
+</div>
+
         <div class="border-t border-gray-300 mt-4 pt-4">
           <p class="text-gray-500 dark:text-gray-300">Ensure your account remains secure by updating your password regularly.</p>
         </div>

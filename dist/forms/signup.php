@@ -1,4 +1,7 @@
-<?php include('../handlers/signup.php'); ?>
+<?php include('../handlers/signup.php'); 
+$today = date('Y-m-d');
+// Limit birthdate to at least 15 years old
+$maxDate = date('Y-m-d', strtotime('-15 years'));?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -70,19 +73,33 @@
                      value="<?= htmlspecialchars($_POST['last_name'] ?? '') ?>" />
             </div>
 
-            <div class="inputGroup">
-              <label for="birthdate">Birthdate</label>
-              <input type="date" id="birthdate" name="birthdate" required
-                     max="<?= date('Y-m-d') ?>"
-                     value="<?= htmlspecialchars($_POST['birthdate'] ?? '') ?>" />
-            </div>
-
+<div class="inputGroup">
+  <label for="birthdate">Birthdate</label>
+  <input 
+    type="date" 
+    id="birthdate" 
+    name="birthdate" 
+    required
+    max="<?= $maxDate ?>" 
+    min="1900-01-01"
+    oninput="
+      const max = new Date('<?= $maxDate ?>');
+      const entered = new Date(this.value);
+      if (entered > max) {
+        this.setCustomValidity('You must be at least 15 years old to register.');
+      } else {
+        this.setCustomValidity('');
+      }
+    "
+  />
+</div>
             <div class="inputGroup">
               <label for="gender">Gender</label>
               <select id="gender" name="gender" required>
                 <option value="" disabled <?= !isset($_POST['gender']) ? 'selected' : '' ?>>Select your gender</option>
                 <option value="Male" <?= (($_POST['gender'] ?? '') === 'Male') ? 'selected' : '' ?>>Male</option>
                 <option value="Female" <?= (($_POST['gender'] ?? '') === 'Female') ? 'selected' : '' ?>>Female</option>
+                <option value="Others" <?= (($_POST['gender'] ?? '') === 'Others') ? 'selected' : '' ?>>Others</option>
               </select>
             </div>
 

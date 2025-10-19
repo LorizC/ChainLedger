@@ -3,6 +3,7 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
+
 -- =======================
 -- Users Table
 -- =======================
@@ -12,12 +13,11 @@ CREATE TABLE users (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     birthdate DATE,
-    gender ENUM('Male','Female'),
+    gender ENUM('Male','Female', 'Others'),
     username VARCHAR(100) UNIQUE NOT NULL,
     profile_image VARCHAR(255) DEFAULT NULL,
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
-
 
 -- =======================
 -- Security Table

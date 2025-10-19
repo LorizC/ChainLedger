@@ -75,23 +75,32 @@ if ($role !== 'staff') {
          flex flex-wrap items-center gap-4">
 
   <!-- User Filter -->
-  <div class="flex items-center gap-2">
-    <span class="material-icons-outlined text-gray-500 dark:text-gray-300">person</span>
-    <label for="user" class="text-gray-700 dark:text-gray-300 font-medium">User:</label>
-    <select 
-      name="user" id="user"
-      class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
-             bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-100 
-             focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-      onchange="this.form.submit()">
-      <option value="">All</option>
-      <?php foreach ($userList as $user): ?>
-        <option value="<?= $user['username'] ?>" <?= $filterUser == $user['username'] ? 'selected' : '' ?>>
-          <?= htmlspecialchars($user['username']) ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
-  </div>
+<div class="flex items-center gap-2">
+  <span class="material-icons-outlined text-gray-500 dark:text-gray-300">person</span>
+  <label for="user" class="text-gray-700 dark:text-gray-300 font-medium">User:</label>
+  <select 
+    name="user" id="user"
+    class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
+           bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-100 
+           focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+    onchange="this.form.submit()">
+    <option value="">All</option>
+    <?php foreach ($userList as $user): 
+      $username = htmlspecialchars($user['username']);
+      $shortUsername = mb_strlen($username) > 20 
+        ? mb_substr($username, 0, 20) . '…' 
+        : $username;
+    ?>
+      <option 
+        value="<?= $user['username'] ?>" 
+        <?= $filterUser == $user['username'] ? 'selected' : '' ?>
+        title="<?= $username ?>">
+        <?= $shortUsername ?>
+      </option>
+    <?php endforeach; ?>
+  </select>
+</div>
+
 
   <!-- Action Filter -->
   <div class="flex items-center gap-1">
@@ -186,7 +195,7 @@ if ($role !== 'staff') {
   <?php else: ?>
     <?php foreach ($paginatedLedger as $row): ?>
     <tr>
-      <td><?= $row['user'] ?></td>
+      <td class="max-w-[180px] truncate" title="<?= htmlspecialchars($row['user']) ?>"><?= htmlspecialchars($row['user']) ?></td>
       <td><?= $row['details'] ?></td>
       <td><?= $row['merchant'] ?></td>
       <td class="<?= strpos($row['amount'], '-') !== false ? 'text-red-600' : 'text-green-600' ?>">

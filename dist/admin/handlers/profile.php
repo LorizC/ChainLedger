@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
 
     // Redirect back to profile page
     $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
-    header("Location: index.php?page=$page");
+    header("Location: profile.php?page=$page");
     exit();
 }
 

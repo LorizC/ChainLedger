@@ -60,26 +60,35 @@ auth_guard(['Business Owner', 'Manager']);
   <!-- LEFT: Fixed Size Profile Card with Edit Modal -->
 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow 
             w-full md:w-[500px] flex-shrink-0"
-           x-data="{
-              open:false,
-              avatar:'<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>',
-              username:'<?= htmlspecialchars($userData['username']) ?>',
-              fullname:'<?= htmlspecialchars($user['name']) ?>'
-           }">
+     x-data="{
+        open:false,
+        avatar:'<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>',
+        username:'<?= htmlspecialchars($userData['username']) ?>',
+        fullname:'<?= htmlspecialchars($user['name']) ?>'
+     }">
 
-<!-- Avatar + Name -->
-<div class="flex items-center space-x-6">
-  <div class="relative inline-block">
-    <img :src="avatar" class="w-32 h-32 rounded-full border-4 border-indigo-200 shadow dark:border-gray-600" alt="User Avatar">
-    <button @click='open=true' class="absolute bottom-1 right-1 bg-white rounded-full p-2 shadow dark:bg-gray-200">
-      <span class="material-icons-outlined text-lg text-indigo-600 dark:text-black">edit</span>
-    </button>
+  <!-- Avatar + Name -->
+  <div class="flex items-center space-x-6">
+    <div class="relative inline-block">
+      <img :src="avatar" class="w-32 h-32 rounded-full border-4 border-indigo-200 shadow dark:border-gray-600" alt="User Avatar">
+      <button @click='open=true' class="absolute bottom-1 right-1 bg-white rounded-full p-2 shadow dark:bg-gray-200">
+        <span class="material-icons-outlined text-lg text-indigo-600 dark:text-black">edit</span>
+      </button>
+    </div>
+
+    <div class="max-w-[220px]">
+      <h2 
+        class="text-4xl font-extrabold text-indigo-700 dark:text-white truncate" 
+        x-text="username" 
+        :title="username">
+      </h2>
+      <p 
+        class="text-xl text-gray-500 dark:text-gray-300 mt-1 truncate" 
+        x-text="fullname" 
+        :title="fullname">
+      </p>
+    </div>
   </div>
-  <div>
-    <h2 class="text-4xl font-extrabold text-indigo-700 dark:text-white" x-text="username"></h2>
-    <p class="text-xl text-gray-500 dark:text-gray-300 mt-1" x-text="fullname"></p>
-  </div>
-</div>
 
 
         <!-- Edit Modal -->
