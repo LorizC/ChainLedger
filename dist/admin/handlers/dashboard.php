@@ -64,7 +64,7 @@ $transactors = [];
 
 $sqlTransactors = "
     SELECT 
-        u.user_id,
+        u.account_id,
         CONCAT(u.first_name, ' ', u.last_name) AS full_name,
         u.username,
         u.date_registered,
@@ -93,7 +93,7 @@ if ($resultTransactors) {
 
 // --- Recent Transactions ---
 $recentTransactions = [];
-$sqlRecent = "SELECT t.transaction_id, t.username, t.detail, t.merchant, t.amount, t.currency, t.transaction_date, COALESCE(t.transaction_type, 'Unknown Type') AS transaction_type, t.status, t.entry_date,
+$sqlRecent = "SELECT t.transaction_id, t.username, t.detail, t.merchant, t.amount, t.currency, t.entry_date, COALESCE(t.transaction_type, 'Unknown Type') AS transaction_type, t.status, t.entry_date,
               COALESCE(CONCAT(u.first_name, ' ', u.last_name), t.username) AS fullname
               FROM transactions t
               LEFT JOIN users u ON t.username = u.username

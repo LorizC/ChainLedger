@@ -168,7 +168,7 @@ if (isset($_GET['error'])): ?>
 
     <thead>
      <tr>
-     <th>User ID</th> 
+     <th>Account ID</th> 
      <th>Full Name</th> 
      <th>Username</th> 
      <th>Role</th> 
@@ -179,13 +179,13 @@ if (isset($_GET['error'])): ?>
     <tbody> 
                                 <?php foreach($transactors as $user): ?>
                                     <tr>
-                                        <td><?= htmlspecialchars($user['user_id']) ?></td>
+                                        <td><?= htmlspecialchars($user['account_id']) ?></td>
                                         <td><?= $user['full_name'] ?></td>
                                         <td><?= $user['username'] ?></td>
                                         <td><span class="px-2 py-1 rounded text-xs bg-green-100 text-green-800"><?= ucfirst($user['role']) ?></span></td>
                                         <td><?= $user['formatted_date'] ?></td>
                                         <td>
-                                            <a href="handlers/delete_user.php?id=<?= $user['user_id'] ?>" onclick="return confirm('Are you sure you want to delete this user?')" class="text-red-600 hover:text-red-800">
+                                            <a href="handlers/delete_user.php?id=<?= $user['account_id'] ?>" onclick="return confirm('Are you sure you want to delete this user?')" class="text-red-600 hover:text-red-800">
                                                 <span class="material-icons-outlined text-base align-middle">delete</span> Delete
                                             </a>
                                         </td>
@@ -267,14 +267,14 @@ if (isset($_GET['error'])): ?>
             </tr> 
           </thead> 
           <tbody> 
-                                <?php foreach($recentTransactions as $tx): ?>
-                                    <tr>
-                                        <td><?= $tx['fullname'] ?></td>
-                                        <td><?= $tx['detail'] ?></td>                                        
-                                        <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= $tx['category'] ?></span></td>
-                                        <td class="<?= $tx['is_negative'] ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">  <!-- Red if cost, no minus -->
-                                            <?= $tx['formatted_amount'] ?>  <!-- Positive always -->
-                                        </td>
+           <?php foreach($recentTransactions as $tx): ?>
+            <tr>
+              <td><?= $tx['fullname'] ?></td>
+              <td><?= $tx['detail'] ?></td>                                        
+              <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= $tx['category'] ?></span></td>
+              <td class="<?= $tx['is_negative'] ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">  <!-- Red if cost, no minus -->
+              <?= $tx['formatted_amount'] ?>  <!-- Positive always -->
+              </td>
 
 
               <td>
@@ -284,7 +284,7 @@ if (isset($_GET['error'])): ?>
                   <?= ($tx['status']) ?>
                 </span>
               </td>
-                                        <td><?= $tx['formatted_date'] ?></td>
+               <td><?= $tx['formatted_date'] ?></td>
 <td class="flex items-center space-x-3">
   <a href="edit_transaction.php?id=<?= $tx['transaction_id'] ?>" 
      class="flex items-center text-blue-600 hover:text-blue-800">
@@ -296,8 +296,8 @@ if (isset($_GET['error'])): ?>
     <span class="material-icons-outlined text-base mr-1">delete</span> Delete
   </a>
 </td>
-                                    </tr>
-                                <?php endforeach; ?>      
+</tr>
+<?php endforeach; ?>      
     </tbody> 
   </table> 
 </div>

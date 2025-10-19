@@ -46,7 +46,7 @@ if ($stmt = $conn->prepare($sql)) {
 
 // --- Recent Transactions (all users) ---
 $recentTransactions = [];
-$sqlRecent = "SELECT t.transaction_id, t.username, t.detail, t.merchant, t.amount, t.currency, t.transaction_date, 
+$sqlRecent = "SELECT t.transaction_id, t.username, t.detail, t.merchant, t.amount, t.currency, t.entry_date, 
                      COALESCE(t.transaction_type, 'Unknown Type') AS transaction_type, t.status, t.entry_date,
                      COALESCE(CONCAT(u.first_name, ' ', u.last_name), t.username) AS fullname
               FROM transactions t

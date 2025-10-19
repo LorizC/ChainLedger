@@ -134,11 +134,11 @@ auth_guard(['Staff']);
   <!-- Amount -->
   <div class="mb-3">
     <label for="amount" class="form-label">
-      Amount <span style="color: red; font-weight: bold;">*</span>
+      Amount <span style="color: red; font-weight: bold;">*</span>(Max amount:<span style="color: red"> 99,999,999.99</span>)
     </label>
     <div class="input-group">
       <span class="input-group-text">₱</span>
-      <input type="number" step="0.01" min="0" name="amount" id="amount" placeholder="0.00" class="form-control" required>
+      <input type="number" step="0.01" min="0" max="99999999.99"  name="amount" id="amount" placeholder="0.00" class="form-control" required oninput="if(this.value > 99999999.99) this.value = 99999999.99;">
     </div>
   </div>
 

@@ -61,8 +61,9 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
         </div>
         <ul class="breadcrumb">
           <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
-          <li class="breadcrumb-item" aria-current="page">Ledger</li>
-          <li class="breadcrumb-item"><a href="../admin/archvdtransactions.php" class=" hover:text-blue-500 transition">Archives</a></li>
+          <li class="breadcrumb-item"><a href="../admin/ledger.php">Ledger</a></li>
+          <li class="breadcrumb-item" aria-current="page">Archives</li>
+          
         </ul>
       </div>
     </div>

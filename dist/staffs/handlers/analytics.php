@@ -133,10 +133,22 @@ if ($result_transaction_types && $result_transaction_types->num_rows > 0) {
     ];
 }
 $result_transaction_types->close();
-// --- MONTHLY SUMMARY DESCRIPTION ---
+// --- MONTHLY SUMMARY DESCRIPTION (COLOR-CODED) ---
 $latest_month_label = isset($monthly_labels) && is_array($monthly_labels) && !empty($monthly_labels)
     ? end($monthly_labels)
     : date('M Y');
+
+// Define consistent Tailwind text colors for highlights
+$colors = [
+    'Food' => 'text-purple-600',
+    'Utilities' => 'text-red-600',
+    'Transportation' => 'text-blue-600',
+    'Equipment' => 'text-yellow-600',
+    'Health' => 'text-green-600',
+    'Maintenance' => 'text-orange-600',
+    'Merchant' => 'text-indigo-600',
+    'Type' => 'text-pink-600'
+];
 
 $highest_merchant = $merchants[0]['title'] ?? 'N/A';
 $highest_category = $categories[0]['title'] ?? 'N/A';
@@ -146,13 +158,27 @@ $top_merchant_value = $merchants[0]['value'] ?? '₱0.00';
 $top_category_value = $categories[0]['value'] ?? '₱0.00';
 $top_type_value = $transaction_types[0]['value'] ?? '₱0.00';
 
+// Get color for category dynamically
+$category_color = $colors[$highest_category] ?? 'text-gray-600';
+
 $monthly_summary = "
-  In {$latest_month_label}, the highest recorded transaction merchant was 
-  <strong>{$highest_merchant}</strong> with a total of <strong>{$top_merchant_value}</strong>. 
-  The leading category was <strong>{$highest_category}</strong> totaling <strong>{$top_category_value}</strong>, 
-  while the most common transaction type was <strong>{$highest_type}</strong> with <strong>{$top_type_value}</strong> in value.<br> 
+  In <span class='font-semibold text-gray-900 dark:text-gray-100'>{$latest_month_label}</span>, 
+  the highest recorded transaction merchant was 
+  <strong class='{$colors['Merchant']}'>{$highest_merchant}</strong> 
+  with a total of 
+  <strong class='{$colors['Merchant']}'>{$top_merchant_value}</strong>. 
+  The leading category was 
+  <strong class='{$category_color}'>{$highest_category}</strong> 
+  totaling 
+  <strong class='{$category_color}'>{$top_category_value}</strong>, 
+  while the most common transaction type was 
+  <strong class='{$colors['Type']}'>{$highest_type}</strong> 
+  with 
+  <strong class='{$colors['Type']}'>{$top_type_value}</strong> 
+  in value.<br> 
   Overall, ChainLedger recorded steady financial activity across all categories, merchants, and transaction types.
 ";
+
 
 
 
