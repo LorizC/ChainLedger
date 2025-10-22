@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ChainLedger | Account Created </title>
+  <title>ChainLedger | Account Created</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../../style.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
@@ -17,10 +17,12 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
     }
+
     .overlay {
       background: rgba(0, 0, 0, 0.55);
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       z-index: 0;
@@ -30,11 +32,13 @@
       from { opacity: 0; transform: translate(-50%, -20px); }
       to { opacity: 1; transform: translate(-50%, 0); }
     }
+
     .animate-fadeInDown {
       animation: fadeInDown 0.3s ease-out;
     }
   </style>
 </head>
+
 <body class="flex items-center justify-center min-h-screen relative font-[Poppins] dark:bg-gray-900 dark:text-white">
 
   <div class="overlay"></div>
@@ -52,6 +56,7 @@
     <h1 class="text-green-700 dark:text-green-400 text-4xl font-semibold mb-4">
       Account Created Successfully!
     </h1>
+
     <h2 class="text-gray-700 dark:text-gray-300 text-2xl font-medium mb-10">
       Account Details
     </h2>
@@ -59,16 +64,21 @@
     <div class="text-left space-y-6 text-xl">
       <p class="text-gray-800 dark:text-gray-200 font-semibold flex justify-between">
         <span>Username:</span>
-        <span class="text-red-600 dark:text-red-400 font-bold ml-2 truncate block max-w-[250px]" title="<?php echo $username; ?>"> <?php echo $username; ?>
-</span>
-
+        <span 
+          class="text-red-600 dark:text-red-400 font-bold ml-2 truncate block max-w-[250px]" 
+          title="<?php echo $username; ?>">
+          <?php echo $username; ?>
+        </span>
       </p>
 
       <div class="flex items-center justify-between">
         <p class="text-gray-800 dark:text-gray-200 font-semibold flex-1">
           Account ID:
-          <span id="accountID" class="text-red-600 dark:text-red-400 font-bold ml-2"><?php echo $accountID; ?></span>
+          <span id="accountID" class="text-red-600 dark:text-red-400 font-bold ml-2">
+            <?php echo $accountID; ?>
+          </span>
         </p>
+
         <button
           onclick="copyAccountID()"
           class="ml-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-blue-600 dark:text-blue-400 px-4 py-2 rounded-lg flex items-center gap-2 text-base font-semibold transition"
@@ -89,18 +99,20 @@
     </button>
 
     <p class="text-gray-500 dark:text-gray-400 text-base mt-6 italic">
-      Tip: Make sure to remember your credentials — they won’t be shown again!</br>
+      Tip: Make sure to remember your credentials — they won’t be shown again!<br>
       📋 Click the copy button to copy your Account ID to clipboard.
     </p>
   </div>
-<!-- Required Js -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/icon/custom-icon.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
+
+  <!-- Required Js -->
+  <script src="../assets/js/plugins/simplebar.min.js"></script>
+  <script src="../assets/js/plugins/popper.min.js"></script>
+  <script src="../assets/js/icon/custom-icon.js"></script>
+  <script src="../assets/js/plugins/feather.min.js"></script>
+  <script src="../assets/js/component.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/script.js"></script>
+
   <script>
     function copyAccountID() {
       const accountIDElement = document.getElementById('accountID');
@@ -122,7 +134,7 @@
       }
     }
 
-    // ✅ Toast now shows at the TOP center
+    // Toast now shows at the TOP center
     function showToast(message) {
       const toast = document.createElement('div');
       toast.textContent = message;

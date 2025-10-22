@@ -1,7 +1,9 @@
-<?php include('../handlers/signup.php'); 
+<?php 
+include('../handlers/signup.php'); 
 $today = date('Y-m-d');
 // Limit birthdate to at least 15 years old
-$maxDate = date('Y-m-d', strtotime('-15 years'));?>
+$maxDate = date('Y-m-d', strtotime('-15 years'));
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,15 +11,16 @@ $maxDate = date('Y-m-d', strtotime('-15 years'));?>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChainLedger | Create Account </title>
+  <title>ChainLedger | Create Account</title>
   <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
 </head>
+
 <body>
-    <!-- Theme Button -->
-<input type="checkbox" id="theme-toggle" hidden />
+  <!-- Theme Button -->
+  <input type="checkbox" id="theme-toggle" hidden />
   <div class="page">
     <label for="theme-toggle" class="theme-button">
       <span class="material-icons light-icon">light_mode</span>
@@ -43,16 +46,21 @@ $maxDate = date('Y-m-d', strtotime('-15 years'));?>
           </div>
         </div>
       </div>
-    <!-- Home Button -->
-<a href="../landingpage/index.php" class="home-button" title="Go to Home">
-  <span class="material-icons">home</span>
-</a>  
+
+      <!-- Home Button -->
+      <a href="../landingpage/index.php" class="home-button" title="Go to Home">
+        <span class="material-icons">home</span>
+      </a>
+
       <!-- Right side: Sign Up form -->
       <div class="inFormBackground">
         <div class="inLoginForm">
-<?php if ($error): ?>
-  <p style="color:red; text-align:center; margin-bottom:0px;"><?= htmlspecialchars($error) ?></p>
-<?php endif; ?>
+
+          <?php if ($error): ?>
+            <p style="color:red; text-align:center; margin-bottom:0px;">
+              <?= htmlspecialchars($error) ?>
+            </p>
+          <?php endif; ?>
 
           <form method="POST" action="signup.php">
             <div class="title">
@@ -61,38 +69,53 @@ $maxDate = date('Y-m-d', strtotime('-15 years'));?>
 
             <div class="inputGroup">
               <label for="firstName">First Name</label>
-              <input type="text" placeholder="Enter First Name" id="firstName" name="first_name" required
-                     pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed"
-                     value="<?= htmlspecialchars($_POST['first_name'] ?? '') ?>" />
+              <input 
+                type="text" 
+                placeholder="Enter First Name" 
+                id="firstName" 
+                name="first_name" 
+                required
+                pattern="[A-Za-z\s]+" 
+                title="Only letters and spaces are allowed"
+                value="<?= htmlspecialchars($_POST['first_name'] ?? '') ?>" 
+              />
             </div>
 
             <div class="inputGroup">
               <label for="lastName">Last Name</label>
-              <input type="text" placeholder="Enter Last Name" id="lastName" name="last_name" required
-                     pattern="[A-Za-z\s]+" title="Only letters and spaces are allowed"
-                     value="<?= htmlspecialchars($_POST['last_name'] ?? '') ?>" />
+              <input 
+                type="text" 
+                placeholder="Enter Last Name" 
+                id="lastName" 
+                name="last_name" 
+                required
+                pattern="[A-Za-z\s]+" 
+                title="Only letters and spaces are allowed"
+                value="<?= htmlspecialchars($_POST['last_name'] ?? '') ?>" 
+              />
             </div>
 
-<div class="inputGroup">
-  <label for="birthdate">Birthdate</label>
-  <input 
-    type="date" 
-    id="birthdate" 
-    name="birthdate" 
-    required
-    max="<?= $maxDate ?>" 
-    min="1900-01-01"
-    oninput="
-      const max = new Date('<?= $maxDate ?>');
-      const entered = new Date(this.value);
-      if (entered > max) {
-        this.setCustomValidity('You must be at least 15 years old to register.');
-      } else {
-        this.setCustomValidity('');
-      }
-    "
-  />
-</div>
+            <div class="inputGroup">
+              <label for="birthdate">Birthdate</label>
+              <input 
+                type="date" 
+                id="birthdate" 
+                name="birthdate" 
+                required
+                max="<?= $maxDate ?>" 
+                min="1900-01-01"
+                oninput="
+                  const max = new Date('<?= $maxDate ?>');
+                  const entered = new Date(this.value);
+                  if (entered > max) {
+                    this.setCustomValidity('You must be at least 15 years old to register.');
+                  } else {
+                    this.setCustomValidity('');
+                  }
+                "
+              />
+            </div>
+
             <div class="inputGroup">
               <label for="gender">Gender</label>
               <select id="gender" name="gender" required>
@@ -116,8 +139,14 @@ $maxDate = date('Y-m-d', strtotime('-15 years'));?>
 
             <div class="inputGroup">
               <label for="security-answer">Your Answer</label>
-              <input type="text" placeholder="Enter your answer" id="security-answer" name="security_answer" required
-                     value="<?= htmlspecialchars($_POST['security_answer'] ?? '') ?>" />
+              <input 
+                type="text" 
+                placeholder="Enter your answer" 
+                id="security-answer" 
+                name="security_answer" 
+                required
+                value="<?= htmlspecialchars($_POST['security_answer'] ?? '') ?>" 
+              />
             </div>
 
             <div class="button-container">
@@ -131,15 +160,16 @@ $maxDate = date('Y-m-d', strtotime('-15 years'));?>
         </div>
       </div>
     </div>
-</div>
-<!-- Required Js -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/icon/custom-icon.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
-<script src="../assets/js/js/scripts.js"></script>
+  </div>
+
+  <!-- Required Js -->
+  <script src="../assets/js/plugins/simplebar.min.js"></script>
+  <script src="../assets/js/plugins/popper.min.js"></script>
+  <script src="../assets/js/icon/custom-icon.js"></script>
+  <script src="../assets/js/plugins/feather.min.js"></script>
+  <script src="../assets/js/component.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/js/scripts.js"></script>
 </body>
 </html>

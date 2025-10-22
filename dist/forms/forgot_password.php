@@ -61,16 +61,16 @@ include('../handlers/forgot_password.php');
 
             <div class="inputGroup">
                 <label for="account_id">Account ID</label>
-  <input type="text" 
-         id="account_id" 
-         name="account_id" 
-         placeholder="Enter 6-digit Account ID" 
-         pattern="\d{6}" 
-         maxlength="6" 
-         required
-         oninput="this.value=this.value.replace(/[^0-9]/g,''); this.setCustomValidity('');"
-         oninvalid="this.setCustomValidity('Please enter exactly 6 digits')" />
-</div>
+             <input type="text" 
+              id="account_id" 
+              name="account_id" 
+              placeholder="Enter 6-digit Account ID" 
+              pattern="\d{6}" 
+              maxlength="6" 
+              required
+              oninput="this.value=this.value.replace(/[^0-9]/g,''); this.setCustomValidity('');"
+              oninvalid="this.setCustomValidity('Please enter exactly 6 digits')" />
+            </div>
 
             <div class="inputGroup">
               <label for="security-question">Security Question</label>

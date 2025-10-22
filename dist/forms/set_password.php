@@ -5,14 +5,16 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChainLedger | Set Password </title>
+  <title>ChainLedger | Set Password</title>
   <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
 </head>
+
 <body>
   <input type="checkbox" id="theme-toggle" hidden />
+
   <div class="page">
     <label for="theme-toggle" class="theme-button">
       <span class="material-icons light-icon">light_mode</span>
@@ -27,6 +29,7 @@
         <div class="welcome-message">
           <h1>Welcome to ChainLedger</h1>
           <p>An Organizational E-wallet Transaction Monitoring System</p>
+
           <div class="features-section">
             <h2>Features</h2>
             <ul class="features-list">
@@ -40,18 +43,17 @@
 
       <!-- Right side -->
       <div class="form-section">
-<?php if (!empty($username)): ?>
-  <div class="success-message global-banner">
-    <span 
-      class="username-ellipsis" 
-      title="<?= htmlspecialchars($username) ?>">
-      Welcome!
-    </span>
-    <br>
-    Please fill the form to complete your registration.
-  </div>
-<?php endif; ?>
-
+        <?php if (!empty($username)): ?>
+          <div class="success-message global-banner">
+            <span 
+              class="username-ellipsis" 
+              title="<?= htmlspecialchars($username) ?>">
+              Welcome!
+            </span>
+            <br>
+            Please fill the form to complete your registration.
+          </div>
+        <?php endif; ?>
 
         <div class="inFormBackground">
           <div class="inLoginForm">
@@ -64,7 +66,6 @@
               <div class="title">
                 <h3 class="login-title">Set Password</h3>
               </div>
-              
 
               <div class="inputGroup">
                 <label for="role">Select Role:</label>
@@ -78,12 +79,26 @@
 
               <div class="inputGroup">
                 <label for="password">Password</label>
-                <input type="password" placeholder="Enter Password" id="password" name="password" minlength="8" required />
+                <input 
+                  type="password" 
+                  placeholder="Enter Password" 
+                  id="password" 
+                  name="password" 
+                  minlength="8" 
+                  required 
+                />
               </div>
 
               <div class="inputGroup">
                 <label for="confirm_password">Confirm Password</label>
-                <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" minlength="8" required />
+                <input 
+                  type="password" 
+                  placeholder="Confirm Password" 
+                  id="confirm_password" 
+                  name="confirm_password" 
+                  minlength="8" 
+                  required 
+                />
               </div>
 
               <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">
@@ -103,57 +118,57 @@
       </div>
     </div>
   </div>
+
   <!-- Required Js -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/icon/custom-icon.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
-<script src="../assets/js/js/scripts.js"></script>
+  <script src="../assets/js/plugins/simplebar.min.js"></script>
+  <script src="../assets/js/plugins/popper.min.js"></script>
+  <script src="../assets/js/icon/custom-icon.js"></script>
+  <script src="../assets/js/plugins/feather.min.js"></script>
+  <script src="../assets/js/component.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/js/scripts.js"></script>
 
-<script>
-  const password = document.getElementById('password');
-  const confirmPassword = document.getElementById('confirm_password');
-  const submitButton = document.querySelector('.submitForm');
-  const toggle = document.getElementById('togglePassword');
+  <script>
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    const submitButton = document.querySelector('.submitForm');
+    const toggle = document.getElementById('togglePassword');
 
-  // Find the title container
-  const titleDiv = document.querySelector('.title');
+    // Find the title container
+    const titleDiv = document.querySelector('.title');
 
-  // Create message element and place it below the title
-  const message = document.createElement('p');
-  message.style.fontSize = '0.9em';
-  message.style.marginTop = '5px';
-  message.style.textAlign = 'center';
-  titleDiv.insertAdjacentElement('afterend', message);
+    // Create message element and place it below the title
+    const message = document.createElement('p');
+    message.style.fontSize = '0.9em';
+    message.style.marginTop = '5px';
+    message.style.textAlign = 'center';
+    titleDiv.insertAdjacentElement('afterend', message);
 
-  // Function to check password match
-  function checkPasswords() {
-    if (password.value && confirmPassword.value) {
-      if (password.value !== confirmPassword.value) {
-        message.textContent = '⚠ Passwords do not match!';
-        message.style.color = 'red';
-        submitButton.disabled = true;
-        submitButton.style.opacity = '0.6';
+    // Function to check password match
+    function checkPasswords() {
+      if (password.value && confirmPassword.value) {
+        if (password.value !== confirmPassword.value) {
+          message.textContent = '⚠ Passwords do not match!';
+          message.style.color = 'red';
+          submitButton.disabled = true;
+          submitButton.style.opacity = '0.6';
+        } else {
+          message.textContent = '✓ Passwords match';
+          message.style.color = 'green';
+          submitButton.disabled = false;
+          submitButton.style.opacity = '1';
+        }
       } else {
-        message.textContent = '✓ Passwords match';
-        message.style.color = 'green';
+        message.textContent = '';
         submitButton.disabled = false;
         submitButton.style.opacity = '1';
       }
-    } else {
-      message.textContent = '';
-      submitButton.disabled = false;
-      submitButton.style.opacity = '1';
     }
-  }
 
-  // Listen for typing events
-  password.addEventListener('input', checkPasswords);
-  confirmPassword.addEventListener('input', checkPasswords);
-</script>
-
+    // Listen for typing events
+    password.addEventListener('input', checkPasswords);
+    confirmPassword.addEventListener('input', checkPasswords);
+  </script>
 </body>
 </html>

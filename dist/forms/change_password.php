@@ -1,7 +1,6 @@
 <?php 
 ob_start();
 include('../handlers/change_password.php');
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,9 +68,11 @@ include('../handlers/change_password.php');
               <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" minlength="8" required />
             </div>
 
-            <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">
-              Show Passwords
-            </p>          
+            <!-- Inline message + Show Passwords -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+             <p id="passwordMessage" style="font-size:0.9em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0;"></p>
+             <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
+            </div>
 
             <div class="button-container">
               <button type="submit" class="submitForm">Change Password</button>
@@ -99,19 +100,8 @@ include('../handlers/change_password.php');
   const password = document.getElementById('password');
   const confirmPassword = document.getElementById('confirm_password');
   const submitButton = document.querySelector('.submitForm');
-  const toggle = document.getElementById('togglePassword');
-  const titleDiv = document.querySelector('.title');
+  const message = document.getElementById('passwordMessage');
 
-  // Create message element below the title
-  const message = document.createElement('p');
-  message.style.fontSize = '0.9em';
-  message.style.marginTop = '5px';
-  message.style.textAlign = 'center';
-  message.style.transition = 'opacity 0.3s ease'; // smooth fade
-  message.style.opacity = '0';
-  titleDiv.insertAdjacentElement('afterend', message);
-
-  // Function to check password match
   function checkPasswords() {
     if (password.value && confirmPassword.value) {
       if (password.value !== confirmPassword.value) {
@@ -135,10 +125,10 @@ include('../handlers/change_password.php');
     }
   }
 
-  // Real-time validation
   password.addEventListener('input', checkPasswords);
   confirmPassword.addEventListener('input', checkPasswords);
 </script>
+
 </body>
 </html>
 <?php ob_end_flush(); ?>
