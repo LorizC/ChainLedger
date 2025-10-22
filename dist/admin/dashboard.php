@@ -95,30 +95,14 @@ if (!empty($_SESSION['flash_success'])): ?>
   </div>
   <?php unset($_SESSION['flash_success']); ?>
 <?php endif; ?>
-
-
 <?php
-// Success messages (from URL parameters)
-if (isset($_GET['deleted'])): ?>
-  <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-    <?php if ($_GET['deleted'] === 'user'): ?>
-      User deleted successfully!
-    <?php elseif ($_GET['deleted'] === 'transaction'): ?>
-      Transaction deleted successfully!
-    <?php endif; ?>
+// Flash error message (session)
+if (!empty($_SESSION['flash_error'])): ?>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 truncate" 
+       title="<?= htmlspecialchars($_SESSION['flash_error']); ?>">
+    <?= htmlspecialchars($_SESSION['flash_error']); ?>
   </div>
-<?php endif; ?>
-
-<?php
-// Error messages (from URL parameters)
-if (isset($_GET['error'])): ?>
-  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-    <?php if ($_GET['error'] === 'delete_failed'): ?>
-      Delete failed. Try again.
-    <?php elseif ($_GET['error'] === 'invalid_id'): ?>
-      Invalid ID. No action taken.
-    <?php endif; ?>
-  </div>
+  <?php unset($_SESSION['flash_error']); ?>
 <?php endif; ?>
 
       <!-- Summary Cards -->

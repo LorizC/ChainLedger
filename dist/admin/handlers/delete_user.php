@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../database/dbconfig.php';
 $conn = Database::getConnection();
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
-    $userId = (int)$_GET['id'];  // Secure cast
+    $accountId = (int)$_GET['id'];  // Secure cast
 
     try {
         // ===============================
@@ -16,8 +16,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         // ===============================
         // Fetch user info
         // ===============================
-        $stmt = $conn->prepare("SELECT account_id, first_name, last_name, birthdate, gender, username, profile_image, date_registered FROM users WHERE user_id = ?");
-        $stmt->bind_param("i", $userId);
+        $stmt = $conn->prepare("SELECT user_id, account_id, first_name, last_name, birthdate, gender, username, profile_image, date_registered FROM users WHERE account_id = ?");
+        $stmt->bind_param("i", $accountId);
         $stmt->execute();
         $userData = $stmt->get_result()->fetch_assoc();
         $stmt->close();
@@ -77,7 +77,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         FROM transactions t
         WHERE t.account_id = ?
     ");
-    $archiveTransactions->bind_param('isi', $accountId, $username, $accountId);
+    $archiveTransactions->bind_param('isi', $accountId, $userData['username'], $accountId);
+
     $archiveTransactions->execute();
 
 if ($archiveTransactions->affected_rows === 0) {
@@ -117,18 +118,18 @@ if ($archiveTransactions->affected_rows === 0) {
         // ===============================
         $conn->commit();
         $_SESSION['flash_success'] = "User deleted successfully! Data archived.";
-        header("Location: dashboard.php?deleted=user");
+        header("Location: ../dashboard.php?deleted=user");
         exit();
 
     } catch (Exception $e) {
         $conn->rollback();
         error_log("Error deleting user: " . $e->getMessage());
         $_SESSION['flash_error'] = "Failed to delete user: " . $e->getMessage();
-        header("Location: dashboard.php?error=delete_failed");
+        header("Location: ../dashboard.php?error=delete_failed");
         exit();
     }
 } else {
     $_SESSION['flash_error'] = "Invalid user ID.";
-    header("Location: dashboard.php?error=invalid_id");
+    header("Location: ../dashboard.php?error=invalid_id");
     exit();
 }
