@@ -71,6 +71,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
         <ul class="breadcrumb">
           <li class="breadcrumb-item"><a href="../admin/dashboard.php">Home</a></li>
           <li class="breadcrumb-item" aria-current="page">Account Registration</li>
+          <li class="breadcrumb-item"><a href="../admin/edit_businessinfo.php" class="hover:text-blue-800 transition">Edit Business</a></li>
         </ul>
       </div>
     </div>
@@ -108,11 +109,11 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
         <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-lg text-gray-700 dark:text-gray-300 text-sm space-y-2 mt-4">
           <p class="font-semibold mb-1">Registration Guidelines:</p>
           <ul class="list-disc list-inside space-y-1">
-  <li>Ensure the <span class="font-semibold text-indigo-600 dark:text-indigo-400">Business ID</span> you enter is valid and matches an existing registered business.</li>
-  <li>Double-check your <span class="font-semibold">Business Password</span> before submission to avoid errors.</li>
-  <li>Only authorized personnel should register a business account using official credentials.</li>
-  <li>Do not share your business login details with unauthorized users.</li>
-  <li>Keep your registration information accurate and up to date to maintain access and data integrity.</li>
+           <li>Ensure the <span class="font-semibold text-indigo-600 dark:text-indigo-400">Business ID</span> you enter is valid and matches an existing registered business.</li>
+           <li>Double-check your <span class="font-semibold">Business Password</span> before submission to avoid errors.</li>
+           <li>Only authorized personnel should register a business account using official credentials.</li>
+           <li>Do not share your business login details with unauthorized users.</li>
+           <li>Keep your registration information accurate and up to date to maintain access and data integrity.</li>
           </ul>
         </div>
       </div>

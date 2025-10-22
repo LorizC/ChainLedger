@@ -182,19 +182,27 @@ while ($row = $actionsResult->fetch_assoc()) {
   <div class="flex items-center gap-2">
     <span class="material-icons-outlined text-gray-500 dark:text-gray-300">person</span>
     <label for="user" class="text-gray-700 dark:text-gray-300 font-medium">User:</label>
-    <select 
-      name="user" id="user"
-      class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
-             bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-100 
-             focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
-      onchange="this.form.submit()">
-      <option value="">All</option>
-      <?php foreach ($userList as $user): ?>
-        <option value="<?= $user['user_id'] ?>" <?= $filterUser == $user['user_id'] ? 'selected' : '' ?>>
-          <?= htmlspecialchars($user['full_name']) ?>
-        </option>
-      <?php endforeach; ?>
-    </select>
+<select 
+  name="user" id="user"
+  class="border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-1.5 
+         bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-100 
+         focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition
+         max-w-[180px] truncate"
+  onchange="this.form.submit()">
+  <option value="">All</option>
+  <?php foreach ($userList as $user): ?>
+    <option 
+      value="<?= $user['user_id'] ?>" 
+      <?= $filterUser == $user['user_id'] ? 'selected' : '' ?>
+      title="<?= htmlspecialchars($user['full_name']) ?>" 
+    >
+      <?= htmlspecialchars(strlen($user['full_name']) > 25 
+            ? substr($user['full_name'], 0, 25) . '…' 
+            : $user['full_name']) ?>
+    </option>
+  <?php endforeach; ?>
+</select>
+
   </div>
 
           <!-- Action Filter -->
@@ -260,9 +268,11 @@ while ($row = $actionsResult->fetch_assoc()) {
                   <td class="px-4 py-2 text-sm">
                     <?= htmlspecialchars($row['user_account_id'] ?? 'N/A') ?>
                   </td>
-                    <td class="px-4 py-2 text-sm">
-                      <?= htmlspecialchars($row['username'] ?? 'N/A') ?>
-                    </td>
+                  <td class="px-4 py-2 text-sm max-w-[180px] truncate whitespace-nowrap overflow-hidden" 
+                  title="<?= htmlspecialchars($row['username'] ?? 'N/A') ?>">
+                 <?= htmlspecialchars($row['username'] ?? 'N/A') ?>
+                  </td>
+
                   <td><?= htmlspecialchars($row["action"]) ?></td>
                   <td><?= htmlspecialchars($row["archived_at"] ?? $row["timestamp"] ?? 'N/A') ?></td>
                 </tr>
