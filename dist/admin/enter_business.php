@@ -101,18 +101,18 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
           </div>
         </div>
         <div class="border-t border-gray-300 mt-4 pt-4">
-          <p class="text-gray-500 dark:text-gray-300">Ensure your account remains secure by updating your password regularly.</p>
+          <p class="text-gray-500 dark:text-gray-300">Make sure your business information is accurate and verified before registration.</p>
         </div>
 
-        <!-- Password Guidelines -->
+        <!-- Registration Guidelines -->
         <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 p-4 rounded-lg text-gray-700 dark:text-gray-300 text-sm space-y-2 mt-4">
           <p class="font-semibold mb-1">Registration Guidelines:</p>
           <ul class="list-disc list-inside space-y-1">
-            <li>Use at least <span class="font-semibold text-indigo-600 dark:text-indigo-400">8 characters</span>.</li>
-            <li>Include a mix of <span class="font-semibold">uppercase</span> and <span class="font-semibold">lowercase</span> letters.</li>
-            <li>Add at least one <span class="font-semibold">number</span> and one <span class="font-semibold">symbol</span> (e.g., !, @, #, $).</li>
-            <li>Avoid using your name or common words.</li>
-            <li>Change your password every few months for maximum security.</li>
+  <li>Ensure the <span class="font-semibold text-indigo-600 dark:text-indigo-400">Business ID</span> you enter is valid and matches an existing registered business.</li>
+  <li>Double-check your <span class="font-semibold">Business Password</span> before submission to avoid errors.</li>
+  <li>Only authorized personnel should register a business account using official credentials.</li>
+  <li>Do not share your business login details with unauthorized users.</li>
+  <li>Keep your registration information accurate and up to date to maintain access and data integrity.</li>
           </ul>
         </div>
       </div>
