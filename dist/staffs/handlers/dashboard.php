@@ -58,7 +58,7 @@ if ($resultRecent) {
         $currency = $row['currency'] ?? 'PHP';
         $symbol = ($currency === 'PHP') ? '₱' : $currency;
         $amount_val = floatval($row['amount']);
-        $is_negative = ($amount_val < 0) || in_array($row['transaction_type'], ['WITHDRAWAL', 'TRANSFER_OUT', 'PAYMENT']);
+        $is_negative = ($amount_val < 0) || in_array($row['transaction_type'], ['WITHDRAWAL', 'TRANSFER', 'PAYMENT']);
                 $row['formatted_amount'] = $symbol . number_format(abs($amount_val), 2);
         $row['is_negative'] = $is_negative;
 
