@@ -59,7 +59,7 @@ auth_guard(['Business Owner', 'Manager']);
 
   <!-- LEFT: Fixed Size Profile Card with Edit Modal -->
 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow 
-            w-full md:w-[500px] flex-shrink-0"
+            w-full md:w-[600px] flex-shrink-0"
      x-data="{
         open:false,
         avatar:'<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>',
@@ -76,7 +76,7 @@ auth_guard(['Business Owner', 'Manager']);
       </button>
     </div>
 
-    <div class="max-w-[220px]">
+    <div class="max-w-[250px]">
       <h2 
         class="text-4xl font-extrabold text-indigo-700 dark:text-white truncate" 
         x-text="username" 
@@ -142,67 +142,67 @@ auth_guard(['Business Owner', 'Manager']);
   </div>
   <hr class="my-6 border-gray-300">
   <div class="flex justify-between">
-    <span class="text-gray-500 dark:text-gray-300 font-medium">Birthdate</span>
-    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["birthdate"]) ?></span>
-  </div>
-  <div class="flex justify-between">
     <span class="text-gray-500 dark:text-gray-300 font-medium">Registered</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
+  </div>
+    <div class="flex justify-between">
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Business Registered</span>
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
   </div>
 </div>
 
       </div>
 
-      <!-- RIGHT: Transactions Table -->
-      <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 min-h-[650px]">
-        <h2 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">Transactions</h2>
 
-        <?php if (empty($transactions)): ?>
-          <div class="flex flex-col items-center justify-center py-16 text-center text-gray-500 dark:text-gray-400">
-            <span class="material-icons-outlined text-5xl mb-3 text-gray-400 dark:text-gray-500">hourglass_empty</span>
-            <p class="text-xl font-medium">No transactions found</p>
-            <p class="text-sm text-gray-400 dark:text-gray-500 mt-1">Your recent activity will appear here.</p>
-          </div>
-        <?php else: ?>
-          <div class="space-y-3 pr-2 text-lg">
-              <?php foreach ($paginatedTransactions as $t): ?>
-              <div class="grid grid-cols-4 gap-4 border-b pb-2">
-                <span class="text-gray-700 font-medium dark:text-gray-300"><?= htmlspecialchars($t["name"]) ?></span>
-                <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["merchant"]) ?></span>
-                <span class="text-gray-800 font-semibold dark:text-white"><?= htmlspecialchars($t["amount"]) ?></span>
-                <span class="text-gray-500 dark:text-gray-300"><?= htmlspecialchars($t["transaction_date"]) ?></span>
-              </div>
-            <?php endforeach; ?>
-          </div>
 
-            <?php if ($totalPages > 1): ?>
-    <div class="flex justify-center mt-4 space-x-2">
-      <?php if ($page > 1): ?>
-        <a href="?page=<?= $page - 1 ?>" 
-           class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-indigo-500 hover:text-white">Prev</a>
-      <?php endif; ?>
-
-      <?php for ($p = 1; $p <= $totalPages; $p++): ?>
-        <a href="?page=<?= $p ?>"
-           class="px-3 py-1 rounded 
-           <?= $p == $page ? 'bg-indigo-600 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-indigo-500 hover:text-white' ?>">
-           <?= $p ?>
-        </a>
-      <?php endfor; ?>
-
-      <?php if ($page < $totalPages): ?>
-        <a href="?page=<?= $page + 1 ?>" 
-           class="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded hover:bg-indigo-500 hover:text-white">Next</a>
-      <?php endif; ?>
+<!-- RIGHT: Transactions Table -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 min-h-[500px]">
+  <div class="space-y-6 text-lg mt-8">
+    
+    <div class="flex justify-between">
+      <span class="text-gray-500 dark:text-gray-300 font-medium">First Name</span>
+      <span class="font-bold text-gray-800 dark:text-white max-w-[150px] truncate overflow-hidden whitespace-nowrap text-right">
+        <?= htmlspecialchars($user["first_name"]) ?>
+      </span>
     </div>
-  <?php endif; ?>
-        <?php endif; ?>
-      </div>
+    <div class="flex justify-between">
+      <span class="text-gray-500 dark:text-gray-300 font-medium">Last Name</span>
+      <span class="font-bold text-gray-800 dark:text-white max-w-[150px] truncate overflow-hidden whitespace-nowrap text-right">
+        <?= htmlspecialchars($user["last_name"]) ?>
+      </span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-500 dark:text-gray-300 font-medium">Gender</span>
+      <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["gender"]) ?></span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-500 dark:text-gray-300 font-medium">Birthdate</span>
+      <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["birthdate"]) ?></span>
+    </div>
 
+    <hr class="my-6 border-gray-300">
+
+    <div class="flex justify-between">
+      <span class="text-gray-500 dark:text-gray-300 font-medium">Business ID</span>
+      <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["gender"]) ?></span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-500 dark:text-gray-300 font-medium">Business Name</span>
+      <span class="font-bold text-gray-800 dark:text-white max-w-[200px] truncate overflow-hidden whitespace-nowrap text-right">
+        <?= htmlspecialchars($user["gender"]) ?>
+      </span>
+    </div>
+    <div class="flex justify-between">
+      <span class="text-gray-500 dark:text-gray-300 font-medium">Business Category</span>
+      <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["gender"]) ?></span>
     </div>
   </div>
 </div>
 
+
+    </div>
+  </div>
+</div>
 <?php include '../includes/footer.php'; ?>
 
 <!-- Required Js -->

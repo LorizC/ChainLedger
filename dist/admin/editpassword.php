@@ -239,11 +239,11 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
       </p>
     </div>
 
-
   <!-- Buttons -->
   <div class="flex justify-end gap-3 pt-4">
-    <button type="reset" class="px-5 py-2 text-gray-600 hover:underline dark:text-gray-300">Cancel</button>
-    <button type="button" @click="confirmModal=true"
+    <button type="reset" class="px-5 py-2 text-gray-600 hover:underline dark:text-gray-300"
+            @click="passwordError=''">Cancel</button>
+    <button type="button" @click="submitForm()"
             class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 dark:bg-slate-100 dark:text-gray-800">
       Save Changes
     </button>
@@ -267,9 +267,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
       </div>
     </div>
   </div>
-
 </form>
-
       </div>
     </div>
   </div>
