@@ -84,7 +84,7 @@ while($row = $result->fetch_assoc()){
     $currency = $row['currency'] ?? 'PHP';
     $symbol = $currency==='PHP'?'₱':$currency;
     $amount_val = floatval($row['amount']);
-    $isNegative = in_array($row['transaction_type'], ['WITHDRAWAL','TRANSFER_OUT','PAYMENT']);
+    $isNegative = in_array($row['transaction_type'], ['WITHDRAWAL','TRANSFER','PAYMENT']);
     $formattedAmount = $symbol . number_format(abs($amount_val),2);
     if($isNegative) $formattedAmount = '-'.$formattedAmount;
 

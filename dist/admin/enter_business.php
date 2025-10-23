@@ -169,7 +169,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/user/default
     <button type="reset" class="px-5 py-2 text-gray-600 hover:underline dark:text-gray-300">Cancel</button>
     <button type="button" @click="confirmModal=true"
             class="px-6 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 dark:bg-slate-100 dark:text-gray-800">
-      Save Changes
+     Register Account
     </button>
   </div>
 
