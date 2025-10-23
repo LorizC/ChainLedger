@@ -92,11 +92,11 @@ auth_guard(['Staff']);
     </label>
     <select name="transaction_type" id="transaction_type" class="form-control" required>
       <option value="">Select Transaction Type</option>
-      <option value="PAYMENT">Payment (Cash out)</option>
-      <option value="REFUND">Refund (Cash In)</option>
-      <option value="WITHDRAWAL">Withdrawal (Cash out)</option>
+      <option value="PAYMENT">Payment (Online Payment)</option>
+      <option value="REFUND">Refund (Receive Funds)</option>
+      <option value="WITHDRAWAL">Withdrawal (Cash Out)</option>
       <option value="DEPOSIT">Deposit (Cash In)</option>
-      <option value="TRANSFER">Transfer (Cash out)</option>
+      <option value="TRANSFER">Transfer (Online Fund Transfer)</option>
     </select>
   </div>
 

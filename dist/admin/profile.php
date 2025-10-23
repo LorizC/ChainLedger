@@ -155,8 +155,8 @@ auth_guard(['Business Owner', 'Manager']);
 
 
 
-<!-- RIGHT: Transactions Table -->
-<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 min-h-[500px]">
+<!-- RIGHT: Table -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 w-full md:max-w-[600px] md:flex-shrink-0 min-h-[500px]">
   <div class="space-y-6 text-lg mt-8">
     
     <div class="flex justify-between">

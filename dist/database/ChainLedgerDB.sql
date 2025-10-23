@@ -3,6 +3,7 @@
 -- =======================
 CREATE DATABASE ChainledgerDB;
 USE ChainledgerDB;
+SELECT * FROM company_personnel
 
 -- =======================
 -- Users Table
@@ -79,6 +80,28 @@ CREATE TABLE registered_businesses (
     password VARCHAR(255) NOT NULL,
     date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+-- ==========================
+-- Registered Accounts Table
+-- ==========================
+CREATE TABLE registered_accounts (
+    account_business_id INT AUTO_INCREMENT PRIMARY KEY,
+    account_id INT NOT NULL,
+    business_id INT NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    role ENUM('Business Owner', 'Manager', 'Staff') NOT NULL,
+    date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (account_id) REFERENCES users(account_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (business_id) REFERENCES registered_businesses(business_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
 
 -- =======================
 -- Transaction Table
@@ -200,6 +223,7 @@ CREATE TABLE archivedlogs (
 SET FOREIGN_KEY_CHECKS = 0;
 
 TRUNCATE TABLE archivedtransactions;
+TRUNCATE TABLE archivedlogs;
 TRUNCATE TABLE archivedaccounts;
 TRUNCATE TABLE security_logs;
 TRUNCATE TABLE transactions;
@@ -207,5 +231,6 @@ TRUNCATE TABLE company_owners;
 TRUNCATE TABLE company_personnel;
 TRUNCATE TABLE security;
 TRUNCATE TABLE users;
+TRUNCATE TABLE registered_businesses;
 
 SET FOREIGN_KEY_CHECKS = 1;
