@@ -88,13 +88,14 @@ include('../handlers/forgot_password.php');
               <input type="text" placeholder="Enter your answer" id="security-answer" name="security_answer" required />
             </div>           
 
-            <div class="button-container">
-              <button type="submit" class="submitForm">Next</button>
-              <div class="signup-row">
-                <p class="new-account">Remembered?</p>
-                <a href="../../index.php" class="submitForm signup-btn">Login</a>
-              </div>
-            </div>
+<div class="button-container">
+  <button type="submit" class="submitForm">Next</button>
+</div>
+
+<div class="link-row">
+  <p class="new-account">Already have an Account?</p>
+  <a href="../../index.php" class="login-link">Log In</a>
+</div>
           </form>
         </div>
       </div>

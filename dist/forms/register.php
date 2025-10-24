@@ -87,13 +87,14 @@
                 Show Passwords
               </p>
 
-            <div class="button-container">
-              <button type="submit" class="submitForm">Register</button>
-              <div class="signup-row">
-                <p class="new-account">Already Registered?</p>
-                <a href="../../index.php" class="submitForm signup-btn">Log In</a>
-              </div>
-            </div>
+<div class="button-container">
+  <button type="submit" class="submitForm">Register</button>
+</div>
+
+<div class="link-row">
+  <p class="new-account">Already registered?</p>
+  <a href="../../index.php" class="login-link">Log In</a>
+</div>
           </form>
         </div>
       </div>

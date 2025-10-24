@@ -74,13 +74,14 @@ include('../handlers/change_password.php');
              <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
             </div>
 
-            <div class="button-container">
-              <button type="submit" class="submitForm">Change Password</button>
-              <div class="signup-row">
-                <p class="new-account">Back to</p>
-                <a href="../../index.php" class="submitForm signup-btn">Login</a>
-              </div>
-            </div>
+<div class="button-container">
+  <button type="submit" class="submitForm">Next</button>
+</div>
+
+<div class="link-row">
+  <p class="new-account">Already have an Account?</p>
+  <a href="../../index.php" class="login-link">Log In</a>
+</div>
           </form>
         </div>
       </div>

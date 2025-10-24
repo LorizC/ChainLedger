@@ -236,7 +236,7 @@ body {
 }
 
 .inputGroup select {
-  width: 90%; /* select width */
+  width: 95%; /* select width */
   height: 45px; /* select height */
   padding: 0 10px; /* inner spacing */
   font-size: 14px; /* text size */
@@ -417,6 +417,52 @@ body {
   min-width: 100px; /* minimum width */
   flex-shrink: 0; /* prevent shrinking */
 }
+
+/* ====================================
+   Login Link (Underlined Text)
+==================================== */
+.link-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.link-row .new-account {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e3a8a;
+}
+
+.login-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2C3E91;
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.login-link:hover {
+  color: #1e2a63;
+  text-decoration-thickness: 2px;
+}
+
+/* Dark mode support */
+#theme-toggle:checked ~ .page .link-row .new-account {
+  color: #ffffff;
+}
+
+#theme-toggle:checked ~ .page .login-link {
+  color: #ffffff;
+}
+
+#theme-toggle:checked ~ .page .login-link:hover {
+  color: #b7b8ff;
+}
+
+
 
 /* ====================================
    Sign Up Row
