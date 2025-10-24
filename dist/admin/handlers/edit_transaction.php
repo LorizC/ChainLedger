@@ -8,7 +8,7 @@ $conn = Database::getConnection();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (
-        isset($_POST['transaction_id'], $_POST['category'], $_POST['merchant'], $_POST['amount'], $_POST['transaction_type'], $_POST['status'])
+        isset($_POST['transaction_id'], $_POST['category'], $_POST['merchant'], $_POST['amount'], $_POST['transaction_type'])
         && !empty($_POST['transaction_id'])
     ) {
         $transaction_id   = (int) $_POST['transaction_id'];
@@ -17,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $amount           = floatval($_POST['amount']);
         $currency         = $_POST['currency'] ?? 'PHP';
         $transaction_type = trim($_POST['transaction_type']);
-        $status           = trim($_POST['status']);
         $transaction_date = !empty($_POST['transaction_date']) ? $_POST['transaction_date'] : date('Y-m-d');
 
         $stmt = $conn->prepare("
@@ -28,19 +27,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 amount = ?, 
                 currency = ?, 
                 transaction_type = ?, 
-                status = ?, 
                 transaction_date = ?
             WHERE transaction_id = ?
         ");
 
         $stmt->bind_param(
-            "ssdssssi",
+            "ssdsssi",
             $detail,
             $merchant,
             $amount,
             $currency,
             $transaction_type,
-            $status,
             $transaction_date,
             $transaction_id
         );
@@ -58,7 +55,7 @@ if (isset($_SESSION['user'])) {
 
     $logService = new SecurityLogService($conn);
     $action = 'TRANSACTION_EDITED';
-    $details = "Edited transaction #{$transaction_id} - {$detail}, ₱{$amount}, {$transaction_type}, {$status}";
+    $details = "Edited transaction #{$transaction_id} - {$detail}, ₱{$amount}, {$transaction_type}";
 
     $logService->logEvent($userId, $accountId, $username, $action, $details);
 }

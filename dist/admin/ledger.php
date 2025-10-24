@@ -185,6 +185,7 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
             <table class="table table-striped table-bordered w-full">
 <thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
   <tr>
+    <th>Action</th>
     <th>User</th>
     <th>Category</th>
     <th>Payment Method</th>
@@ -201,6 +202,18 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
   <?php else: ?>
     <?php foreach ($paginatedLedger as $row): ?>
     <tr>
+<td class="flex items-center space-x-3">
+  <a href="edit_transaction.php?id=<?= $row['transaction_id'] ?>" 
+     class="flex items-center text-blue-600 hover:text-blue-800">
+    <span class="material-icons-outlined text-base mr-1">edit</span> Edit
+  </a>
+  <a href="handlers/delete_transaction.php?id=<?= $row['transaction_id'] ?>" 
+     onclick="return confirm('Are you sure you want to delete this transaction?')" 
+     class="flex items-center text-red-600 hover:text-red-800">
+    <span class="material-icons-outlined text-base mr-1">delete</span> Delete
+  </a>
+</td>
+
       <td class="max-w-[180px] truncate" title="<?= htmlspecialchars($row['user']) ?>"><?= htmlspecialchars($row['user']) ?></td>
       <td><?= $row['details'] ?></td>
       <td><?= $row['merchant'] ?></td>

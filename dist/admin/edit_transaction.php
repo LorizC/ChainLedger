@@ -163,22 +163,9 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 <div class="mb-3">
                   <label for="transaction_date" class="form-label">Date <span style="color:red">*</span></label>
                   <input type="date" name="transaction_date" id="transaction_date"
-                    value="<?= htmlspecialchars($transaction['transaction_date']) ?>" class="form-control" required>
+                    value="<?= htmlspecialchars($transaction['transaction_date']) ?>" class="form-control"min="<?= date('1900-m-d') ?>" max="<?= date('Y-m-d') ?>"  required>
                 </div>
 
-                <!-- Status -->
-                <div class="mb-4">
-                  <label for="status" class="form-label">Status <span style="color:red">*</span></label>
-                  <select name="status" id="status" class="form-control" required>
-                    <?php
-                      $statuses = ['COMPLETED', 'PENDING', 'FAILED', 'CANCELLED'];
-                      foreach ($statuses as $s) {
-                        $selected = ($transaction['status'] === $s) ? 'selected' : '';
-                        echo "<option value='$s' $selected>$s</option>";
-                      }
-                    ?>
-                  </select>
-                </div>
 
                 <!-- Buttons -->
                 <div class="flex mt-1 justify-between items-center flex-wrap">

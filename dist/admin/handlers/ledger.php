@@ -62,10 +62,17 @@ $page = min($page, $totalPages);
 $offset = ($page-1)*$limit;
 $stmt_total->close();
 
-// --- FETCH PAGINATED LEDGER ---
-$sql = "SELECT username AS user, detail AS details, merchant, amount, transaction_type, currency, 
-        DATE_FORMAT(entry_date,'%m-%d-%Y') AS date
-        FROM transactions $where 
+$sql = "SELECT 
+            transaction_id,
+            username AS user, 
+            detail AS details, 
+            merchant, 
+            amount, 
+            transaction_type, 
+            currency, 
+            DATE_FORMAT(entry_date,'%m-%d-%Y') AS date
+        FROM transactions 
+        $where 
         ORDER BY entry_date ".($sortDate==='asc'?'ASC':'DESC')." 
         LIMIT $limit OFFSET $offset";
 
@@ -88,13 +95,15 @@ while($row = $result->fetch_assoc()){
     $formattedAmount = $symbol . number_format(abs($amount_val),2);
     if($isNegative) $formattedAmount = '-'.$formattedAmount;
 
-    $paginatedLedger[] = [
-        'user' => htmlspecialchars($row['user'] ?? 'Unknown'),
-        'details' => htmlspecialchars($row['details'] ?? 'N/A'),
-        'merchant' => htmlspecialchars($row['merchant'] ?? 'N/A'),
-        'amount' => $formattedAmount,
-        'transaction_type' => htmlspecialchars($row['transaction_type'] ?? 'N/A'),
-        'date' => $row['date']
-    ];
+$paginatedLedger[] = [
+    'transaction_id' => $row['transaction_id'],
+    'user' => htmlspecialchars($row['user'] ?? 'Unknown'),
+    'details' => htmlspecialchars($row['details'] ?? 'N/A'),
+    'merchant' => htmlspecialchars($row['merchant'] ?? 'N/A'),
+    'amount' => $formattedAmount,
+    'transaction_type' => htmlspecialchars($row['transaction_type'] ?? 'N/A'),
+    'date' => $row['date']
+];
+
 }
 ?>

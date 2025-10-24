@@ -160,7 +160,6 @@ if (!$userData) {
       Date <span style="color: red; font-weight: bold;">*</span>
     </label>
     <input type="date" name="date" id="date" class="form-control"min="<?= date('1900-m-d') ?>" max="<?= date('Y-m-d') ?>" required>
-    
   </div>
 
   <div class="flex mt-1 justify-between items-center flex-wrap">

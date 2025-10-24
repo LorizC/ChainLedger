@@ -13,6 +13,19 @@ $role = $_SESSION['user']['role'] ?? null;
 
 
 $conn = Database::getConnection();
+// --- CHECK IF THERE ARE ANY TRANSACTIONS ---
+$total_transactions_query = "SELECT COUNT(*) AS total_txn FROM transactions";
+$total_transactions_result = $conn->query($total_transactions_query);
+$total_transactions = 0;
+
+if ($total_transactions_result && $total_transactions_result->num_rows > 0) {
+    $row = $total_transactions_result->fetch_assoc();
+    $total_transactions = (int)$row['total_txn'];
+}
+$total_transactions_result->close();
+
+$has_transactions = $total_transactions > 0;
+
 
 // --- MERCHANTS ---
 $merchants = [];
@@ -54,7 +67,6 @@ if ($result_merchants && $result_merchants->num_rows > 0) {
 }
 $result_merchants->close();
 
-// --- CATEGORIES ---
 // --- CATEGORIES ---
 $categories = [];
 $sql_categories = "
@@ -162,23 +174,34 @@ $top_type_value = $transaction_types[0]['value'] ?? '₱0.00';
 // Get color for category dynamically
 $category_color = $colors[$highest_category] ?? 'text-gray-600';
 
-$monthly_summary = "
-  In <span class='font-semibold text-gray-900 dark:text-gray-100'>{$latest_month_label}</span>, 
-  the highest recorded transaction merchant was 
-  <strong class='{$colors['Merchant']}'>{$highest_merchant}</strong> 
-  with a total of 
-  <strong class='{$colors['Merchant']}'>{$top_merchant_value}</strong>. 
-  The leading category was 
-  <strong class='{$category_color}'>{$highest_category}</strong> 
-  totaling 
-  <strong class='{$category_color}'>{$top_category_value}</strong>, 
-  while the most common transaction type was 
-  <strong class='{$colors['Type']}'>{$highest_type}</strong> 
-  with 
-  <strong class='{$colors['Type']}'>{$top_type_value}</strong> 
-  in value.<br> 
-  Overall, ChainLedger recorded steady financial activity across all categories, merchants, and transaction types.
-";
+if ($has_transactions) {
+    // When there ARE transactions
+    $monthly_summary = "
+      In <span class='font-semibold text-gray-900 dark:text-gray-100'>{$latest_month_label}</span>, 
+      the highest recorded transaction merchant was 
+      <strong class='{$colors['Merchant']}'>{$highest_merchant}</strong> 
+      with a total of 
+      <strong class='{$colors['Merchant']}'>{$top_merchant_value}</strong>. 
+      The leading category was 
+      <strong class='{$category_color}'>{$highest_category}</strong> 
+      totaling 
+      <strong class='{$category_color}'>{$top_category_value}</strong>, 
+      while the most common transaction type was 
+      <strong class='{$colors['Type']}'>{$highest_type}</strong> 
+      with 
+      <strong class='{$colors['Type']}'>{$top_type_value}</strong> 
+      in value.<br> 
+      Overall, ChainLedger recorded steady financial activity across all categories, merchants, and transaction types.
+    ";
+} else {
+    // When there are NO transactions
+    $monthly_summary = "
+      <span class='text-gray-600 dark:text-gray-400 italic'>
+        No monthly transactions yet. Summary will appear once data is available.
+      </span>
+    ";
+}
+
 
 
 // --- MONTHLY LINE CHART (LAST 6 MONTHS) ---
