@@ -101,7 +101,6 @@ CREATE TABLE registered_accounts (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
-drop table transactions
 -- =======================
 -- Transaction Table
 -- =======================
