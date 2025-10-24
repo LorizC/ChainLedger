@@ -109,6 +109,7 @@ CREATE TABLE registered_accounts (
 CREATE TABLE transactions (
     transaction_id INT AUTO_INCREMENT PRIMARY KEY,
     account_id INT NOT NULL,
+    business_id INT NOT NULL,
     username VARCHAR(100) NOT NULL,
     detail ENUM('Food', 'Equipment', 'Transportation', 'Health', 'Maintenance', 'Utilities') NOT NULL,
     merchant ENUM('Gcash', 'Maya', 'Grabpay', 'Paypal', 'Googlepay') NOT NULL,
@@ -122,6 +123,9 @@ CREATE TABLE transactions (
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (business_id) REFERENCES registered_businesses(business_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );

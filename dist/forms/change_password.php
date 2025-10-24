@@ -105,7 +105,7 @@ include('../handlers/change_password.php');
   function checkPasswords() {
     if (password.value && confirmPassword.value) {
       if (password.value !== confirmPassword.value) {
-        message.textContent = '⚠ Passwords do not match!';
+        message.textContent = '⚠ Entered Passwords do not match!';
         message.style.color = 'red';
         message.style.opacity = '1';
         submitButton.disabled = true;
