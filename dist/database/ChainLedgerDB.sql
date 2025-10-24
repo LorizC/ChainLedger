@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2025 at 03:17 PM
+-- Generation Time: Oct 24, 2025 at 03:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -107,35 +107,6 @@ CREATE TABLE `company_personnel` (
   `account_id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
   `company_role` enum('Business Owner','Manager','Staff') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `registered_accounts`
---
-
-CREATE TABLE `registered_accounts` (
-  `account_business_id` int(11) NOT NULL,
-  `account_id` int(11) NOT NULL,
-  `business_id` int(11) NOT NULL,
-  `username` varchar(100) NOT NULL,
-  `role` enum('Business Owner','Manager','Staff') NOT NULL,
-  `date_registered` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `registered_businesses`
---
-
-CREATE TABLE `registered_businesses` (
-  `business_id` int(11) NOT NULL,
-  `business_name` varchar(255) NOT NULL,
-  `business_industry` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `date_registered` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -251,22 +222,6 @@ ALTER TABLE `company_personnel`
   ADD KEY `username` (`username`);
 
 --
--- Indexes for table `registered_accounts`
---
-ALTER TABLE `registered_accounts`
-  ADD PRIMARY KEY (`account_business_id`),
-  ADD KEY `account_id` (`account_id`),
-  ADD KEY `business_id` (`business_id`),
-  ADD KEY `username` (`username`);
-
---
--- Indexes for table `registered_businesses`
---
-ALTER TABLE `registered_businesses`
-  ADD PRIMARY KEY (`business_id`),
-  ADD UNIQUE KEY `business_name` (`business_name`);
-
---
 -- Indexes for table `security`
 --
 ALTER TABLE `security`
@@ -333,12 +288,6 @@ ALTER TABLE `company_personnel`
   MODIFY `personnel_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `registered_accounts`
---
-ALTER TABLE `registered_accounts`
-  MODIFY `account_business_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `security`
 --
 ALTER TABLE `security`
@@ -379,14 +328,6 @@ ALTER TABLE `company_owners`
 ALTER TABLE `company_personnel`
   ADD CONSTRAINT `company_personnel_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `users` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `company_personnel_ibfk_2` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `registered_accounts`
---
-ALTER TABLE `registered_accounts`
-  ADD CONSTRAINT `registered_accounts_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `users` (`account_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `registered_accounts_ibfk_2` FOREIGN KEY (`business_id`) REFERENCES `registered_businesses` (`business_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `registered_accounts_ibfk_3` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `security`
