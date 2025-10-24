@@ -70,16 +70,16 @@ if (isset($_SESSION['user'])) {
             $_SESSION['flash_error'] = "❌ Failed to update transaction. Please try again.";
             $stmt->close();
             $conn->close();
-            header("Location: ../dashboard.php?error=update_failed");
+            header("Location: ../ledger.php?error=update_failed");
             exit();
         }
     } else {
         $_SESSION['flash_error'] = "⚠️ Missing or incomplete form data.";
-        header("Location: ../dashboard.php?error=incomplete_data");
+        header("Location: ../ledger.php?error=incomplete_data");
         exit();
     }
 } else {
-    header("Location: ../dashboard.php?error=invalid_request");
+    header("Location: ../ledger.php?error=invalid_request");
     exit();
 }
 ?>

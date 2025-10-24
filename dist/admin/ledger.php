@@ -66,7 +66,26 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
         </ul>
       </div>
     </div>
-
+<?php
+// Flash success message (session)
+if (!empty($_SESSION['flash_success'])): ?>
+  <div 
+    class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 truncate" 
+    title="<?= htmlspecialchars($_SESSION['flash_success']); ?>"
+  >
+    <?= htmlspecialchars($_SESSION['flash_success']); ?>
+  </div>
+  <?php unset($_SESSION['flash_success']); ?>
+<?php endif; ?>
+<?php
+// Flash error message (session)
+if (!empty($_SESSION['flash_error'])): ?>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 truncate" 
+       title="<?= htmlspecialchars($_SESSION['flash_error']); ?>">
+    <?= htmlspecialchars($_SESSION['flash_error']); ?>
+  </div>
+  <?php unset($_SESSION['flash_error']); ?>
+<?php endif; ?>
     <!-- [ Ledger Table Content ] start -->
     <div class="grid grid-cols-12 gap-x-6">
       <div class="col-span-12">

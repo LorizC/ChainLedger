@@ -141,17 +141,16 @@ if (isset($_SESSION['user'])) {
                   </div>
                 </div>
 
-                <div class="button-container">
-                  <button type="submit" class="submitForm">Log In</button> 
-                  <div class="signup-row">
-                    <p class="new-account">Create New Account</p>
-                    <a href="dist/forms/signup.php" class="submitForm signup-btn">Sign Up</a>
+<div class="button-container">
+  <button type="submit" class="submitForm">Log In</button>
+</div>
+
+<div class="link-row">
+  <p class="new-account">Create an Account</p>
+  <a href="dist/forms/signup.php" class="login-link">Sign Up</a>
+</div>
                     <!-- <a href="dist/forms/signup.php" class="submitForm signup-btn">Create Account</a>
-
-                    <a href="dist/forms/register.php" class="submitForm signup-btn">Register Business</a>                     -->
-                  </div>
-                </div>
-
+                    <a href="dist/forms/register.php" class="submitForm signup-btn">Register Business</a>  -->
               </form>
             </div>
           </div>

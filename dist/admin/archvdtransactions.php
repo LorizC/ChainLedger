@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../services/AuthGuard.php';
 require_once __DIR__ . '/../repositories/UserRepository.php';
-require_once __DIR__ . '/handlers/ledger.php';
+require_once __DIR__ . '/handlers/archived_ledger.php';
 
 // Only allow logged-in users who are Business Owner or Manager
 auth_guard(['Business Owner', 'Manager']);
@@ -186,36 +186,38 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
   </tr>
 </thead>
 <tbody>
-  <?php if (empty($paginatedLedger)): ?>
+  <?php if (empty($archivedLedger)): ?>
     <tr>
-      <td colspan="6" class="text-center py-4 text-gray-500 dark:text-gray-400">No transactions found.</td>
+      <td colspan="6" class="text-center py-4 text-gray-500 dark:text-gray-400">
+        No archived transactions found.
+      </td>
     </tr>
   <?php else: ?>
-    <?php foreach ($paginatedLedger as $row): ?>
-    <tr>
-      <td><?= $row['user'] ?></td>
-      <td><?= $row['details'] ?></td>
-      <td><?= $row['merchant'] ?></td>
-      <td class="<?= strpos($row['amount'], '-') !== false ? 'text-red-600' : 'text-green-600' ?>">
-        <?= $row['amount'] ?>
-      </td>
-      <td>
-        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                     <?= $row['transaction_type'] === 'DEPOSIT' ? 'bg-green-100 text-green-800' : 
-                        ($row['transaction_type'] === 'WITHDRAWAL' ? 'bg-red-100 text-red-800' : 
-                         ($row['transaction_type'] === 'TRANSFER' ? 'bg-yellow-100 text-yellow-800' : 
+    <?php foreach ($archivedLedger as $row): ?>
+      <tr>
+        <td><?= htmlspecialchars($row['username']) ?></td>
+        <td><?= htmlspecialchars($row['detail']) ?></td>
+        <td><?= htmlspecialchars($row['merchant']) ?></td>
+        <td class="<?= $row['transaction_type'] === 'WITHDRAWAL' ? 'text-red-600' : 'text-green-600' ?>">
+          ₱<?= number_format($row['amount'], 2) ?>
+        </td>
+        <td>
+          <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                       <?= $row['transaction_type'] === 'DEPOSIT' ? 'bg-green-100 text-green-800' :
+                          ($row['transaction_type'] === 'WITHDRAWAL' ? 'bg-red-100 text-red-800' :
+                          ($row['transaction_type'] === 'TRANSFER' ? 'bg-yellow-100 text-yellow-800' :
                           ($row['transaction_type'] === 'PAYMENT' ? 'bg-orange-100 text-orange-800' :
                           ($row['transaction_type'] === 'REFUND' ? 'bg-blue-100 text-blue-800' :
-
                           'bg-gray-100 text-gray-800')))) ?>">
-          <?= strtoupper($row['transaction_type']) ?>
-        </span>
-      </td>
-      <td><?= $row['date'] ?></td>
-    </tr>
+            <?= strtoupper($row['transaction_type']) ?>
+          </span>
+        </td>
+        <td><?= htmlspecialchars($row['transaction_date']) ?></td>
+      </tr>
     <?php endforeach; ?>
   <?php endif; ?>
 </tbody>
+
 
 </table>
 <!-- Pagination -->

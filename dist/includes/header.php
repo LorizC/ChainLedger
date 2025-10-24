@@ -66,12 +66,12 @@
                 <a href="profile.php" class="dropdown-item dark:hover:bg-gray-800">
                   <span><i class="ti ti-user"></i><span class="ms-2">My Profile</span></span>
                 </a>
-                <a href="enter_business.php" class="dropdown-item dark:hover:bg-gray-800">
+                <a href="editpassword.php" class="dropdown-item dark:hover:bg-gray-800">
                   <span>
                     <svg class="pc-icon text-muted me-2 inline-block">
                       <use xlink:href="#custom-lock-outline"></use>
                     </svg>
-                    <span>Enter a Business / ChangeP</span>
+                    <span>Change Password</span>
                   </span>
                 </a>
                <a href="#" class="dropdown-item dark:hover:bg-gray-800" onclick="return validateAccess('<?php echo strtolower($_SESSION['user']['company_role'] ?? ''); ?>')"><span><i class="ti ti-report"></i><span class="ms-2"> Security Logs</span>

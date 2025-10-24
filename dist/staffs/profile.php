@@ -61,11 +61,13 @@ auth_guard(['Staff']);
 <div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow 
             w-full md:w-[600px] flex-shrink-0"
            x-data="{
-              open:false,
-              avatar:'<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>',
-              username:'<?= htmlspecialchars($userData['username']) ?>',
-              fullname:'<?= htmlspecialchars($user['name']) ?>'
-           }">
+                 open:false,
+                 avatar:'<?= htmlspecialchars($_SESSION['user']['profile_image'] ?? $currentAvatar) ?>',
+                 username:'<?= htmlspecialchars($userData['username']) ?>',
+                 first_name:'<?= htmlspecialchars($user['first_name']) ?>',
+                 last_name:'<?= htmlspecialchars($user['last_name']) ?>',
+                fullname:'<?= htmlspecialchars($user['first_name'] . ' ' . $user['last_name']) ?>'
+               }">
 
   <!-- Avatar + Name -->
   <div class="flex items-center space-x-6">
@@ -99,9 +101,23 @@ auth_guard(['Staff']);
                 <img :src="avatar" class="w-28 h-28 rounded-full border-4 border-indigo-200 shadow object-cover dark:border-gray-600" alt="Avatar">
               </div>
 
-              <label class="block text-sm font-medium text-gray-600 mb-1 dark:text-gray-300">Username</label>
-              <input type="text" name="username" x-model="username"
-                class="w-full border rounded-lg px-3 py-3 mb-4 text-lg text-gray-700 focus:ring-2 focus:ring-indigo-500">
+<label class="block text-sm font-medium text-gray-600 mb-1 dark:text-gray-300">Username</label>
+<input type="text" name="username" x-model="username"
+  class="w-full border rounded-lg px-3 py-3 mb-4 text-lg text-gray-700 focus:ring-2 focus:ring-indigo-500">
+
+<div class="grid grid-cols-2 gap-4 mb-4">
+  <div>
+    <label class="block text-sm font-medium text-gray-600 mb-1 dark:text-gray-300">First Name</label>
+    <input type="text" name="first_name" value="<?= htmlspecialchars($user['first_name']) ?>"
+      class="w-full border rounded-lg px-3 py-3 text-lg text-gray-700 focus:ring-2 focus:ring-indigo-500">
+  </div>
+  <div>
+    <label class="block text-sm font-medium text-gray-600 mb-1 dark:text-gray-300">Last Name</label>
+    <input type="text" name="last_name" value="<?= htmlspecialchars($user['last_name']) ?>"
+      class="w-full border rounded-lg px-3 py-3 text-lg text-gray-700 focus:ring-2 focus:ring-indigo-500">
+  </div>
+</div>
+
 
               <label class="block text-sm font-medium text-gray-600 mb-2 dark:text-gray-300">Choose Avatar</label>
               <div class="grid grid-cols-5 gap-4 mb-6">
@@ -140,23 +156,28 @@ auth_guard(['Staff']);
     <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["role"]) ?></span>
   </div>
   <hr class="my-6 border-gray-300">
+    <div class="flex justify-between">
+    <span class="text-gray-500 dark:text-gray-300 font-medium">No. of Business Owners</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($ownersCount) ?></span>
+  </div>
   <div class="flex justify-between">
-    <span class="text-gray-500 dark:text-gray-300 font-medium">Registered</span>
-    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">No. of Managers</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($managersCount) ?></span>
   </div>
     <div class="flex justify-between">
-    <span class="text-gray-500 dark:text-gray-300 font-medium">Business Registered</span>
-    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
+    <span class="text-gray-500 dark:text-gray-300 font-medium">No. of Staffs</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($staffsCount)?></span>
   </div>
 </div>
 
-      </div>
+</div>
 
 
 
-<!-- RIGHT: Transactions Table -->
-<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 w-full md:max-w-[600px] md:flex-shrink-0 min-h-[500px]">
+<!-- RIGHT: Table -->
+<div class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow flex-1 w-full md:max-w-[600px] md:flex-shrink-0 min-h-[300px]">
   <div class="space-y-6 text-lg mt-8">
+    
     <div class="flex justify-between">
       <span class="text-gray-500 dark:text-gray-300 font-medium">First Name</span>
       <span class="font-bold text-gray-800 dark:text-white max-w-[150px] truncate overflow-hidden whitespace-nowrap text-right">
@@ -180,20 +201,10 @@ auth_guard(['Staff']);
 
     <hr class="my-6 border-gray-300">
 
-    <div class="flex justify-between">
-      <span class="text-gray-500 dark:text-gray-300 font-medium">Business ID</span>
-      <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["gender"]) ?></span>
-    </div>
-    <div class="flex justify-between">
-      <span class="text-gray-500 dark:text-gray-300 font-medium">Business Name</span>
-      <span class="font-bold text-gray-800 dark:text-white max-w-[200px] truncate overflow-hidden whitespace-nowrap text-right">
-        <?= htmlspecialchars($user["gender"]) ?>
-      </span>
-    </div>
-    <div class="flex justify-between">
-      <span class="text-gray-500 dark:text-gray-300 font-medium">Business Category</span>
-      <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["gender"]) ?></span>
-    </div>
+  <div class="flex justify-between">
+    <span class="text-gray-500 dark:text-gray-300 font-medium">Date Registered</span>
+    <span class="font-bold text-gray-800 dark:text-white"><?= htmlspecialchars($user["registered"]) ?></span>
+  </div>
   </div>
 </div>
 
@@ -201,7 +212,6 @@ auth_guard(['Staff']);
     </div>
   </div>
 </div>
-
 <?php include '../includes/footer.php'; ?>
 
 <!-- Required Js -->

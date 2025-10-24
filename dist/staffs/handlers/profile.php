@@ -15,17 +15,28 @@ $accountId = (int)$_SESSION['user']['account_id'];
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     $newUsername = trim($_POST['username']);
     $newAvatar   = trim($_POST['avatar']);
+    
+    //  New fields for first and last name
+    $newFirstName = trim($_POST['first_name'] ?? '');
+    $newLastName  = trim($_POST['last_name'] ?? '');
 
+    //  Update query includes first_name and last_name now
     if ($newUsername !== '') {
-        $stmt = $conn->prepare("UPDATE users SET username = ?, profile_image = ? WHERE account_id = ?");
-        $stmt->bind_param("ssi", $newUsername, $newAvatar, $accountId);
+        $stmt = $conn->prepare("
+            UPDATE users 
+            SET username = ?, profile_image = ?, first_name = ?, last_name = ?
+            WHERE account_id = ?
+        ");
+        $stmt->bind_param("ssssi", $newUsername, $newAvatar, $newFirstName, $newLastName, $accountId);
         $stmt->execute();
         $stmt->close();
     }
 
-    // Update session immediately
+    //  Update session immediately
     $_SESSION['user']['username'] = $newUsername;
     $_SESSION['user']['profile_image'] = $newAvatar;
+    $_SESSION['user']['first_name'] = $newFirstName;
+    $_SESSION['user']['last_name'] = $newLastName;
 
     // Redirect back to profile page
     $page = isset($_POST['page']) ? (int)$_POST['page'] : 1;
@@ -53,5 +64,22 @@ $user = [
 
 $currentAvatar = $userData['profile_image'] ?: '../../assets/images/user/profile.png';
 
+// ==========================
+// COUNT BUSINESS ROLES
+// ==========================
+$countQuery = $conn->prepare("
+    SELECT 
+        SUM(company_role = 'Business Owner') AS owners,
+        SUM(company_role = 'Manager') AS managers,
+        SUM(company_role = 'Staff') AS staffs
+    FROM company_personnel
+");
+$countQuery->execute();
+$counts = $countQuery->get_result()->fetch_assoc();
+
+// Default to 0 if null
+$ownersCount = $counts['owners'] ?? 0;
+$managersCount = $counts['managers'] ?? 0;
+$staffsCount = $counts['staffs'] ?? 0;
 
 ?>
