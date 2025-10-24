@@ -5,13 +5,13 @@ if (isset($_SESSION['user'])) {
     $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
     if ($role === 'staff') {
-        header("Location: /ChainLedger-System-/dist/staffs/dashboard.php");
+        header("Location: /ChainLedger/dist/staffs/dashboard.php");
     } elseif ($role === 'business owner' || $role === 'manager') {
-        header("Location: /ChainLedger-System-/dist/admin/dashboard.php");
+        header("Location: /ChainLedger/dist/admin/dashboard.php");
     } else {
         session_unset();
         session_destroy();
-        header("Location: /ChainLedger-System-/index.php");
+        header("Location: /ChainLedger/index.php");
     }
     exit;
 }

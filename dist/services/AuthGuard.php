@@ -10,7 +10,7 @@ session_start();
  */
 function auth_guard(array $allowedRoles = null): void {
     if (!isset($_SESSION['user'])) {
-        header("Location: /ChainLedger-System-/index.php");
+        header("Location: /ChainLedger/index.php");
         exit;
     }
 
@@ -20,7 +20,7 @@ function auth_guard(array $allowedRoles = null): void {
         $allowedRoles = array_map('strtolower', $allowedRoles);
 
         if (!in_array($userRole, $allowedRoles)) {
-            header("Location: /ChainLedger-System-/pages.php");
+            header("Location: /ChainLedger/pages.php");
             exit;
         }
     }

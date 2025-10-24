@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../database/dbconfig.php';
 $conn = Database::getConnection();
 
 if (!isset($_SESSION['user'])) {
-    header("Location: /ChainLedger-System-/index.php");
+    header("Location: /ChainLedger/index.php");
     exit();
 }
 

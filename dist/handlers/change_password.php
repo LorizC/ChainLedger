@@ -47,7 +47,7 @@ if (!isset($_SESSION['reset_account_id'])) {
                 // ✅ Cleanup + redirect
                 unset($_SESSION['reset_account_id']); 
                 $_SESSION['flash_success'] = "Your password has been reset successfully. Please login with your new password.";
-                header("Location: /ChainLedger-System-/index.php");
+                header("Location: /ChainLedger/index.php");
                 exit;
             } catch (Exception $e) {
                 $error = "Password reset failed: " . $e->getMessage();

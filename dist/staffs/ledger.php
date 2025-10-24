@@ -9,7 +9,7 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
 // Only staff
 if ($role !== 'staff') {
-    header("Location: /ChainLedger-System-/pages.php");
+    header("Location: /ChainLedger/pages.php");
     exit;
 }
 ?>

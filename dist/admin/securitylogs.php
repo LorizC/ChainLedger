@@ -14,7 +14,7 @@ $userRepo = new UserRepository($conn);
 $accountId = $_SESSION['user']['account_id'] ?? null;
 $userData = $userRepo->findWithRoleByAccountId($accountId);
 if (!$userData) {
-    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
+    header("Location: /ChainLedger/pages.php?error=user_not_found");
     exit();
 }
 
@@ -29,7 +29,7 @@ $accountId = $user['account_id'] ?? null;
 // Preserve filters for pagination
 $baseQuery = $_GET;
 unset($baseQuery['page']);
-$baseURL = '/ChainLedger-System-/dist/admin/security_logs.php?' . http_build_query($baseQuery);
+$baseURL = '/ChainLedger/dist/admin/security_logs.php?' . http_build_query($baseQuery);
 
 ?>
 

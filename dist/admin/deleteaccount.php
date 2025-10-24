@@ -12,7 +12,7 @@ $userRepo = new UserRepository($conn);
 $accountId = $_SESSION['user']['account_id'] ?? null;
 $userData = $userRepo->findWithRoleByAccountId($accountId);
 if (!$userData) {
-    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
+    header("Location: /ChainLedger/pages.php?error=user_not_found");
     exit();
 }
 
@@ -200,7 +200,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
 
   <h2 class="text-2xl font-bold text-red-700 dark:text-red-400 mb-6">Delete Your Account</h2>
 
-  <form x-ref="deleteForm" id="deleteForm" method="POST" action="/ChainLedger-System-/dist/admin/handlers/delete_account.php" class="space-y-6">
+  <form x-ref="deleteForm" id="deleteForm" method="POST" action="/ChainLedger/dist/admin/handlers/delete_account.php" class="space-y-6">
 
     <!-- Security Answer -->
     <div>

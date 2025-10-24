@@ -13,7 +13,7 @@ $userRepo = new UserRepository($conn);
 $accountId = $_SESSION['user']['account_id'] ?? null;
 $userData = $userRepo->findWithRoleByAccountId($accountId);
 if (!$userData) {
-    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
+    header("Location: /ChainLedger/pages.php?error=user_not_found");
     exit();
 }
 

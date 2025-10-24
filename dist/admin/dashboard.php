@@ -13,7 +13,7 @@ $userRepo = new UserRepository($conn);
 $accountId = $_SESSION['user']['account_id'] ?? null;
 $userData = $userRepo->findWithRoleByAccountId($accountId);
 if (!$userData) {
-    header("Location: /ChainLedger-System-/pages.php?error=user_not_found");
+    header("Location: /ChainLedger/pages.php?error=user_not_found");
     exit();
 }
 
@@ -21,7 +21,7 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
 
 // Only business owners or managers
 if ($role !== 'business owner' && $role !== 'manager') {
-    header("Location: /ChainLedger-System-/pages.php");
+    header("Location: /ChainLedger/pages.php");
     exit;
 }
 ?>

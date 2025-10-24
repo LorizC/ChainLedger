@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($accountId) || empty($password)) {
         $_SESSION['flash_error'] = "Please enter both Account ID and Password.";
-        header("Location: /ChainLedger-System-/index.php");
+        header("Location: /ChainLedger/index.php");
         exit;
     }
 
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Wrong credentials
         $_SESSION['flash_error'] = $result['error'];
         $logService->logFailedLogin($accountId);
-        header("Location: /ChainLedger-System-/index.php");
+        header("Location: /ChainLedger/index.php");
         exit;
     } else {
         //  Successful login
@@ -60,13 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $role = strtolower(trim($user['company_role'] ?? ''));
 
         if ($role === 'staff') {
-            header("Location: /ChainLedger-System-/dist/staffs/dashboard.php");
+            header("Location: /ChainLedger/dist/staffs/dashboard.php");
         } elseif ($role === 'business owner' || $role === 'manager') {
-            header("Location: /ChainLedger-System-/dist/admin/dashboard.php");
+            header("Location: /ChainLedger/dist/admin/dashboard.php");
         } else {
             // If not staff/manager/business owner → deny access
             $_SESSION['flash_error'] = "Your account does not have dashboard access.";
-            header("Location: /ChainLedger-System-/index.php");
+            header("Location: /ChainLedger/index.php");
         }
 
         exit;

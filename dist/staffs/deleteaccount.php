@@ -195,7 +195,7 @@ $profileImage = $_SESSION['user']['profile_image'] ?? '../../images/avatars/defa
 
   <h2 class="text-2xl font-bold text-indigo-700 dark:text-indigo-400 mb-6">Delete Your Account</h2>
 
-  <form x-ref="deleteForm" id="deleteForm" method="POST" action="/ChainLedger-System-/dist/staffs/handlers/delete_account.php" class="space-y-6">
+  <form x-ref="deleteForm" id="deleteForm" method="POST" action="/ChainLedger/dist/staffs/handlers/delete_account.php" class="space-y-6">
 
     <!-- Security Answer -->
     <div>
