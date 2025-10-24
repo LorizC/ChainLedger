@@ -102,7 +102,6 @@ CREATE TABLE registered_accounts (
         ON UPDATE CASCADE
 );
 
-
 -- =======================
 -- Transaction Table
 -- =======================
@@ -118,17 +117,18 @@ CREATE TABLE transactions (
     transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
     entry_date DATETIME DEFAULT CURRENT_TIMESTAMP,
     transaction_type ENUM('DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT', 'REFUND') NOT NULL,
-    status ENUM('COMPLETED') NOT NULL DEFAULT 'COMPLETED';
+    status ENUM('COMPLETED') NOT NULL DEFAULT 'COMPLETED',
     FOREIGN KEY (account_id) REFERENCES users(account_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (username) REFERENCES users(username)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (business_id) REFERENCES registered_businesses(business_id)
+    FOREIGN KEY (business_id) REFERENCES registered_accounts(business_id)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
 -- ==========================
 -- Security Logs Table
 -- ========================== 
