@@ -13,10 +13,13 @@ $logService = new SecurityLogService($conn);
 $error = "";
 $success = "";
 
+// 🚨 If user tries to access this page directly without a reset session, redirect them
 if (!isset($_SESSION['reset_account_id'])) {
-    $error = "No reset session found. Please use Forgot Password again.";
-} else {
-    $accountId = $_SESSION['reset_account_id'];
+    header("Location: /ChainLedger/dist/auth/forgot_password.php?error=unauthorized");
+    exit;
+}
+
+$accountId = $_SESSION['reset_account_id'];
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $newPassword = $_POST['new_password'] ?? '';
@@ -54,5 +57,4 @@ if (!isset($_SESSION['reset_account_id'])) {
             }
         }
     }
-}
 ?>
