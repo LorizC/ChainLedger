@@ -100,10 +100,11 @@
                   required 
                 />
               </div>
-
-              <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin-top:5px;">
-                Show Passwords
-              </p>
+              <!-- Inline message + Show Passwords -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+             <p id="passwordMessage" style="font-size:0.7em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
+             <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
+            </div>
 
 <div class="button-container">
   <button type="submit" class="submitForm">Next</button>
@@ -134,40 +135,32 @@
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirm_password');
     const submitButton = document.querySelector('.submitForm');
+    const message = document.getElementById('passwordMessage');
     const toggle = document.getElementById('togglePassword');
 
-    // Find the title container
-    const titleDiv = document.querySelector('.title');
-
-    // Create message element and place it below the title
-    const message = document.createElement('p');
-    message.style.fontSize = '0.9em';
-    message.style.marginTop = '5px';
-    message.style.textAlign = 'center';
-    titleDiv.insertAdjacentElement('afterend', message);
-
-    // Function to check password match
+    // Password match check
     function checkPasswords() {
       if (password.value && confirmPassword.value) {
         if (password.value !== confirmPassword.value) {
-          message.textContent = '⚠ Passwords do not match!';
+          message.textContent = '⚠ Entered Passwords do not match!';
           message.style.color = 'red';
+          message.style.opacity = '1';
           submitButton.disabled = true;
           submitButton.style.opacity = '0.6';
         } else {
           message.textContent = '✓ Passwords match';
           message.style.color = 'green';
+          message.style.opacity = '1';
           submitButton.disabled = false;
           submitButton.style.opacity = '1';
         }
       } else {
         message.textContent = '';
+        message.style.opacity = '0';
         submitButton.disabled = false;
         submitButton.style.opacity = '1';
       }
     }
-
-    // Listen for typing events
     password.addEventListener('input', checkPasswords);
     confirmPassword.addEventListener('input', checkPasswords);
   </script>

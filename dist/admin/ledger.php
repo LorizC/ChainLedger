@@ -216,7 +216,7 @@ if (!empty($_SESSION['flash_error'])): ?>
 <tbody>
   <?php if (empty($paginatedLedger)): ?>
     <tr>
-      <td colspan="6" class="text-center py-4 text-gray-500 dark:text-gray-400">No transactions found.</td>
+      <td colspan="7" class="text-center py-4 text-gray-500 dark:text-gray-400">No transactions found.</td>
     </tr>
   <?php else: ?>
     <?php foreach ($paginatedLedger as $row): ?>

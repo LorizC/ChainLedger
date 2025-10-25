@@ -70,16 +70,16 @@ include('../handlers/change_password.php');
 
             <!-- Inline message + Show Passwords -->
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-             <p id="passwordMessage" style="font-size:0.8em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0;"></p>
+             <p id="passwordMessage" style="font-size:0.7em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
              <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
             </div>
 
 <div class="button-container">
-  <button type="submit" class="submitForm">Next</button>
+  <button type="submit" class="submitForm">Change Password</button>
 </div>
 
 <div class="link-row">
-  <p class="new-account">Already have an Account?</p>
+  <p class="new-account">Remembered?</p>
   <a href="../../index.php" class="login-link">Log In</a>
 </div>
           </form>
@@ -106,7 +106,7 @@ include('../handlers/change_password.php');
   function checkPasswords() {
     if (password.value && confirmPassword.value) {
       if (password.value !== confirmPassword.value) {
-        message.textContent = ' ⚠ Entered Passwords do not match!';
+        message.textContent = ' ⚠ Entered passwords do not match!';
         message.style.color = 'red';
         message.style.opacity = '1';
         submitButton.disabled = true;

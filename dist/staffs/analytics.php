@@ -74,7 +74,7 @@ if(isset($_POST['submit'])){
       <?= $monthly_summary ?>
     </p>
   </div>
-</section>  
+</section>
 
 <!-- E-Wallet Summary -->
 <section class="relative px-2 py-6">
