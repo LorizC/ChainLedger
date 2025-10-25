@@ -141,30 +141,36 @@ if (!empty($_SESSION['flash_success'])): ?>
             <th>Date</th> 
           </tr> 
         </thead> 
-        <tbody> 
-          <?php foreach($transactors as $tx): ?>
-            <tr>
-              <td><?= htmlspecialchars($tx['detail']) ?></td>
-              <td><?= htmlspecialchars($tx['merchant']) ?></td>
-              <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= htmlspecialchars($tx['transaction_type']) ?></span></td>
-<td class="<?= ($tx['amount'] < 0 || in_array($tx['transaction_type'], ['WITHDRAWAL', 'TRANSFER', 'PAYMENT'])) 
-    ? 'text-red-500 font-semibold' 
-    : 'text-green-500 font-semibold' ?>">
-  <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
-</td>
+<tbody>
+<?php if (empty($transactions)): ?>
+  <tr>
+    <td colspan="6" class="text-center py-4 text-gray-500 italic">No Transactions Yet</td>
+  </tr>
+<?php else: ?>
+  <?php foreach($transactions as $tx): ?>
+    <tr>
+      <td><?= htmlspecialchars($tx['detail'] ?? 'N/A') ?></td>
+      <td><?= htmlspecialchars($tx['merchant'] ?? 'N/A') ?></td>
+      <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= htmlspecialchars($tx['transaction_type'] ?? 'Unknown') ?></span></td>
+      <td class="<?= ($tx['amount'] < 0 || in_array($tx['transaction_type'], ['WITHDRAWAL', 'TRANSFER', 'PAYMENT'])) 
+          ? 'text-red-500 font-semibold' 
+          : 'text-green-500 font-semibold' ?>">
+        <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
+      </td>
+      <td>
+        <span class="px-2 py-1 rounded text-xs 
+          <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
+             ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
+             ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
+          <?= ($tx['status']) ?>
+        </span>
+      </td>
+      <td><?= $tx['formatted_date'] ?></td>
+    </tr>
+  <?php endforeach; ?>
+<?php endif; ?>
+</tbody>
 
-              <td>
-                <span class="px-2 py-1 rounded text-xs 
-                  <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
-                     ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
-                     ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
-                  <?= ($tx['status']) ?>
-                </span>
-              </td>
-              <td><?= $tx['formatted_date'] ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody> 
       </table> 
     </div> 
   </div> 
@@ -193,30 +199,43 @@ if (!empty($_SESSION['flash_success'])): ?>
              <th>Date</th> 
             </tr> 
           </thead> 
-          <tbody> 
-                                <?php foreach($recentTransactions as $tx): ?>
-                                    <tr>
-                                        <td class="max-w-[180px] truncate" title="<?= htmlspecialchars($tx['fullname']) ?>"><?= htmlspecialchars($tx['fullname']) ?></td>
-                                        <td><?= $tx['detail'] ?></td>                                        
-                                        <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= $tx['category'] ?></span></td>
-                                        <td class="<?= $tx['is_negative'] ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">  <!-- Red if cost, no minus -->
-                                            <?= $tx['formatted_amount'] ?>  <!-- Positive always -->
-                                        </td>
+ <tbody>
+<?php if (empty($recentTransactions)): ?>
+  <tr>
+    <td colspan="7" class="text-center py-4 text-gray-500 italic">No Transactions Yet</td>
+  </tr>
+<?php else: ?>
+  <?php foreach($recentTransactions as $tx): ?>
+    <tr>
+      <td class="max-w-[180px] truncate" title="<?= htmlspecialchars($tx['fullname']) ?>"><?= htmlspecialchars($tx['fullname']) ?></td>
+      <td><?= $tx['detail'] ?></td>
+      <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= $tx['category'] ?></span></td>
+      <td class="<?= $tx['is_negative'] ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">
+        <?= $tx['formatted_amount'] ?>
+      </td>
+      <td>
+        <span class="px-2 py-1 rounded text-xs 
+          <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' :  
+             ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800') ?>">
+          <?= ($tx['status']) ?>
+        </span>
+      </td>
+      <td><?= $tx['formatted_date'] ?></td>
+      <td class="flex items-center space-x-3">
+        <a href="edit_transaction.php?id=<?= $tx['transaction_id'] ?>" class="flex items-center text-blue-600 hover:text-blue-800">
+          <span class="material-icons-outlined text-base mr-1">edit</span> Edit
+        </a>
+        <a href="handlers/delete_transaction.php?id=<?= $tx['transaction_id'] ?>" 
+           onclick="return confirm('Are you sure you want to delete this transaction?')" 
+           class="flex items-center text-red-600 hover:text-red-800">
+          <span class="material-icons-outlined text-base mr-1">delete</span> Delete
+        </a>
+      </td>
+    </tr>
+  <?php endforeach; ?>
+<?php endif; ?>
+</tbody>
 
-
-              <td>
-                <span class="px-2 py-1 rounded text-xs 
-                  <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' : 
-                     ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' : 
-                     ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
-                  <?= ($tx['status']) ?>
-                </span>
-              </td>
-                                        <td><?= $tx['formatted_date'] ?></td>
-
-                                    </tr>
-                                <?php endforeach; ?>      
-    </tbody> 
   </table> 
 </div>
 </section>
