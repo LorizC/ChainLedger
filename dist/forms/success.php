@@ -36,6 +36,13 @@
     .animate-fadeInDown {
       animation: fadeInDown 0.3s ease-out;
     }
+    /* Make sure popup is always on top */
+.toast,
+.popup {
+  position: fixed;
+  z-index: 9999 !important; /* Higher than overlay (0) and card (10) */
+}
+
   </style>
 </head>
 
@@ -134,18 +141,19 @@
       }
     }
 
-    // Toast now shows at the TOP center
-    function showToast(message) {
-      const toast = document.createElement('div');
-      toast.textContent = message;
-      toast.className = 'fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-fadeInDown text-lg font-semibold';
-      document.body.appendChild(toast);
+function showToast(message) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.className =
+    'toast fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg animate-fadeInDown text-lg font-semibold z-[9999]';
+  document.body.appendChild(toast);
 
-      setTimeout(() => {
-        toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
-        setTimeout(() => toast.remove(), 500);
-      }, 2000);
-    }
+  setTimeout(() => {
+    toast.classList.add('opacity-0', 'transition-opacity', 'duration-500');
+    setTimeout(() => toast.remove(), 500);
+  }, 2000);
+}
+
   </script>
 </body>
 </html>

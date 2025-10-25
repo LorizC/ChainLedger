@@ -42,6 +42,16 @@ include('../handlers/change_password.php');
         </div>
       </div>
 
+<div class="form-section">
+            <div class="success-message global-banner">
+            <span 
+              class="username-ellipsis" 
+              title="<?= htmlspecialchars($username) ?>">
+              Welcome!
+            </span>
+            <br>
+            Please fill the form to complete your registration.
+          </div>
       <!-- Right side: Change Password form -->
       <div class="inFormBackground">
         <div class="inLoginForm">
@@ -82,7 +92,8 @@ include('../handlers/change_password.php');
   <p class="new-account">Remembered?</p>
   <a href="../../index.php" class="login-link">Log In</a>
 </div>
-          </form>
+            </form>
+          </div>
         </div>
       </div>
     </div>

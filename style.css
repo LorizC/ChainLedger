@@ -805,3 +805,12 @@ a {
     text-align: center;
   }
 }
+/* Hide scrollbar but allow scrolling */
+::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;     /* Firefox */
+}
