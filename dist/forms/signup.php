@@ -34,7 +34,7 @@ $maxDate = date('Y-m-d', strtotime('-15 years'));
       <div class="left-side">
         <div class="welcome-message">
           <h1>Welcome to ChainLedger</h1>
-          <p>An Organizational E-wallet Transaction Monitoring System</p>
+          <p>A Business E-wallet Transaction Monitoring System</p>
 
           <div class="features-section">
             <h2>Features</h2>

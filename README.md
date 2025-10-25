@@ -47,7 +47,7 @@
 *-----------------------------*
 1. copy the folder to: c:\xampp\htdocs\
 2. open web browser
-2. on web browser url type: http://localhost/ChainLedger-System-/index.php
+2. on web browser url type: http://localhost/ChainLedger/index.php
 
 *******************************************************************************
 NOTE: DO NOT DELETE ANY FOLDERS ON THE PACKAGE THIS WILL DESTROY THE SYSTEM.
