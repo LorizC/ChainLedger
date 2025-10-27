@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ((empty($accountId) && empty($username)) || empty($question) || empty($answer)) {
         $error = "Please provide either Account ID or Username and answer the security question.";
     } else {
-        // ✅ If username is provided, get account_id from it
+        // If username is provided, get account_id from it
         if (!empty($username)) {
             $stmt = $conn->prepare("SELECT account_id FROM users WHERE username = ? LIMIT 1");
             $stmt->bind_param("s", $username);
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         if (empty($error)) {
-            // ✅ Check if security record exists
+            // Check if security record exists
             $stmt2 = $conn->prepare("SELECT account_id FROM security WHERE account_id = ? LIMIT 1");
             $stmt2->bind_param("i", $accountId);
             $stmt2->execute();
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($result2->num_rows === 0) {
                 $error = "No account found for this user.";
             } else {
-                // ✅ Verify security question + answer
+                // Verify security question + answer
                 if ($passwordService->verifySecurityAnswer($accountId, $question, $answer)) {
                     $_SESSION['reset_account_id'] = $accountId;
                     header("Location: change_password.php");

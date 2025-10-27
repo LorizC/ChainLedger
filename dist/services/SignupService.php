@@ -70,13 +70,13 @@ class SignupService {
             $accountId,
             $defaultProfile
         );
-// Hash the security answer
-$hashedSecurityAnswer = password_hash($securityA, PASSWORD_DEFAULT);
+        // Hash the security answer
+        $hashedSecurityAnswer = password_hash($securityA, PASSWORD_DEFAULT);
 
-// Insert security (leave password NULL for now)
-if (!$this->userRepo->addSecurity($accountId, $username, null, $securityQ, $hashedSecurityAnswer)) {
-    throw new Exception("Failed to add security info for account ID $accountId.");
-}
+       // Insert security (leave password NULL for now)
+        if (!$this->userRepo->addSecurity($accountId, $username, null, $securityQ, $hashedSecurityAnswer)) {
+         throw new Exception("Failed to add security info for account ID $accountId.");
+         }
 
         return [
             "user_id"    => $userId,

@@ -170,8 +170,8 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 <!-- Buttons -->
                 <div class="flex mt-1 justify-between items-center flex-wrap">
                   <div class="form-check">
-                    <button type="submit" name="submit_edit" class="btn btn-primary mx-auto shadow-2xl">Update Transaction</button>
-                    <a href="../admin/dashboard.php" class="btn btn-warning mx-auto shadow-2xl">Cancel</a>
+                    <a href="../admin/dashboard.php" class="btn btn-danger mx-auto shadow-2xl">Cancel</a>
+                    <button type="submit" name="submit_edit" class="btn btn-success mx-auto shadow-2xl">Update Transaction</button>
                   </div>
                 </div>
 

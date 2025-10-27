@@ -149,16 +149,16 @@ $maxDate = date('Y-m-d', strtotime('-15 years'));
               />
             </div>
 
-<div class="button-container">
-  <button type="submit" class="submitForm">Next</button>
-</div>
+            <div class="button-container">
+              <button type="submit" class="submitForm">Next</button>
+            </div>
 
-<div class="link-row">
-  <p class="new-account">Already have an Account?</p>
-  <a href="../../index.php" class="login-link">Log In</a>
-</div>
-
+            <div class="link-row">
+              <p class="new-account">Already have an Account?</p>
+              <a href="../../index.php" class="login-link">Log In</a>
+            </div>
           </form>
+
         </div>
       </div>
     </div>

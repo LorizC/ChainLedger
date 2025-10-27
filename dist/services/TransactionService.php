@@ -1,6 +1,4 @@
 <?php
-// services/TransactionService.php
-
 class TransactionService {
     private mysqli $conn;
 
@@ -115,7 +113,7 @@ class TransactionService {
         $this->conn->begin_transaction();
 
         try {
-            // 1️⃣ Copy to archivedtransactions
+            // Copy to archivedtransactions
             $archiveSql = "
                 INSERT INTO archivedtransactions 
                 (account_id, old_account_id, old_username, detail, merchant, amount, currency, transaction_date, entry_date, transaction_type, status)
@@ -133,7 +131,7 @@ class TransactionService {
             }
             $archiveStmt->close();
 
-            // 2️⃣ Delete from transactions
+            // Delete from transactions
             $deleteSql = "DELETE FROM transactions WHERE transaction_id = ?";
             $deleteStmt = $this->conn->prepare($deleteSql);
             if (!$deleteStmt) {

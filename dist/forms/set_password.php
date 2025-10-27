@@ -45,13 +45,8 @@
       <div class="form-section">
         <?php if (!empty($username)): ?>
           <div class="success-message global-banner">
-            <span 
-              class="username-ellipsis" 
-              title="<?= htmlspecialchars($username) ?>">
-              Welcome!
-            </span>
-            <br>
-            Please fill the form to complete your registration.
+            <span class="username-ellipsis" title="<?= htmlspecialchars($username) ?>">Welcome!</span>
+            <br>Please fill the form to complete your registration.
           </div>
         <?php endif; ?>
 
@@ -61,7 +56,6 @@
               <p class="error-message"><?= htmlspecialchars($error) ?></p>
             <?php endif; ?>
 
-            <!-- Single form only -->
             <form method="post" action="">
               <div class="title">
                 <h3 class="login-title">Set Password</h3>
@@ -100,20 +94,21 @@
                   required 
                 />
               </div>
-              <!-- Inline message + Show Passwords -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-             <p id="passwordMessage" style="font-size:0.7em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
-             <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
-            </div>
 
-<div class="button-container">
-  <button type="submit" class="submitForm">Next</button>
-</div>
+              <!-- Password message + Show Passwords -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                <p id="passwordMessage" style="font-size:0.7em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
+                <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
+              </div>
 
-<div class="link-row">
-  <p class="new-account">Already have an Account?</p>
-  <a href="../../index.php" class="login-link">Log In</a>
-</div>
+              <div class="button-container">
+                <button type="submit" class="submitForm">Next</button>
+              </div>
+
+              <div class="link-row">
+                <p class="new-account">Already have an Account?</p>
+                <a href="../../index.php" class="login-link">Log In</a>
+              </div>
             </form>
           </div>
         </div>
@@ -138,7 +133,7 @@
     const message = document.getElementById('passwordMessage');
     const toggle = document.getElementById('togglePassword');
 
-    // Password match check
+    // Check if passwords match
     function checkPasswords() {
       if (password.value && confirmPassword.value) {
         if (password.value !== confirmPassword.value) {
@@ -161,6 +156,7 @@
         submitButton.style.opacity = '1';
       }
     }
+
     password.addEventListener('input', checkPasswords);
     confirmPassword.addEventListener('input', checkPasswords);
   </script>

@@ -6,9 +6,9 @@ class AuthService {
         $this->userRepo = $userRepo;
     }
 
-    /**
-     * Login using account_id + password
-     */
+    
+      //Login using account_id + password
+     
     public function login(string $accountId, string $password): array {
         //  fetch user with role included
         $user = $this->userRepo->findWithRoleByAccountId($accountId);

@@ -15,6 +15,7 @@ include('../handlers/forgot_password.php');
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
 </head>
+
 <body>
   <input type="checkbox" id="theme-toggle" hidden />
   <div class="page">
@@ -31,7 +32,7 @@ include('../handlers/forgot_password.php');
         <div class="welcome-message">
           <h1>Welcome to ChainLedger</h1>
           <p>A Business E-wallet Transaction Monitoring System</p>
-         
+
           <div class="features-section">
             <h2>Features</h2>
             <ul class="features-list">
@@ -53,29 +54,31 @@ include('../handlers/forgot_password.php');
           <?php if (!empty($error)): ?>
             <p style="color: red; text-align:center;"><?= htmlspecialchars($error) ?></p>
           <?php endif; ?>
-          
+
           <form method="POST" action="">
             <div class="title">
               <h3 class="login-title">Forgot Password</h3>
             </div>
 
             <div class="inputGroup">
-                <label for="account_id">Account ID</label>
-             <input type="text" 
-              id="account_id" 
-              name="account_id" 
-              placeholder="Enter 6-digit Account ID" 
-              pattern="\d{6}" 
-              maxlength="6" 
-              required
-              oninput="this.value=this.value.replace(/[^0-9]/g,''); this.setCustomValidity('');"
-              oninvalid="this.setCustomValidity('Please enter exactly 6 digits')" />
+              <label for="account_id">Account ID</label>
+              <input 
+                type="text" 
+                id="account_id" 
+                name="account_id" 
+                placeholder="Enter 6-digit Account ID" 
+                pattern="\d{6}" 
+                maxlength="6" 
+                required
+                oninput="this.value=this.value.replace(/[^0-9]/g,''); this.setCustomValidity('');"
+                oninvalid="this.setCustomValidity('Please enter exactly 6 digits')" 
+              />
             </div>
 
             <div class="inputGroup">
               <label for="security-question">Security Question</label>
               <select id="security-question" name="security_question" required>
-              <option value="" disabled selected>Select a question</option>
+                <option value="" disabled selected>Select a question</option>
                 <option value="First Pet">What is the name of your first pet?</option>
                 <option value="Elementary School">What is the name of your elementary school?</option>
                 <option value="Favorite Food">What is your favorite food?</option>
@@ -85,31 +88,38 @@ include('../handlers/forgot_password.php');
 
             <div class="inputGroup">
               <label for="security-answer">Your Answer</label>
-              <input type="text" placeholder="Enter your answer" id="security-answer" name="security_answer" required />
-            </div>           
+              <input 
+                type="text" 
+                placeholder="Enter your answer" 
+                id="security-answer" 
+                name="security_answer" 
+                required 
+              />
+            </div>
 
-<div class="button-container">
-  <button type="submit" class="submitForm">Next</button>
-</div>
+            <div class="button-container">
+              <button type="submit" class="submitForm">Next</button>
+            </div>
 
-<div class="link-row">
-  <p class="new-account">Already have an Account?</p>
-  <a href="../../index.php" class="login-link">Log In</a>
-</div>
+            <div class="link-row">
+              <p class="new-account">Already have an Account?</p>
+              <a href="../../index.php" class="login-link">Log In</a>
+            </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
   <!-- Required Js -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/icon/custom-icon.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
-<script src="../assets/js/js/scripts.js"></script>
+  <script src="../assets/js/plugins/simplebar.min.js"></script>
+  <script src="../assets/js/plugins/popper.min.js"></script>
+  <script src="../assets/js/icon/custom-icon.js"></script>
+  <script src="../assets/js/plugins/feather.min.js"></script>
+  <script src="../assets/js/component.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/js/scripts.js"></script>
 </body>
 </html>
 

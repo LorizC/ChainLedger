@@ -8,12 +8,13 @@ include('../handlers/change_password.php');
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ChainLedger - Change Password </title>
+  <title>ChainLedger - Change Password</title>
   <link rel="stylesheet" href="../../style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet" />
 </head>
+
 <body>
   <input type="checkbox" id="theme-toggle" hidden />
   <div class="page">
@@ -30,7 +31,7 @@ include('../handlers/change_password.php');
         <div class="welcome-message">
           <h1>Welcome to ChainLedger</h1>
           <p>A Business E-wallet Transaction Monitoring System</p>
-         
+
           <div class="features-section">
             <h2>Features</h2>
             <ul class="features-list">
@@ -42,105 +43,120 @@ include('../handlers/change_password.php');
         </div>
       </div>
 
-<div class="form-section">
-            <div class="success-message global-banner">
-            <span 
-              class="username-ellipsis" 
-              title="<?= htmlspecialchars($username) ?>">
-              Welcome!
-            </span>
-            <br>
-            Please fill the form to complete your registration.
-          </div>
-      <!-- Right side: Change Password form -->
-      <div class="inFormBackground">
-        <div class="inLoginForm">
-          <?php if (!empty($success)): ?>
-            <p style="color: green; text-align:center;"><?= htmlspecialchars($success) ?></p>
-          <?php endif; ?>
+      <div class="form-section">
+        <div class="success-message global-banner">
+          <span 
+            class="username-ellipsis" 
+            title="<?= htmlspecialchars($username) ?>">
+            Welcome!
+          </span>
+          <br>
+          Please fill the form to complete your registration.
+        </div>
 
-          <?php if (!empty($error)): ?>
-            <p style="color: red; text-align:center;"><?= htmlspecialchars($error) ?></p>
-          <?php endif; ?>
-          
-          <form method="POST" action="">
-            <div class="title">
-              <h3 class="login-title">Change Password</h3>
-            </div>
+        <!-- Right side: Change Password form -->
+        <div class="inFormBackground">
+          <div class="inLoginForm">
+            <?php if (!empty($success)): ?>
+              <p style="color: green; text-align:center;"><?= htmlspecialchars($success) ?></p>
+            <?php endif; ?>
 
-            <div class="inputGroup">
-              <label for="password">New Password</label>
-              <input type="password" placeholder="Enter Password" id="password" name="new_password" minlength="8" required />
-            </div>
+            <?php if (!empty($error)): ?>
+              <p style="color: red; text-align:center;"><?= htmlspecialchars($error) ?></p>
+            <?php endif; ?>
 
-            <div class="inputGroup">
-              <label for="confirm_password">Confirm Password</label>
-              <input type="password" placeholder="Confirm Password" id="confirm_password" name="confirm_password" minlength="8" required />
-            </div>
+            <form method="POST" action="">
+              <div class="title">
+                <h3 class="login-title">Change Password</h3>
+              </div>
 
-            <!-- Inline message + Show Passwords -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-             <p id="passwordMessage" style="font-size:0.7em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
-             <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
-            </div>
+              <div class="inputGroup">
+                <label for="password">New Password</label>
+                <input 
+                  type="password" 
+                  placeholder="Enter Password" 
+                  id="password" 
+                  name="new_password" 
+                  minlength="8" 
+                  required 
+                />
+              </div>
 
-<div class="button-container">
-  <button type="submit" class="submitForm">Change Password</button>
-</div>
+              <div class="inputGroup">
+                <label for="confirm_password">Confirm Password</label>
+                <input 
+                  type="password" 
+                  placeholder="Confirm Password" 
+                  id="confirm_password" 
+                  name="confirm_password" 
+                  minlength="8" 
+                  required 
+                />
+              </div>
 
-<div class="link-row">
-  <p class="new-account">Remembered?</p>
-  <a href="../../index.php" class="login-link">Log In</a>
-</div>
+              <!-- Inline message + Show Passwords -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                <p id="passwordMessage" style="font-size:0.7em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
+                <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
+              </div>
+
+              <div class="button-container">
+                <button type="submit" class="submitForm">Change Password</button>
+              </div>
+
+              <div class="link-row">
+                <p class="new-account">Remembered?</p>
+                <a href="../../index.php" class="login-link">Log In</a>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <!-- Required Js -->
-<script src="../assets/js/plugins/simplebar.min.js"></script>
-<script src="../assets/js/plugins/popper.min.js"></script>
-<script src="../assets/js/icon/custom-icon.js"></script>
-<script src="../assets/js/plugins/feather.min.js"></script>
-<script src="../assets/js/component.js"></script>
-<script src="../assets/js/theme.js"></script>
-<script src="../assets/js/script.js"></script>
-<script src="../assets/js/js/scripts.js"></script>
+  <script src="../assets/js/plugins/simplebar.min.js"></script>
+  <script src="../assets/js/plugins/popper.min.js"></script>
+  <script src="../assets/js/icon/custom-icon.js"></script>
+  <script src="../assets/js/plugins/feather.min.js"></script>
+  <script src="../assets/js/component.js"></script>
+  <script src="../assets/js/theme.js"></script>
+  <script src="../assets/js/script.js"></script>
+  <script src="../assets/js/js/scripts.js"></script>
 
-<script>
-  const password = document.getElementById('password');
-  const confirmPassword = document.getElementById('confirm_password');
-  const submitButton = document.querySelector('.submitForm');
-  const message = document.getElementById('passwordMessage');
+  <script>
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    const submitButton = document.querySelector('.submitForm');
+    const message = document.getElementById('passwordMessage');
 
-  function checkPasswords() {
-    if (password.value && confirmPassword.value) {
-      if (password.value !== confirmPassword.value) {
-        message.textContent = ' ⚠ Entered passwords do not match!';
-        message.style.color = 'red';
-        message.style.opacity = '1';
-        submitButton.disabled = true;
-        submitButton.style.opacity = '0.6';
+    function checkPasswords() {
+      if (password.value && confirmPassword.value) {
+        if (password.value !== confirmPassword.value) {
+          message.textContent = ' ⚠ Entered passwords do not match!';
+          message.style.color = 'red';
+          message.style.opacity = '1';
+          submitButton.disabled = true;
+          submitButton.style.opacity = '0.6';
+        } else {
+          message.textContent = '✓ Passwords match';
+          message.style.color = 'green';
+          message.style.opacity = '1';
+          submitButton.disabled = false;
+          submitButton.style.opacity = '1';
+        }
       } else {
-        message.textContent = '✓ Passwords match';
-        message.style.color = 'green';
-        message.style.opacity = '1';
+        message.textContent = '';
+        message.style.opacity = '0';
         submitButton.disabled = false;
         submitButton.style.opacity = '1';
       }
-    } else {
-      message.textContent = '';
-      message.style.opacity = '0';
-      submitButton.disabled = false;
-      submitButton.style.opacity = '1';
     }
-  }
 
-  password.addEventListener('input', checkPasswords);
-  confirmPassword.addEventListener('input', checkPasswords);
-</script>
-
+    password.addEventListener('input', checkPasswords);
+    confirmPassword.addEventListener('input', checkPasswords);
+  </script>
 </body>
 </html>
 <?php ob_end_flush(); ?>
