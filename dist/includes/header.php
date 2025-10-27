@@ -73,15 +73,7 @@
                     </svg>
                     <span>Change Password</span>
                   </span>
-                </a>
-                      <a href="enter_business.php" class="dropdown-item dark:hover:bg-gray-800">
-                  <span>
-                    <svg class="pc-icon text-muted me-2 inline-block">
-                      <use xlink:href="#custom-lock-outline"></use>
-                    </svg>
-                    <span>Enter a Business Organization</span>
-                  </span>
-                </a>    
+                </a>   
                <a href="#" class="dropdown-item dark:hover:bg-gray-800" onclick="return validateAccess('<?php echo strtolower($_SESSION['user']['company_role'] ?? ''); ?>')"><span><i class="ti ti-report"></i><span class="ms-2"> Security Logs</span>
               </span>
             </a>
