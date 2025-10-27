@@ -166,7 +166,7 @@ class TransactionService {
         $validDetails = ['Food', 'Equipment', 'Transportation', 'Health', 'Maintenance', 'Utilities'];
         $validMerchants = ['Gcash', 'Maya', 'Grabpay', 'Paypal', 'Googlepay'];
         $validTypes = ['DEPOSIT', 'WITHDRAWAL', 'TRANSFER', 'PAYMENT', 'REFUND'];
-        $validStatuses = ['PENDING', 'COMPLETED', 'FAILED', 'CANCELLED'];
+        $validStatuses = ['COMPLETED'];
 
         if (!in_array($detail, $validDetails)) return "Invalid detail/category.";
         if (!in_array($merchant, $validMerchants)) return "Invalid merchant.";

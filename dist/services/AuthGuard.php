@@ -1,5 +1,4 @@
 <?php
-// auth_guard.php
 session_start();
 
 /**
