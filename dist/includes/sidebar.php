@@ -61,7 +61,7 @@ $basePath = ($role === 'staff') ? '../staffs/' : '../admin/';
         <li class="pc-item">
           <a href="<?= $basePath ?>report.php" class="pc-link">
             <span class="pc-micon"><i data-feather="bar-chart-2"></i></span>
-            <span class="pc-mtext">Report</span>
+            <span class="pc-mtext">Report a Transaction</span>
           </a>
         </li>
 
