@@ -35,7 +35,7 @@ $transactions = [];
 $sql = "
     SELECT * FROM transactions 
     WHERE account_id = ? 
-    ORDER BY transaction_date DESC 
+    ORDER BY entry_date DESC 
     LIMIT 10
 ";
 if ($stmt = $conn->prepare($sql)) {
