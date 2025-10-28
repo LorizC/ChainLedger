@@ -223,9 +223,9 @@ $current_month_label = date('F Y');
 if ($highest_merchant !== 'N/A' || $highest_category !== 'N/A' || $highest_type !== 'N/A') {
     $monthly_summary = "
       For <span class='font-semibold text-gray-900 dark:text-gray-100'>{$current_month_label}</span>, 
-      the top merchant is 
+      the highest recorded payment method is 
       <strong class='{$colors['Merchant']}'>{$highest_merchant}</strong> 
-      with total transactions of 
+      with a total of 
       <strong class='{$colors['Merchant']}'>{$top_merchant_value}</strong>. 
       The leading category is 
       <strong class='{$category_color}'>{$highest_category}</strong> 
@@ -234,7 +234,8 @@ if ($highest_merchant !== 'N/A' || $highest_category !== 'N/A' || $highest_type 
       while the most active transaction type is 
       <strong class='{$colors['Type']}'>{$highest_type}</strong> 
       totaling 
-      <strong class='{$colors['Type']}'>{$top_type_value}</strong>.
+      <strong class='{$colors['Type']}'>{$top_type_value}</strong> in value.<br>
+      Overall, ChainLedger recorded this month's financial activity across all categories, merchants, and transaction types.
     ";
 } else {
     $monthly_summary = "
@@ -243,6 +244,8 @@ if ($highest_merchant !== 'N/A' || $highest_category !== 'N/A' || $highest_type 
       </span>
     ";
 }
+
+
 
 
 // --- MONTHLY LINE CHART (LAST 6 MONTHS) ---
