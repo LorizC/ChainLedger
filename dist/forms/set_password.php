@@ -137,13 +137,13 @@
     function checkPasswords() {
       if (password.value && confirmPassword.value) {
         if (password.value !== confirmPassword.value) {
-          message.textContent = '⚠ Entered Passwords do not match!';
+          message.textContent = 'Entered Passwords do not match!';
           message.style.color = 'red';
           message.style.opacity = '1';
           submitButton.disabled = true;
           submitButton.style.opacity = '0.6';
         } else {
-          message.textContent = '✓ Passwords match';
+          message.textContent = 'Passwords match ✓';
           message.style.color = 'green';
           message.style.opacity = '1';
           submitButton.disabled = false;
