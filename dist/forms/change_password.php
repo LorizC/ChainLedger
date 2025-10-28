@@ -161,6 +161,25 @@ include('../handlers/change_password.php');
 
     password.addEventListener('input', checkPasswords);
     confirmPassword.addEventListener('input', checkPasswords);
+  // ==========================
+  // PASSWORD VISIBILITY TOGGLE
+  // ==========================
+  document.addEventListener('click', (e) => {
+    const toggle = e.target.closest('.toggle-password');
+    if (!toggle) return; // Not a toggle icon click
+
+    const input = document.querySelector(toggle.dataset.toggle);
+    if (!input) return;
+
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+
+    const icon = toggle.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('fa-eye', !isHidden);
+      icon.classList.toggle('fa-eye-slash', isHidden);
+    }
+  });    
   </script>
 </body>
 </html>

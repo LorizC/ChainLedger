@@ -188,6 +188,28 @@ if (isset($_SESSION['user'])) {
   <script src="dist/assets/js/theme.js"></script>
   <script src="dist/assets/js/script.js"></script>
   <script src="dist/assets/js/js/scripts.js"></script>
+  <script>
+  // ==========================
+  // PASSWORD VISIBILITY TOGGLE
+  // ==========================
+  document.addEventListener("click", (e) => {
+    const toggle = e.target.closest(".toggle-password");
+    if (!toggle) return; // Click not on the eye icon
+
+    const input = document.querySelector(toggle.dataset.toggle);
+    if (!input) return;
+
+    const isHidden = input.type === "password";
+    input.type = isHidden ? "text" : "password";
+
+    const icon = toggle.querySelector("i");
+    if (icon) {
+      icon.classList.toggle("fa-eye", !isHidden);
+      icon.classList.toggle("fa-eye-slash", isHidden);
+    }
+  });
+</script>
+
 </body>
 </html>
 

@@ -1,40 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-// =========================================================================================================================================== //
-// =======================================================PASSWORD FIELD TOGGLES============================================================== //
-// ========================================================================================================================================== //  
-  document.querySelectorAll(".toggle-password").forEach(toggle => {
-
-    // Single password toggle (eye icon)
-    toggle.addEventListener("click", function () {
-      const input = document.querySelector(this.dataset.toggle);
-      if (!input) return;
-      input.type = input.type === "password" ? "text" : "password";
-      const icon = this.querySelector("i");
-      if (icon) {
-        icon.classList.toggle("fa-eye");
-        icon.classList.toggle("fa-eye-slash");
-      }
-    });
-  });
-
-// Toggle password visibility for each field (like in login page)
-document.querySelectorAll('.toggle-password').forEach(icon => {
-  icon.addEventListener('click', () => {
-    const input = document.querySelector(icon.getAttribute('data-toggle'));
-    const eyeIcon = icon.querySelector('i');
-
-    if (input.type === 'password') {
-      input.type = 'text';
-      eyeIcon.classList.remove('fa-eye');
-      eyeIcon.classList.add('fa-eye-slash');
-    } else {
-      input.type = 'cpassword';
-      eyeIcon.classList.remove('fa-eye-slash');
-      eyeIcon.classList.add('fa-eye');
-    }
-  });
-});
-
 
 // =========================================================================================================================================== //
 // ===========================================================Copy Account ID================================================================= //

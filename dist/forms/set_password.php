@@ -132,6 +132,9 @@
   <script src="../assets/js/js/scripts.js"></script>
 
   <script>
+      // ==========================
+  // PASSWORD VALIDATION
+  // ==========================
     const password = document.getElementById('password');
     const confirmPassword = document.getElementById('confirm_password');
     const submitButton = document.querySelector('.submitForm');
@@ -162,8 +165,28 @@
       }
     }
 
-    password.addEventListener('input', checkPasswords);
-    confirmPassword.addEventListener('input', checkPasswords);
+  password.addEventListener('input', checkPasswords);
+  confirmPassword.addEventListener('input', checkPasswords);
+
+  // ==========================
+  // PASSWORD VISIBILITY TOGGLE
+  // ==========================
+  document.addEventListener('click', (e) => {
+    const toggle = e.target.closest('.toggle-password');
+    if (!toggle) return; // Not a toggle icon
+
+    const input = document.querySelector(toggle.dataset.toggle);
+    if (!input) return;
+
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+
+    const icon = toggle.querySelector('i');
+    if (icon) {
+      icon.classList.toggle('fa-eye', !isHidden);
+      icon.classList.toggle('fa-eye-slash', isHidden);
+    }
+  });
   </script>
 </body>
 </html>

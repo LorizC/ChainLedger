@@ -1,11 +1,13 @@
 <?php
 session_start();
 require_once __DIR__ . '/../../database/dbconfig.php';
+require_once __DIR__ . '/../../services/SecurityLogService.php'; // ✅ Include the logger class
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 $conn = Database::getConnection();
+$logService = new SecurityLogService($conn); // ✅ Initialize logging service
 
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = (int) $_GET['id'];
@@ -58,23 +60,47 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 
         $archive->execute();
 
-        // Debug if the insert fails
         if ($archive->error) {
             throw new Exception("Insert failed: " . $archive->error);
         }
 
         $archive->close();
 
-        // Delete original transaction
+        // Delete the original transaction
         $delete = $conn->prepare("DELETE FROM transactions WHERE transaction_id = ?");
         $delete->bind_param("i", $id);
         $delete->execute();
+
         if ($delete->error) {
             throw new Exception("Delete failed: " . $delete->error);
         }
+
         $delete->close();
 
-        // Commit
+        // ✅ Log the deletion event
+        $userId = $_SESSION['user']['user_id'] ?? 0;
+        $accountId = $_SESSION['user']['account_id'] ?? 0;
+        $username = $_SESSION['user']['username'] ?? 'Unknown';
+        $detail = $transaction['detail'] ?? 'No details';
+
+        $logDetails = sprintf(
+            "Transaction #%d ('%s', Amount: %s %s) was archived and deleted by %s.",
+            $transaction['transaction_id'],
+            $detail,
+            $transaction['currency'] ?? 'PHP',
+            number_format($transaction['amount'], 2),
+            $username
+        );
+
+        $logService->logEvent(
+            $userId,
+            $accountId,
+            $username,
+            "DELETE_TRANSACTION",
+            $logDetails
+        );
+
+        // Commit changes
         $conn->commit();
 
         $_SESSION['flash_success'] = "Transaction moved to archives successfully!";

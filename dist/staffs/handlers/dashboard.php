@@ -36,7 +36,6 @@ $sql = "
     SELECT * FROM transactions 
     WHERE account_id = ? 
     ORDER BY entry_date DESC 
-    LIMIT 10
 ";
 if ($stmt = $conn->prepare($sql)) {
     $stmt->bind_param('i', $accountID);

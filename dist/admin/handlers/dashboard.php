@@ -44,7 +44,6 @@ $sql = "
     SELECT * FROM transactions 
     WHERE account_id = ? 
     ORDER BY entry_date DESC 
-    LIMIT 10
 ";
 if ($stmt = $conn->prepare($sql)) {
     $stmt->bind_param('i', $accountID);
@@ -72,7 +71,6 @@ $sqlTransactors = "
     FROM users u
     LEFT JOIN company_personnel cp ON u.account_id = cp.account_id
     ORDER BY u.date_registered DESC
-    LIMIT 10
 ";
 
 $resultTransactors = $conn->query($sqlTransactors);
