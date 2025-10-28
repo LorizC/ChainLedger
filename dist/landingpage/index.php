@@ -221,10 +221,10 @@
       </div>
 
       <div class="pt-10 text-center">
-        <!-- Light & Dark Mode -->
-        <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">dark_mode</span>
-        <h3 class="font-bold">Light & Dark Mode</h3>
-        <p>Switch themes easily for comfort and accessibility.</p>
+        <!-- Archives Section -->
+        <span class="material-symbols-outlined text-brand-blue text-4xl mb-4 mt-10">archive</span>
+        <h3 class="font-bold">Archives</h3>
+        <p>View and manage stored or past transactions or logs easily.</p>
       </div>
 
       <div class="pt-10 text-center">
