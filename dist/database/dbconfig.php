@@ -13,7 +13,7 @@ class Database {
     // Get the database connection
     public static function getConnection(): mysqli {
         if (self::$instance === null) {
-            self::$instance = new mysqli("localhost", "root", "", "ChainledgerDB");
+            self::$instance = new mysqli("127.0.0.1", "root", "", "ChainledgerDB", "3306");
 
             if (self::$instance->connect_error) {
                 die(" Database connection failed: " . self::$instance->connect_error);

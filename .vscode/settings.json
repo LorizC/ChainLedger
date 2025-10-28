@@ -15,6 +15,21 @@
             "database": "ChainLedgerDB",
             "username": "root",
             "password": ""
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3307,
+            "driver": "MySQL",
+            "name": "chainledgerdb",
+            "database": "chainledgerdb",
+            "username": "root",
+            "password": ""
         }
     ]
 }

@@ -229,17 +229,6 @@ if ($role !== 'staff') {
                                                 </span>
                                             </td>
                                             <td><?= $tx['formatted_date'] ?></td>
-                                            <td class="flex items-center space-x-3">
-                                                <a href="edit_transaction.php?id=<?= $tx['transaction_id'] ?>" 
-                                                   class="flex items-center text-blue-600 hover:text-blue-800">
-                                                    <span class="material-icons-outlined text-base mr-1">edit</span> Edit
-                                                </a>
-                                                <a href="handlers/delete_transaction.php?id=<?= $tx['transaction_id'] ?>"
-                                                   onclick="return confirm('Are you sure you want to delete this transaction?')"
-                                                   class="flex items-center text-red-600 hover:text-red-800">
-                                                    <span class="material-icons-outlined text-base mr-1">delete</span> Delete
-                                                </a>
-                                            </td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
