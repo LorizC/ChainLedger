@@ -20,18 +20,6 @@
     html{
       scroll-behavior: smooth;
     }
-
-/* Home section always takes full viewport height */
-#home {
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Class to lock scroll on the body */
-body.lock-scroll {
-  overflow: hidden;
-  height: 100vh;
-}
   </style>
 </head>
 <body class="font-sans text-gray-800">

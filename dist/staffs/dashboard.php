@@ -117,66 +117,55 @@ if ($role !== 'staff') {
                 </div>
             </section>
 
-            <!-- My Transactions Table -->
-            <section class="content mt-8">
-                <div class="card table-card">
-                    <div class="card-header flex justify-between items-center">
-                        <h5>My Transactions</h5>
-                        <a href="#" onclick="exportTableToText('myTransactionsTable', 'my_transactions.txt')" 
-                           class="text-primary-500 text-sm flex items-center">
-                            <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
-                        </a>
-                    </div>
-
-                    <div class="card-body overflow-x-auto">
-                        <table id="myTransactionsTable" class="table table-hover w-full">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>Details</th>
-                                    <th>Type</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if (empty($transactions)): ?>
-                                    <tr>
-                                        <td colspan="6" class="text-center py-4 text-gray-500 italic">No Transactions Yet</td>
-                                    </tr>
-                                <?php else: ?>
-                                    <?php foreach ($transactions as $tx): ?>
-                                        <tr>
-                                            <td><?= htmlspecialchars($tx['detail'] ?? 'N/A') ?></td>
-                                            <td><?= htmlspecialchars($tx['merchant'] ?? 'N/A') ?></td>
-                                            <td>
-                                                <span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800">
-                                                    <?= htmlspecialchars($tx['transaction_type'] ?? 'Unknown') ?>
-                                                </span>
-                                            </td>
-                                            <td class="<?= ($tx['amount'] < 0 || in_array($tx['transaction_type'], ['WITHDRAWAL', 'TRANSFER', 'PAYMENT']))
-                                                ? 'text-red-500 font-semibold'
-                                                : 'text-green-500 font-semibold' ?>">
-                                                <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
-                                            </td>
-                                            <td>
-                                                <span class="px-2 py-1 rounded text-xs 
-                                                    <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' :
-                                                        ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
-                                                        ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
-                                                    <?= ($tx['status']) ?>
-                                                </span>
-                                            </td>
-                                            <td><?= $tx['formatted_date'] ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+      <!-- My Transactions -->
+      <section class="content mt-8">
+        <div class="card table-card">
+          <div class="card-header flex justify-between items-center">
+            <h5>My Transactions</h5>
+          </div>
+          <div class="card-body overflow-x-auto">
+            <table id="myTransactionsTable" class="table table-hover w-full">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Details</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if (empty($transactions)): ?>
+                  <tr>
+                    <td colspan="6" class="text-center py-4 text-gray-500 italic">No Transactions Yet</td>
+                  </tr>
+                <?php else: ?>
+                  <?php foreach($transactions as $tx): ?>
+                    <tr>
+                      <td><?= htmlspecialchars($tx['detail'] ?? 'N/A') ?></td>
+                      <td><?= htmlspecialchars($tx['merchant'] ?? 'N/A') ?></td>
+                      <td><span class="px-2 py-1 rounded text-xs bg-blue-100 text-blue-800"><?= htmlspecialchars($tx['transaction_type'] ?? 'Unknown') ?></span></td>
+                      <td class="<?= ($tx['amount'] < 0 || in_array($tx['transaction_type'], ['WITHDRAWAL', 'TRANSFER', 'PAYMENT'])) ? 'text-red-500 font-semibold' : 'text-green-500 font-semibold' ?>">
+                        <?= ($tx['currency'] === 'PHP' ? '₱' : $tx['currency']) . number_format(abs($tx['amount']), 2) ?>
+                      </td>
+                      <td>
+                        <span class="px-2 py-1 rounded text-xs 
+                          <?= $tx['status'] === 'COMPLETED' ? 'bg-green-100 text-green-800' :
+                             ($tx['status'] === 'PENDING' ? 'bg-yellow-100 text-yellow-800' :
+                             ($tx['status'] === 'FAILED' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800')) ?>">
+                          <?= ($tx['status']) ?>
+                        </span>
+                      </td>
+                      <td><?= $tx['formatted_date'] ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                <?php endif; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
 
             <!-- Recent Transactions Table -->
             <section class="content mt-8">

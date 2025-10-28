@@ -39,7 +39,7 @@ $sql = "
     LIMIT 10
 ";
 if ($stmt = $conn->prepare($sql)) {
-    $stmt->bind_param('i', $accountId);
+    $stmt->bind_param('i', $accountID);
     $stmt->execute();
     $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {

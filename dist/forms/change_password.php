@@ -80,6 +80,9 @@ include('../handlers/change_password.php');
                   minlength="8" 
                   required 
                 />
+                  <span data-toggle="#password" class="toggle-password"style="position:absolute; right:70px; top:31%; transform:translateY(-50%); cursor:pointer;">
+                    <i class="fas fa-eye"></i>
+                  </span>                
               </div>
 
               <div class="inputGroup">
@@ -92,12 +95,14 @@ include('../handlers/change_password.php');
                   minlength="8" 
                   required 
                 />
+                  <span data-toggle="#confirm_password" class="toggle-password"style="position:absolute; right:70px; top:49%; transform:translateY(-50%); cursor:pointer;">
+                    <i class="fas fa-eye"></i>
+                  </span>                
               </div>
 
               <!-- Inline message + Show Passwords -->
               <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                <p id="passwordMessage" style="font-size:0.7em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
-                <p id="togglePassword" style="font-size:0.9em; color:blue; cursor:pointer; margin:0;">Show Passwords</p>
+                <p id="passwordMessage" style="font-size:0.9em; margin:0; text-align:left; transition:opacity 0.3s ease; opacity:0; height:2em;"></p>
               </div>
 
               <div class="button-container">

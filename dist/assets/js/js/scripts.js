@@ -17,20 +17,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Toggle both password + confirm password
-  const togglePasswordBtn = document.getElementById("togglePassword");
-  if (togglePasswordBtn) {
-    togglePasswordBtn.addEventListener("click", () => {
-      const fields = [
-        document.getElementById("password"),
-        document.getElementById("confirm_password"),    
-      ];
-      if (!fields[0] || !fields[1]) return;
-      const isHidden = fields.every(f => f.type === "password");
-      fields.forEach(f => f.type = isHidden ? "text" : "password");
-      togglePasswordBtn.textContent = isHidden ? "Hide Passwords" : "Show Passwords";
-    });
-  }
+// Toggle password visibility for each field (like in login page)
+document.querySelectorAll('.toggle-password').forEach(icon => {
+  icon.addEventListener('click', () => {
+    const input = document.querySelector(icon.getAttribute('data-toggle'));
+    const eyeIcon = icon.querySelector('i');
+
+    if (input.type === 'password') {
+      input.type = 'text';
+      eyeIcon.classList.remove('fa-eye');
+      eyeIcon.classList.add('fa-eye-slash');
+    } else {
+      input.type = 'cpassword';
+      eyeIcon.classList.remove('fa-eye-slash');
+      eyeIcon.classList.add('fa-eye');
+    }
+  });
+});
+
 
 // =========================================================================================================================================== //
 // ===========================================================Copy Account ID================================================================= //
