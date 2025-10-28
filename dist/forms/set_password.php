@@ -81,7 +81,7 @@
                   minlength="8" 
                   required 
                 />
-                  <span data-toggle="#password" class="toggle-password" style="position:absolute; right:70px; top:42%; transform:translateY(-50%); cursor:pointer;">
+                  <span data-toggle="#password" class="toggle-password" style="position:absolute; right:70px; top:41.5%; transform:translateY(-50%); cursor:pointer;">
                     <i class="fas fa-eye"></i> 
                   </span>
               </div>
@@ -96,7 +96,7 @@
                   minlength="8" 
                   required 
                 />
-                  <span data-toggle="#confirm_password" class="toggle-password"style="position:absolute; right:70px; top:58%; transform:translateY(-50%); cursor:pointer;">
+                  <span data-toggle="#confirm_password" class="toggle-password"style="position:absolute; right:70px; top:57%; transform:translateY(-50%); cursor:pointer;">
                     <i class="fas fa-eye"></i>
                   </span>
               </div>

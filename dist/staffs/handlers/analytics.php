@@ -146,12 +146,8 @@ if ($result_transaction_types && $result_transaction_types->num_rows > 0) {
     ];
 }
 $result_transaction_types->close();
-// --- MONTHLY SUMMARY DESCRIPTION (COLOR-CODED) ---
-$latest_month_label = isset($monthly_labels) && is_array($monthly_labels) && !empty($monthly_labels)
-    ? end($monthly_labels)
-    : date('M Y');
-
-// Define consistent Tailwind text colors for highlights
+// --- MONTHLY SUMMARY DESCRIPTION (BASED ON CURRENT MONTH) ---
+$current_month = date('Y-m');
 $colors = [
     'Food' => 'text-purple-600',
     'Utilities' => 'text-red-600',
@@ -163,47 +159,90 @@ $colors = [
     'Type' => 'text-pink-600'
 ];
 
-$highest_merchant = $merchants[0]['title'] ?? 'N/A';
-$highest_category = $categories[0]['title'] ?? 'N/A';
-$highest_type = $transaction_types[0]['type'] ?? 'N/A';
+// --- FETCH TOP MERCHANT, CATEGORY, TYPE FOR CURRENT MONTH ---
+$sql_top_merchant = "
+    SELECT merchant, SUM(ABS(amount)) AS total_amount
+    FROM transactions
+    WHERE DATE_FORMAT(transaction_date, '%Y-%m') = '$current_month'
+    GROUP BY merchant
+    ORDER BY total_amount DESC
+    LIMIT 1
+";
+$sql_top_category = "
+    SELECT detail, SUM(ABS(amount)) AS total_amount
+    FROM transactions
+    WHERE DATE_FORMAT(transaction_date, '%Y-%m') = '$current_month'
+    GROUP BY detail
+    ORDER BY total_amount DESC
+    LIMIT 1
+";
+$sql_top_type = "
+    SELECT transaction_type, SUM(ABS(amount)) AS total_amount
+    FROM transactions
+    WHERE DATE_FORMAT(transaction_date, '%Y-%m') = '$current_month'
+    GROUP BY transaction_type
+    ORDER BY total_amount DESC
+    LIMIT 1
+";
 
-$top_merchant_value = $merchants[0]['value'] ?? '₱0.00';
-$top_category_value = $categories[0]['value'] ?? '₱0.00';
-$top_type_value = $transaction_types[0]['value'] ?? '₱0.00';
+$highest_merchant = $top_merchant_value = 'N/A';
+$highest_category = $top_category_value = 'N/A';
+$highest_type = $top_type_value = 'N/A';
 
-// Get color for category dynamically
+// Merchant
+$res = $conn->query($sql_top_merchant);
+if ($res && $res->num_rows > 0) {
+    $row = $res->fetch_assoc();
+    $highest_merchant = $row['merchant'];
+    $top_merchant_value = '₱' . number_format($row['total_amount'], 2);
+}
+$res->close();
+
+// Category
+$res = $conn->query($sql_top_category);
+if ($res && $res->num_rows > 0) {
+    $row = $res->fetch_assoc();
+    $highest_category = $row['detail'];
+    $top_category_value = '₱' . number_format($row['total_amount'], 2);
+}
+$res->close();
+
+// Type
+$res = $conn->query($sql_top_type);
+if ($res && $res->num_rows > 0) {
+    $row = $res->fetch_assoc();
+    $highest_type = ucfirst($row['transaction_type']);
+    $top_type_value = '₱' . number_format($row['total_amount'], 2);
+}
+$res->close();
+
 $category_color = $colors[$highest_category] ?? 'text-gray-600';
+$current_month_label = date('F Y');
 
-if ($has_transactions) {
-    // When there ARE transactions
+// --- GENERATE MONTHLY SUMMARY MESSAGE ---
+if ($highest_merchant !== 'N/A' || $highest_category !== 'N/A' || $highest_type !== 'N/A') {
     $monthly_summary = "
-      In <span class='font-semibold text-gray-900 dark:text-gray-100'>{$latest_month_label}</span>, 
-      the highest recorded transaction merchant was 
+      For <span class='font-semibold text-gray-900 dark:text-gray-100'>{$current_month_label}</span>, 
+      the top merchant is 
       <strong class='{$colors['Merchant']}'>{$highest_merchant}</strong> 
-      with a total of 
+      with total transactions of 
       <strong class='{$colors['Merchant']}'>{$top_merchant_value}</strong>. 
-      The leading category was 
+      The leading category is 
       <strong class='{$category_color}'>{$highest_category}</strong> 
-      totaling 
+      amounting to 
       <strong class='{$category_color}'>{$top_category_value}</strong>, 
-      while the most common transaction type was 
+      while the most active transaction type is 
       <strong class='{$colors['Type']}'>{$highest_type}</strong> 
-      with 
-      <strong class='{$colors['Type']}'>{$top_type_value}</strong> 
-      in value.<br> 
-      Overall, ChainLedger recorded steady financial activity across all categories, merchants, and transaction types.
+      totaling 
+      <strong class='{$colors['Type']}'>{$top_type_value}</strong>.
     ";
 } else {
-    // When there are NO transactions
     $monthly_summary = "
       <span class='text-gray-600 dark:text-gray-400 italic'>
-        No monthly transactions yet. Summary will appear once data is available.
+        No transactions recorded for this month yet.
       </span>
     ";
 }
-
-
-
 
 
 // --- MONTHLY LINE CHART (LAST 6 MONTHS) ---
