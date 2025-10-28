@@ -79,12 +79,15 @@
             </a>
                   <!-- Logout -->
                 <div class="grid my-3">
-                  <button class="btn bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600" type="button">
-                    <svg class="pc-icon me-2 w-[22px] h-[22px]">
-                      <use xlink:href="#custom-logout-1-outline"></use>
-                    </svg>
-                    <a href="logout.php" id="logoutBtn" class="label">Log-Out</a>
-                  </button>
+<a href="logout.php"
+   id="logoutBtn"
+   class="btn bg-indigo-600 flex items-center justify-center text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+  <svg class="pc-icon me-2 w-[22px] h-[22px]">
+    <use xlink:href="#custom-logout-1-outline"></use>
+  </svg>
+  Log-Out
+</a>
+
                 </div>
               </div>
             </div>
