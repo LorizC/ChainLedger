@@ -396,6 +396,55 @@ document.addEventListener("DOMContentLoaded", () => {
   renderTransactionsPage(1);
 });
 </script>
+<script>
+/**
+ * Export table content (excluding "Action" column) to a text or CSV file.
+ * @param {string} tableId - The table's HTML ID
+ * @param {string} filename - The file name to download (e.g., 'transactions.txt')
+ */
+function exportTableToText(tableId, filename = 'export.txt') {
+  const table = document.getElementById(tableId);
+  if (!table) {
+    alert("Table not found!");
+    return;
+  }
+
+  let rows = [];
+  const headerCells = Array.from(table.querySelectorAll("thead th"));
+  const excludeIndex = [];
+
+  // Find any column labeled "Action" (case-insensitive)
+  headerCells.forEach((th, index) => {
+    if (th.innerText.trim().toLowerCase() === "action") {
+      excludeIndex.push(index);
+    }
+  });
+
+  // Process all table rows
+  const tableRows = table.querySelectorAll("tr");
+  tableRows.forEach(row => {
+    const cols = row.querySelectorAll("th, td");
+    const rowData = [];
+
+    cols.forEach((col, index) => {
+      if (!excludeIndex.includes(index)) {
+        rowData.push(col.innerText.replace(/\s+/g, " ").trim());
+      }
+    });
+
+    rows.push(rowData.join("\t")); // Tab-separated text
+  });
+
+  // Create downloadable file
+  const blob = new Blob([rows.join("\n")], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+</script>
+
 
 </body>
 </html>

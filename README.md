@@ -40,7 +40,7 @@
 1. open a terminal in VSCode
 2. on terminal type: php -S localhost:8000
 3. open a web browser
-4. on web browser url type: http://localhost:8000/ChainLedger-System-/index.php
+4. on web browser url type: http://localhost:8000/ChainLedger/index.php
 
 *-----------------------------*
 * Run on localhost must be in htdocs
@@ -48,6 +48,15 @@
 1. copy the folder to: c:\xampp\htdocs\
 2. open web browser
 2. on web browser url type: http://localhost/ChainLedger/index.php
+
+
+*---------------------------------*
+* User Credentials for the 3 Roles
+*---------------------------------*
+                      Account ID:  Password:        Role:
+'Loriz Neil Carlos',    233348     123123123   'Business Owner'
+'Maki Roll',            762308     123123123       'Staff'
+'Choco Latte',          516229     123123123      'Manager'
 
 *******************************************************************************
 NOTE: DO NOT DELETE ANY FOLDERS ON THE PACKAGE THIS WILL DESTROY THE SYSTEM.

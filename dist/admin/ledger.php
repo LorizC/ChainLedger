@@ -90,8 +90,11 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
       <div class="grid grid-cols-12 gap-x-6">
         <div class="col-span-12">
           <div class="card">
-            <div class="card-header">
+            <div class="card-header flex justify-between items-center">
               <h5>Ledger History</h5>
+              <a href="#" onclick="exportTableToText('ledgerTable', 'ledger.txt')" class="text-primary-500 text-sm flex items-center">
+               <i data-feather='download' class="w-4 h-4 mr-1"></i> Export
+               </a>
             </div>
             <div class="card-body overflow-x-auto">
 
@@ -199,7 +202,7 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
               <!-- FILTER FORM END -->
 
               <!-- Ledger Table -->
-              <table class="table table-striped table-bordered w-full">
+              <table id="ledgerTable" class="table table-striped table-bordered w-full">
                 <thead class="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-200">
                   <tr>
                     <th>Action</th>
@@ -322,5 +325,65 @@ $role = strtolower(trim($_SESSION['user']['company_role'] ?? ''));
   <script src="../assets/js/component.js"></script>
   <script src="../assets/js/theme.js"></script>
   <script src="../assets/js/script.js"></script>
+  <script>
+function exportTableToText(tableId, filename = 'ledger.txt') {
+  const table = document.getElementById(tableId);
+  if (!table) {
+    alert("Ledger table not found!");
+    return;
+  }
+
+  // Gather applied filter info
+  const filters = {
+    user: document.getElementById('user')?.value || 'All',
+    action: document.getElementById('action')?.value || 'All',
+    merchant: document.getElementById('merchant')?.value || 'All',
+    transaction_type: document.getElementById('transaction_type')?.value || 'All',
+    sort_date: document.getElementById('sort_date')?.value || 'Default'
+  };
+
+  // Prepare table headers (exclude 'Action' column)
+  const headers = Array.from(table.querySelectorAll("thead th"))
+    .map(th => th.innerText.trim())
+    .filter(header => header.toLowerCase() !== "action");
+
+  const rows = [headers.join("\t")]; // start with headers
+
+  // Get filtered rows (only visible ones)
+  const tableRows = Array.from(table.querySelectorAll("tbody tr"))
+    .filter(row => row.offsetParent !== null); // only visible rows
+
+  tableRows.forEach(row => {
+  // Skip first column (Action)
+  const allCells = Array.from(row.querySelectorAll("td"));
+  const cols = allCells.slice(1).map(td =>
+    td.innerText.replace(/\s+/g, " ").trim()
+  );
+  rows.push(cols.join("\t"));
+  });
+
+  // Add filter summary at the top
+  const filterSummary = [
+    "=== LEDGER EXPORT ===",
+    `User: ${filters.user}`,
+    `Category: ${filters.action}`,
+    `Method: ${filters.merchant}`,
+    `Type: ${filters.transaction_type}`,
+    `Date Sort: ${filters.sort_date}`,
+    "",
+    "------------------------------------",
+    ""
+  ].join("\n");
+
+  // Create text blob
+  const blob = new Blob([filterSummary + rows.join("\n")], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+</script>
+
 </body>
 </html>
